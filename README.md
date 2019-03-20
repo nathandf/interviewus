@@ -1,4 +1,4 @@
-# JiuJitsuScout.com | Lead Generation and Marketing automation platform for martial arts businesses
+# InterviewUs.net | Dynamic Automated Interviewing via Text Message
 
 ## Versioning Standards
 ---

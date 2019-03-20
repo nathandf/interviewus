@@ -75,7 +75,7 @@ abstract class Repository implements RepositoryInterface
         $mapper = $this->getMapper();
         $entity = $mapper->build( $this->entityName );
 
-        return $mapper->_insert( $key_values, $return_object );
+        return $mapper->insert( $key_values, $return_object );
     }
 
     public function get( array $columns, $key_values = [], $return_type = "array" )
@@ -97,7 +97,7 @@ abstract class Repository implements RepositoryInterface
     public function update( array $columns_to_update, array $where_columns )
     {
         $mapper = $this->getMapper();
-        $mapper->_update( $columns_to_update, $where_columns );
+        $mapper->update( $columns_to_update, $where_columns );
     }
 
     public function delete( array $keys, array $values )

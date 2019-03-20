@@ -4,12 +4,12 @@
         <p><a class="link tc-deep-blue" href="{$HOME}terms-and-conditions">Terms and Conditions</a></p>
     </div>
     <div class="col-33 floatleft inner-pad-med">
-        <p>Contact JiuJitsuScout.com</p>
-        <p>Tel:<span content="+18122763172">(812) 276-3172</span></p>
-        <p>Email: jiujitsuscout@gmail.com</p>
+        <p>Contact</p>
+        <p>Tel:<span content=""></span></p>
+        <p>Email:</p>
     </div>
     <div class="col-33 floatleft inner-pad-med">
-        <p class="">© 2016 JiuJitsuScout.com All Rights Reserved</p>
+        <p class="">©</p>
     </div>
     <div class="clear"></div>
     <div class="push-t-med"></div>
