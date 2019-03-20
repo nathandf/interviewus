@@ -1,0 +1,305 @@
+.choose-gym-button {
+	border: 1px solid #0667D0;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+.results-header {
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-left: 100px;
+	background: #FFF;
+	color: #444;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.results-body {
+	display: block;
+	height: 100%;
+}
+
+.results-container {
+	padding: 25px;
+	box-sizing: border-box;
+	width: 80%;
+}
+.results-side-bar {
+	display: block;
+	width: 20%;
+	height: 100%;
+	border-right: 1px solid #DDDDDD;
+	box-sizing: border-box;
+}
+
+.search_bar {
+	height: 35px;
+	width: 300px;
+	text-indent: 10px;
+	margin-bottom: 20px;
+	box-shadow: 0px 3px 5px #ddd;
+}
+.find-gym-button {
+	height: 35px;
+	width: 100px;
+	margin-bottom: 20px;
+	box-shadow: 0px 3px 5px #ddd;
+	color: #fff;
+	font-weight: 600;
+}
+.find-gym-button:hover {
+	cursor: pointer;
+}
+
+.listing {
+	display: block;
+	background: #FFF;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+	padding: 10px;
+	border-bottom: 1px solid #DDDDDD;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 15px;
+	padding-bottom: 15px;
+}
+
+.left-container, .middle-container {
+	display: table;
+}
+
+.middle-container {
+	max-width: 250px;
+}
+
+.right-container {
+
+}
+
+.view-profile-button {
+	float: right;
+	text-decoration: none;
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box;
+	display: inline-block;
+}
+
+.discipline-tags-container {
+
+}
+
+.discipline-tag {
+	border-radius: 2px;
+	border: 1px solid #CCC;
+	padding: 1px;
+	box-sizing: border-box;
+	transition: .25s;
+}
+
+.discipline-tag:hover {
+	color: #0667D0;
+	border: 1px solid #0667D0;
+}
+
+.request-schedule-btn {
+	text-decoration: none;
+	padding: 8px;
+	display: inline-block;
+	box-sizing: border-box;
+	border-radius: 3px;
+	border: 2px solid #00C853;
+	background: none;
+	color: #00C853;
+}
+
+.request-offer-btn {
+	text-decoration: none;
+	padding: 10px;
+	display: inline-block;
+	box-sizing: border-box;
+	border-radius: 3px;
+}
+
+.business-tag-form {
+	box-sizing: border-box;
+	border-top: 1px solid #CCC;
+	padding-top: 15px;
+	margin-top: 10px;
+}
+
+.business-tag-form-input {
+	border: 1px solid #DDD;
+	height: 32px;
+	width: 150px;
+}
+
+.featured {
+	/*background-color: rgba(0,0,255,.1);*/
+}
+.featured_tag {
+	display: table;
+	width: auto;
+	font-size: 10px;
+	font-weight: 600;
+	border-radius: 3px;
+	padding: 2px;
+	border: 1px solid blue;
+	color: blue;
+}
+
+.business-logo-container {
+	width: 140px;
+	height: 140px;
+}
+
+.business-logo {
+	width: 140px;
+	max-height: 140px;
+	border-radius: 5px;
+}
+.name {
+	font-weight: 600;
+	font-size: 18px;
+	text-decoration: none;
+	color: #333;
+}
+
+.name:hover{
+	text-decoration: underline;
+}
+
+.star{
+	color: #E7711B;
+}
+
+.cta_btn {
+	display: inline-block;
+	font-family: arial;
+	font-size: 14px;
+	font-weight: 600;
+	color: #fff;
+	padding: 10px;
+	background: #D32323;
+	margin-top: 15px;
+	border-radius: 5px;
+	text-decoration: none;
+	box-shadow: 0px 1px 3px #666;
+	transition: .4s;
+}
+	.cta_btn:hover {
+		box-shadow: 0px 1px 5px #666;
+	}
+
+.review {
+	color: #444;
+	margin-top: 10px;
+	padding: 5px;
+	padding-top: 10px;
+	border-top: 1px solid #DDD;
+}
+.user_icon {
+	margin-right: 10px;
+}
+.review_name {
+	padding-right: 10px;
+	font-size: 14px;
+	display: table-cell;
+	color: #444;
+	vertical-align: middle;
+}
+.review_text {
+	font-size: 14px;
+	display: table-cell;
+	color: #444;
+	vertical-align: middle;
+}
+
+.mo{
+	display: none;
+}
+
+.do{
+display: block;
+}
+
+.view-profile-button-container {
+	float: right;
+}
+
+@media screen and (max-width: 800px){
+	.results-header{
+		box-sizing: border-box;
+		padding-left: 20px;
+
+	}
+	.results-container {
+		box-sizing: border-box;
+		width: 100%;
+		float: left;
+		padding: 20px;
+		padding-right: 25px;
+		padding-top: 0px;
+	}
+
+	.name {
+		font-size: 18px;
+	}
+
+
+	.user_icon {
+		margin-right: 10px;
+	}
+	.review_name {
+		padding-right: 10px;
+		font-size: 14px;
+		display: table-cell;
+		color: #444;
+		vertical-align: middle;
+	}
+	.review_text {
+		font-size: 14px;
+		display: table-cell;
+		color: #444;
+		vertical-align: middle;
+	}
+
+}
+
+@media screen and (max-width: 450px) {
+
+	.listing {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.business-logo-container {
+		width: 80px;
+		height: 80px;
+	}
+	.business-logo {
+		width: 80px;
+	}
+
+	.view-profile-button-container {
+		margin-top: 10px;
+		float: left;
+	}
+
+	.search_bar {
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 8px;
+	}
+
+	.find-gym-button {
+		display: block;
+		width: 300px;
+		margin: 0 auto;
+		margin-bottom: 20px;
+	}
+
+	.results-header {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
