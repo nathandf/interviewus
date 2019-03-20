@@ -13,6 +13,7 @@ class Home extends Controller
 
     public function indexAction()
     {
-        
+        $this->view->setTemplate( "index.tpl" );
+        $this->view->render( "Home.php" );
     }
 }

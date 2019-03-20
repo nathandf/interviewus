@@ -52,7 +52,6 @@ class View extends CoreObject
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );
         $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
-        $this->templatingEngine->assign( "PHP_SCRIPTS", "App/scripts/php/" );
 
     }
 
@@ -85,7 +84,7 @@ class View extends CoreObject
 
         // render view
         ob_start();
-        require_once( $file_name );
+        require_once( VIEWS . $file_name );
         ob_end_flush();
 
     }

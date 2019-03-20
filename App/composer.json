@@ -1,12 +1,6 @@
 {
     "require": {
-        "twilio/sdk": "^5.16",
-        "paypal/rest-api-sdk-php": "*",
-        "sendgrid/sendgrid": "~6.0",
         "smarty/smarty": "~3.1",
-        "facebook/graph-sdk": "^5.6",
-        "google/apiclient": "^2.0",
-        "braintree/braintree_php" : "3.34.0",
         "katzgrau/klogger": "dev-master"
     },
     "autoload": {
@@ -18,6 +12,7 @@
         "Controllers\\": "Controllers/",
         "Views\\": "Views/",
         "Model\\": "Model/",
+		"Entities\\": "Model/Entities",
         "Mappers\\": "Model/Mappers/",
         "Services\\": "Model/Services/"
       },
