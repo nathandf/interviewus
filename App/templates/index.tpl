@@ -9,5 +9,5 @@
 {/block}
 
 {block name="footer"}
-
+	{include file="includes/snippets/footer.tpl"}
 {/block}
