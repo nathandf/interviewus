@@ -8,13 +8,11 @@ class Router
   protected $routes = [];
   // Parameters from the matched routes
   protected $params = [];
-  private $configs;
-  private $environment;
+  private $config;
 
-    public function __construct( \Conf\Config $Config )
+    public function __construct( \Conf\Config $config )
     {
-        $this->configs = $Config::$configs;
-        $this->environment = $Config::getEnv();
+        $this->config = $config;
     }
 
   // Add a route to the routing table
@@ -68,8 +66,8 @@ class Router
     $this->resetGETSuperGLobal( $url );
 
     if ( $this->match( $url ) ) {
-        $root = $this->environment == "production"
-        ? $this->configs[ "routing" ][ $this->environment ][ "root" ]
+        $root = $this->config->getEnv() == "production"
+        ? $this->config->configs[ "routing" ][ "production" ][ "root" ]
         : $this->createRelativeURL( $url );
 
         define( "HOME", $root );

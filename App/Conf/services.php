@@ -66,9 +66,9 @@ $container->register( "logger", function() use ( $container ) {
 $container->register( "pdo", function() use ( $container ) {
 	$conf = $container->getService( "config" );
 	$pdo = new \PDO(
-		"mysql:host={$conf::$configs[ "db" ][ "{$conf::getEnv()}" ][ "host" ]}; dbname={$conf::$configs[ "db" ][ "{$conf::getEnv()}" ][ "dbname" ]};",
-		$conf::$configs[ "db" ][ "{$conf::getEnv()}" ][ "user" ],
-		$conf::$configs[ "db" ][ "{$conf::getEnv()}" ][ "password" ]
+		"mysql:host={$conf->configs[ "db" ][ "{$conf->getEnv()}" ][ "host" ]}; dbname={$conf->configs[ "db" ][ "{$conf->getEnv()}" ][ "dbname" ]};",
+		$conf->configs[ "db" ][ "{$conf->getEnv()}" ][ "user" ],
+		$conf->configs[ "db" ][ "{$conf->getEnv()}" ][ "password" ]
 	);
 	$pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 	return $pdo;
@@ -84,6 +84,13 @@ $container->register( "dao", function() use ( $container ) {
 $container->register( "entity-factory", function() {
 	$factory = new \Model\Services\EntityFactory;
 	return $factory;
+} );
+
+$container->register( "quick-boi", function() use ( $container ) {
+	$service = new \Model\Services\QuickBoi(
+		$container->getService( "dao" )
+	);
+	return $service;
 } );
 
 // NOTE REPOSITORY

@@ -8,13 +8,15 @@ abstract class Controller extends CoreObject
 {
     protected $session;
     protected $container;
+    protected $config;
     protected $params;
     protected $view;
     protected $action_filter_data = [];
 
-    public function __construct( DI_Container $container, Session $session, $params )
+    public function __construct( DI_Container $container, \Conf\Config $config, Session $session, $params )
     {
         $this->setContainer( $container );
+        $this->config = $config;
         $this->session = $session;
         $this->params = $params;
         $this->view = $this->load( "view" );

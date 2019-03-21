@@ -9,20 +9,17 @@ require_once( "App/Helpers/debug.php" );
 // Dependency injection container
 $container = new Core\DI_Container;
 
-// Environment
-Conf\Config::setEnv( "development" );
-
 // Load services using DI_Container
 require_once( "App/Conf/services.php" );
 
-// Error handling
-Core\Error::setEnv( Conf\Config::getEnv() );
-error_reporting( E_ALL );
-// set_error_handler( "Core\Error::errorHandler" );
-// set_exception_handler( "Core\Error::exceptionHandler" );
+// Initialize configs
+$config = $container->getService( "config" );
 
 // Session and token handling
 $session = $container->getService( "session" );
+
+// Error handling
+error_reporting( E_ALL );
 
 // routing
 $Router = $container->getService( "router" );
@@ -35,5 +32,5 @@ $controller_name = $request[ "controller" ];
 $method = $request[ "method" ];
 $params = $request[ "params" ];
 
-$controller = new $controller_name( $container, $session, $params );
+$controller = new $controller_name( $container, $config, $session, $params );
 $controller->$method();
