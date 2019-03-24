@@ -93,17 +93,168 @@ $container->register( "quick-boi", function() use ( $container ) {
 	return $service;
 } );
 
-// NOTE pattern to registrer a REPOSITORY
-// $container->register( "x-repository", function() use ( $container ) {
-// 	$repo = new \Model\Services\XRepository(
-// 		$container->getService( "dao" ),
-// 		$container->getService( "entity-factory" )
-// 	);
-// 	return $repo;
-// } );
+$container->register( "industry-repository", function() use ( $container ) {
+	$repo = new \Model\Services\IndustryRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "account-repository", function() use ( $container ) {
+	$repo = new \Model\Services\AccountRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "account-user-repository", function() use ( $container ) {
+	$repo = new \Model\Services\AccountUserRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "address-repository", function() use ( $container ) {
+	$repo = new \Model\Services\AddressRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "country-repository", function() use ( $container ) {
+	$repo = new \Model\Services\CountryRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "file-repository", function() use ( $container ) {
+	$repo = new \Model\Services\FileRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "image-repository", function() use ( $container ) {
+	$repo = new \Model\Services\ImageRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
 
 $container->register( "industry-repository", function() use ( $container ) {
 	$repo = new \Model\Services\IndustryRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "interview-repository", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "interviewee-repository", function() use ( $container ) {
+	$repo = new \Model\Services\IntervieweeRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "interviewee-answer-repository", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewAnswerRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "interview-question-repository", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewQuestionRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "interview-template-repository", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewTemplateRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "organization-repository", function() use ( $container ) {
+	$repo = new \Model\Services\OrganizationRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "organization-user-repository", function() use ( $container ) {
+	$repo = new \Model\Services\OrganizationUserRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "phone-repository", function() use ( $container ) {
+	$repo = new \Model\Services\PhoneRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "position-repository", function() use ( $container ) {
+	$repo = new \Model\Services\PositionRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "question-repository", function() use ( $container ) {
+	$repo = new \Model\Services\QuestionRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "question-choice-repository", function() use ( $container ) {
+	$repo = new \Model\Services\QuestionChoiceRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "question-type-repository", function() use ( $container ) {
+	$repo = new \Model\Services\QuestionTypeRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "user-repository", function() use ( $container ) {
+	$repo = new \Model\Services\UserRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
