@@ -174,7 +174,7 @@ $container->register( "interviewee-repository", function() use ( $container ) {
 } );
 
 $container->register( "interviewee-answer-repository", function() use ( $container ) {
-	$repo = new \Model\Services\InterviewAnswerRepository(
+	$repo = new \Model\Services\IntervieweeAnswerRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
