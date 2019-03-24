@@ -4,7 +4,7 @@ namespace Model\Entities;
 
 use Contracts\EntityInterface;
 
-class User implements EntityInterface
+class User extends Person implements EntityInterface
 {
 	public $id;
 	public $role;
