@@ -4,7 +4,7 @@ namespace Model\Services;
 
 class EntityFactory
 {
-    public function build( $type, $namespace = "\\Model\\" )
+    public function build( $type, $namespace = "\\Model\\Entities\\" )
     {
         if ( $type == "" ) {
             throw new \Exception( "Invalid Entity Type: \"$type\"." );

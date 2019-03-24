@@ -93,7 +93,7 @@ $container->register( "quick-boi", function() use ( $container ) {
 	return $service;
 } );
 
-// NOTE REPOSITORY
+// NOTE pattern to registrer a REPOSITORY
 // $container->register( "x-repository", function() use ( $container ) {
 // 	$repo = new \Model\Services\XRepository(
 // 		$container->getService( "dao" ),
@@ -101,6 +101,14 @@ $container->register( "quick-boi", function() use ( $container ) {
 // 	);
 // 	return $repo;
 // } );
+
+$container->register( "industry-repository", function() use ( $container ) {
+	$repo = new \Model\Services\IndustryRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
 
 $container->register( "video-repository", function() use ( $container ) {
 	$repo = new \Model\Services\VideoRepository(

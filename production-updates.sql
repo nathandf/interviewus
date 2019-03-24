@@ -1,0 +1,22 @@
+
+CREATE TABLE `industry` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) NOT NULL , `display_name` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `country` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `iso` VARCHAR(256) NOT NULL , `nicename` VARCHAR(256) NOT NULL , `iso3` VARCHAR(256) NOT NULL , `numcode` BIGINT NOT NULL , `phone_code` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `address` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `address_1` VARCHAR(256) NOT NULL , `address_2` VARCHAR(256) NOT NULL , `city` VARCHAR(128) NOT NULL , `postal_code` VARCHAR(64) NOT NULL , `region` VARCHAR(128) NOT NULL , `country_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `phone` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `country_code` BIGINT NOT NULL , `national_number` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `image` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `filename` VARCHAR(512) NOT NULL , `file_type` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `video` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `filename` VARCHAR(512) NOT NULL , `file_type` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `file` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `filename` VARCHAR(512) NOT NULL , `file_type` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `account` ( `id` BIGINT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `user` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `role` VARCHAR(256) NOT NULL , `first_name` VARCHAR(256) NOT NULL , `last_name` VARCHAR(256) NULL , `email` VARCHAR(256) NOT NULL , `phone_id` BIGINT NULL , `address_id` BIGINT NULL , `password` VARCHAR(512) NOT NULL , `image_id` BIGINT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `account_user` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , `user_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `organization` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , `industry_id` BIGINT NULL , `name` VARCHAR(256) NOT NULL , `phone_id` BIGINT NULL , `address_id` BIGINT NULL , `user_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `position` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) NOT NULL , `description` VARCHAR(512) NULL , `organization_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `organization_user` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `organization_id` BIGINT NOT NULL , `user_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `interview` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `organization_id` BIGINT NOT NULL , `name` VARCHAR(256) NOT NULL , `description` VARCHAR(512) NULL , `position_id` BIGINT NOT NULL , `status` VARCHAR(128) NOT NULL , `scheduled_time` VARCHAR(256) NULL , `start_time` VARCHAR(256) NOT NULL , `end_time` VARCHAR(256) NOT NULL , `token` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `interview_question` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `interview_id` BIGINT NOT NULL , `placement` BIGINT NOT NULL , `body` VARCHAR(1024) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `interviewee` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(256) NOT NULL , `last_name` VARCHAR(256) NULL , `email` VARCHAR(256) NOT NULL , `phone_id` BIGINT NOT NULL , `address_id` BIGINT NULL , `image_id` BIGINT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `interviewee_answer` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `interview_question_id` BIGINT NOT NULL , `body` VARCHAR(1024) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `interview_template` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `organization_id` BIGINT NOT NULL , `industry_id` BIGINT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `question` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `question_type_id` BIGINT NOT NULL , `placement` BIGINT NOT NULL , `body` VARCHAR(1024) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `question_choice` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `question_id` BIGINT NOT NULL , `placement` BIGINT NOT NULL , `body` VARCHAR(1024) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `question_type` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
