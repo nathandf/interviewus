@@ -6,7 +6,7 @@ CREATE TABLE `phone` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `country_code` BIGI
 CREATE TABLE `image` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `filename` VARCHAR(512) NOT NULL , `file_type` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `video` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `filename` VARCHAR(512) NOT NULL , `file_type` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `file` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `filename` VARCHAR(512) NOT NULL , `file_type` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
-CREATE TABLE `account` ( `id` BIGINT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `account` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_type_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `user` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `role` VARCHAR(256) NOT NULL , `first_name` VARCHAR(256) NOT NULL , `last_name` VARCHAR(256) NULL , `email` VARCHAR(256) NOT NULL , `phone_id` BIGINT NULL , `address_id` BIGINT NULL , `password` VARCHAR(512) NOT NULL , `image_id` BIGINT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `account_user` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , `user_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `organization` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , `industry_id` BIGINT NULL , `name` VARCHAR(256) NOT NULL , `phone_id` BIGINT NULL , `address_id` BIGINT NULL , `user_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;

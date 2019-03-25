@@ -47,7 +47,7 @@
     --main-font-light: #FFFFFF;
     --main-font-dark: #000000;
     --secondary-font-color: #448AFF;
-    --main-btn-bg: #448AFF;
+    --main-btn-bg: #4A148C;
     --main-btn-color: #fff;
     /* borders and box-shadows */
     --std-border-bottom: 2px solid #D9E1E7;
@@ -104,7 +104,7 @@ td {
 .login-menu {
     box-sizing: border-box;
     font-family: var(--std-font-family);
-    background: #0667D0;
+    background: #4A148C;
     color: var(--main-font-dark);
 }
 
@@ -196,7 +196,7 @@ td {
     padding-right: var(--std-padding-right);
     display: block;
     text-decoration: none;
-    color: #0667D0;
+    color: #4A148C;
     font-weight: var(--heavy-weight);
     font-size: 14px;
     box-sizing: border-box;
@@ -204,7 +204,7 @@ td {
 }
 
 .nav-link-main:hover {
-    border-bottom: 2px solid #0667D0;
+    border-bottom: 2px solid #4A148C;
 }
 
 .footer {
