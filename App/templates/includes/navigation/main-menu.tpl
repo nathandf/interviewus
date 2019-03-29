@@ -1,9 +1,9 @@
 <div class="nav-top-main" itemscope itemtype="http://schema.org/SiteNavigationElement">
     <a href="{$HOME}">
-        <img src="" class="floatleft cursor-pt login-menu-logo" alt="Main Logo">
+        <img src="{$HOME}public/static/img/initials-logo.jpg" class="floatleft cursor-pt login-menu-logo" alt="Main Logo">
     </a>
     <div id="nav-dropdown-button" class="nav-dropdown-button floatright push-r-med" style="line-height: 60px;">
-        <span class="text-xlrg-heavy tc-gun-metal">
+        <span class="text-xlrg-heavy tc-white">
             <i class="fa fa-bars" aria-hidden="true"></i>
         </span>
     </div>

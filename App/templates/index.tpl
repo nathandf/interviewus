@@ -6,12 +6,13 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	<div class="con-cnt-lrg inner-pad-med push-t-med push-b-lrg">
-		<p class="title">Automate Your Interviews</p>
+	<div class="con-cnt-lrg inner-pad-med push-t-lrg push-b-lrg border-std bg-white">
 		<div class="con-cnt-med-plus-plus">
-			<p class="sub-title push-t-lrg" style="margin-bottom: 0;">Create. Deploy. Sit back and relax.</p>
-			<p class="sub-title" style="margin-top: 0;">Your HR workflow is now on Autopilot.</p>
-			<a href="{$HOME}sign-up/" class="button-link tc-white push-t-lrg">Create your first interview</a>
+			<p class="title" style="margin: 0;">Automate Your Interviews</p>
+			<div class="push-t-med"></div>
+			<img class="img-lrg" src="{$HOME}public/static/img/robo-logo.jpg" style="display: block; margin: 0 auto;" alt="">
+			<p class="sub-title push-t-med">Your HR workflow on Autopilot.</p>
+			<a href="{$HOME}sign-up/" class="button-link tc-white">Create your first interview</a>
 		</div>
 	</div>
 {/block}

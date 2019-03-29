@@ -1,19 +1,19 @@
 <?php
 
-namespace Controllers;
+namespace Controllers\Profile;
 
 use \Core\Controller;
 
-class Profile extends Controller
+class Interviewees extends Controller
 {
     public function before()
     {
-
+        
     }
 
     public function indexAction()
     {
-        $this->view->setTemplate( "profile/index.tpl" );
+        $this->view->setTemplate( "profile/interviewees/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
     }
 }

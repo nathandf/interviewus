@@ -1,0 +1,13 @@
+.interviews-container {
+	border: 1px solid #CCCCCC;
+}
+
+.interview-snippet {
+	width: 100%;
+	background: #FFFFFF;
+}
+
+.interview-snippet-seperator {
+	width: 100%;
+	border-bottom: 1px solid #CCCCCC;
+}
