@@ -1,0 +1,29 @@
+.theme-primary {
+	background: #4A148C;
+	color: #FFFFFF;
+}
+
+.theme-primary-light {
+	background: #7c43bd;
+	color: #FFFFFF;
+}
+
+.theme-primary-dark {
+	background: #12005e;
+	color: #FFFFFF;
+}
+
+.theme-secondary {
+	background: #00e676;
+	color: #000000;
+}
+
+.theme-secondary-light {
+	background: #66ffa6;
+	color: #000000;
+}
+
+.theme-secondary-dark {
+	background: #00b248;
+	color: #000000;
+}

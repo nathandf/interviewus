@@ -8,7 +8,7 @@ class Home extends Controller
 {
     public function before()
     {
-
+        
     }
 
     public function indexAction()

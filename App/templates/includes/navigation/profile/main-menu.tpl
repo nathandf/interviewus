@@ -1,4 +1,4 @@
-<div class="nav-top-main" itemscope itemtype="http://schema.org/SiteNavigationElement">
+<div class="nav-top-main">
     <a href="{$HOME}">
         <img src="{$HOME}public/static/img/initials-logo.jpg" class="floatleft cursor-pt login-menu-logo" alt="Main Logo">
     </a>
@@ -7,11 +7,13 @@
             <i class="fa fa-bars" aria-hidden="true"></i>
         </span>
     </div>
-    <ul class="nav-top-ul" itemscope itemtype="http://schema.org/BreadcrumbList">
+    <ul class="nav-top-ul">
         <div id="nav-items-container" class="nav-items-container">
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}profile/interviews/"><span itemprop="name">Interviews</span></a></li>
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}profile/interviewees/"><span itemprop="name">Interviewees</span></a></li>
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}profile/"><span itemprop="name">Profile</span></a></li>
+            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/settings/"><span><i aria-hidden="true" class="fa fa-cog"></i></span></a></li>
+            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/interviewees/"><span>Interviewees</span></a></li>
+            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/positions/"><span>Positions</span></a></li>
+            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/interview-templates/"><span>Interview Templates</span></a></li>
+            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/"><span>Home</span></a></li>
         </div>
     </ul>
     <div class="clear"></div>

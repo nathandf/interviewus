@@ -1,13 +1,18 @@
 .interviews-container {
 	border: 1px solid #CCCCCC;
+	background: #FFFFFF;
 }
 
 .interview-snippet {
+	padding: 18px 10px 18px 10px;
 	width: 100%;
-	background: #FFFFFF;
 }
 
 .interview-snippet-seperator {
 	width: 100%;
 	border-bottom: 1px solid #CCCCCC;
+}
+
+.section-seperator {
+	height: 50px;
 }

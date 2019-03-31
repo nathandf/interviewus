@@ -75,6 +75,7 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     outline: none;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    box-sizing: border-box;
 }
 
 body {
@@ -204,7 +205,7 @@ td {
 }
 
 .nav-link-main:hover {
-    border-bottom: 2px solid #FFFFFF;
+    border-bottom: 2px solid #00e676;
 }
 
 .footer {
@@ -1014,6 +1015,7 @@ td {
     font-size: 16px;
     text-align: center;
     justify-content: center;
+    font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
     background: var(--main-btn-bg);
     color: var(--main-btn-color);
     width: 100%;
@@ -1038,6 +1040,7 @@ td {
     justify-content: center;
     background: var(--main-btn-bg);
     color: var(--main-btn-color);
+    font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
     width: 100%;
     display: block;
     margin: 0 auto;
@@ -1056,14 +1059,12 @@ td {
 /* Buttons */
 .btn {
     -webkit-appearance: none;
-    display: block;
-    margin-bottom: var(--std-margin-bottom);
-    background: var(--main-btn-bg);
-    color: var(--main-btn-color);
+    font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+    font-size: 14px;
     font-weight: 600;
-    padding: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    border-radius: 2px;
+    display: block;
+    padding: 8px 12px 8px 12px;
+    border-radius: 1.5px;
     text-decoration: none;
     transition: .4s;
 }
