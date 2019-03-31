@@ -8,7 +8,7 @@ class Home extends Controller
 {
     public function before()
     {
-        
+        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
     }
 
     public function indexAction()

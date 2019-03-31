@@ -8,7 +8,21 @@ class Interviewee extends Controller
 {
     public function before()
     {
-        
+        $organizationRepo = $this->load( "organization-repository" );
+        $intervieweeRepo = $this->load( "interviewee-repository" );
+
+        $this->organization = $organizationRepo->get( [ "*" ], [ "id" => 0 ], "single" );
+
+        // Ensure the current interviewee is owned by this organization
+        if (
+            isset( $this->params[ "id" ] ) &&
+            !in_array(
+                $this->params[ "id" ],
+                $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+            )
+        ) {
+            $this->view->redirect( "profile/" );
+        }
     }
 
     public function indexAction()
@@ -16,6 +30,12 @@ class Interviewee extends Controller
         if ( !isset( $this->params[ "id" ] ) ) {
             $this->view->redirect( "profile/interview/new" );
         }
+
+        $intervieweeRepo = $this->load( "interviewee-repository" );
+
+        $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
+
+        $this->view->assign( "interviewee", $interviewee );
 
         $this->view->setTemplate( "profile/interviewee/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

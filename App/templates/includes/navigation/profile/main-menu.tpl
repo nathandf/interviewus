@@ -10,8 +10,8 @@
     <ul class="nav-top-ul">
         <div id="nav-items-container" class="nav-items-container">
             <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/settings/"><span><i aria-hidden="true" class="fa fa-cog"></i></span></a></li>
-            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/interviewees/"><span>Interviewees</span></a></li>
             <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/positions/"><span>Positions</span></a></li>
+            <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/interviewees/"><span>Interviewees</span></a></li>
             <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/interview-templates/"><span>Interview Templates</span></a></li>
             <li class="nav-item"><a class="nav-link-main" href="{$HOME}profile/"><span>Home</span></a></li>
         </div>

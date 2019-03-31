@@ -379,6 +379,25 @@ td {
 
 }
 
+.container-full-phone {
+    width: 100%;
+}
+
+.container-country-code {
+    display: block;
+    position: relative;
+    width: 35%;
+    margin-right: 5%;
+    float: left;
+}
+
+.container-national-number {
+    width: 60%;
+    display: block;
+    position: relative;
+    float: left;
+}
+
 .con-inline {
     display: inline-block;
 }

@@ -7,12 +7,12 @@
 		<div class="inner-pad-med">
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
+				<input type="hidden" name="new_interviewee" value="{$csrf_token}">
 				<p class="label push-t-sml">Name</p>
 				<input type="text" name="name" required="required" class="inp inp-full">
 				<p class="label push-t-sml">Email</p>
-				<input type="text" name="email" required="required" class="inp inp-full">
-				<p class="label push-t-sml">Phone number</p>
-				<input type="text" name="phone" required="required" class="inp inp-full">
+				<input type="email" name="email" required="required" class="inp inp-full">
+				{include file="includes/snippets/form-components/full-phone.tpl"}
 				<button type="submit" class="button push-t-med">Create Interviewee</button>
 			</form>
 		</div>
