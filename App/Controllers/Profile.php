@@ -24,9 +24,12 @@ class Profile extends Controller
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $phoneRepo = $this->load( "phone-repository" );
+        $positionRepo = $this->load( "position-repository" );
 
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+
+        $positions = $positionRepo->get( [ "*" ], [ "id" => $this->organization->id ] );
 
         if (
             $input->exists() &&
@@ -91,6 +94,7 @@ class Profile extends Controller
 
         $this->view->assign( "interviews", $interviews );
         $this->view->assign( "interviewTemplates", $interviewTemplates );
+        $this->view->assign( "positions", $positions );
         $this->view->setErrorMessages( $inputValidator->getErrors() );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 

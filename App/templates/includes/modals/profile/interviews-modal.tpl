@@ -13,7 +13,7 @@
 			{foreachelse}
 			<div class="interview-snippet">
 				<p>You don't have any interview templates!</p>
-				<a href="{$HOME}profile/interview-template/new" class="link tc-deep-purple">Create your first</a>
+				<a href="{$HOME}profile/interview-templates/" class="link tc-deep-purple">Create your first</a>
 			</div>
 			{/foreach}
 		</div>

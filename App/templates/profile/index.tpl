@@ -5,10 +5,11 @@
 
 {block name="profile-body"}
 	{include file="includes/modals/profile/interviewee-modal.tpl"}
+	{include file="includes/modals/profile/interview-template-modal.tpl"}
 	{include file="includes/modals/profile/interviews-modal.tpl"}
 	<div class="con-cnt-xxlrg inner-pad-med">
 		<button id="interviews" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
-		<a href="{$HOME}profile/interview-template/new" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</a>
+		<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</button>
 		<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
 		{if !empty($error_messages.new_interviewee)}
 			{foreach from=$error_messages.new_interviewee item=message}
@@ -23,12 +24,14 @@
 			</div>
 			<div class="theme-primary-light">
 				{foreach from=$interviews item=interview}
-				<div class="interview-snippet tc-white">
+				<div class="inner-pad-med tc-white">
 					<p>{$interview->interviewee->getFullName()}</p>
 				</div>
 				{foreachelse}
-				<div class="interview-snippet">
-					<a href="{$HOME}profile/interview-template/new" class="link tc-white">Create your first interview!</a>
+				<div class="inner-pad-sml">
+					<p>You don't have any interviews yet!</p>
+					<button id="interview-template" class="btn btn-inline theme-secondary-light --modal-trigger push-t-sml floatright"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Create your first interview</button>
+					<div class="clear"></div>
 				</div>
 				{/foreach}
 			</div>

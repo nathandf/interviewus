@@ -22,16 +22,4 @@ class InterviewTemplate extends Controller
         $this->view->setTemplate( "profile/interview-template/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
     }
-
-    public function newAction()
-    {
-        $positionRepo = $this->load( "position-repository" );
-
-        $positions = $positionRepo->get( [ "*" ], [ "id" => $this->organization->id ] );
-
-        $this->view->assign( "positions", $positions );
-
-        $this->view->setTemplate( "profile/interview-template/new.tpl" );
-        $this->view->render( "App/Views/Home.php" );
-    }
 }
