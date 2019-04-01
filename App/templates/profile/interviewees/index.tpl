@@ -6,7 +6,7 @@
 {block name="profile-body"}
 	{include file="includes/modals/profile/interviewee-modal.tpl"}
 	<div class="con-cnt-xxlrg inner-pad-med">
-		<button id="interviewee" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+		<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
 		{if !empty($error_messages.new_interviewee)}
 			{foreach from=$error_messages.new_interviewee item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
@@ -14,15 +14,20 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="inner-pad-sml theme-secondary push-t-med">
-			<p>Interviewees</p>
+		<div class="push-t-med">
+			<div class="inner-pad-sml theme-secondary-light">
+				<p>Interviewees</p>
+			</div>
+			{foreach from=$interviewees item=interviewee name=interviewee_loop}
+			<a href="{$HOME}profile/interviewee/{$interviewee->id}/" class="link-overlay">
+				<div class="inner-pad-med {cycle values='bg-light-grey,bg-grey'}">
+					<p>{$interviewee->getFullName()}</p>
+				</div>
+				<div class="clear"></div>
+			</a>
+			{foreachelse}
+			<div class="inner-pad-med"></div>
+			{/foreach}
 		</div>
-		{foreach from=$interviewees item=interviewee}
-		<div class="inner-pad-med {cycle values='theme-secondary-light,theme-secondary-dark'}">
-			{$interviewee->getFullName()}
-		</div>
-		{foreachelse}
-		<div class="inner-pad-med"></div>
-		{/foreach}
 	</div>
 {/block}

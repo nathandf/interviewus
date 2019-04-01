@@ -21,4 +21,10 @@ class InterviewTemplates extends Controller
     {
 
     }
+
+    public function browseAction()
+    {
+        $this->view->setTemplate( "profile/interview-templates/browse.tpl" );
+        $this->view->render( "App/Views/Home.php" );
+    }
 }

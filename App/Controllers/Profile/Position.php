@@ -23,6 +23,7 @@ class Position extends Controller
 
     public function newAction()
     {
-
+        $this->view->setTemplate( "profile/position/new.tpl" );
+        $this->view->render( "App/Views/Home.php" );
     }
 }

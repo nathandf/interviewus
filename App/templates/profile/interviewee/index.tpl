@@ -4,8 +4,10 @@
 {/block}
 
 {block name="profile-body"}
+	{include file="includes/modals/profile/interviews-modal.tpl"}
 	<div class="con-cnt-xxlrg inner-pad-med">
-		<button id="interviews" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Deploy Interview</button>
+		<a href="{$HOME}profile/interviewees/" class="btn btn-inline theme-primary "><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Interviewees</a>
+		<button id="interviews" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
 		{if !empty($error_messages.new_interviewee)}
 			{foreach from=$error_messages.new_interviewee item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">

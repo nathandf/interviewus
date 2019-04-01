@@ -228,6 +228,15 @@ td {
     text-decoration: underline;
 }
 
+.link-overlay {
+    text-decoration: none;
+    color: #000000;
+}
+
+.link-overlay:hover {
+    cursor: pointer;
+}
+
 /* containers */
 .inner-box {
     box-sizing: border-box;
@@ -1245,6 +1254,10 @@ td {
 
 .bg-forest {
     background: #00B478;
+}
+
+.bg-light-grey {
+    background: #EEE;
 }
 
 .bg-grey {

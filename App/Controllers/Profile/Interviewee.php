@@ -32,10 +32,13 @@ class Interviewee extends Controller
         }
 
         $intervieweeRepo = $this->load( "interviewee-repository" );
+        $interviewTemplateRepo = $this->load( "interview-template-repository" );
 
         $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
+        $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $this->view->assign( "interviewee", $interviewee );
+        $this->view->assign( "interviewTemplates", $interviewTemplates );
 
         $this->view->setTemplate( "profile/interviewee/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

@@ -23,6 +23,7 @@ class InterviewTemplate extends Controller
 
     public function newAction()
     {
-
+        $this->view->setTemplate( "profile/interview-template/new.tpl" );
+        $this->view->render( "App/Views/Home.php" );
     }
 }

@@ -22,9 +22,11 @@ class Profile extends Controller
         $inputValidator = $this->load( "input-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
+        $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $phoneRepo = $this->load( "phone-repository" );
 
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+        $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         if (
             $input->exists() &&
@@ -88,6 +90,7 @@ class Profile extends Controller
         }
 
         $this->view->assign( "interviews", $interviews );
+        $this->view->assign( "interviewTemplates", $interviewTemplates );
         $this->view->setErrorMessages( $inputValidator->getErrors() );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
