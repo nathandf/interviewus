@@ -5,13 +5,16 @@
 			Choose an interview template
 		</div>
 		<div class="inner-pad-med">
-			{foreach from=$interviewTemplates item=interviewTemplate}
-			<div class="interview-snippet tc-white">
+			{foreach from=$interviewTemplates item=interviewTemplate name=interview_template_loop}
+			{if !$smarty.foreach.interview_template_loop.first}
+			<div class="push-t-sml"></div>
+			{/if}
+			<div class="border-std inner-pad-sml cursor-pt">
 				<p>{$interviewTemplate->name}</p>
 				<p>{$interviewTemplate->description}</p>
 			</div>
 			{foreachelse}
-			<div class="interview-snippet">
+			<div class="">
 				<p>You don't have any interview templates!</p>
 				<a href="{$HOME}profile/interview-templates/" class="link tc-deep-purple">Create your first</a>
 			</div>

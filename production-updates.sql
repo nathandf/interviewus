@@ -265,3 +265,6 @@ INSERT INTO `country` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `phon
 ALTER TABLE `interviewee` ADD `organization_id` BIGINT NOT NULL AFTER `id`;
 ALTER TABLE `question` ADD `interview_template_id` BIGINT NOT NULL AFTER `id`;
 ALTER TABLE `interview_template` ADD `name` VARCHAR(256) NOT NULL AFTER `id`, ADD `description` VARCHAR(1024) NULL DEFAULT NULL AFTER `name`;
+
+CREATE TABLE `tag` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `string` VARCHAR(64) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `question_tag` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `question_id` BIGINT NOT NULL , `tag_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;

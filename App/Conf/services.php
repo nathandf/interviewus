@@ -245,6 +245,14 @@ $container->register( "question-choice-repository", function() use ( $container 
 	return $repo;
 } );
 
+$container->register( "question-tag-repository", function() use ( $container ) {
+	$repo = new \Model\Services\QuestionTagRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "question-type-repository", function() use ( $container ) {
 	$repo = new \Model\Services\QuestionTypeRepository(
 		$container->getService( "dao" ),
@@ -255,6 +263,14 @@ $container->register( "question-type-repository", function() use ( $container ) 
 
 $container->register( "user-repository", function() use ( $container ) {
 	$repo = new \Model\Services\UserRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "tag-repository", function() use ( $container ) {
+	$repo = new \Model\Services\TagRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);

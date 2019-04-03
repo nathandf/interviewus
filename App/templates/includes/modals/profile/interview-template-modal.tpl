@@ -15,7 +15,7 @@
 					<p class="label">Name</p>
 					<input type="text" name="name" class="inp inp-full">
 					<p class="label">Description</p>
-					<textarea name="" id="" cols="30" rows="10" class="inp textarea inp-full"></textarea>
+					<textarea name="description" class="inp textarea inp-full"></textarea>
 				</div>
 				<div class="section-seperator"></div>
 				<div class="bg-grey inner-pad-sml">
