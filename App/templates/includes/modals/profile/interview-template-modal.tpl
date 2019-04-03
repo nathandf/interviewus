@@ -6,6 +6,8 @@
 		</div>
 		<div class="inner-pad-med">
 			<form action="" method="post">
+				<input type="hidden" name="token" value={$csrf_token}>
+				<input type="hidden" name="new_interview_template" value="{$csrf_token}">
 				<div class="bg-grey inner-pad-sml">
 					<p>Name it something memorable!</p>
 				</div>
@@ -17,7 +19,7 @@
 				</div>
 				<div class="section-seperator"></div>
 				<div class="bg-grey inner-pad-sml">
-					<p>What positions is this interview template related to?</p>
+					<p>What positions will they be interviewing for?</p>
 				</div>
 				<div class="push-t-med">
 					{foreach from=$positions item=position}
@@ -32,9 +34,12 @@
 					<p>Add questions</p>
 				</div>
 				<div class="push-t-med">
-					<p class="label">Question 1</p>
-					<textarea name="" id="" cols="30" rows="10" class="inp textarea inp-full"></textarea>
-					<button type="button" class="btn btn-inline theme-secondary push-t-med"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add question</button>
+					<div id="questions-container">
+						<p class="label">Question 1</p>
+						<textarea name="questions[]" id="question-textarea-1" class="inp textarea inp-full"></textarea>
+					</div>
+					<button id="add-question" type="button" class="btn btn-inline theme-secondary push-t-med floatright"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add question</button>
+					<div class="clear"></div>
 				</div>
 				<div class="section-seperator"></div>
 				<button type="submit" class="button push-t-med">Create Interview Template</button>

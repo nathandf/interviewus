@@ -263,3 +263,5 @@ INSERT INTO `country` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `phon
 (238, 'ZM', 'ZAMBIA', 'Zambia', 'ZMB', 894, 260),
 (239, 'ZW', 'ZIMBABWE', 'Zimbabwe', 'ZWE', 716, 263);
 ALTER TABLE `interviewee` ADD `organization_id` BIGINT NOT NULL AFTER `id`;
+ALTER TABLE `question` ADD `interview_template_id` BIGINT NOT NULL AFTER `id`;
+ALTER TABLE `interview_template` ADD `name` VARCHAR(256) NOT NULL AFTER `id`, ADD `description` VARCHAR(1024) NULL DEFAULT NULL AFTER `name`;

@@ -15,11 +15,15 @@ class InterviewTemplates extends Controller
 
     public function indexAction()
     {
+        $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $positionRepo = $this->load( "position-repository" );
 
-        $positions = $positionRepo->get( [ "*" ], [ "id" => $this->organization->id ] );
+        $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+        $positions = $positionRepo->get( [ "*" ], [ "organization_id" ] );
 
         $this->view->assign( "positions", $positions );
+        $this->view->assign( "interviewTemplates", $interviewTemplates );
+        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         $this->view->setTemplate( "profile/interview-templates/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

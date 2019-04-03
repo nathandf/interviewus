@@ -120,4 +120,9 @@ $( function() {
     $( ".--create-button" ).on( "click", function () {
         $( this ).html( "Creating<i class=\"fa fa-spinner fa-spin push-l-sml\" aria-hidden=\"true\"></i>" );
     } );
+
+    // Trigger modals with based on the buttons id
+    $( ".--modal-trigger" ).on( "click", function () {
+		$( "#" + this.id + "-modal" ).slideDown( 250 );
+	} );
 } );
