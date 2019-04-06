@@ -19,8 +19,8 @@
 				<p>Interviewees</p>
 			</div>
 			{foreach from=$interviewees item=interviewee name=interviewee_loop}
-			<a href="{$HOME}profile/interviewee/{$interviewee->id}/" class="link-overlay">
-				<div class="inner-pad-med {cycle values='bg-light-grey,bg-grey'}">
+			<a href="{$HOME}profile/interviewee/{$interviewee->id}/" class="link-container">
+				<div class="inner-pad-med shade-on-hover {cycle values='bg-light-grey,bg-grey'}">
 					<p>{$interviewee->getFullName()}</p>
 				</div>
 				<div class="clear"></div>

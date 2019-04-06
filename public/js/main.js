@@ -123,6 +123,6 @@ $( function() {
 
     // Trigger modals with based on the buttons id
     $( ".--modal-trigger" ).on( "click", function () {
-		$( "#" + this.id + "-modal" ).slideDown( 250 );
+		$( "#" + this.id + "-modal" ).slideDown( 0 );
 	} );
 } );

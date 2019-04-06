@@ -228,12 +228,12 @@ td {
     text-decoration: underline;
 }
 
-.link-overlay {
+.link-container {
     text-decoration: none;
     color: #000000;
 }
 
-.link-overlay:hover {
+.link-container:hover {
     cursor: pointer;
 }
 
@@ -684,29 +684,8 @@ td {
     width: calc(20% - (var(--num-of-gutters) * var(--col-gutter) / var(--num-of-cols)));
 }
 
-.tag {
-    box-sizing: border-box;
-    width:  100%;
-    border: 2px solid #CCCCCC;
-    padding: 8px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #000000;
-    background: #FFFFFF;
-}
-
-.tag-no-pad {
-    box-sizing: border-box;
-    width:  100%;
-    border: 2px solid #CCCCCC;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #000000;
-    background: #FFFFFF;
-}
-
-.tag-link {
-    text-decoration: none;
+.shade-on-hover:hover {
+    background: rgba( 0, 0, 0, .3 );
 }
 
 /* Horizontal Line */
@@ -1060,6 +1039,11 @@ td {
     cursor: pointer;
 }
 
+.button:disabled {
+    background: grey;
+    color: #666666;
+}
+
 .button-link {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -1088,6 +1072,8 @@ td {
 .btn {
     -webkit-appearance: none;
     font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+    background: var(--main-btn-bg);
+    color: var(--main-btn-color);
     font-size: 14px;
     font-weight: 600;
     display: block;

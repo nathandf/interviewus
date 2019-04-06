@@ -30,7 +30,7 @@ class Profile extends Controller
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
-        $positions = $positionRepo->get( [ "*" ], [ "id" => $this->organization->id ] );
+        $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         if (
             $input->exists() &&

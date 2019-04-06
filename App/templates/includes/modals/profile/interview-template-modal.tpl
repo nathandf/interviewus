@@ -19,18 +19,6 @@
 				</div>
 				<div class="section-seperator"></div>
 				<div class="bg-grey inner-pad-sml">
-					<p>What positions will they be interviewing for?</p>
-				</div>
-				<div class="push-t-med">
-					{foreach from=$positions item=position}
-						<label for="position-{$position->id}">{$position->name}</label>
-						<input id="position-{$position->id}" type="checkbox" style="display: none;">
-					{foreachelse}
-						<p>No positions have added to your organization</p>
-					{/foreach}
-				</div>
-				<div class="section-seperator"></div>
-				<div class="bg-grey inner-pad-sml">
 					<p>Add questions</p>
 				</div>
 				<div class="push-t-med">

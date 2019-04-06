@@ -6,9 +6,9 @@
 {block name="profile-body"}
 	{include file="includes/modals/profile/interviewee-modal.tpl"}
 	{include file="includes/modals/profile/interview-template-modal.tpl"}
-	{include file="includes/modals/profile/interviews-modal.tpl"}
+	{include file="includes/modals/profile/interview-deployment-modal.tpl"}
 	<div class="con-cnt-xxlrg inner-pad-med">
-		<button id="interviews" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
+		<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
 		<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</button>
 		<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
 		{if !empty($error_messages.new_interviewee)}
@@ -30,7 +30,11 @@
 				{foreachelse}
 				<div class="inner-pad-sml">
 					<p>You don't have any interviews yet!</p>
+					{if count( $interviewTemplates ) > 0}
+					<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger push-t-sml floatright"><i aria-hidden="true" class="fas fa-rocket push-r-sml"></i>Deploy your first interview</button>
+					{else}
 					<button id="interview-template" class="btn btn-inline theme-secondary-light --modal-trigger push-t-sml floatright"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Create your first interview</button>
+					{/if}
 					<div class="clear"></div>
 				</div>
 				{/foreach}
