@@ -30,7 +30,13 @@ class InterviewTemplates extends Controller
             $inputValidator->validate(
                 $input,
                 [
-                    "name" => [],
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "name" => [
+                        "required" => true
+                    ],
                     "description" => [],
                     "questions" => [
                         "required" => true,
@@ -50,12 +56,14 @@ class InterviewTemplates extends Controller
 
             $i = 1;
             foreach ( $questions as $question ) {
-                $questionRepo->insert([
-                    "interview_template_id" => $interviewTemplate->id,
-                    "question_type_id" => 1,
-                    "placement" => $i,
-                    "body" => $question
-                ]);
+                if ( !is_null( $question ) && $question != "" ) {
+                    $questionRepo->insert([
+                        "interview_template_id" => $interviewTemplate->id,
+                        "question_type_id" => 1,
+                        "placement" => $i,
+                        "body" => $question
+                    ]);
+                }
                 $i++;
             }
 

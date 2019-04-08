@@ -8,7 +8,7 @@
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="new_interviewee" value="{$csrf_token}">
-				<p class="label push-t-sml">Name</p>
+				<p class="label">Name</p>
 				<input type="text" name="name" required="required" class="inp inp-full">
 				<p class="label push-t-sml">Email</p>
 				<input type="email" name="email" required="required" class="inp inp-full">

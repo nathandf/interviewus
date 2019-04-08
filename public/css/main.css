@@ -1040,8 +1040,9 @@ td {
 }
 
 .button:disabled {
-    background: grey;
+    background: #DDDDDD;
     color: #666666;
+    box-shadow: none;
 }
 
 .button-link {

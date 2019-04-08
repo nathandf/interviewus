@@ -26,7 +26,9 @@
 				<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="">
 				<div data-id="{$question->id}" contenteditable="true" class="inner-pad-med --existing-question {cycle values='bg-light-grey,bg-grey'}">{$question->body}</div>
 				{/foreach}
-				<button type="submit" class="button push-t-med --update-questions-button" disabled="disabled">Update</button>
+				<div class="con-cnt-sml floatleft">
+					<button type="submit" class="button push-t-med --update-questions-button" disabled="disabled">Update</button>
+				</div>
 			</form>
 		</div>
 	</div>
