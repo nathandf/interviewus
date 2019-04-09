@@ -12,5 +12,8 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{$HOME}public/jqueryui/css/jquery-ui.css">
+<script src="{$HOME}public/jqueryui/js/jquery.js"></script>
+<script src="{$HOME}public/jqueryui/js/jquery-ui.js"></script>
+<script src="{$HOME}public/jqueryui/js/jquery.ui.touch-punch.min.js"></script>
 <script src="{$HOME}{$JS_SCRIPTS}main.js"></script>

@@ -17,12 +17,20 @@
 		<div>
 			<form action="" method="post">
 				<input id="update-existing-questions-input" type="hidden" name="update_existing_questions">
-				{foreach from=$interviewTemplate->questions item=question name=existing_question_loop}
-				<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="">
-				<div data-id="{$question->id}" contenteditable="true" class="inner-pad-med --existing-question {cycle values='bg-light-grey,bg-grey'}">{$question->body}</div>
-				{/foreach}
+				<div class="sortable-container">
+					<div class="sortable">
+						{foreach from=$interviewTemplate->questions item=question name=existing_question_loop}
+						<div class="draggable-y border-std push-t-sml push-b-sml bg-white">
+							<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="">
+							<div class="drag-handle hover-grab inner-pad-med floatleft"><i aria-hidden="true" class="fas fa-bars"></i></div>
+							<div data-id="{$question->id}" contenteditable="true" class="inner-pad-med --existing-question">{$question->body}</div>
+							<div class="clear"></div>
+						</div>
+						{/foreach}
+					</div>
+				</div>
 				<div class="con-cnt-sml floatleft">
-					<button type="submit" class="button push-t-med --update-questions-button" disabled="disabled">Update</button>
+					<button type="submit" class="button --update-questions-button" disabled="disabled">Update</button>
 				</div>
 			</form>
 		</div>

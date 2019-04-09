@@ -24,7 +24,7 @@
 				<div class="inner-pad-med shade-on-hover {cycle values='bg-light-grey,bg-grey'}">
 					<p class="text-med-heavy">{$interviewTemplate->name}</p>
 					{if !is_null( $interviewTemplate->description )}
-					<p class="text-med">{$interviewTemplate->description}</p>
+					<p class="text-med">{$interviewTemplate->description|truncate:"300":"..."}</p>
 					{/if}
 				</div>
 				<div class="clear"></div>

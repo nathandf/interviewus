@@ -1776,6 +1776,14 @@ td {
     cursor: pointer;
 }
 
+.hover-pointer:hover {
+    cursor: pointer;
+}
+
+.hover-grab:hover {
+    cursor: grab;
+}
+
 .border-std {
     box-sizing: border-box;
     border-radius: 3px;

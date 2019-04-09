@@ -7,7 +7,7 @@
 		<div class="bg-grey inner-pad-sml">
 			<p>1. Choose an interviewee</p>
 		</div>
-		<div class="inner-pad-med">
+		<div class="inner-pad-med deployment-widget-scrollable-section">
 			{if isset( $interviewee ) == false}
 				{foreach from=$interviewees item=interviewee name=interviewee_loop}
 				{if !$smarty.foreach.interviewee_loop.first}
@@ -51,7 +51,7 @@
 		<div class="bg-grey inner-pad-sml">
 			<p>3. Choose an interview to deploy</p>
 		</div>
-		<div class="inner-pad-med">
+		<div class="inner-pad-med deployment-widget-scrollable-section">
 			{foreach from=$interviewTemplates item=interviewTemplate name=interview_template_loop}
 			{if !$smarty.foreach.interview_template_loop.first}
 			<div class="push-t-sml"></div>
@@ -59,7 +59,7 @@
 			<input type="radio" name="interview_template_id" value="{$interviewTemplate->id}" id="interview-template-radio-{$interviewTemplate->id}" style="display: none;">
 			<div id="interview-template-tag-{$interviewTemplate->id}" data-interview_template_id="{$interviewTemplate->id}" class="border-std inner-pad-sml cursor-pt deployment-interview-template-tag">
 				<p class="text-med-heavy">{$interviewTemplate->name}</p>
-				<p class="text-sml">{$interviewTemplate->description}</p>
+				<p class="text-sml">{$interviewTemplate->description|truncate:"300":"..."}</p>
 			</div>
 			{foreachelse}
 			<div class="">

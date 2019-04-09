@@ -70,11 +70,11 @@ $( function() {
     // Trigger modals with based on the buttons id
     $( ".--modal-trigger" ).on( "click", function () {
 		$( "#" + this.id + "-modal" ).show( 0, function () {
-            $( "#" + this.id + " > div.--modal-content" ).animate( { opacity: 0 }, 0 ).animate( { opacity: 1 }, 250 );
+            $( "#" + this.id + " > div.--modal-content" ).effect( "slide" );
         } );
 	} );
 
     $( ".lightbox-close" ).on( "click", function () {
-        $( ".lightbox-close" ).parent().hide( 250 );
+        $( this ).parent().hide();
     } );
 } );
