@@ -13,7 +13,8 @@
 				{if !$smarty.foreach.interviewee_loop.first}
 				<div class="push-t-sml"></div>
 				{/if}
-				<div class="border-std inner-pad-sml cursor-pt shade-on-hover">
+				<input type="radio" name="interviewee_id" value="{$interviewee->id}" id="interviewee-radio-{$interviewee->id}" style="display: none;">
+				<div id="interviewee-tag-{$interviewee->id}" data-interviewee_id="{$interviewee->id}" class="border-std inner-pad-sml cursor-pt deployment-interviewee-tag">
 					<p class="text-med-heavy">{$interviewee->getFullName()}</p>
 				</div>
 				{foreachelse}

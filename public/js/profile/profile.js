@@ -18,9 +18,13 @@ $( function () {
 	} );
 
 	var tagTracker = {
-		selectedTagID: null,
-		setSelectedTagID: function ( id ) {
-			this.selectedTagID = id;
+		selectedInterviewTemplateTagID: null,
+		selectedIntervieweeTagID: null,
+		setSelectedInterviewTemplateTagID: function ( id ) {
+			this.selectedInterviewTemplateTagID = id;
+		},
+		setSelectedIntervieweeTagID: function ( id ) {
+			this.selectedIntervieweeTagID = id;
 		}
 	};
 
@@ -29,11 +33,22 @@ $( function () {
 	$( ".deployment-interview-template-tag" ).on( "click", function () {
 		$( "#interview-template-radio-" + this.dataset.interview_template_id ).prop( "checked", true );
 		$( this ).addClass( "selected-tag" );
-		if ( tagTracker.selectedTagID != null ) {
-			if ( this.id != tagTracker.selectedTagID ) {
-				$( "#" + tagTracker.selectedTagID ).removeClass( "selected-tag" );
+		if ( tagTracker.selectedInterviewTemplateTagID != null ) {
+			if ( this.id != tagTracker.selectedInterviewTemplateTagID ) {
+				$( "#" + tagTracker.selectedInterviewTemplateTagID ).removeClass( "selected-tag" );
 			}
 		}
-		tagTracker.setSelectedTagID( "interview-template-tag-" + this.dataset.interview_template_id );
+		tagTracker.setSelectedInterviewTemplateTagID( "interview-template-tag-" + this.dataset.interview_template_id );
+	} );
+
+	$( ".deployment-interviewee-tag" ).on( "click", function () {
+		$( "#interviewee-radio-" + this.dataset.interviewee_id ).prop( "checked", true );
+		$( this ).addClass( "selected-tag" );
+		if ( tagTracker.selectedIntervieweeTagID != null ) {
+			if ( this.id != tagTracker.selectedIntervieweeTagID ) {
+				$( "#" + tagTracker.selectedIntervieweeTagID ).removeClass( "selected-tag" );
+			}
+		}
+		tagTracker.setSelectedIntervieweeTagID( "interviewee-tag-" + this.dataset.interviewee_id );
 	} );
 } );
