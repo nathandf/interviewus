@@ -78,7 +78,7 @@ class Interviewees extends Controller
                         "last_name" => $interviewee->getLastName()
                     ],
                     [
-                        "id" => $user->id
+                        "id" => $interviewee->id
                     ]
                 );
             }

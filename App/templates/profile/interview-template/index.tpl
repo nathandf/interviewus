@@ -18,11 +18,6 @@
 			<form action="" method="post">
 				<input id="update-existing-questions-input" type="hidden" name="update_existing_questions">
 				{foreach from=$interviewTemplate->questions item=question name=existing_question_loop}
-				{if $smarty.foreach.existing_question_loop.iteration == 1}
-				<div class="theme-secondary-light inner-pad-sml">
-					<p>Questions:</p>
-				</div>
-				{/if}
 				<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="">
 				<div data-id="{$question->id}" contenteditable="true" class="inner-pad-med --existing-question {cycle values='bg-light-grey,bg-grey'}">{$question->body}</div>
 				{/foreach}

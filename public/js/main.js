@@ -24,48 +24,6 @@ $( function() {
         }
     } );
 
-    $( ".--c-reject-prospect" ).on( "click", function( event ) {
-        confirmation = confirm( "Are you sure your want to pass this lead on to the nearest gym? This action is permanent." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-purchase" ).on( "click", function( event ) {
-        confirmation = confirm( "Press OK to confirm your purchase." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-status-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Confirm this status change." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-send-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Press \"OK\" to confirm and send this email." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--clickable" ).on( "click", function( event ) {
-        if ( $( location ).attr( "hostname" ) == "www.jiujitsuscout.com" ) {
-            $.post(
-                "https://www.jiujitsuscout.com/tracking/record-click",
-                {
-                    "business_id": this.dataset.b_id,
-                    "property": this.dataset.property,
-                    "property_sub_type": this.dataset.property_sub_type,
-                    "ip": this.dataset.ip
-                }
-            );
-        }
-    } );
-
     $( "input:file" ).change(
         function() {
             if ( $( this ).val() ) {
@@ -94,7 +52,7 @@ $( function() {
     } );
 
     $( ".lightbox-close" ).on( "click", function () {
-        $( ".lightbox-close" ).parent().hide();
+        $( ".lightbox-close" ).parent().hide( 250 );
     } );
 
     $( ".--update-button" ).on( "click", function () {
@@ -123,6 +81,6 @@ $( function() {
 
     // Trigger modals with based on the buttons id
     $( ".--modal-trigger" ).on( "click", function () {
-		$( "#" + this.id + "-modal" ).slideDown( 0 );
+		$( "#" + this.id + "-modal" ).show( 250 );
 	} );
 } );

@@ -41,7 +41,7 @@
 					</select>
 					{/if}
 				{foreachelse}
-					<p class="label">Position</p>
+					<p class="label" style="margin-top: 0;">Position</p>
 					<input type="text" class="inp inp-full">
 				{/foreach}
 			</div>
@@ -66,7 +66,7 @@
 			{/foreach}
 		</div>
 		<div class="bg-grey inner-pad-sml">
-			<p>4. Deploy!</p>
+			<p>4. Launch interview</p>
 		</div>
 		<div class="inner-pad-med">
 			<button type="submit" class="button theme-secondary-dark" disabled="disabled"><i aria-hidden="true" class="fas fa-rocket push-r-sml"></i>Deploy</button>

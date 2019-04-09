@@ -1078,8 +1078,8 @@ td {
     font-size: 14px;
     font-weight: 600;
     display: block;
-    padding: 8px 12px 8px 12px;
-    border-radius: 1.5px;
+    padding: 11px 12px 11px 12px;
+    border-radius: 3px;
     text-decoration: none;
     transition: .4s;
 }

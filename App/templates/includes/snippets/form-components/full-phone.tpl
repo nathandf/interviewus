@@ -5,7 +5,7 @@
 			<option value="1" selected="selected" hidden="hidden">+1</option>
 			{if isset($countries)}
 				{foreach from=$countries item=country}
-				<option value="{$country->phonecode}">+{$country->phonecode} {$country->iso3}</option>
+				<option value="{$country->phonecode}">+{$country->phonecode} {if $country->iso3 == ""}{$country->iso}{else}{$country->iso3}{/if}</option>
 				{/foreach}
 			{/if}
 		</select>
