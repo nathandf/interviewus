@@ -40,19 +40,7 @@ $( function() {
     } );
 
     $( ".--c-advanced-options" ).on( "click", function() {
-        $( "#advanced-options" ).slideToggle();
-    } );
-
-    $( "#create-account" ).on( "submit", function () {
-        $( "#account-creation-loading-screen" ).show( "" );
-    } );
-
-    $( ".emailer-open" ).on( "click", function () {
-        $( "#emailer" ).toggle();
-    } );
-
-    $( ".lightbox-close" ).on( "click", function () {
-        $( ".lightbox-close" ).parent().hide( 250 );
+        $( ".advanced-options" ).slideToggle();
     } );
 
     $( ".--update-button" ).on( "click", function () {
@@ -81,6 +69,12 @@ $( function() {
 
     // Trigger modals with based on the buttons id
     $( ".--modal-trigger" ).on( "click", function () {
-		$( "#" + this.id + "-modal" ).show( 250 );
+		$( "#" + this.id + "-modal" ).show( 0, function () {
+            $( "#" + this.id + " > div.--modal-content" ).animate( { opacity: 0 }, 0 ).animate( { opacity: 1 }, 250 );
+        } );
 	} );
+
+    $( ".lightbox-close" ).on( "click", function () {
+        $( ".lightbox-close" ).parent().hide( 250 );
+    } );
 } );

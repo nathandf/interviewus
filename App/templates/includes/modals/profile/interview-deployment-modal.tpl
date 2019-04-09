@@ -1,6 +1,6 @@
 <div id="interview-deployment-modal" style="display: none; overflow-y: scroll;" class="lightbox inner-pad-med">
 	<p class="lightbox-close"><i class="fa fa-2x fa-times" aria-hidden="true"></i></p>
-	<div class="con-cnt-med-plus-plus bg-white push-t-lrg">
+	<div class="con-cnt-med-plus-plus bg-white push-t-lrg --modal-content">
 		<div class="theme-primary inner-pad-med">
 			<p>Deploy an interview</p>
 		</div>
@@ -22,7 +22,8 @@
 				</div>
 				{/foreach}
 			{else}
-				<div class="border-std inner-pad-sml cursor-pt shade-on-hover">
+				<input type="hidden" name="interviewee_id" value="{$interviewee->id}">
+				<div class="border-std inner-pad-sml cursor-pt selected-tag">
 					<p class="text-med-heavy">{$interviewee->getFullName()}</p>
 				</div>
 			{/if}
@@ -54,7 +55,8 @@
 			{if !$smarty.foreach.interview_template_loop.first}
 			<div class="push-t-sml"></div>
 			{/if}
-			<div class="border-std inner-pad-sml cursor-pt shade-on-hover">
+			<input type="radio" name="interview_template_id" value="{$interviewTemplate->id}" id="interview-template-radio-{$interviewTemplate->id}" style="display: none;">
+			<div id="interview-template-tag-{$interviewTemplate->id}" data-interview_template_id="{$interviewTemplate->id}" class="border-std inner-pad-sml cursor-pt deployment-interview-template-tag">
 				<p class="text-med-heavy">{$interviewTemplate->name}</p>
 				<p class="text-sml">{$interviewTemplate->description}</p>
 			</div>

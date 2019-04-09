@@ -41,5 +41,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="section-seperator"></div>
+	
 {/block}
