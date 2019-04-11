@@ -8,30 +8,38 @@
 	{include file="includes/modals/profile/add-question-modal.tpl"}
 	<div class="con-cnt-xxlrg inner-pad-med">
 		<a href="{$HOME}profile/interview-templates/" class="btn btn-inline theme-primary "><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Interview Templates</a>
-		<button id="add-question" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-plus"></i>Add question</button>
 		{include file="includes/snippets/flash-messages.tpl"}
-		<div class="theme-secondary inner-pad-sml push-t-med">
+		<div class="bg-grey inner-pad-sml push-t-med">
 			<p class="text-med-heavy">{$interviewTemplate->name}</p>
 			<p class="text-med">{$interviewTemplate->description|default:null}</p>
 		</div>
+		<div class="hr-full"></div>
 		<div>
 			<form action="" method="post">
 				<input id="update-existing-questions-input" type="hidden" name="update_existing_questions">
+				<button type="submit" class="btn btn-inline theme-primary --update-questions-button floatleft" disabled="disabled">Update</button>
+				<button type="button" id="add-question" class="btn btn-inline theme-secondary --modal-trigger floatright"><i aria-hidden="true" class="push-r-sml fas fa-plus"></i>Add question</button>
+				<div class="clear"></div>
+				<div class="hr-full"></div>
 				<div class="sortable-container">
 					<div class="sortable">
 						{foreach from=$interviewTemplate->questions item=question name=existing_question_loop}
-						<div class="draggable-y border-std push-t-sml push-b-sml bg-white">
-							<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="">
-							<div class="drag-handle hover-grab inner-pad-med floatleft"><i aria-hidden="true" class="fas fa-bars"></i></div>
+						<div id="question-{$question->id}" class="border-std-thin push-t-sml push-b-sml bg-white">
+							<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="{$question->body}">
+							<div class="drag-handle hover-grab inner-pad-med floatleft"><i aria-hidden="true" class="fas fa-grip-horizontal"></i></div>
 							<div data-id="{$question->id}" contenteditable="true" class="inner-pad-med --existing-question">{$question->body}</div>
 							<div class="clear"></div>
 						</div>
 						{/foreach}
 					</div>
 				</div>
-				<div class="con-cnt-sml floatleft">
-					<button type="submit" class="button --update-questions-button" disabled="disabled">Update</button>
-				</div>
+				{if count( $interviewTemplate->questions ) >= 3}
+					<div class="hr-full"></div>
+					<button type="submit" class="btn btn-inline theme-primary --update-questions-button floatleft" disabled="disabled">Update</button>
+					<button type="button" id="add-question" class="btn btn-inline theme-secondary --modal-trigger floatright"><i aria-hidden="true" class="push-r-sml fas fa-plus"></i>Add question</button>
+					<div class="clear"></div>
+					<div class="hr-full"></div>
+				{/if}
 			</form>
 		</div>
 	</div>

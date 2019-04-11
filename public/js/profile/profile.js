@@ -51,17 +51,4 @@ $( function () {
 		}
 		tagTracker.setSelectedIntervieweeTagID( "interviewee-tag-" + this.dataset.interviewee_id );
 	} );
-
-	$( ".sortable" ).sortable({
-    	revert: false,
-		cursor: "grabbing",
-		containment: ".sortable-container",
-		handle: ".drag-handle"
-    });
-
-	$( ".draggable-y" ).draggable({
-		connectToSortable: ".sortable",
-		containment: ".sortable-container",
-		handle: ".drag-handle"
-	});
 } );

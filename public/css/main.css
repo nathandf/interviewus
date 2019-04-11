@@ -1089,6 +1089,12 @@ td {
     cursor: pointer;
 }
 
+.btn:disabled {
+    background: #DDDDDD;
+    color: #666666;
+    box-shadow: none;
+}
+
 .btn-full {
     text-align: center;
     padding: 12px;
@@ -1788,6 +1794,18 @@ td {
     box-sizing: border-box;
     border-radius: 3px;
     border: 2px solid #CCCCCC;
+}
+
+.border-std-thin {
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 1px solid #CCCCCC;
+}
+
+.border-std-thick {
+    box-sizing: border-box;
+    border-radius: 3px;
+    border: 3px solid #CCCCCC;
 }
 
 .de-tab {
