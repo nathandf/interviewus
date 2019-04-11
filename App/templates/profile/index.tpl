@@ -22,7 +22,7 @@
 			<div class="theme-primary inner-pad-sml push-t-med">
 				<p class="tc-white">Interviews</p>
 			</div>
-			<div class="bg-grey">
+			<div class="theme-tertiary">
 				{foreach from=$interviews item=interview}
 				<div class="inner-pad-med tc-white">
 					<p>{$interview->interviewee->getFullName()}</p>

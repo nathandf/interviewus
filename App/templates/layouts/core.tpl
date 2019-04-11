@@ -4,7 +4,7 @@
 		{include file="includes/head/main-head.tpl"}
 		{block name="head"}{/block}
 	</head>
-	<body>
+	<body class="theme-tertiary-light">
 		{block name="body"}{/block}
 	</body>
 	<footer>

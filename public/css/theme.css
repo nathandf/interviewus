@@ -27,3 +27,13 @@
 	background: #00b248;
 	color: #000000;
 }
+
+.theme-tertiary {
+	background: #E1E2E1;
+	color: #000000;
+}
+
+.theme-tertiary-light {
+	background: #F5F5F6;
+	color: #000000;
+}

@@ -26,7 +26,7 @@
 						{foreach from=$interviewTemplate->questions item=question name=existing_question_loop}
 						<div id="question-{$question->id}" class="border-std-thin push-t-sml push-b-sml bg-white">
 							<input type="hidden" id="existing-question-{$question->id}" name="existing_question[{$question->id}]" value="{$question->body}">
-							<div class="drag-handle hover-grab inner-pad-med floatleft"><i aria-hidden="true" class="fas fa-grip-horizontal"></i></div>
+							<div class="drag-handle hover-grab inner-pad-med floatleft"><span class="tc-grey push-r-sml">{$smarty.foreach.existing_question_loop.iteration}</span><i aria-hidden="true" class="fas fa-grip-horizontal"></i></div>
 							<div data-id="{$question->id}" contenteditable="true" class="inner-pad-med --existing-question">{$question->body}</div>
 							<div class="clear"></div>
 						</div>

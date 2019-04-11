@@ -1,11 +1,23 @@
 <div id="interview-deployment-modal" style="display: none; overflow-y: scroll;" class="lightbox inner-pad-med">
 	<p class="lightbox-close"><i class="fa fa-2x fa-times" aria-hidden="true"></i></p>
-	<div class="con-cnt-med-plus-plus bg-white push-t-lrg --modal-content">
+	<div class="con-cnt-med-plus-plus bg-white push-t-lrg --modal-content theme-tertiary-light">
 		<div class="theme-primary inner-pad-med">
-			<p>Deploy an interview</p>
+			<p class="">Deploy an interview</p>
 		</div>
-		<div class="bg-grey inner-pad-sml">
-			<p>1. Choose an interviewee</p>
+		<div class="theme-tertiary inner-pad-sml">
+			<p>1. Choose a deployment type</p>
+		</div>
+		<div class="inner-pad-med">
+			<div class="inner-pad-sml floatleft col-50">
+				<button class="button"><i aria-hidden="true" class="far fa-comment push-r-sml"></i>SMS</button>
+			</div>
+			<div class="inner-pad-sml floatleft col-50">
+				<button class="button"><i aria-hidden="true" class="fa fa-globe push-r-sml"></i>Web</button>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="theme-tertiary inner-pad-sml">
+			<p>2. Choose an interviewee</p>
 		</div>
 		<div class="inner-pad-med deployment-widget-scrollable-section">
 			{if isset( $interviewee ) == false}
@@ -29,8 +41,8 @@
 				</div>
 			{/if}
 		</div>
-		<div class="bg-grey inner-pad-sml">
-			<p>2. What position are they interviewing for?</p>
+		<div class="theme-tertiary inner-pad-sml">
+			<p>3. What position are they interviewing for?</p>
 		</div>
 		<div class="inner-pad-med">
 			<div class="">
@@ -48,8 +60,8 @@
 				{/foreach}
 			</div>
 		</div>
-		<div class="bg-grey inner-pad-sml">
-			<p>3. Choose an interview to deploy</p>
+		<div class="theme-tertiary inner-pad-sml">
+			<p>4. Choose an interview to deploy</p>
 		</div>
 		<div class="inner-pad-med deployment-widget-scrollable-section">
 			{foreach from=$interviewTemplates item=interviewTemplate name=interview_template_loop}
@@ -68,8 +80,8 @@
 			</div>
 			{/foreach}
 		</div>
-		<div class="bg-grey inner-pad-sml">
-			<p>4. Launch interview</p>
+		<div class="theme-tertiary inner-pad-sml">
+			<p>5. Launch interview</p>
 		</div>
 		<div class="inner-pad-med">
 			<button type="submit" class="button theme-secondary-dark" disabled="disabled"><i aria-hidden="true" class="fas fa-rocket push-r-sml"></i>Deploy</button>

@@ -78,10 +78,6 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     box-sizing: border-box;
 }
 
-body {
-    background: var(--main-bg-light);
-}
-
 iframe {
     max-width: 100%;
 }
