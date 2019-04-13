@@ -134,6 +134,23 @@ class Profile extends Controller
             $this->view->redirect( "profile/interview-template/" . $interviewTemplate->id . "/" );
         }
 
+        if (
+            $input->exists() &&
+            $input->issetField( "deploy-interview" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "equals-hidden" => $this->session->getSession( "csrf-token" ),
+                        "required" => true
+                    ],
+                ],
+                "deploy_interview"
+            )
+        ) {
+            vdumpd( $input );
+        }
+
         $this->view->assign( "interviews", $interviews );
         $this->view->assign( "interviewTemplates", $interviewTemplates );
         $this->view->assign( "interviewees", $interviewees );

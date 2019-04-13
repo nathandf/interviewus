@@ -2,23 +2,27 @@
 	<p class="lightbox-close"><i class="fa fa-2x fa-times" aria-hidden="true"></i></p>
 	<div class="con-cnt-med-plus-plus bg-white push-t-lrg --modal-content theme-tertiary-light">
 		<form action="" method="post">
+			<input type="hidden" name="token" value="{$csrf_token}">
+			<input type="hidden" name="deploy-interview" value="{$csrf_token}">
 			<div class="theme-primary inner-pad-med">
 				<p class="">Deploy an interview</p>
 			</div>
+
 			<div class="theme-tertiary-dark inner-pad-sml">
 				<p>1. Choose a deployment type</p>
 			</div>
 			<div class="inner-pad-med">
 				<div class="inner-pad-sml floatleft col-50">
 					<input id="sms-deployment" type="radio" name="deployment_type" value="1" style="display: none;" class="--c-deployment-requirement deployment-type-radio" required="required">
-					<label data-rid="1" for="sms-deployment" class="button button-label radio-label"><i aria-hidden="true" class="far fa-comment push-r-sml"></i>SMS</label>
+					<label for="sms-deployment" class="button button-label radio-label"><i aria-hidden="true" class="far fa-comment push-r-sml"></i>SMS</label>
 				</div>
 				<div class="inner-pad-sml floatleft col-50">
 					<input id="web-deployment" type="radio" name="deployment_type" value="2" style="display: none;"class="--c-deployment-requirement deployment-type-radio" required="required">
-					<label data-rid="1" for="web-deployment" class="button button-label radio-label"><i aria-hidden="true" class="fa fa-globe push-r-sml"></i>Web</lable>
+					<label for="web-deployment" class="button button-label radio-label"><i aria-hidden="true" class="fa fa-globe push-r-sml"></i>Web</lable>
 				</div>
 				<div class="clear"></div>
 			</div>
+
 			<div class="theme-tertiary-dark inner-pad-sml">
 				<p>2. Choose an interviewee</p>
 			</div>
@@ -42,6 +46,7 @@
 					</div>
 				{/if}
 			</div>
+
 			<div class="theme-tertiary-dark inner-pad-sml">
 				<p>3. What position are they interviewing for?</p>
 			</div>
@@ -64,6 +69,7 @@
 					</div>
 				{/if}
 			</div>
+
 			<div class="theme-tertiary-dark inner-pad-sml deployment-instruction">
 				<p>4. Choose an interview to deploy</p>
 			</div>
@@ -84,8 +90,29 @@
 				</div>
 				{/foreach}
 			</div>
+
 			<div class="theme-tertiary-dark inner-pad-sml">
-				<p>5. Launch interview</p>
+				<p>5. Schedule Interview</p>
+			</div>
+			<div class="inner-pad-med">
+				<div class="inner-pad-sml floatleft col-50">
+					<input id="immediate" type="radio" name="schedule_type" value="1" style="display: none;" class="schedule-type-radio --c-deployment-requirement" required="required">
+					<label for="immediate" class="button button-label radio-label schedule-button"><i aria-hidden="true" class="far fa-clock push-r-sml"></i>Deploy<span class="immediately"> Immediately</span></label>
+				</div>
+				<div class="inner-pad-sml floatleft col-50">
+					<input id="schedule" type="radio" name="schedule_type" value="2" style="display: none;"class="schedule-type-radio --c-deployment-requirement" required="required">
+					<label for="schedule" class="button button-label radio-label schedule-button"><i aria-hidden="true" class="fa fa-calendar push-r-sml"></i>Schedule</lable>
+				</div>
+				<div class="clear"></div>
+				<div id="date-time-picker-container" class="inner-pad-sml" style="display: none;">
+					<p class="label">Date:</p>
+					<input type="text" name="date" id="datepicker" class="inp inp-full scheduled-time-input --c-deployment-requirement">
+					<p class="label">Time:</p>
+					{html_select_time class="inp inp-ful time-picker-input cursor-pt push-b-sml" minute_interval=15 display_seconds=false use_24_hours=false prefix=false}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="theme-tertiary-dark inner-pad-sml">
 			</div>
 			<div class="inner-pad-med">
 				<button id="deploy-interview-button" type="submit" class="button theme-secondary-dark" disabled="disabled"><i aria-hidden="true" class="fas fa-rocket push-r-sml"></i>Deploy</button>

@@ -48,3 +48,23 @@ input[type=radio]:checked + .radio-label {
 	background: #4A148C;
 	color: #FFFFFF;
 }
+
+.time-picker-input {
+	width: 32%;
+}
+
+@media screen and (max-width: 600px) {
+	.schedule-button {
+		font-size: 14px;
+	}
+
+	.time-picker-input {
+		padding: 5px;
+	}
+}
+
+@media screen and (max-width: 510px) {
+	.immediately {
+		display: none;
+	}
+}

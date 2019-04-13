@@ -19,11 +19,11 @@ $( function () {
 
 	var InterviewDeploymentWidget = {
 		requirements: {
-			1: false,
-			2: false,
-			3: false,
-			4: false,
-			5: false
+			"deployment-type": false,
+			"interviewee": false,
+			"position": false,
+			"template": false,
+			"schedule-type": false
 		},
 
 		init: function () {
@@ -32,16 +32,16 @@ $( function () {
 
 		updateRequirements: function () {
 			if ( $( ".deployment-type-radio" ).is( ":checked" ) == true ) {
-				this.requirements[ 1 ] = true;
+				this.requirements[ "deployment-type" ] = true;
 			}
 
 			if ( $( ".interviewee-radio" ).is( ":checked" ) == true ) {
-				this.requirements[ 2 ] = true;
+				this.requirements[ "interviewee" ] = true;
 			}
 
 			if ( $( ".position-radio" ).val() != undefined ) {
 				if ( $( ".position-radio" ).is( ":checked" ) ) {
-					this.requirements[ 3 ] = true;
+					this.requirements[ "position" ] = true;
 				}
 			}
 
@@ -50,14 +50,28 @@ $( function () {
 					$( ".position-input" ).val() != "" &&
 					$( ".position-input" ).val() != null
 				) {
-					this.requirements[ 3 ] = true;
+					this.requirements[ "position" ] = true;
 				} else {
-					this.requirements[ 3 ] = false;
+					this.requirements[ "position" ] = false;
 				}
 			}
 
 			if ( $( ".interview-template-radio" ).is( ":checked" ) ) {
-				this.requirements[ 4 ] = true;
+				this.requirements[ "template" ] = true;
+			}
+
+			if ( $( ".schedule-type-radio" ).is( ":checked" ) ) {
+				if ( $( ".schedule-type-radio:checked" ).val() == 1 ) {
+					this.requirements[ "schedule-type" ] = true;
+				}
+
+				if ( $( ".schedule-type-radio:checked" ).val() == 2 ) {
+					if ( $( "#datepicker" ).val() != "" ) {
+						this.requirements[ "schedule-type" ] = true;
+					} else {
+						this.requirements[ "schedule-type" ] = false;
+					}
+				}
 			}
 
 			this.checkRequirements();
@@ -65,10 +79,11 @@ $( function () {
 
 		checkRequirements: function () {
 			if (
-				this.requirements[ 1 ] == true &&
-				this.requirements[ 2 ] == true &&
-				this.requirements[ 3 ] == true &&
-				this.requirements[ 4 ] == true
+				this.requirements[ "deployment-type" ] == true &&
+				this.requirements[ "interviewee" ] == true &&
+				this.requirements[ "position" ] == true &&
+				this.requirements[ "template" ] == true &&
+				this.requirements[ "schedule-type" ] == true
 			) {
 				return true;
 			}
@@ -96,4 +111,14 @@ $( function () {
 			$( "#deploy-interview-button" ).prop( "disabled", true );
 		}
 	} );
+
+	$( "#schedule" ).on( "click", function () {
+		$( "#date-time-picker-container" ).show( 250 );
+	} );
+
+	$( "#immediate" ).on( "click", function () {
+		$( "#date-time-picker-container" ).hide( 250 );
+	} );
+
+	$( "#datepicker" ).datepicker();
 } );
