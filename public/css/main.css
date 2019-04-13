@@ -1041,6 +1041,10 @@ td {
     box-shadow: none;
 }
 
+.button-label {
+    line-height: 46px;
+}
+
 .button-link {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -1546,7 +1550,7 @@ td {
 
 .text-sml {
     font-family: "Noto Sans", arial;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 100;
 }
 
@@ -1577,7 +1581,7 @@ td {
 
 .text-sml-heavy {
     font-family: "Noto Sans", arial;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 600;
 }
 

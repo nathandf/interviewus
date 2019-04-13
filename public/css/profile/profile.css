@@ -17,12 +17,34 @@
 	height: 50px;
 }
 
+.deployment-tag {
+	background: #DDDDDD;
+    color: #666666;
+	font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+}
+
 .selected-tag {
-	border: 2px solid #4A148C;
+	background: #4A148C;
+	color: #FFFFFF;
 	transition: .4s;
 }
 
 .deployment-widget-scrollable-section {
 	overflow-y: scroll;
 	max-height: 300px;
+}
+
+.radio-label {
+	background: #DDDDDD;
+    color: #666666;
+	transition: .333s;
+}
+
+.radio-label:hover {
+	box-shadow: none;
+}
+
+input[type=radio]:checked + .radio-label {
+	background: #4A148C;
+	color: #FFFFFF;
 }

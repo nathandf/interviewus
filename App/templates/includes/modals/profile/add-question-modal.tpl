@@ -1,6 +1,6 @@
 <div id="add-question-modal" style="display: none; overflow-y: scroll;" class="lightbox inner-pad-med">
 	<p class="lightbox-close"><i class="fa fa-2x fa-times" aria-hidden="true"></i></p>
-	<div class="con-cnt-med-plus-plus bg-white push-t-lrg --modal-content">
+	<div class="con-cnt-med-plus-plus theme-tertiary-light push-t-lrg --modal-content">
 		<div class="theme-primary inner-pad-med">
 			<p>New Question</p>
 		</div>

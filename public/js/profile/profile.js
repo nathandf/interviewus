@@ -17,38 +17,83 @@ $( function () {
 		$( "#questions-container" ).append( questionBuilder.newQuestion() );
 	} );
 
-	var tagTracker = {
-		selectedInterviewTemplateTagID: null,
-		selectedIntervieweeTagID: null,
-		setSelectedInterviewTemplateTagID: function ( id ) {
-			this.selectedInterviewTemplateTagID = id;
+	var InterviewDeploymentWidget = {
+		requirements: {
+			1: false,
+			2: false,
+			3: false,
+			4: false,
+			5: false
 		},
-		setSelectedIntervieweeTagID: function ( id ) {
-			this.selectedIntervieweeTagID = id;
-		}
-	};
 
-	// On click, tick the radio button and add a class to the tag that is related
-	// to the radio button
-	$( ".deployment-interview-template-tag" ).on( "click", function () {
-		$( "#interview-template-radio-" + this.dataset.interview_template_id ).prop( "checked", true );
-		$( this ).addClass( "selected-tag" );
-		if ( tagTracker.selectedInterviewTemplateTagID != null ) {
-			if ( this.id != tagTracker.selectedInterviewTemplateTagID ) {
-				$( "#" + tagTracker.selectedInterviewTemplateTagID ).removeClass( "selected-tag" );
+		init: function () {
+			this.updateRequirements();
+		},
+
+		updateRequirements: function () {
+			if ( $( ".deployment-type-radio" ).is( ":checked" ) == true ) {
+				this.requirements[ 1 ] = true;
 			}
+
+			if ( $( ".interviewee-radio" ).is( ":checked" ) == true ) {
+				this.requirements[ 2 ] = true;
+			}
+
+			if ( $( ".position-radio" ).val() != undefined ) {
+				if ( $( ".position-radio" ).is( ":checked" ) ) {
+					this.requirements[ 3 ] = true;
+				}
+			}
+
+			if ( $( ".position-input" ).val() != undefined ) {
+				if (
+					$( ".position-input" ).val() != "" &&
+					$( ".position-input" ).val() != null
+				) {
+					this.requirements[ 3 ] = true;
+				} else {
+					this.requirements[ 3 ] = false;
+				}
+			}
+
+			if ( $( ".interview-template-radio" ).is( ":checked" ) ) {
+				this.requirements[ 4 ] = true;
+			}
+
+			this.checkRequirements();
+		},
+
+		checkRequirements: function () {
+			if (
+				this.requirements[ 1 ] == true &&
+				this.requirements[ 2 ] == true &&
+				this.requirements[ 3 ] == true &&
+				this.requirements[ 4 ] == true
+			) {
+				return true;
+			}
+
+			return false;
 		}
-		tagTracker.setSelectedInterviewTemplateTagID( "interview-template-tag-" + this.dataset.interview_template_id );
+	}
+
+	InterviewDeploymentWidget.init();
+
+	$( ".position-input" ).on( "keyup", function () {
+		InterviewDeploymentWidget.updateRequirements();
+		if ( InterviewDeploymentWidget.checkRequirements() ) {
+			$( "#deploy-interview-button" ).prop( "disabled", false );
+		} else {
+			$( "#deploy-interview-button" ).prop( "disabled", true );
+		}
 	} );
 
-	$( ".deployment-interviewee-tag" ).on( "click", function () {
-		$( "#interviewee-radio-" + this.dataset.interviewee_id ).prop( "checked", true );
-		$( this ).addClass( "selected-tag" );
-		if ( tagTracker.selectedIntervieweeTagID != null ) {
-			if ( this.id != tagTracker.selectedIntervieweeTagID ) {
-				$( "#" + tagTracker.selectedIntervieweeTagID ).removeClass( "selected-tag" );
-			}
+	$( ".--c-deployment-requirement" ).on( "change", function () {
+		InterviewDeploymentWidget.updateRequirements();
+		if ( InterviewDeploymentWidget.checkRequirements() ) {
+			$( "#deploy-interview-button" ).prop( "disabled", false );
+		} else {
+			$( "#deploy-interview-button" ).prop( "disabled", true );
 		}
-		tagTracker.setSelectedIntervieweeTagID( "interviewee-tag-" + this.dataset.interviewee_id );
 	} );
 } );
