@@ -268,3 +268,5 @@ ALTER TABLE `interview_template` ADD `name` VARCHAR(256) NOT NULL AFTER `id`, AD
 
 CREATE TABLE `tag` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `string` VARCHAR(64) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `question_tag` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `question_id` BIGINT NOT NULL , `tag_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `interview` DROP `name`, DROP `description`;
+ALTER TABLE `interview` ADD `interviewee_id` BIGINT NOT NULL AFTER `organization_id`, ADD `interview_template_id` BIGINT NOT NULL AFTER `interviewee_id`;

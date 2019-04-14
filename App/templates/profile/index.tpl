@@ -11,6 +11,13 @@
 		<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
 		<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</button>
 		<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+		{if !empty($error_messages.deploy_interview)}
+			{foreach from=$error_messages.deploy_interview item=message}
+				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
 		{if !empty($error_messages.new_interviewee)}
 			{foreach from=$error_messages.new_interviewee item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
@@ -24,7 +31,7 @@
 			</div>
 			<div class="theme-tertiary">
 				{foreach from=$interviews item=interview}
-				<div class="inner-pad-med tc-white">
+				<div class="inner-pad-med shade-on-hover {cycle values='bg-light-grey,bg-grey'}">
 					<p>{$interview->interviewee->getFullName()}</p>
 				</div>
 				{foreachelse}

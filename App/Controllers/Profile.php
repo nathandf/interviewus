@@ -29,6 +29,11 @@ class Profile extends Controller
         $questionRepo = $this->load( "question-repository" );
 
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+
+        foreach ( $interviews as $interview ) {
+            $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
+        }
+
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
@@ -144,11 +149,66 @@ class Profile extends Controller
                         "equals-hidden" => $this->session->getSession( "csrf-token" ),
                         "required" => true
                     ],
+                    "deployment_type" => [
+                        "required" => true,
+                        "in_array" => [ 1, 2 ]
+                    ],
+                    "interviewee_id" => [
+                        "required" => true,
+                        "in_array" => $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                    ],
+                    "position_id" => [
+                        "in_array" => $positionRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                    ],
+                    "interview_template_id" => [
+                        "required" => true,
+                        "in_array" => $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                    ],
+                    "schedule_type" => [
+                        "required" => true,
+                        "in_array" => [ 1, 2 ]
+                    ],
+                    "date" => [],
+                    "Hour" => [],
+                    "Minute" => [],
+                    "Meridian" => []
                 ],
                 "deploy_interview"
             )
         ) {
-            vdumpd( $input );
+            $position_id = $input->get( "position_id" );
+
+            if ( $input->get( "position" ) != "" ) {
+                $position = $positionRepo->insert([
+                    "organization_id" => $this->organization->id,
+                    "name" => $input->get( "position" )
+                ]);
+
+                $position_id = $position->id;
+            }
+
+            $scheduled_time = null;
+            $status = "active";
+
+            if (
+                $input->get( "schedule_type" ) == 2 &&
+                $input->get( "date" ) != ""
+            ) {
+                $status = "scheduled";
+                $scheduled_time = $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" );
+            }
+
+            $interviewRepo->insert([
+                "organization_id" => $this->organization->id,
+                "interviewee_id" => $input->get( "interviewee_id" ),
+                "interview_template_id" => $input->get( "interview_template_id" ),
+                "position_id" => $position_id,
+                "status" => $status,
+                "scheduled_time" => $scheduled_time,
+                "token" => md5( microtime() ) . $this->organization->id . "-" . $input->get( "interviewee_id" )
+            ]);
+
+            $this->view->redirect( "profile/" );
         }
 
         $this->view->assign( "interviews", $interviews );

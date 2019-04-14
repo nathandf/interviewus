@@ -8,8 +8,8 @@ class Interview implements EntityInterface
 {
 	public $id;
 	public $organization_id;
-	public $name;
-	public $description;
+	public $interviewee_id;
+	public $interview_template_id;
 	public $position_id;
 	public $status;
 	public $scheduled_time;

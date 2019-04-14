@@ -85,8 +85,7 @@
 				</label>
 				{foreachelse}
 				<div class="">
-					<p>You don't have any interview templates!</p>
-					<a href="{$HOME}profile/interview-templates/" class="link tc-deep-purple">Create your first</a>
+					<a href="{$HOME}profile/interview-templates/" class="btn btn-inline tc-deep-purple"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add an inteview template</a>
 				</div>
 				{/foreach}
 			</div>
@@ -106,7 +105,7 @@
 				<div class="clear"></div>
 				<div id="date-time-picker-container" class="inner-pad-sml" style="display: none;">
 					<p class="label">Date:</p>
-					<input type="text" name="date" id="datepicker" class="inp inp-full scheduled-time-input --c-deployment-requirement">
+					<input type="text" name="date" id="datepicker" class="inp inp-full scheduled-time-input --c-deployment-requirement" autocomplete="off">
 					<p class="label">Time:</p>
 					{html_select_time class="inp inp-ful time-picker-input cursor-pt push-b-sml" minute_interval=15 display_seconds=false use_24_hours=false prefix=false}
 				</div>
