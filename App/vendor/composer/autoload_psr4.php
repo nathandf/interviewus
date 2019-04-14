@@ -7,7 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Views\\' => array($baseDir . '/Views'),
+    'Twilio\\' => array($vendorDir . '/twilio/sdk/Twilio'),
     'Services\\' => array($baseDir . '/Model/Services'),
+    'SendGrid\\' => array($vendorDir . '/sendgrid/php-http-client/lib'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Model\\' => array($baseDir . '/Model'),
     'Mappers\\' => array($baseDir . '/Model/Mappers'),

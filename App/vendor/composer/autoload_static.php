@@ -8,6 +8,10 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
 {
     public static $files = array (
         'f084d01b0a599f67676cffef638aa95b' => __DIR__ . '/..' . '/smarty/smarty/libs/bootstrap.php',
+        '3f8bdd3b35094c73a26f0106e3c0f8b2' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/SendGrid.php',
+        '9dda55337a76a24e949fbcc5d905a2c7' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/mail/Mail.php',
+        '5d7e2090c9a3b69b2ff2fceddeadca94' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/contacts/Recipients.php',
+        '04a9a7b26fb79fbd712347cc9bc9d9be' => __DIR__ . '/..' . '/sendgrid/sendgrid/lib/helpers/stats/Stats.php',
         'a38330d2f51f82a186b58186cfe87a71' => __DIR__ . '/../..' . '/Conf/constants.php',
     );
 
@@ -16,9 +20,14 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
         array (
             'Views\\' => 6,
         ),
+        'T' => 
+        array (
+            'Twilio\\' => 7,
+        ),
         'S' => 
         array (
             'Services\\' => 9,
+            'SendGrid\\' => 9,
         ),
         'P' => 
         array (
@@ -55,9 +64,17 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
         array (
             0 => __DIR__ . '/../..' . '/Views',
         ),
+        'Twilio\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twilio/sdk/Twilio',
+        ),
         'Services\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Model/Services',
+        ),
+        'SendGrid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sendgrid/php-http-client/lib',
         ),
         'Psr\\Log\\' => 
         array (
