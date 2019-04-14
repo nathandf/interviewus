@@ -28,10 +28,9 @@
 				<div class="clear"></div>
 			</div>
 			<div class="theme-tertiary-dark inner-pad-sml">
-				<p>3. Save Interview Template</p>
 			</div>
 			<div class="inner-pad-med">
-				<button type="submit" class="button">Complete</button>
+				<button type="submit" class="button"><i aria-hidden="true" class="far fa-file-alt push-r-med"></i>Save Template</button>
 			</div>
 			</form>
 	</div>

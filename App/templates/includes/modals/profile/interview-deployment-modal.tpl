@@ -13,11 +13,11 @@
 			</div>
 			<div class="inner-pad-med">
 				<div class="inner-pad-sml floatleft col-50">
-					<input id="sms-deployment" type="radio" name="deployment_type" value="1" style="display: none;" class="--c-deployment-requirement deployment-type-radio" required="required">
+					<input id="sms-deployment" type="radio" name="deployment_type_id" value="1" style="display: none;" class="--c-deployment-requirement deployment-type-radio" required="required">
 					<label for="sms-deployment" class="button button-label radio-label"><i aria-hidden="true" class="far fa-comment push-r-sml"></i>SMS</label>
 				</div>
 				<div class="inner-pad-sml floatleft col-50">
-					<input id="web-deployment" type="radio" name="deployment_type" value="2" style="display: none;"class="--c-deployment-requirement deployment-type-radio" required="required">
+					<input id="web-deployment" type="radio" name="deployment_type_id" value="2" style="display: none;"class="--c-deployment-requirement deployment-type-radio" required="required">
 					<label for="web-deployment" class="button button-label radio-label"><i aria-hidden="true" class="fa fa-globe push-r-sml"></i>Web</lable>
 				</div>
 				<div class="clear"></div>
@@ -57,7 +57,7 @@
 						<div class="push-t-sml"></div>
 						{/if}
 						<input type="radio" name="position_id" value="{$position->id}" class="position-radio --c-deployment-requirement" id="position-radio-{$position->id}" style="display: none;">
-						<label for="position-radio-{$position->id}" id="position-tag-{$position->id}" class="deployment-tag inner-pad-sml cursor-pt radio-label" style="display: block;">{$position->name}</label>
+						<label for="position-radio-{$position->id}" id="position-tag-{$position->id}" class="deployment-tag inner-pad-sml cursor-pt radio-label" style="display: block;"><i aria-hidden="true" class="fas fa-user-tie push-r-sml"></i>{$position->name}</label>
 					{foreachelse}
 						<p class="label" style="margin-top: 0;">Position</p>
 						<input type="text" class="inp inp-full position-input --c-deployment-requirement" name="position" required="required">
@@ -65,7 +65,7 @@
 				{else}
 					<input type="radio" name="position_id" value="{$position->id}" class="position-radio" checked="checked" style="display: none;">
 					<div class="deployment-tag inner-pad-sml cursor-pt selected-tag">
-						<p class="text-med-heavy">{$position->name}</p>
+						<p class="text-med-heavy"><i aria-hidden="true" class="fas fa-user-tie push-r-sml"></i>{$position->name}</p>
 					</div>
 				{/if}
 			</div>
@@ -80,8 +80,11 @@
 				{/if}
 				<input type="radio" name="interview_template_id" value="{$interviewTemplate->id}" id="interview-template-radio-{$interviewTemplate->id}" class="interview-template-radio --c-deployment-requirement" required="required" style="display: none;">
 				<label for="interview-template-radio-{$interviewTemplate->id}" class="radio-label inner-pad-sml cursor-pt deployment-tag" style="display: block;">
-					<p class="text-med-heavy">{$interviewTemplate->name}</p>
-					<p class="text-sml">{$interviewTemplate->description|truncate:"300":"..."}</p>
+					<p class="text-med-heavy"><i aria-hidden="true" class="far fa-file-alt push-r-sml"></i>{$interviewTemplate->name}</p>
+					{if $interviewTemplate->description != "" && $interviewTemplate->description != null}
+					<div class="hr-std push-t-sml"></div>
+					<p class="text-sml push-t-sml">{$interviewTemplate->description|truncate:"300":"..."}</p>
+					{/if}
 				</label>
 				{foreachelse}
 				<div class="">

@@ -261,12 +261,14 @@ $container->register( "question-type-repository", function() use ( $container ) 
 	return $repo;
 } );
 
-$container->register( "user-repository", function() use ( $container ) {
-	$repo = new \Model\Services\UserRepository(
-		$container->getService( "dao" ),
-		$container->getService( "entity-factory" )
-	);
-	return $repo;
+$container->register( "sendgrid-mailer", function() use ( $container ) {
+	$sendGridMailer = new \Model\Services\SendGridMailer( $container->getService( "config" ) );
+	return $sendGridMailer;
+} );
+
+$container->register( "mailer", function() use ( $container ) {
+	$mailerService = $container->getService( "sendgrid-mailer" );
+	return $mailerService;
 } );
 
 $container->register( "tag-repository", function() use ( $container ) {
@@ -281,6 +283,55 @@ $container->register( "video-repository", function() use ( $container ) {
 	$repo = new \Model\Services\VideoRepository(
 	    $container->getService( "dao" ),
 	    $container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "twilio-phone-number-repository", function() use ( $container ) {
+	$repo = new \Model\Services\TwilioPhoneNumberRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "twilio-api-initializer", function() use ( $container ) {
+	$obj = new \Model\Services\TwilioAPIInitializer(
+	    $container->getService( "config" )
+	);
+	return $obj;
+} );
+
+$container->register( "twilio-phone-number-buyer", function() use ( $container ) {
+	$obj = new \Model\Services\TwilioPhoneNumberBuyer(
+	    $container->getService( "twilio-api-initializer" )
+	);
+	return $obj;
+} );
+
+$container->register( "twilio-service-dispatcher", function() use ( $container ) {
+	$obj = new \Model\Services\TwilioServiceDispatcher(
+	    $container->getService( "twilio-api-initializer" )
+	);
+	return $obj;
+} );
+
+$container->register( "twilio-sms-messager", function() use ( $container ) {
+	$obj = new \Model\Services\TwilioSMSMessager(
+	    $container->getService( "twilio-api-initializer" )
+	);
+	return $obj;
+} );
+
+$container->register( "sms-messager", function() use ( $container ) {
+	$smsMessager = $container->getService( "twilio-sms-messager" );
+	return $smsMessager;
+} );
+
+$container->register( "user-repository", function() use ( $container ) {
+	$repo = new \Model\Services\UserRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
 	);
 	return $repo;
 } );
