@@ -24,48 +24,6 @@ $( function() {
         }
     } );
 
-    $( ".--c-reject-prospect" ).on( "click", function( event ) {
-        confirmation = confirm( "Are you sure your want to pass this lead on to the nearest gym? This action is permanent." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-purchase" ).on( "click", function( event ) {
-        confirmation = confirm( "Press OK to confirm your purchase." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-status-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Confirm this status change." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-send-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Press \"OK\" to confirm and send this email." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--clickable" ).on( "click", function( event ) {
-        if ( $( location ).attr( "hostname" ) == "www.jiujitsuscout.com" ) {
-            $.post(
-                "https://www.jiujitsuscout.com/tracking/record-click",
-                {
-                    "business_id": this.dataset.b_id,
-                    "property": this.dataset.property,
-                    "property_sub_type": this.dataset.property_sub_type,
-                    "ip": this.dataset.ip
-                }
-            );
-        }
-    } );
-
     $( "input:file" ).change(
         function() {
             if ( $( this ).val() ) {
@@ -82,19 +40,7 @@ $( function() {
     } );
 
     $( ".--c-advanced-options" ).on( "click", function() {
-        $( "#advanced-options" ).slideToggle();
-    } );
-
-    $( "#create-account" ).on( "submit", function () {
-        $( "#account-creation-loading-screen" ).show( "" );
-    } );
-
-    $( ".emailer-open" ).on( "click", function () {
-        $( "#emailer" ).toggle();
-    } );
-
-    $( ".lightbox-close" ).on( "click", function () {
-        $( ".lightbox-close" ).parent().hide();
+        $( ".advanced-options" ).slideToggle();
     } );
 
     $( ".--update-button" ).on( "click", function () {
@@ -119,5 +65,16 @@ $( function() {
 
     $( ".--create-button" ).on( "click", function () {
         $( this ).html( "Creating<i class=\"fa fa-spinner fa-spin push-l-sml\" aria-hidden=\"true\"></i>" );
+    } );
+
+    // Trigger modals with based on the buttons id
+    $( ".--modal-trigger" ).on( "click", function () {
+		$( "#" + this.id + "-modal" ).show( 0, function () {
+            $( "#" + this.id + " > div.--modal-content" ).effect( "slide" );
+        } );
+	} );
+
+    $( ".lightbox-close" ).on( "click", function () {
+        $( this ).parent().hide();
     } );
 } );

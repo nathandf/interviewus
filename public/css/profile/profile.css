@@ -1,0 +1,70 @@
+.interviews-container {
+	border: 1px solid #CCCCCC;
+	background: #FFFFFF;
+}
+
+.interview-snippet {
+	padding: 18px 10px 18px 10px;
+	width: 100%;
+}
+
+.interview-snippet-seperator {
+	width: 100%;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.section-seperator {
+	height: 50px;
+}
+
+.deployment-tag {
+	background: #DDDDDD;
+    color: #666666;
+	font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+}
+
+.selected-tag {
+	background: #4A148C;
+	color: #FFFFFF;
+	transition: .4s;
+}
+
+.deployment-widget-scrollable-section {
+	overflow-y: scroll;
+	max-height: 300px;
+}
+
+.radio-label {
+	background: #DDDDDD;
+    color: #666666;
+	transition: .333s;
+}
+
+.radio-label:hover {
+	box-shadow: none;
+}
+
+input[type=radio]:checked + .radio-label {
+	background: #4A148C;
+	color: #FFFFFF;
+}
+
+.time-picker-input {
+	width: 32%;
+}
+
+@media screen and (max-width: 600px) {
+	.schedule-button {
+		font-size: 14px;
+	}
+
+	.time-picker-input {
+		padding: 5px;
+	}
+}
+
+@media screen and (max-width: 510px) {
+	.immediately {
+		display: none;
+	}
+}

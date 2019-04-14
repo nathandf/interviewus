@@ -84,7 +84,7 @@ class View extends CoreObject
 
         // render view
         ob_start();
-        require_once( VIEWS . $file_name );
+        require_once( $file_name );
         ob_end_flush();
 
     }
