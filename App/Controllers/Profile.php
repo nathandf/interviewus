@@ -28,6 +28,7 @@ class Profile extends Controller
         $phoneRepo = $this->load( "phone-repository" );
         $positionRepo = $this->load( "position-repository" );
         $questionRepo = $this->load( "question-repository" );
+        $interviewDispatcher = $this->load( "interview-dispatcher" );
 
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
@@ -223,6 +224,8 @@ class Profile extends Controller
                     "body" => $question->body
                 ]);
             }
+
+            $interviewDispatcher->dispatch( $interview->id );
 
             $this->view->redirect( "profile/" );
         }

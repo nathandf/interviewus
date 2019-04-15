@@ -274,3 +274,4 @@ ALTER TABLE `interview` ADD `last_interview_question_id` BIGINT NULL DEFAULT NUL
 ALTER TABLE `interview` ADD `deployment_type_id` BIGINT NOT NULL AFTER `id`;
 
 CREATE TABLE `twilio_phone_number` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `organization_id` BIGINT NOT NULL , `sid` VARCHAR(256) NOT NULL , `phone_number` VARCHAR(256) NOT NULL , `friendly_number` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `interview_question` ADD `dispatched` TINYINT NOT NULL DEFAULT '0' AFTER `body`;

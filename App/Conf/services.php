@@ -165,6 +165,16 @@ $container->register( "interview-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "interview-dispatcher", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewDispatcher(
+		$container->getService( "interview-repository" ),
+		$container->getService( "interview-question-repository" ),
+		$container->getService( "interviewee-answer-repository" ),
+		$container->getService( "interviewee-repository" )
+	);
+	return $repo;
+} );
+
 $container->register( "interviewee-repository", function() use ( $container ) {
 	$repo = new \Model\Services\IntervieweeRepository(
 		$container->getService( "dao" ),

@@ -33,7 +33,7 @@
 					<div class="push-t-sml"></div>
 					{/if}
 					<input type="radio" name="interviewee_id" value="{$interviewee->id}" class="interviewee-radio --c-deployment-requirement" id="interviewee-radio-{$interviewee->id}" style="display: none;">
-					<label for="interviewee-radio-{$interviewee->id}" id="interviewee-tag-{$interviewee->id}" class="deployment-tag inner-pad-sml cursor-pt radio-label" style="display: block;">{$interviewee->getFullName()}</label>
+					<label for="interviewee-radio-{$interviewee->id}" id="interviewee-tag-{$interviewee->id}" class="deployment-tag inner-pad-sml cursor-pt radio-label" style="display: block;"><i aria-hidden="true" class="fas fa-user push-r-sml"></i>{$interviewee->getFullName()}</label>
 					{foreachelse}
 					<div class="">
 						<a href="{$HOME}profile/interviewees/" class="btn btn-inline tc-deep-purple"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add an inteviewee</a>

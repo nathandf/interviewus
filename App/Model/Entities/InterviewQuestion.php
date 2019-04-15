@@ -10,4 +10,5 @@ class InterviewQuestion implements EntityInterface
 	public $interview_id;
 	public $placement;
 	public $body;
+	public $dispatched;
 }
