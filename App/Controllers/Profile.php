@@ -225,7 +225,11 @@ class Profile extends Controller
                 ]);
             }
 
-            $interviewDispatcher->dispatch( $interview->id );
+            // Dispatch the first interview question immediately if interview
+            // status is active
+            if ( $status == "active" ) {
+                $interviewDispatcher->dispatch( $interview->id );
+            }
 
             $this->view->redirect( "profile/" );
         }
