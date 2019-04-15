@@ -47,12 +47,17 @@ class InterviewDispatcher
 				// in the interview data
 				if ( $question->dispatched == false ) {
 					// TODO Send the question
-					vdumpd( "Question dispatched: {$question->body}" );
 
 					// Update the dispatch status of this question
-					$interviewQuestionRepo->update(
+					$this->interviewQuestionRepo->update(
 						[ "dispatched" => 1 ],
 						[ "id" => $question->id ]
+					);
+
+					// Set the interview status to active if not already
+					$this->interviewRepo->update(
+						[ "status" => "active" ],
+						[ "id" => $interview->id ]
 					);
 				}
 
@@ -64,7 +69,7 @@ class InterviewDispatcher
 		// TODO Send "interview complete" message
 
 		// ...and update the interview's status to dispatched
-		$interviewRepo->update(
+		$this->interviewRepo->update(
 			[ "status" => "complete" ],
 			[ "id" => $interview->id ]
 		);
