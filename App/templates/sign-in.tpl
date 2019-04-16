@@ -6,7 +6,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	<div class="con-cnt-med-plus push-t-lrg push-b-lrg inner-pad-med bg-white border-std">
+	<div class="con-cnt-med-plus push-t-lrg push-b-lrg pad-med bg-white border-std">
 		<p class="sub-title" style="margin: 0;">Sign In</p>
 		<div>
 			<img class="img-med" style="margin: 0 auto; display: block;" src="{$HOME}public/static/img/robo-logo.jpg" alt="">

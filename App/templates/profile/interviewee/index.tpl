@@ -5,7 +5,7 @@
 
 {block name="profile-body"}
 	{include file="includes/modals/profile/interview-deployment-modal.tpl"}
-	<div class="con-cnt-xxlrg inner-pad-med">
+	<div class="con-cnt-xxlrg pad-med">
 		<a href="{$HOME}profile/interviewees/" class="btn btn-inline theme-primary "><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Interviewees</a>
 		<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
 		{if !empty($error_messages.new_interviewee)}
@@ -15,7 +15,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="theme-secondary inner-pad-sml push-t-med">
+		<div class="theme-secondary pad-sml push-t-med">
 			<p class="tc-black">{$interviewee->getFullName()}</p>
 		</div>
 		<div class="theme-secondary-light">

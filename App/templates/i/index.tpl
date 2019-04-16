@@ -9,7 +9,7 @@
 	{include file="includes/navigation/main-menu.tpl"}
 	<div class="con-cnt-lrg push-t-lrg">
 		<p class="label">Interviewer: {$organization->name}</p>
-		<div class="con-cnt-lrg inner-pad-med push-b-lrg bg-white border-std">
+		<div class="con-cnt-lrg pad-med push-b-lrg bg-white border-std">
 			<div id="interview-intro">
 				{if $interview->deployment_type_id == 1}
 				<p class="title">Text Message Interview</p>

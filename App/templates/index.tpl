@@ -6,7 +6,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	<div class="con-cnt-lrg inner-pad-med push-t-lrg push-b-lrg border-std bg-white">
+	<div class="con-cnt-lrg pad-med push-t-lrg push-b-lrg border-std bg-white">
 		<div class="con-cnt-med-plus-plus">
 			<p class="title" style="margin: 0;">Automate Your Interviews</p>
 			<div class="push-t-med"></div>

@@ -7,7 +7,7 @@
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
 	<p class="title title-h2 push-t-med">Create Account</p>
-	<div class="con-cnt-med-plus-plus inner-pad-med border-std bg-white push-t-med push-b-lrg">
+	<div class="con-cnt-med-plus-plus pad-med border-std bg-white push-t-med push-b-lrg">
 		{if !empty($error_messages.create_account)}
 			{foreach from=$error_messages.create_account item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
