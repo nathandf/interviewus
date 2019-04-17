@@ -510,9 +510,30 @@ td {
     box-sizing: border-box;
 }
 
+.pad-xxsml {
+    box-sizing: border-box;
+    padding: 2.5px;
+}
+
+.pad-xxsml-mob-neg {
+    padding: 2.5px;
+}
+
+.pad-xxsml-mob-pos {
+    padding: 0px;
+}
+
 .pad-xsml {
     box-sizing: border-box;
     padding: 5px;
+}
+
+.pad-xsml-mob-neg {
+    padding: 5px;
+}
+
+.pad-xsml-mob-pos {
+    padding: 0px;
 }
 
 .pad-sml {
@@ -1896,6 +1917,22 @@ td {
 }
 
 @media screen and (max-width: 768px) {
+    .pad-xxsml-mob-neg {
+        padding: 0px;
+    }
+
+    .pad-xxsml-mob-pos {
+        padding: 2.5px;
+    }
+
+    .pad-xsml-mob-neg {
+        padding: 0px;
+    }
+
+    .pad-xsml-mob-pos {
+        padding: 5px;
+    }
+
     .pad-sml-mob-neg {
         padding: 0px;
     }

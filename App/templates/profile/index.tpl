@@ -9,9 +9,22 @@
 	{include file="includes/modals/profile/interview-deployment-modal.tpl"}
 	<div class="con-cnt-xxlrg pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
-			<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger push-t-sml"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
-			<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger push-t-sml"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</button>
-			<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger push-t-sml"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+			<div class="floatleft push-r-xsml">
+				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
+				<div class="pad-xxsml-mob-pos"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="floatleft push-r-xsml">
+				<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</button>
+				<div class="pad-xxsml-mob-pos"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="floatleft">
+				<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+				<div class="pad-xxsml-mob-pos"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.deploy_interview)}
@@ -29,8 +42,39 @@
 			{/foreach}
 		{/if}
 		{foreach from=$interviews item=interview name="fe_interviews"}
+		<div id="interview-details-{$interview->id}" class="interview-details" style="display: none;">
+			<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
+				<th class="theme-secondary pad-sml text-left" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table"><i class="fas fa-chevron-left no-deco push-r-med tc-black"></i></a><span>{$interview->interviewee->getFullName()}</span></th>
+				<tr>
+					<td class="theme-secondary-light pad-sml text-sml-heavy">Postion</td>
+					<td class="theme-secondary-light pad-sml text-sml-heavy">Type</td>
+					<td class="theme-secondary-light pad-sml text-sml-heavy">Status</td>
+				</tr>
+				<tr>
+					<td class="bg-white pad-sml text-sml">{$interview->position->name}</td>
+					<td class="bg-white pad-sml text-sml">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
+					<td class="bg-white pad-sml text-sml">{ucfirst( $interview->status )}</td>
+				</tr>
+			</table>
+			<table class="col-100 text-center mat-box-shadow push-t-med" style="border-collapse: separate; table-layout: auto;">
+				<th class="theme-secondary pad-sml" colspan="1">Questions</th>
+				{foreach from=$interview->questions item=question name=fe_questions}
+				<tr>
+					<td class="text-left">
+						<div class="pad-sml bg-white">
+							<p class="text-lrg-heavy">{$smarty.foreach.fe_questions.iteration}.<i class="push-l-sml">{$question->body}</i></p>
+							<p class="">{$question->answer->body|default:"Not Answered"}</p>
+						</div>
+					</td>
+				</tr>
+				{/foreach}
+			</table>
+
+		</div>
+		{/foreach}
+		{foreach from=$interviews item=interview name="fe_interviews"}
 		{if $smarty.foreach.fe_interviews.first}
-		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
+		<table class="col-100 text-center mat-box-shadow interviews-table" style="border-collapse: separate; table-layout: auto;">
 			<th class="theme-primary pad-sml" colspan="4">Interviews</th>
 			<tr>
 				<td class="text-sml-heavy theme-primary-light pad-sml">Interviewee</td>
@@ -39,7 +83,7 @@
 				<td class="text-sml-heavy theme-primary-light pad-sml"></td>
 			</tr>
 		{/if}
-			<tr>
+			<tr id="interview-{$interview->id}" >
 				<td class="bg-white text-med-heavy shade-on-hover">
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="tc-black no-deco">
 						<div class="pad-sml">
@@ -50,9 +94,9 @@
 				<td class="bg-white text-med-heavy pad-sml">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
 				<td class="bg-white text-med-heavy pad-sml">{ucfirst( $interview->status )}</td>
 				<td class="bg-white text-med-heavy shade-on-hover">
-					<a href="#" class="tc-black link">
+					<div data-id="{$interview->id}" class="tc-black link cursor-pt --c-interview-details">
 						<div class="pad-sml"><i class="fas fa-chevron-right"></i></div>
-					</a>
+					</div>
 				</td>
 			</tr>
 		{if $smarty.foreach.fe_interviews.last}

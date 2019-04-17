@@ -17,6 +17,16 @@ $( function () {
 		$( "#questions-container" ).append( questionBuilder.newQuestion() );
 	} );
 
+	$( ".--c-interview-details" ).on( "click", function () {
+		$( ".interviews-table" ).hide( "slide", { direction: "left" }, 333 );
+		$( "#interview-details-" + this.dataset.id ).show( "slide", { direction: "right" }, 333 );
+	} );
+
+	$( ".--c-interview-table" ).on( "click", function () {
+		$( "#interview-details-" + this.dataset.id ).hide();
+		$( ".interviews-table" ).show( "slide", { direction: "left" }, 333 );
+	} );
+
 	var InterviewDeploymentWidget = {
 		requirements: {
 			"deployment-type": false,

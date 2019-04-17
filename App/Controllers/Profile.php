@@ -22,6 +22,7 @@ class Profile extends Controller
         $inputValidator = $this->load( "input-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
+        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
@@ -34,6 +35,12 @@ class Profile extends Controller
 
         foreach ( $interviews as $interview ) {
             $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
+            $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
+            $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
+
+            foreach ( $interview->questions as $question ) {
+                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
+            }
         }
 
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
