@@ -31,19 +31,29 @@
 		{foreach from=$interviews item=interview name="fe_interviews"}
 		{if $smarty.foreach.fe_interviews.first}
 		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
-			<th class="theme-primary" colspan="4">Interviews</th>
-			<tr style="border-bottom: 1px solid #DDDDDD;">
-				<td class="text-sml-heavy theme-primary-light">Interviewee</td>
-				<td class="text-sml-heavy theme-primary-light">Type</td>
-				<td class="text-sml-heavy theme-primary-light">Status</td>
-				<td class="text-sml-heavy theme-primary-light"></td>
+			<th class="theme-primary pad-sml" colspan="4">Interviews</th>
+			<tr>
+				<td class="text-sml-heavy theme-primary-light pad-sml">Interviewee</td>
+				<td class="text-sml-heavy theme-primary-light pad-sml">Type</td>
+				<td class="text-sml-heavy theme-primary-light pad-sml">Status</td>
+				<td class="text-sml-heavy theme-primary-light pad-sml"></td>
 			</tr>
 		{/if}
-			<tr class="cursor-pt bg-white shade-on-hover" style="border-bottom: 1px solid #DDDDDD;">
-				<td class="bg-white text-med-heavy">{$interview->interviewee->getFullName()}</td>
-				<td class="bg-white text-med-heavy">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
-				<td class="bg-white text-med-heavy">{ucfirst( $interview->status )}</td>
-				<td class="bg-white text-med-heavy shade-on-hover"><div class="pad-xsml"><i class="fas fa-chevron-right"></i></div></td>
+			<tr>
+				<td class="bg-white text-med-heavy shade-on-hover">
+					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="tc-black no-deco">
+						<div class="pad-sml">
+							{$interview->interviewee->getFullName()}
+						</div>
+					</a>
+				</td>
+				<td class="bg-white text-med-heavy pad-sml">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
+				<td class="bg-white text-med-heavy pad-sml">{ucfirst( $interview->status )}</td>
+				<td class="bg-white text-med-heavy shade-on-hover">
+					<a href="#" class="tc-black link">
+						<div class="pad-sml"><i class="fas fa-chevron-right"></i></div>
+					</a>
+				</td>
 			</tr>
 		{if $smarty.foreach.fe_interviews.last}
 		</table>
@@ -62,6 +72,5 @@
 			<div class="clear"></div>
 		</div>
 		{/foreach}
-		<div class="section-seperator"></div>
 	</div>
 {/block}
