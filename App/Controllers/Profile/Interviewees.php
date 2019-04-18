@@ -55,7 +55,8 @@ class Interviewees extends Controller
         ) {
             $phone = $phoneRepo->insert([
                 "country_code" => $input->get( "country_code" ),
-                "national_number" => $input->get( "national_number" )
+                "national_number" => $input->get( "national_number" ),
+                "e164_phone_number" => "+" . $input->get( "country_code" ) . $input->get( "national_number" )
             ]);
 
             $interviewee = $intervieweeRepo->insert([
