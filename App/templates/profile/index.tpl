@@ -10,7 +10,7 @@
 	<div class="con-cnt-xxlrg pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
 			<div class="floatleft push-r-xsml">
-				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
+				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
 				<div class="pad-xxsml-mob-pos"></div>
 				<div class="clear"></div>
 			</div>
@@ -20,7 +20,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="floatleft">
-				<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+				<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i class="push-r-sml fa fa-plus"></i>Interviewee</button>
 				<div class="pad-xxsml-mob-pos"></div>
 				<div class="clear"></div>
 			</div>
@@ -42,9 +42,9 @@
 			{/foreach}
 		{/if}
 		{foreach from=$interviews item=interview name="fe_interviews"}
-		<div id="interview-details-{$interview->id}" class="interview-details" style="display: none;">
+		<div id="interview-details-{$interview->id}" class="interview-details slideable" style="display: none;">
 			<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-secondary pad-sml text-left" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table"><i class="fas fa-chevron-left no-deco push-r-med tc-black"></i></a><span>{$interview->interviewee->getFullName()}</span></th>
+				<th class="theme-secondary text-left" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table"><i class="fas fa-chevron-left no-deco push-r-med tc-black pad-sml"></i></a><span>{$interview->interviewee->getFullName()}</span></th>
 				<tr>
 					<td class="theme-secondary-light pad-sml text-sml-heavy">Postion</td>
 					<td class="theme-secondary-light pad-sml text-sml-heavy">Type</td>
@@ -57,24 +57,24 @@
 				</tr>
 			</table>
 			<table class="col-100 text-center mat-box-shadow push-t-med" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-secondary pad-sml" colspan="1">Questions</th>
+				<th class="theme-primary pad-sml" colspan="1">Questions</th>
 				{foreach from=$interview->questions item=question name=fe_questions}
 				<tr>
 					<td class="text-left">
 						<div class="pad-sml bg-white">
-							<p class="text-lrg-heavy">{$smarty.foreach.fe_questions.iteration}.<i class="push-l-sml">{$question->body}</i></p>
-							<p class="">{$question->answer->body|default:"Not Answered"}</p>
+							<p class="text-lrg-heavy">Q{$smarty.foreach.fe_questions.iteration}.<span class="push-l-sml">{$question->body}</span></p>
+							<div class="push-t-sml push-b-sml"></div>
+							<p class=""><span class="text-lrg-heavy">A: </span><i>{$question->answer->body|default:"Not Answered"}</i></p>
 						</div>
 					</td>
 				</tr>
 				{/foreach}
 			</table>
-
 		</div>
 		{/foreach}
 		{foreach from=$interviews item=interview name="fe_interviews"}
 		{if $smarty.foreach.fe_interviews.first}
-		<table class="col-100 text-center mat-box-shadow interviews-table" style="border-collapse: separate; table-layout: auto;">
+		<table class="col-100 text-center mat-box-shadow interviews-table slideable" style="border-collapse: separate; table-layout: auto;">
 			<th class="theme-primary pad-sml" colspan="4">Interviews</th>
 			<tr>
 				<td class="text-sml-heavy theme-primary-light pad-sml">Interviewee</td>
@@ -83,18 +83,12 @@
 				<td class="text-sml-heavy theme-primary-light pad-sml"></td>
 			</tr>
 		{/if}
-			<tr id="interview-{$interview->id}" >
-				<td class="bg-white text-med-heavy shade-on-hover">
-					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="tc-black no-deco">
-						<div class="pad-sml">
-							{$interview->interviewee->getFullName()}
-						</div>
-					</a>
-				</td>
-				<td class="bg-white text-med-heavy pad-sml">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
-				<td class="bg-white text-med-heavy pad-sml">{ucfirst( $interview->status )}</td>
-				<td class="bg-white text-med-heavy shade-on-hover">
-					<div data-id="{$interview->id}" class="tc-black link cursor-pt --c-interview-details">
+			<tr id="interview-{$interview->id}" data-id="{$interview->id}" class="bg-white shade-on-hover cursor-pt --c-interview-details">
+				<td class="text-med-heavy">{$interview->interviewee->getFullName()}</td>
+				<td class="text-med-heavy pad-sml">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
+				<td class="text-med-heavy pad-sml">{ucfirst( $interview->status )}</td>
+				<td class="text-med-heavy">
+					<div class="tc-black link">
 						<div class="pad-sml"><i class="fas fa-chevron-right"></i></div>
 					</div>
 				</td>

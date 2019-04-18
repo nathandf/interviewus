@@ -18,8 +18,11 @@ $( function () {
 	} );
 
 	$( ".--c-interview-details" ).on( "click", function () {
+		$( "body" ).css( "overflow", "hidden" ); // Keep scroll bars from appearing
 		$( ".interviews-table" ).hide( "slide", { direction: "left" }, 333 );
-		$( "#interview-details-" + this.dataset.id ).show( "slide", { direction: "right" }, 333 );
+		$( "#interview-details-" + this.dataset.id ).show( "slide", { direction: "right" }, 333, function () {
+			$( "body" ).css( "overflow", "auto" ); // Continue normal scrolling behavior
+		} );
 	} );
 
 	$( ".--c-interview-table" ).on( "click", function () {
