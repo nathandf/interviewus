@@ -80,11 +80,13 @@ class Incoming extends Controller
                         "body" => $input->get( "message" )
                     ]);
                     // Once the interviewee's answer is saved. Break the loop and
-                    // redeploy the interview.
+                    // dispatch the interview.
                     break;
                 }
             }
 
+            // If there are more questions, they will be dispatched. If not, then
+            // this interview's status will be updated to "complete"
             $interviewDispatcher->dispatch( $interview->id );
         }
 
