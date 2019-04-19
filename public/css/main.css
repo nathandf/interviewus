@@ -87,6 +87,10 @@ table  {
     margin: 0;
 }
 
+.row-link:hover {
+    cursor: pointer;
+}
+
 tr {
     padding: 0;
     margin: 0;

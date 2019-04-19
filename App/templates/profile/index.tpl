@@ -44,7 +44,7 @@
 		{foreach from=$interviews item=interview name="fe_interviews"}
 		<div id="interview-details-{$interview->id}" class="interview-details slideable" style="display: none;">
 			<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-secondary text-left" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table"><i class="fas fa-chevron-left no-deco push-r-med tc-black pad-sml"></i></a><span>{$interview->interviewee->getFullName()}</span></th>
+				<th class="theme-secondary text-left pad-sml" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table push-r-sml"><span class="pad-sml"><i class="fas fa-chevron-left no-deco tc-black"></i></span></a><span>{$interview->interviewee->getFullName()}</span></th>
 				<tr>
 					<td class="theme-secondary-light pad-sml text-sml-heavy">Postion</td>
 					<td class="theme-secondary-light pad-sml text-sml-heavy">Type</td>

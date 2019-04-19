@@ -17,18 +17,20 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="pad-sml theme-secondary-light">
-			<p>Interviewees</p>
-		</div>
-		{foreach from=$interviewees item=interviewee name=interviewee_loop}
-		<a href="{$HOME}profile/interviewee/{$interviewee->id}/" class="link-container">
-			<div class="pad-med shade-on-hover {cycle values='bg-light-grey,bg-grey'}">
-				<p>{$interviewee->getFullName()}</p>
-			</div>
-			<div class="clear"></div>
-		</a>
-		{foreachelse}
-		<div class="pad-med"></div>
-		{/foreach}
+		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
+			<th class="theme-secondary pad-sml" colspan="1">Interviewees</th>
+			<tr>
+				<td class="theme-secondary-light pad-sml text-sml-heavy">Name</td>
+			</tr>
+			{foreach from=$interviewees item=interviewee name=interviewee_loop}
+			<tr class="bg-white shade-on-hover row-link" data-href="{$HOME}profile/interviewee/{$interviewee->id}/">
+				<td class="pad-sml text-med-heavy text-left">{$interviewee->getFullName()}</td>
+			</tr>
+			{foreachelse}
+			<tr>
+				<td class="pad-sml text-med-heavy"><i>No Interviewees</i></td>
+			</tr>
+			{/foreach}
+		</table>
 	</div>
 {/block}

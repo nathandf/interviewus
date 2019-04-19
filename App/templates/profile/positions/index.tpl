@@ -17,21 +17,22 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="pad-sml theme-primary-light">
-			<p>Positions</p>
-		</div>
-		{foreach from=$positions item=position name=position_loop}
-		<a href="{$HOME}profile/position/{$position->id}/" class="link-container">
-			<div class="pad-med shade-on-hover {cycle values='bg-light-grey,bg-grey'}">
-				<p class="text-med-heavy">{$position->name}</p>
-				{if !is_null( $position->description )}
-				<p class="text-med">{$position->description}</p>
-				{/if}
-			</div>
-			<div class="clear"></div>
-		</a>
-		{foreachelse}
-		<div class="pad-med"></div>
-		{/foreach}
+		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
+			<th class="theme-primary-light pad-sml" colspan="2">Positions</th>
+			<tr>
+				<td class="theme-primary pad-sml text-sml-heavy">Name</td>
+				<td class="theme-primary pad-sml text-sml-heavy">Description</td>
+			</tr>
+			{foreach from=$positions item=position name=position_loop}
+			<tr class="bg-white shade-on-hover row-link" data-href="{$HOME}profile/position/{$position->id}/">
+				<td class="pad-sml text-med-heavy text-left">{$position->name}</td>
+				<td class="pad-sml text-med-heavy text-left">{$position->description|default:"<i>No description</i>"|truncate:"300":"..."}</td>
+			</tr>
+			{foreachelse}
+			<tr>
+				<td class="pad-sml text-med-heavy">No Positions</td>
+			</tr>
+			{/foreach}
+		</table>
 	</div>
 {/block}
