@@ -8,6 +8,13 @@
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
 	<div class="con-cnt-lrg push-t-lrg">
+		{if !empty($error_messages.web_interview)}
+			{foreach from=$error_messages.web_interview item=message}
+				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
 		<p class="label">Interviewer: {$organization->name}</p>
 		<div class="con-cnt-lrg pad-med push-b-lrg bg-white border-std">
 			<div id="interview-intro">
@@ -22,9 +29,11 @@
 			</div>
 			<div id="interview" style="display: none;">
 				<form action="" method="post">
+					<input type="hidden" name="web_interview" value="{$csrf_token}">
+					<input type="hidden" name="token" value="{$csrf_token}">
 					{foreach from=$interview->questions item=question}
 					<p class="label">{$question->body}</p>
-					<textarea name="interviewee_question_answer[]" class="inp textarea inp-full" required="required"></textarea>
+					<textarea name="interviewee_answers[{$question->id}]" class="inp textarea inp-full" required="required">{$question->answer->body|default:null}</textarea>
 					<div class="push-t-med"></div>
 					{/foreach}
 					<div class="con-cnt-med-plus">
