@@ -18,16 +18,16 @@ $( function () {
 	} );
 
 	$( ".--c-interview-details" ).on( "click", function () {
-		$( "body" ).css( "overflow", "hidden" ); // Keep scroll bars from appearing
 		$( ".interviews-table" ).hide( "slide", { direction: "left" }, 333 );
-		$( "#interview-details-" + this.dataset.id ).show( "slide", { direction: "right" }, 333, function () {
-			$( "body" ).css( "overflow", "auto" ); // Continue normal scrolling behavior
-		} );
+		$( "#interview-details-" + this.dataset.id ).show( "slide", { direction: "right" }, 333 );
+		$( "body,html" ).animate( { scrollTop: 0 }, 300 );
 	} );
 
 	$( ".--c-interview-table" ).on( "click", function () {
-		$( "#interview-details-" + this.dataset.id ).hide();
-		$( ".interviews-table" ).show( "slide", { direction: "left" }, 333 );
+		$( "#interview-details-" + this.dataset.id ).effect( "fold", function () {
+			$( ".interviews-table" ).show( "slide", { direction: "left" }, 333 );
+		} );
+
 	} );
 
 	var InterviewDeploymentWidget = {

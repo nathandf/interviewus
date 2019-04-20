@@ -50,7 +50,6 @@ class Profile extends Controller
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
-
         if (
             $input->exists() &&
             $input->issetField( "new_interviewee" ) &&
