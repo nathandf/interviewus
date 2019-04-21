@@ -19,6 +19,9 @@
 			<p class="label">Interviewer: {$organization->name}</p>
 		</div>
 		<div class="con-cnt-lrg pad-med push-b-lrg bg-white border-std">
+			{if $interview->status == "complete"}
+			<p class="sub-title">Interview Complete <i class="fas fa-check tc-good-green"></i></p>
+			{else}
 			<div id="interview-intro">
 				{if $interview->deployment_type_id == 1}
 				<p class="title">Text Message Interview</p>
@@ -43,6 +46,7 @@
 					</div>
 				</form>
 			</div>
+			{/if}
 		</div>
 	</div>
 {/block}
