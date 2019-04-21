@@ -8,6 +8,7 @@ class InterviewDispatcher
 	private $interviewQuestionRepo;
 	private $intervieweeRepo;
 	private $intervieweeAnswerRepo;
+	private $interview;
 
 	public function __construct(
 		InterviewRepository $interviewRepo,
@@ -25,14 +26,28 @@ class InterviewDispatcher
 	// in the interview data.
 	public function dispatch( $interview_id )
 	{
-		// Retrieve interview data
+		// Retrieve and set interview
 		$interview = $this->interviewRepo->get( [ "*" ], [ "id" => $interview_id ], "single" );
 
+		$this->setInterview( $interview );
+
+		switch ( $interview->deployment_type_id ) {
+			case 1:
+				$this->dispatchSMSInterview();
+				break;
+			case 2:
+				$this->dispatchWebInterview();
+				break;
+		}
+	}
+
+	private function dispatchSMSInterview()
+	{
 		// Get questions data related to this ineterview
-		$interview->questions = $this->interviewQuestionRepo->getAllByInterviewID( $interview->id );
+		$this->interview->questions = $this->interviewQuestionRepo->getAllByInterviewID( $this->interview->id );
 
 		// Retrieve the answer for each question from the database if one exists
-		foreach ( $interview->questions as $question ) {
+		foreach ( $this->interview->questions as $question ) {
 			$question->answer = $this->intervieweeAnswerRepo->get(
 				[ "*" ],
 				[ "interview_question_id" => $question->id ],
@@ -57,7 +72,7 @@ class InterviewDispatcher
 					// Set the interview status to active if not already
 					$this->interviewRepo->update(
 						[ "status" => "active" ],
-						[ "id" => $interview->id ]
+						[ "id" => $this->interview->id ]
 					);
 				}
 
@@ -71,9 +86,44 @@ class InterviewDispatcher
 		// ...and update the interview's status to dispatched
 		$this->interviewRepo->update(
 			[ "status" => "complete" ],
-			[ "id" => $interview->id ]
+			[ "id" => $this->interview->id ]
 		);
 
 		return;
+	}
+
+	private function dispatchWebInterview()
+	{
+		// Get questions data related to this ineterview
+		$this->interview->questions = $this->interviewQuestionRepo->getAllByInterviewID( $this->interview->id );
+
+		// Retrieve the answer for each question from the database if one exists
+		foreach ( $this->interview->questions as $question ) {
+			$question->answer = $this->intervieweeAnswerRepo->get(
+				[ "*" ],
+				[ "interview_question_id" => $question->id ],
+				"single"
+			);
+
+			// If a question hasn't been answered, stop the process
+			if ( is_null( $question->answer ) ) {
+
+				return;
+			}
+		}
+
+		// if all questions have been dispatched, mark interview as complete
+		$this->interviewRepo->update(
+			[ "status" => "complete" ],
+			[ "id" => $this->interview->id ]
+		);
+
+		return;
+	}
+
+	private function setInterview( \Model\Entities\Interview $interview )
+	{
+		$this->interview = $interview;
+		return $this;
 	}
 }

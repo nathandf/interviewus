@@ -59,6 +59,12 @@
 						</div>
 					</td>
 				</tr>
+				{if $interview->deployment_type_id == 2}
+				<th class="theme-secondary text-left pad-sml" colspan="3">Interview URL</th>
+				<tr>
+					<td colspan="3" class="pad-sml text-sml text-left"><span class="text-breakable">https://www.interviewus.net/i/{$interview->token}</span></td>
+				</tr>
+				{/if}
 			</table>
 			<table class="col-100 text-center mat-box-shadow push-t-med" style="border-collapse: separate; table-layout: auto;">
 				<th class="theme-primary pad-sml" colspan="2">Interview Details</th>

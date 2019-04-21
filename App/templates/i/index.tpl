@@ -7,7 +7,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	<div class="con-cnt-lrg push-t-lrg">
+	<div class="con-cnt-lrg push-t-lrg pad-sml-mob-neg">
 		{if !empty($error_messages.web_interview)}
 			{foreach from=$error_messages.web_interview item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
@@ -15,7 +15,9 @@
 				</div>
 			{/foreach}
 		{/if}
-		<p class="label">Interviewer: {$organization->name}</p>
+		<div class="pad-sml-mob-pos">
+			<p class="label">Interviewer: {$organization->name}</p>
+		</div>
 		<div class="con-cnt-lrg pad-med push-b-lrg bg-white border-std">
 			<div id="interview-intro">
 				{if $interview->deployment_type_id == 1}
@@ -31,8 +33,8 @@
 				<form action="" method="post">
 					<input type="hidden" name="web_interview" value="{$csrf_token}">
 					<input type="hidden" name="token" value="{$csrf_token}">
-					{foreach from=$interview->questions item=question}
-					<p class="label">{$question->body}</p>
+					{foreach from=$interview->questions item=question name=fe_questions}
+					<p class="label">{$smarty.foreach.fe_questions.iteration}. {$question->body}</p>
 					<textarea name="interviewee_answers[{$question->id}]" class="inp textarea inp-full" required="required">{$question->answer->body|default:null}</textarea>
 					<div class="push-t-med"></div>
 					{/foreach}

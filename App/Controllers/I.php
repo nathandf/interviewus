@@ -69,7 +69,10 @@ class I extends Controller
 
             foreach ( $answers as $interview_question_id => $interviewee_answer ) {
                 // Ensure the question the user is answering is owned by this organization
-                if ( in_array( $interview_question_id, $interview_question_ids ) ) {
+                if (
+                    in_array( $interview_question_id, $interview_question_ids ) &&
+                    $interviewee_answer != ""
+                ) {
                     // Get the existing interviewee answer if one exists
                     $existing_interviewee_answer = $intervieweeAnswerRepo->get(
                         [ "*" ],
@@ -80,8 +83,8 @@ class I extends Controller
                     // continue on to the next quesiton
                     if ( !is_null( $existing_interviewee_answer ) ) {
                         $intervieweeAnswerRepo->update(
-                            [ "body", $interviewee_answer ],
-                            [ "interview_questions_id" => $interview_questions_id ]
+                            [ "body" => trim( $interviewee_answer ) ],
+                            [ "interview_question_id" => $interview_question_id ]
                         );
 
                         continue;
@@ -91,8 +94,16 @@ class I extends Controller
                         "interview_question_id" => $interview_question_id,
                         "body" => $interviewee_answer
                     ]);
+
+                    // Update the interview question to deployed
+                    $interviewQuestionRepo->update(
+                        [ "dispatched" => 1 ],
+                        [ "id" => trim( $interview_question_id ) ]
+                    );
                 }
             }
+
+            $interviewDispatcher->dispatch( $interview->id );
 
             $this->view->redirect( "i/" . $this->params[ "token" ] );
         }
