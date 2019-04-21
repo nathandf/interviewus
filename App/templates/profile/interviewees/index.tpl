@@ -5,8 +5,11 @@
 
 {block name="profile-body"}
 	{include file="includes/modals/profile/interviewee-modal.tpl"}
-	<div class="con-cnt-xxlrg inner-pad-med">
-		<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+	<div class="con-cnt-xxlrg pad-med-mob-neg">
+		<div class="pad-sml-mob-pos">
+			<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+		</div>
+		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.new_interviewee)}
 			{foreach from=$error_messages.new_interviewee item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
@@ -14,20 +17,20 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="push-t-med">
-			<div class="inner-pad-sml theme-secondary-light">
-				<p>Interviewees</p>
-			</div>
+		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
+			<th class="theme-secondary pad-sml" colspan="1">Interviewees</th>
+			<tr>
+				<td class="theme-secondary-light pad-sml text-sml-heavy">Name</td>
+			</tr>
 			{foreach from=$interviewees item=interviewee name=interviewee_loop}
-			<a href="{$HOME}profile/interviewee/{$interviewee->id}/" class="link-container">
-				<div class="inner-pad-med shade-on-hover {cycle values='bg-light-grey,bg-grey'}">
-					<p>{$interviewee->getFullName()}</p>
-				</div>
-				<div class="clear"></div>
-			</a>
+			<tr class="bg-white shade-on-hover row-link" data-href="{$HOME}profile/interviewee/{$interviewee->id}/">
+				<td class="pad-sml text-med-heavy text-left">{$interviewee->getFullName()}</td>
+			</tr>
 			{foreachelse}
-			<div class="inner-pad-med"></div>
+			<tr>
+				<td class="pad-sml text-med-heavy"><i>No Interviewees</i></td>
+			</tr>
 			{/foreach}
-		</div>
+		</table>
 	</div>
 {/block}

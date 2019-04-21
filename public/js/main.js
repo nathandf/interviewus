@@ -74,6 +74,10 @@ $( function() {
         } );
 	} );
 
+    $( ".row-link" ).on( "click", function () {
+        window.location = $( this ).data( "href" );
+    } );
+
     $( ".lightbox-close" ).on( "click", function () {
         $( this ).parent().hide();
     } );

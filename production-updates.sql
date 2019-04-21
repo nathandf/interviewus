@@ -270,3 +270,8 @@ CREATE TABLE `tag` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `string` VARCHAR(64) 
 CREATE TABLE `question_tag` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `question_id` BIGINT NOT NULL , `tag_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `interview` DROP `name`, DROP `description`;
 ALTER TABLE `interview` ADD `interviewee_id` BIGINT NOT NULL AFTER `organization_id`, ADD `interview_template_id` BIGINT NOT NULL AFTER `interviewee_id`;
+ALTER TABLE `interview` ADD `deployment_type_id` BIGINT NOT NULL AFTER `id`;
+
+CREATE TABLE `twilio_phone_number` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `organization_id` BIGINT NOT NULL , `sid` VARCHAR(256) NOT NULL , `phone_number` VARCHAR(256) NOT NULL , `friendly_number` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `interview_question` ADD `dispatched` TINYINT NOT NULL DEFAULT '0' AFTER `body`;
+ALTER TABLE `phone` ADD `e164_phone_number` VARCHAR(256) NOT NULL AFTER `national_number`;

@@ -10,6 +10,7 @@
 	{include file="includes/navigation/profile/login-menu.tpl"}
 	{include file="includes/navigation/profile/main-menu.tpl"}
 	{block name="profile-body"}{/block}
+	<div class="section-seperator"></div>
 {/block}
 
 {block name="footer"}

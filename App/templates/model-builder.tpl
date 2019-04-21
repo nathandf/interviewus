@@ -5,7 +5,7 @@
 {/block}
 
 {block name="body"}
-<div class="con-cnt-xlrg inner-pad-med">
+<div class="con-cnt-xlrg pad-med">
 	<h3>Model Builder</h3>
 	{if !empty($error_messages.quick_boi)}
 		{foreach from=$error_messages.quick_boi item=message}

@@ -21,17 +21,28 @@ class Profile extends Controller
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
         $interviewRepo = $this->load( "interview-repository" );
+        $interviewQuestionRepo = $this->load( "interview-question-repository" );
+        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $phoneRepo = $this->load( "phone-repository" );
         $positionRepo = $this->load( "position-repository" );
         $questionRepo = $this->load( "question-repository" );
+        $interviewDispatcher = $this->load( "interview-dispatcher" );
+
+        // TODO Process input sent from Twilio
 
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         foreach ( $interviews as $interview ) {
             $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
+            $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
+            $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
+
+            foreach ( $interview->questions as $question ) {
+                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
+            }
         }
 
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
@@ -39,7 +50,6 @@ class Profile extends Controller
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
-
         if (
             $input->exists() &&
             $input->issetField( "new_interviewee" ) &&
@@ -70,7 +80,8 @@ class Profile extends Controller
         ) {
             $phone = $phoneRepo->insert([
                 "country_code" => $input->get( "country_code" ),
-                "national_number" => $input->get( "national_number" )
+                "national_number" => $input->get( "national_number" ),
+                "e164_phone_number" => "+" . $input->get( "country_code" ) . $input->get( "national_number" )
             ]);
 
             $interviewee = $intervieweeRepo->insert([
@@ -149,7 +160,7 @@ class Profile extends Controller
                         "equals-hidden" => $this->session->getSession( "csrf-token" ),
                         "required" => true
                     ],
-                    "deployment_type" => [
+                    "deployment_type_id" => [
                         "required" => true,
                         "in_array" => [ 1, 2 ]
                     ],
@@ -198,15 +209,36 @@ class Profile extends Controller
                 $scheduled_time = $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" );
             }
 
-            $interviewRepo->insert([
+            $interview = $interviewRepo->insert([
+                "deployment_type_id" => $input->get( "deployment_type_id" ),
                 "organization_id" => $this->organization->id,
                 "interviewee_id" => $input->get( "interviewee_id" ),
                 "interview_template_id" => $input->get( "interview_template_id" ),
                 "position_id" => $position_id,
                 "status" => $status,
                 "scheduled_time" => $scheduled_time,
-                "token" => md5( microtime() ) . $this->organization->id . "-" . $input->get( "interviewee_id" )
+                "token" => md5( microtime() ) . "-" . $this->organization->id . "-" . $input->get( "interviewee_id" )
             ]);
+
+            // Create the questions for this interview from the interview template
+            // questions
+            $questions = $questionRepo->getAllByInterviewTemplateID(
+                $interview->interview_template_id
+            );
+
+            foreach ( $questions as $question ) {
+                $interviewQuestionRepo->insert([
+                    "interview_id" => $interview->id,
+                    "placement" => $question->placement,
+                    "body" => $question->body
+                ]);
+            }
+
+            // Dispatch the first interview question immediately if interview
+            // status is active
+            if ( $status == "active" ) {
+                $interviewDispatcher->dispatch( $interview->id );
+            }
 
             $this->view->redirect( "profile/" );
         }
