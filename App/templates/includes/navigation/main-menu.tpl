@@ -9,8 +9,9 @@
     </div>
     <ul class="nav-top-ul" itemscope itemtype="http://schema.org/BreadcrumbList">
         <div id="nav-items-container" class="nav-items-container">
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}sign-in"><span itemprop="name">Sign in</span></a><meta itemprop="position" content="2" /></li>
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}sign-up/"><span itemprop="name">Sign Up</span></a><meta itemprop="position" content="2" /></li>
+            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}sign-in"><span itemprop="name">Sign in</span></a><meta itemprop="position" content="4" /></li>
+            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}sign-up/"><span itemprop="name">Sign Up</span></a><meta itemprop="position" content="3" /></li>
+            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}pricing/"><span itemprop="name">Pricing</span></a><meta itemprop="position" content="2" /></li>
             <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}"><span itemprop="name">Home</span></a><meta itemprop="position" content="1" /></li>
         </div>
     </ul>

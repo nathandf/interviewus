@@ -231,6 +231,22 @@ $container->register( "phone-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "plan-details-repository", function() use ( $container ) {
+	$repo = new \Model\Services\PlanDetailsRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "plan-repository", function() use ( $container ) {
+	$repo = new \Model\Services\PlanRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "position-repository", function() use ( $container ) {
 	$repo = new \Model\Services\PositionRepository(
 		$container->getService( "dao" ),
