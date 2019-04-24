@@ -280,7 +280,7 @@ CREATE TABLE `plan` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) 
 INSERT INTO `plan` (`id`, `name`, `description`, `price`) VALUES (NULL, 'basic', NULL, '19'), (NULL, 'standard', NULL, '49'), (NULL, 'pro', NULL, '78'), (NULL, 'business', NULL, '124'), (NULL, 'enterprise', NULL, '198');
 
 CREATE TABLE `plan_details` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `plan_id` BIGINT NOT NULL , `sms_interviews` BIGINT NOT NULL , `web_interviews` BIGINT NOT NULL , `users` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
-INSERT INTO `plan_details` (`id`, `plan_id`, `sms_interviews`, `web_interviews`, `users`) VALUES (NULL, '1', '10', '10', '1'), (NULL, '2', '20', '20', '2'), (NULL, '3', '40', '40', '5'), (NULL, '4', '80', '80', '10'), (NULL, '5', '160', '-1', '25');
+INSERT INTO `plan_details` (`id`, `plan_id`, `sms_interviews`, `web_interviews`, `users`) VALUES (NULL, '1', '9', '9', '1'), (NULL, '2', '25', '25', '2'), (NULL, '3', '50', '50', '5'), (NULL, '4', '100', '100', '10'), (NULL, '5', '175', '-1', '25');
 ALTER TABLE `plan` ADD `featured` TINYINT NOT NULL DEFAULT '0' AFTER `price`;
 UPDATE `plan` SET `featured` = '1' WHERE `plan`.`id` = 2;
 ALTER TABLE `plan_details` ADD `max_questions` BIGINT NOT NULL AFTER `web_interviews`, ADD `storage` VARCHAR(64) NOT NULL AFTER `max_questions`;
@@ -289,8 +289,8 @@ UPDATE `plan_details` SET `max_questions` = '10' WHERE `plan_details`.`id` = 2;
 UPDATE `plan_details` SET `max_questions` = '15' WHERE `plan_details`.`id` = 3;
 UPDATE `plan_details` SET `max_questions` = '25' WHERE `plan_details`.`id` = 4;
 UPDATE `plan_details` SET `max_questions` = '25' WHERE `plan_details`.`id` = 5;
-UPDATE `plan_details` SET `storage` = '1GB' WHERE `plan_details`.`id` = 1;
-UPDATE `plan_details` SET `storage` = '1GB' WHERE `plan_details`.`id` = 2;
-UPDATE `plan_details` SET `storage` = '1GB' WHERE `plan_details`.`id` = 3;
-UPDATE `plan_details` SET `storage` = '5GB' WHERE `plan_details`.`id` = 4;
-UPDATE `plan_details` SET `storage` = '5GB' WHERE `plan_details`.`id` = 5;
+UPDATE `plan_details` SET `storage` = '5GB' WHERE `plan_details`.`id` = 1;
+UPDATE `plan_details` SET `storage` = '25GB' WHERE `plan_details`.`id` = 2;
+UPDATE `plan_details` SET `storage` = '50GB' WHERE `plan_details`.`id` = 3;
+UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 4;
+UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 5;

@@ -1705,6 +1705,16 @@ td {
     cursor: help;
 }
 
+/* Icons */
+.circle-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 22px;
+    font-size: 11px;
+}
+
 /* Special */
 
 .floatleft {

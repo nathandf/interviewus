@@ -23,6 +23,7 @@ class Pricing extends Controller
         }
 
         $this->view->assign( "plans", $plans );
+        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         $this->view->setTemplate( "pricing/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
