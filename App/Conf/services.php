@@ -354,6 +354,14 @@ $container->register( "sms-messager", function() use ( $container ) {
 	return $smsMessager;
 } );
 
+$container->register( "user-authenticator", function() use ( $container ) {
+	$repo = new \Model\Services\UserAuthenticator(
+		$container->getService( "user-repository" ),
+		$container->getService( "session" )
+	);
+	return $repo;
+} );
+
 $container->register( "user-repository", function() use ( $container ) {
 	$repo = new \Model\Services\UserRepository(
 		$container->getService( "dao" ),

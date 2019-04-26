@@ -294,3 +294,5 @@ UPDATE `plan_details` SET `storage` = '25GB' WHERE `plan_details`.`id` = 2;
 UPDATE `plan_details` SET `storage` = '50GB' WHERE `plan_details`.`id` = 3;
 UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 4;
 UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 5;
+ALTER TABLE `user` ADD `current_account_id` BIGINT NULL DEFAULT NULL AFTER `image_id`, ADD `current_organization_id` BIGINT NULL DEFAULT NULL AFTER `current_account_id`;
+ALTER TABLE `user` ADD `token` VARCHAR(256) NULL DEFAULT NULL AFTER `password`;

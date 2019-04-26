@@ -2,22 +2,29 @@
 
 namespace Model\Services;
 
-class UserAuthenticator extends Service
+class UserAuthenticator
 {
     public $userRepo;
+    public $session;
+    public $authenticatedUser;
 
-    public function __construct( UserRepository $userRepo )
+    public function __construct( UserRepository $userRepo, \Core\Session $session )
     {
         $this->userRepo = $userRepo;
+        $this->session = $session;
+
+        // Check for a logged in user
+        $this->isLoggedIn();
     }
 
-    public function signIn( $email, $password )
+    public function authenticate( $email, $password )
     {
-        $user = $userRepo->get( [ "*" ], [ "email" => $email ], "single" );
+        $user = $this->userRepo->get( [ "*" ], [ "email" => $email ], "single" );
 
         if ( !is_null( $user ) ) {
             if ( password_verify( $password, $user->password ) ) {
-                // TODO Log user in
+                $this->setAuthenticatedUser( $user );
+                $this->logIn( $user );
 
                 return true;
             }
@@ -35,8 +42,52 @@ class UserAuthenticator extends Service
             session_destroy();
         }
 
-        if ( isset( $_COOKIE[ "user_login_token" ] ) ) {
-            unset( $_COOKIE[ "user_login_token" ] );
+        $this->session->deleteCookie( "user-token" );
+    }
+
+    public function logIn( \Model\Entities\User $user )
+    {
+        $token = $this->session->generateToken();
+        $this->session->setSession( "user-id", $user->id );
+        $this->session->setCookie( "user-token", $token );
+        $this->userRepo->update(
+            [ "token" => $token ],
+            [ "id" => $user->id ]
+        );
+    }
+
+    public function isLoggedIn()
+    {
+        if ( $this->session->getSession( "user-id" ) ) {
+            $user = $this->userRepo->get( [ "*" ], [ "id" => $this->session->getSession( "user-id" ) ], "single" );
+            if ( is_null( $user ) ) {
+                return false;
+            }
+            $this->setAuthenticatedUser( $user );
+
+            return true;
+
+        } elseif ( $this->session->getCookie( "user-token" ) ) {
+            $user = $this->userRepo->get( [ "*" ], [ "token" => $this->session->getCookie( "user-token" ) ], "single" );
+            if ( is_null( $user ) ) {
+                return false;
+            }
+            $this->setAuthenticatedUser( $user );
+
+            return true;
         }
+
+        return false;
+    }
+
+    private function setAuthenticatedUser( \Model\Entities\User $user )
+    {
+        $this->authenticatedUser = $user;
+        return $this;
+    }
+
+    public function getAuthenticatedUser()
+    {
+        return $this->authenticatedUser;
     }
 }

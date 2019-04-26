@@ -14,5 +14,8 @@ class User extends Person implements EntityInterface
 	public $phone_id;
 	public $address_id;
 	public $password;
+	public $token;
 	public $image_id;
+	public $current_account_id;
+	public $current_organization_id;
 }
