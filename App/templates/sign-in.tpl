@@ -11,8 +11,16 @@
 		<div>
 			<img class="img-med" style="margin: 0 auto; display: block;" src="{$HOME}public/static/img/robo-logo.jpg" alt="">
 		</div>
-		<form action="{$HOME}sign-in">
+		{if !empty($error_messages.sign_in)}
+			{foreach from=$error_messages.sign_in item=message}
+				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
+		<form action="{$HOME}sign-in" method="post">
 			<input type="hidden" name="token" value="{$csrf_token}">
+			<input type="hidden" name="sign_in" value="{$csrf_token}">
 			<p class="label">Email</p>
 			<input type="text" name="email" class="inp inp-full push-b-sml">
 			<p class="label">Password</p>

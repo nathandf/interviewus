@@ -8,7 +8,7 @@ class SignUp extends Controller
 {
     public function before()
     {
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
+
     }
 
     public function indexAction()
@@ -45,6 +45,8 @@ class SignUp extends Controller
             $userRepo = $this->load( "user-repository" );
             $accountRepo = $this->load( "account-repository" );
             $accountUserRepo = $this->load( "account-user-repository" );
+            $organizationRepo = $this->load( "organization-repository" );
+            $organizationUserRepo = $this->load( "organization-user-repository" );
 
             // Ensure email is unique and create the new account, and user.
             if ( !in_array( $input->get( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
@@ -76,9 +78,34 @@ class SignUp extends Controller
                     "account_type_id" => 1
                 ]);
 
+                // Update current_account_id to new account_id
+                $userRepo->update(
+                    [ "current_account_id" => $account->id ],
+                    [ "id" => $user->id ]
+                );
+
                 // Create new AccountUser
                 $accountUser = $accountUserRepo->insert([
                     "account_id" => $account->id,
+                    "user_id" => $user->id
+                ]);
+
+                // Create new Organization
+                $organization = $organizationRepo->insert([
+                    "account_id" => $account->id,
+                    "name" => "My Organization",
+                    "user_id" => $user->id
+                ]);
+
+                // Update current_organization_id to new organization_id
+                $userRepo->update(
+                    [ "current_organization_id" => $organization->id ],
+                    [ "id" => $user->id ]
+                );
+
+                // Create new OrganizationUser
+                $organizationUser = $organizationUserRepo->insert([
+                    "organization_id" => $organization->id,
                     "user_id" => $user->id
                 ]);
 
@@ -87,7 +114,7 @@ class SignUp extends Controller
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );
-                $userAuth->logIn( $user->email, $input->get( "password" ) );
+                $userAuth->authenticate( $user->email, $input->get( "password" ) );
 
                 // Redirect to profile
                 $this->view->redirect( "profile/" );
@@ -106,6 +133,7 @@ class SignUp extends Controller
         }
 
         $this->view->assign( "fields", $fields );
+        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->setErrorMessages( $inputValidator->getErrors() );
 
         $this->view->setTemplate( "sign-up/index.tpl" );

@@ -4,7 +4,6 @@ namespace Core;
 
 class Session
 {
-
     private $crsf_token;
     public $flash_messages = [];
 
@@ -67,19 +66,15 @@ class Session
 
     public function setCookie( $index, $value, $time = 86400 )
     {
-        setcookie( $index, $value, time() + $time, null, null, false, false );
+        setcookie( $index, $value, time() + $time, "/" );
+    }
+
+    public function deleteCookie( $index )
+    {
+        setcookie( $index, null, time() - 3600, "/" );
     }
 
     public function getCookie( $index )
-    {
-        if ( isset( $_COOKIE[ $index ] ) ) {
-            return $_COOKIE[ $index ];
-        }
-
-        return null;
-    }
-
-    public function getCookieToken( $index )
     {
         if ( isset( $_COOKIE[ $index ] ) ) {
             return $_COOKIE[ $index ];
