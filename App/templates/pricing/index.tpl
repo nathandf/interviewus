@@ -8,6 +8,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
+	{include file="includes/modals/pricing/payment-modal.tpl"}
 	<div class="con-cnt-lrg">
 		<div class="pad-med">
 			<p class="title">Try it out for <span class="basic-text">free</span></p>
@@ -18,12 +19,9 @@
 		</div>
 		<div class="pad-sml">
 			<form id="pricing-form" action="" method="post">
-				<input type="hidden"  name="token" value="{$csrf_token}">
-				<input type="hidden" name="choose_plan" value="{$csrf_token}">
-				<input type="hidden" name="plan_id" value="" required="required">
-				<input id="yearly" type="radio" name="billing_interval" value="2" required="required" checked="checked" style="display: none;">
+				<input id="yearly" type="radio" name="billing_interval" class="--billing-interval" value="2" required="required" checked="checked" style="display: none;">
 				<label data-multiple="1" data-frequency_text="annually" data-radio="yearly" for="yearly" class="pad-sml radio-label btn btn-inline push-r-sml --c-billing-interval-label">Yearly Save > 25%</label>
-				<input id="monthly" type="radio" name="billing_interval" value="1" required="required" style="display: none;">
+				<input id="monthly" type="radio" name="billing_interval" class="--billing-interval" value="1" required="required" style="display: none;">
 				<label data-multiple="1.25" data-frequency_text="monthly" data-radio="monthly" for="monthly" class="pad-sml radio-label btn btn-inline --c-billing-interval-label">Monthly</label>
 			</form>
 		</div>
@@ -42,7 +40,7 @@
 						<p class="text-sml-heavy tc-gun-metal">Billed <span class="frequency-text">annually</span></p>
 					</div>
 					<div class="pricing-cta-container">
-						<button data-plan_id="{$plan->id}" type="button" class="pricing-cta cursor-pt --c-plan-id">Get Started</button>
+						<button id="payment" data-plan_name="{ucfirst( $plan->name )}" data-base_price="{$plan->price}" data-plan_id="{$plan->id}" type="button" class="pricing-cta cursor-pt --c-plan-id --modal-trigger">Get Started</button>
 					</div>
 					<div class="pricing-component-details">
 						<div class="pricing-component-detail">
