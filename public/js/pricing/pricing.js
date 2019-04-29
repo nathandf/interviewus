@@ -51,12 +51,46 @@ $( function () {
 	$( ".--create-account" ).on( "click", function () {
 		$( "#account-options" ).hide();
 		$( "#sign-in-container" ).hide();
-		$( "#create-account-container" ).show( "slide", { direction: "left" }, 333 );
+		$( "#create-account-container" ).show();
 	} );
 
 	$( ".--sign-in" ).on( "click", function () {
 		$( "#account-options" ).hide();
 		$( "#create-account-container" ).hide();
-		$( "#sign-in-container" ).show( "slide", { direction: "left" }, 333 );
+		$( "#sign-in-container" ).show();
 	} );
+
+	// Login form AJAX
+	$( "#sign-in-form" ).submit( function( e ) {
+        e.preventDefault();
+        $.ajax( {
+            type : "post",
+            url : "sign-in",
+            data : $( "#sign-in-form" ).serialize(),
+            success : function( response ) {
+                alert( response );
+            },
+            error : function() {
+                alert( "Something went wrong." );
+            }
+        } );
+        e.preventDefault();
+    } );
+
+	// Create account form AJAX
+	$( "#create-account-form" ).submit( function( e ) {
+        e.preventDefault();
+        $.ajax( {
+            type : "post",
+            url : "create-account",
+            data : $( "#create-account-form" ).serialize(),
+            success : function( response ) {
+                alert( response );
+            },
+            error : function() {
+                alert( "Something went wrong." );
+            }
+        } );
+        e.preventDefault();
+    } );
 } );

@@ -33,7 +33,7 @@
 			</div>
 			<div id="create-account-container" style="display: none;">
 				<p class="sub-title">Create a new account</p>
-				<form action="" method="post">
+				<form id="create-account-form" action="" method="post">
 					<input type="hidden" name="create_account" value="{$csrf_token}">
 					<p class="label">Name</p>
 					<input type="text" name="name" class="inp inp-full" required="required">
@@ -41,20 +41,20 @@
 					<input type="email" name="email" class="inp inp-full" required="required">
 					<p class="label">Password</p>
 					<input type="password" name="password" class="inp inp-full" required="required">
-					<button type="submit" class="button push-t-med theme-secondary-dark"><span class="text-lrg-heavy">Continue</span></button>
+					<button id="create-account-submit" type="submit" class="button push-t-med theme-secondary-dark"><span class="text-lrg-heavy">Continue</span></button>
 				</form>
 				<div class="clear push-t-med"></div>
 				<a class="--sign-in link tc-deep-blue">Sign in</a>
 			</div>
 			<div id="sign-in-container" style="display: none;">
 				<p class="sub-title">Sign in</p>
-				<form action="" method="post">
-					<input type="hidden" name="sign-in" value="{$csrf_token}">
+				<form id="sign-in-form" action="" method="post">
+					<input type="hidden" name="sign_in" value="{$csrf_token}">
 					<p class="label">Email</p>
 					<input type="email" name="email" class="inp inp-full" required="required">
 					<p class="label">Password</p>
 					<input type="password" name="password" class="inp inp-full" required="required">
-					<button type="submit" class="button push-t-med">Sign in</button>
+					<button id="sign-in-submit" type="submit" class="button push-t-med">Sign in</button>
 				</form>
 				<div class="clear push-t-med"></div>
 				<a class="--create-account link tc-deep-blue">Create new account</a>

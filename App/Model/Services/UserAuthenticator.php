@@ -19,7 +19,7 @@ class UserAuthenticator
 
     public function authenticate( $email, $password )
     {
-        $user = $this->userRepo->get( [ "*" ], [ "email" => $email ], "single" );
+        $user = $this->userRepo->get( [ "*" ], [ "email" => strtolower( trim( $email ) ) ], "single" );
 
         if ( !is_null( $user ) ) {
             if ( password_verify( $password, $user->password ) ) {

@@ -2,8 +2,10 @@
 
 {block name="head"}
 	<title>Pricing | InterviewUs</title>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
 	<script src="{$HOME}{$JS_SCRIPTS}pricing/pricing.js"></script>
 	<link rel="stylesheet" href="{$HOME}public/css/pricing/pricing.css">
+
 {/block}
 
 {block name="body"}
