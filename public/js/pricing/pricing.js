@@ -68,7 +68,15 @@ $( function () {
             url : "sign-in",
             data : $( "#sign-in-form" ).serialize(),
             success : function( response ) {
-                alert( response );
+				var user = JSON.parse( response );
+                if ( user.id != undefined && user.id != null ) {
+					$( "#create-account-container" ).hide();
+					$( "#account-options" ).hide();
+					$( "#sign-in-container" ).hide();
+					$( "#checkout-button-container" ).show();
+				} else {
+					alert( response );
+				}
             },
             error : function() {
                 alert( "Something went wrong." );
@@ -85,7 +93,15 @@ $( function () {
             url : "create-account",
             data : $( "#create-account-form" ).serialize(),
             success : function( response ) {
-                alert( response );
+				var user = JSON.parse( response );
+                if ( user.id != undefined && user.id != null ) {
+					$( "#create-account-container" ).hide();
+					$( "#account-options" ).hide();
+					$( "#sign-in-container" ).hide();
+					$( "#checkout-button-container" ).show();
+				} else {
+					alert( response );
+				}
             },
             error : function() {
                 alert( "Something went wrong." );

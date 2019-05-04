@@ -78,7 +78,7 @@ class Pricing extends Controller
             !is_null( $user ) ? echod( json_encode( $user ) ) : echod( "Invalid Credentials" );
             return;
         }
-        echo( implode( ", ", $inputValidator->errors[ "ajax_sign_in" ] ) );
+        echo( json_encode( $inputValidator->errors[ "ajax_sign_in" ] ) );
 
         return;
     }
@@ -195,7 +195,7 @@ class Pricing extends Controller
             return;
         }
 
-        echod( implode( ", ", $inputValidator->errors[ "create_account" ] ) );
+        echod( json_encode( $inputValidator->errors[ "create_account" ] ) );
         return;
     }
 }

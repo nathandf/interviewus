@@ -29,7 +29,9 @@
 			<div id="account-options">
 				<button class="button theme-primary --sign-in"><i class="fas fa-sign-in-alt push-r-sml"></i>Sign In</button>
 				<p class="fancy-line-text push-t-sml tc-gun-metal"><span class="push-r-sml">Or</span></p>
-				<button class="button theme-secondary-dark push-t-sml --create-account"><span class="text-lrg-heavy"><i class="fas fa-robot push-r-sml"></i>Create account</span></button>
+				<div class="col-100 text-center push-t-med">
+					<a class="link tc-deep-blue --create-account" style="display: block; margin: 0 auto;"><i class="fas fa-robot push-r-sml"></i>Create account</a>
+				</div>
 			</div>
 			<div id="create-account-container" style="display: none;">
 				<p class="sub-title">Create a new account</p>
@@ -65,6 +67,10 @@
 				<input type="hidden" name="choose_plan" value="{$csrf_token}">
 				<input type="hidden" name="plan_id" value="" required="required">
 				<input id="billing-interval" type="hidden" name="billing-interval" value="annually">
+				<div id="checkout-button-container" {if is_null( $organization ) || is_null( $user )}style="display: none;"{/if}>
+					<div class="hr-full"></div>
+					<button id="checkout-button" type="submit" class="button theme-secondary"><i class="fas fa-dollar-sign push-r-sml"></i>Checkout</button>
+				</div>
 			</form>
 		</div>
 	</div>
