@@ -7,8 +7,8 @@
 		<div class="theme-primary pad-sml">
 			<p>User Settings</p>
 		</div>
-		<a class="link no-deco" href="{$HOME}profile/logout">
-			<div class="pad-sml text-center bg-white tc-black text-med-heavy" style="border-bottom: 1px solid #000000;">
+		<a class="link" href="{$HOME}profile/logout" style="text-decoration: none;">
+			<div class="pad-sml text-center bg-white tc-black text-med-heavy shade-on-hover" style="border-bottom: 1px solid #000000;">
 				<p>Logout</p>
 			</div>
 		</a>
