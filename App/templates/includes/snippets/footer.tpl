@@ -9,7 +9,7 @@
         <p>Email:</p>
     </div>
     <div class="col-33 floatleft pad-med">
-        <p class="">© 2019 IterviewUs.net All Rights Reserved</p>
+        <p class="">© 2019 InterviewUs.net All Rights Reserved</p>
     </div>
     <div class="clear"></div>
     <div class="push-t-med"></div>

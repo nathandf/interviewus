@@ -1,5 +1,15 @@
 $( function () {
+	function getFullName( first_name, last_name ) {
+		var fullName = "";
+		if ( first_name != null ) {
+			fullName = first_name;
+			if ( last_name != null ) {
+				fullName = fullName + " " + last_name;
+			}
+		}
 
+		return fullName;
+	}
 	var PricingWidget = {
 		plan_id: 1,
 		plan_name: "Basic",
@@ -69,14 +79,18 @@ $( function () {
             data : $( "#sign-in-form" ).serialize(),
             success : function( response ) {
 				var user = JSON.parse( response );
-                if ( user.id != undefined && user.id != null ) {
+				if ( !user.errors ) {
 					$( "#create-account-container" ).hide();
 					$( "#account-options" ).hide();
 					$( "#sign-in-container" ).hide();
 					$( "#checkout-button-container" ).show();
-				} else {
-					alert( response );
+					$( "#user-name" ).text( getFullName( user.first_name, user.last_name ) );
+					$( "#user-name-container" ).show();
+					return;
 				}
+
+				alert( user.errors );
+                return;
             },
             error : function() {
                 alert( "Something went wrong." );
@@ -94,14 +108,18 @@ $( function () {
             data : $( "#create-account-form" ).serialize(),
             success : function( response ) {
 				var user = JSON.parse( response );
-                if ( user.id != undefined && user.id != null ) {
+				if ( !user.errors ) {
 					$( "#create-account-container" ).hide();
 					$( "#account-options" ).hide();
 					$( "#sign-in-container" ).hide();
 					$( "#checkout-button-container" ).show();
-				} else {
-					alert( response );
+					$( "#user-name" ).text( getFullName( user.first_name, user.last_name ) );
+					$( "#user-name-container" ).show();
+					return;
 				}
+
+				alert( user.errors );
+                return;
             },
             error : function() {
                 alert( "Something went wrong." );

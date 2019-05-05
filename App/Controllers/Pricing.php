@@ -75,10 +75,10 @@ class Pricing extends Controller
             $userAuth->authenticate( $input->get( "email" ), $input->get( "password" ) );
             $user = $userAuth->getAuthenticatedUser();
 
-            !is_null( $user ) ? echod( json_encode( $user ) ) : echod( "Invalid Credentials" );
+            !is_null( $user ) ? echod( json_encode( $user ) ) : echod( json_encode( [ "errors" => "Invalid Credentials" ]) );
             return;
         }
-        echo( json_encode( $inputValidator->errors[ "ajax_sign_in" ] ) );
+        echo( json_encode( [ "errors" => $inputValidator->errors[ "ajax_sign_in" ] ] ) );
 
         return;
     }
@@ -190,12 +190,12 @@ class Pricing extends Controller
                 return;
             }
 
-            echod( "Email unavailable" );
+            echod( json_encode( [ "errors" => "Email unavailable" ] ) );
 
             return;
         }
 
-        echod( json_encode( $inputValidator->errors[ "create_account" ] ) );
+        echod( json_encode( [ "errors" => $inputValidator->errors[ "create_account" ] ] ) );
         return;
     }
 }

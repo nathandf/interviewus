@@ -8,6 +8,10 @@
 			<p>Payment</p>
 		</div>
 		<div id="payment-content" class="pad-med">
+			<div id="user-name-container" style="display: none;">
+				<p id="user-name" class="text-med-heavy"></p>
+				<div class="hr-full"></div>
+			</div>
 			{if !is_null( $organization ) && !is_null( $user )}
 			<p class="text-sml"><span class="text-sml-heavy">{$organization->name}</span> - {$user->getFullName()}</p>
 			<div class="hr-full"></div>
@@ -24,11 +28,11 @@
 			<div class="hr-full"></div>
 			<p class="label">Total:</p>
 			<p class="text-xlrg-heavy">$<span id="total">19</span>.<sup class="text-sml-heavy">00<sup></p>
-			{if is_null( $organization ) || is_null( $user )}
 			<div class="hr-full"></div>
+			{if is_null( $organization ) || is_null( $user )}
 			<div id="account-options">
 				<button class="button theme-primary --sign-in"><i class="fas fa-sign-in-alt push-r-sml"></i>Sign In</button>
-				<p class="fancy-line-text push-t-sml tc-gun-metal"><span class="push-r-sml">Or</span></p>
+				<p class="fancy-line-text push-t-med tc-gun-metal"><span class="push-r-sml">Or</span></p>
 				<div class="col-100 text-center push-t-med">
 					<a class="link tc-deep-blue --create-account" style="display: block; margin: 0 auto;"><i class="fas fa-robot push-r-sml"></i>Create account</a>
 				</div>
@@ -53,9 +57,9 @@
 				<form id="sign-in-form" action="" method="post">
 					<input type="hidden" name="sign_in" value="{$csrf_token}">
 					<p class="label">Email</p>
-					<input type="email" name="email" class="inp inp-full" required="required">
+					<input type="email" name="email"  autocomplete="username" class="inp inp-full" required="required">
 					<p class="label">Password</p>
-					<input type="password" name="password" class="inp inp-full" required="required">
+					<input type="password" name="password" autocomplete="current-password" class="inp inp-full" required="required">
 					<button id="sign-in-submit" type="submit" class="button push-t-med">Sign in</button>
 				</form>
 				<div class="clear push-t-med"></div>
@@ -68,8 +72,7 @@
 				<input type="hidden" name="plan_id" value="" required="required">
 				<input id="billing-interval" type="hidden" name="billing-interval" value="annually">
 				<div id="checkout-button-container" {if is_null( $organization ) || is_null( $user )}style="display: none;"{/if}>
-					<div class="hr-full"></div>
-					<button id="checkout-button" type="submit" class="button theme-secondary"><i class="fas fa-dollar-sign push-r-sml"></i>Checkout</button>
+					<button id="checkout-button" type="submit" class="button theme-secondary"><i class="fas fa-shopping-cart push-r-sml"></i>Checkout</button>
 				</div>
 			</form>
 		</div>
