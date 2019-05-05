@@ -11,9 +11,9 @@ $( function () {
 			table_open = "<tr class=\"table-row\">";
 			hidden_properties_tracker = "<input type='hidden' name='property_indicies[]' value='" + this.iteration + "'>";
 			value_length_options = "<option selected=\"selected\" hidden=\"hidden\"value=\"\">Choose</option><option value=\"BIGINT\">BIGINT</option><option value=\"TINYINT\">TINYINT</option><option value=\"VARCHAR\">VARCHAR</option><option value=\"MEDIUMTEXT\">MEDIUMTEXT</option>";
-			property_name = "<td style=\"text-align: center;\"><input name=\"property_row_" + this.iteration + "[property_name]\" class=\"inp col-100\" required=\"required\"></td>";
-			data_type = "<td style=\"text-align: center;\"><select name=\"property_row_" + this.iteration + "[data_type]\" class=\"inp col-100 cursor-pt\" required=\"required\">" + value_length_options + "</select></td>";
-			value_length = "<td style=\"text-align: center;\"><input name=\"property_row_" + this.iteration + "[value_length]\" class=\"inp col-100\"></td>";
+			property_name = "<td style=\"text-align: center;\"><input name=\"property_row_" + this.iteration + "[property_name]\" data-iteration=\"" + this.iteration + "\" id=\"prop-" + this.iteration + "\" class=\"inp inp-full --model-prop\" required=\"required\"></td>";
+			data_type = "<td style=\"text-align: center;\"><select name=\"property_row_" + this.iteration + "[data_type]\" class=\"inp inp-full cursor-pt\" required=\"required\">" + value_length_options + "</select></td>";
+			value_length = "<td style=\"text-align: center;\"><input name=\"property_row_" + this.iteration + "[value_length]\" class=\"inp inp-full\"></td>";
 			is_null = "<td style=\"text-align: center;\"><input type=\"checkbox\" class=\"checkbox\" name=\"property_row_" + this.iteration + "[is_null]\"></td>";
 			is_primary = "<td style=\"text-align: center;\"><input type=\"checkbox\" class=\"checkbox\" name=\"property_row_" + this.iteration + "[is_primary]\"></td>";
 			auto_increment = "<td style=\"text-align: center;\"><input type=\"checkbox\" class=\"checkbox\" name=\"property_row_" + this.iteration + "[auto_increment]\"></td>";
@@ -24,12 +24,15 @@ $( function () {
 		}
 	};
 
-	$( "#model-name" ).on( "keyup", function() {
-		$( "#model-name" ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ) );
+	$( ".--model-name" ).on( "keyup", function() {
+		$( ".--model-name" ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ) );
     });
 
 	$( "#add-property" ).on( "click", function () {
 		$( "#property-table" ).append( propertyBuilder.newPropertyRow() );
+		$( ".--model-prop" ).on( "keyup", function() {
+			$( "#prop-" + this.dataset.iteration ).val( $( this ).val().toLowerCase().split( " " ).join( "_" ) );
+	    });
 	} );
 
 	$( "#property-table" ).on( "click", ".table-row-trash", function () {

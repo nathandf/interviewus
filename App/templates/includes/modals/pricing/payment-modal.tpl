@@ -66,7 +66,7 @@
 				<a class="--create-account link tc-deep-blue">Create new account</a>
 			</div>
 			{/if}
-			<form action="" method="post">
+			<form action="{$HOME}cart/" method="post">
 				<input type="hidden"  name="token" value="{$csrf_token}">
 				<input type="hidden" name="choose_plan" value="{$csrf_token}">
 				<input type="hidden" name="plan_id" value="" required="required">
