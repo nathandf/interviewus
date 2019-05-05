@@ -31,9 +31,10 @@ class Pricing extends Controller
 
     public function indexAction()
     {
+        $input = $this->load( "input" );
+        $inputValidator = $this->load( "input-validator" );
         $planRepo = $this->load( "plan-repository" );
         $planDetailsRepo = $this->load( "plan-details-repository" );
-
 
         $plans = $planRepo->get( [ "*" ] );
 
@@ -41,8 +42,68 @@ class Pricing extends Controller
             $plan->details = $planDetailsRepo->get( [ "*" ], [ "plan_id" => $plan->id ], "single" );
         }
 
+        if (
+            $input->exists() &&
+            $input->issetField( "add_to_cart" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "plan_id" => [
+                        "required" => true,
+                        "in_array" => $planRepo->get( [ "id" ], [], "raw" )
+                    ],
+                    "billing_interval" => [
+                        "required" => true,
+                        "in_array" => [ "annually", "monthly" ]
+                    ]
+                ],
+                "add_to_cart"
+            )
+        ) {
+            if ( !is_null( $this->user ) ) {
+                $cartRepo = $this->load( "cart-repository" );
+                $productRepo = $this->load( "product-repository" );
+
+                // Get existing cart
+                $cart = $cartRepo->get( [ "*" ], [ "account_id", $this->account->id ], "single" );
+
+                // If no cart exists, create a new one
+                if ( is_null( $cart ) ) {
+                    $cart = $cartRepo->insert([
+                        "account_id" => $this->account->id
+                    ]);
+                }
+
+                // Get all products for this cart
+                $cart->products = $productRepo->get( [ "*" ], [ "cart_id" => $cart->id ] );
+
+                // Update all products in cart
+                foreach ( $cart->products as $product ) {
+                    $productRepo->delete([
+                        "id" => $product->id
+                    ]);
+                }
+
+                // Add new product to the cart
+                $product = $productRepo->insert([
+                    "cart_id" => $cart->id,
+                    "plan_id" => $input->get( "plan_id" ),
+                    "billing_frequency" => $input->get( "billing_interval" )
+                ]);
+
+                $this->view->redirect( "cart/" );
+            }
+
+            $inputValidator->addError( "add_to_cart", "Invalid Action. You must be logged in." );
+        }
+
         $this->view->assign( "plans", $plans );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
+        $this->view->assign( "errors", $inputValidator->getErrors() );
 
         $this->view->setTemplate( "pricing/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

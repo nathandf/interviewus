@@ -66,11 +66,11 @@
 				<a class="--create-account link tc-deep-blue">Create new account</a>
 			</div>
 			{/if}
-			<form action="{$HOME}cart/" method="post">
+			<form action="" method="post">
 				<input type="hidden"  name="token" value="{$csrf_token}">
-				<input type="hidden" name="choose_plan" value="{$csrf_token}">
+				<input type="hidden" name="add_to_cart" value="{$csrf_token}">
 				<input type="hidden" name="plan_id" value="" required="required">
-				<input id="billing-interval" type="hidden" name="billing-interval" value="annually">
+				<input id="billing-interval" type="hidden" name="billing_interval" value="annually">
 				<div id="checkout-button-container" {if is_null( $organization ) || is_null( $user )}style="display: none;"{/if}>
 					<button id="checkout-button" type="submit" class="button theme-secondary"><i class="fas fa-shopping-cart push-r-sml"></i>Checkout</button>
 				</div>
