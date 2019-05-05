@@ -25,13 +25,13 @@ $( function () {
 	};
 
 	$( ".--model-name" ).on( "keyup", function() {
-		$( ".--model-name" ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ) );
+		$( ".--model-name" ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ).split( "--" ).join( "-" ) );
     });
 
 	$( "#add-property" ).on( "click", function () {
 		$( "#property-table" ).append( propertyBuilder.newPropertyRow() );
 		$( ".--model-prop" ).on( "keyup", function() {
-			$( "#prop-" + this.dataset.iteration ).val( $( this ).val().toLowerCase().split( " " ).join( "_" ) );
+			$( "#prop-" + this.dataset.iteration ).val( $( this ).val().toLowerCase().split( " " ).join( "_" ).split( "__" ).join( "_" ) );
 	    });
 	} );
 
