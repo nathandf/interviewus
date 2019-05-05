@@ -125,6 +125,14 @@ $container->register( "address-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "cart-repository", function() use ( $container ) {
+	$repo = new \Model\Services\CartRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "country-repository", function() use ( $container ) {
 	$repo = new \Model\Services\CountryRepository(
 		$container->getService( "dao" ),
@@ -249,6 +257,14 @@ $container->register( "plan-repository", function() use ( $container ) {
 
 $container->register( "position-repository", function() use ( $container ) {
 	$repo = new \Model\Services\PositionRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "product-repository", function() use ( $container ) {
+	$repo = new \Model\Services\ProductRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);

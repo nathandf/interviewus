@@ -296,3 +296,6 @@ UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 4;
 UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 5;
 ALTER TABLE `user` ADD `current_account_id` BIGINT NULL DEFAULT NULL AFTER `image_id`, ADD `current_organization_id` BIGINT NULL DEFAULT NULL AFTER `current_account_id`;
 ALTER TABLE `user` ADD `token` VARCHAR(256) NULL DEFAULT NULL AFTER `password`;
+
+CREATE TABLE `cart` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `product` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `cart_id` BIGINT NOT NULL , `plan_id` BIGINT NULL , `billing_frequency` VARCHAR(256) NULL , PRIMARY KEY (`id`)) engine = InnoDB;

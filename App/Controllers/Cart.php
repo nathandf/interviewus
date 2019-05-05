@@ -33,6 +33,6 @@ class Cart extends Controller
 
     public function indexAction()
     {
-
+        
     }
 }
