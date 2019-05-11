@@ -20,4 +20,5 @@ return array(
     'Controllers\\' => array($baseDir . '/Controllers'),
     'Contracts\\' => array($baseDir . '/Contracts'),
     'Conf\\' => array($baseDir . '/Conf'),
+    'Braintree\\' => array($vendorDir . '/braintree/braintree_php/lib/Braintree'),
 );
