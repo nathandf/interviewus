@@ -10,6 +10,10 @@ $( function () {
 
 		return fullName;
 	}
+
+	// Every time page is reloaded, check the radio button
+	$( "#yearly" ).prop( "checked", true );
+
 	var PricingWidget = {
 		plan_id: 1,
 		plan_name: "Basic",
@@ -39,7 +43,7 @@ $( function () {
 		$( "#total" ).text( PricingWidget.calculateTotal() );
 	} );
 
-	$( ".--c-billing-interval-label" ).on( "click", function () {
+	$( ".--c-billing-frequency-label" ).on( "click", function () {
 		$( "#" + this.dataset.radio ).prop( "checked", true );
 		PricingWidget.multiple = this.dataset.multiple;
 		PricingWidget.frequency = this.dataset.frequency_text;
@@ -47,13 +51,13 @@ $( function () {
 			if ( PricingWidget.frequency == "monthly" ) {
 				$( this ).text( "$" + Math.ceil( PricingWidget.multiple * $( this ).data( "base_price" ) ) );
 				$( ".frequency-text" ).text( PricingWidget.frequency );
-				$( "#billing-interval" ).val( "monthly" );
-				$( "#billing-interval-text" ).text( "Monthly" );
+				$( "#billing-frequency" ).val( "monthly" );
+				$( "#billing-frequency-text" ).text( "Monthly" );
 			} else {
 				$( this ).text( "$" + Math.round( PricingWidget.multiple * $( this ).data( "base_price" ) ) );
 				$( ".frequency-text" ).text( PricingWidget.frequency );
-				$( "#billing-interval" ).val( "annually" );
-				$( "#billing-interval-text" ).text( "Yearly" );
+				$( "#billing-frequency" ).val( "annually" );
+				$( "#billing-frequency-text" ).text( "Annually" );
 			}
 		} );
 	} );

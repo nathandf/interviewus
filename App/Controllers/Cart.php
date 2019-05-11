@@ -29,7 +29,7 @@ class Cart extends Controller
 
         $this->cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
         if ( is_null( $this->cart ) ) {
-            $this->view->redirect( "pricing" );
+            $this->view->redirect( "pricing/" );
         }
 
         // Get all products for cart
@@ -53,6 +53,38 @@ class Cart extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
+
+        if (
+            $input->exists() &&
+            $input->issetField( "purchase" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ]
+                ],
+                "purchase"
+            )
+        ) {
+            $accountUpgrader = $this->load( "account-upgrader" );
+            $cartDestroyer = $this->load( "cart-destroyer" );
+            $planRepo = $this->load( "plan-repository" );
+
+            foreach ( $this->cart->products as $product ) {
+                $plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
+                $accountUpgrader->upgrade( $this->account->id, $plan->id );
+            }
+
+            $cartDestroyer->destroy( $this->cart->id );
+            
+            $this->view->redirect( "profile/" );
+        }
+
+        $this->view->assign( "error_messages", $inputValidator->getErrors() );
+        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
+        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "cart/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

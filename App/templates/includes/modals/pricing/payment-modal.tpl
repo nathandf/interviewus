@@ -22,7 +22,7 @@
 			</div>
 			<div class="col-50 pad-xsml floatleft">
 				<p class="label">Billing frequency:</p>
-				<p><span id="billing-interval-text">Yearly</span></p>
+				<p><span id="billing-frequency-text">Yearly</span></p>
 			</div>
 			<div class="clear"></div>
 			<div class="hr-full"></div>
@@ -66,11 +66,11 @@
 				<a class="--create-account link tc-deep-blue">Create new account</a>
 			</div>
 			{/if}
-			<form action="" method="post">
+			<form id="checkout-form" action="" method="post">
 				<input type="hidden"  name="token" value="{$csrf_token}">
 				<input type="hidden" name="add_to_cart" value="{$csrf_token}">
 				<input type="hidden" name="plan_id" value="" required="required">
-				<input id="billing-interval" type="hidden" name="billing_interval" value="annually">
+				<input id="billing-frequency" type="hidden" name="billing_frequency" value="annually">
 				<div id="checkout-button-container" {if is_null( $organization ) || is_null( $user )}style="display: none;"{/if}>
 					<button id="checkout-button" type="submit" class="button theme-secondary"><i class="fas fa-shopping-cart push-r-sml"></i>Checkout</button>
 				</div>

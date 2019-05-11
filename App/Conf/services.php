@@ -101,6 +101,24 @@ $container->register( "industry-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "account-provisioner", function() use ( $container ) {
+	$repo = new \Model\Services\AccountProvisioner(
+		$container->getService( "account-repository" ),
+		$container->getService( "plan-repository" ),
+		$container->getService( "plan-details-repository" )
+	);
+	return $repo;
+} );
+
+$container->register( "account-upgrader", function() use ( $container ) {
+	$repo = new \Model\Services\AccountUpgrader(
+		$container->getService( "account-repository" ),
+		$container->getService( "account-provisioner" ),
+		$container->getService( "plan-repository" )
+	);
+	return $repo;
+} );
+
 $container->register( "account-repository", function() use ( $container ) {
 	$repo = new \Model\Services\AccountRepository(
 		$container->getService( "dao" ),
@@ -121,6 +139,14 @@ $container->register( "address-repository", function() use ( $container ) {
 	$repo = new \Model\Services\AddressRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "cart-destroyer", function() use ( $container ) {
+	$repo = new \Model\Services\CartDestroyer(
+		$container->getService( "cart-repository" ),
+		$container->getService( "product-repository" )
 	);
 	return $repo;
 } );

@@ -5,7 +5,6 @@
     <script src="http://malsup.github.com/jquery.form.js"></script>
 	<script src="{$HOME}{$JS_SCRIPTS}pricing/pricing.js"></script>
 	<link rel="stylesheet" href="{$HOME}public/css/pricing/pricing.css">
-
 {/block}
 
 {block name="body"}
@@ -19,12 +18,19 @@
 				<a href="{$HOME}sign-up/" class="button-link">Get started</a>
 			</div>
 		</div>
+		{if !empty($error_messages.add_to_cart)}
+			{foreach from=$error_messages.add_to_cart item=message}
+				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
 		<div class="pad-sml">
 			<form id="pricing-form" action="" method="post">
-				<input id="yearly" type="radio" name="billing_interval" class="--billing-interval" value="2" required="required" checked="checked" style="display: none;">
-				<label data-multiple="1" data-frequency_text="annually" data-radio="yearly" for="yearly" class="pad-sml radio-label btn btn-inline push-r-sml --c-billing-interval-label">Yearly Save > 25%</label>
-				<input id="monthly" type="radio" name="billing_interval" class="--billing-interval" value="1" required="required" style="display: none;">
-				<label data-multiple="1.25" data-frequency_text="monthly" data-radio="monthly" for="monthly" class="pad-sml radio-label btn btn-inline --c-billing-interval-label">Monthly</label>
+				<input id="yearly" type="radio" name="billing_frequency" class="--billing-frequency" value="2" required="required" checked="checked" style="display: none;">
+				<label data-multiple="1" data-frequency_text="annually" data-radio="yearly" for="yearly" class="pad-sml radio-label btn btn-inline push-r-sml --c-billing-frequency-label">Yearly Save > 25%</label>
+				<input id="monthly" type="radio" name="billing_frequency" class="--billing-frequency" value="1" required="required" style="display: none;">
+				<label data-multiple="1.25" data-frequency_text="monthly" data-radio="monthly" for="monthly" class="pad-sml radio-label btn btn-inline --c-billing-frequency-label">Monthly</label>
 			</form>
 		</div>
 	</div>
@@ -32,6 +38,7 @@
 		<div class="clear"></div>
 		<div class="pricing-container">
 			{foreach from=$plans item=plan name=fe_plans}
+			{if $plan->id != 6}
 			<div class="pricing-component{if $smarty.foreach.fe_plans.last} pricing-component-last{/if}">
 				<div class="pricing-component-header {$plan->name}">{ucfirst( $plan->name )}</div>
 				<div class="pricing-component-content {if $plan->featured} {$plan->name}-border pricing-component-featured{/if}">
@@ -80,6 +87,7 @@
 					</div>
 				</div>
 			</div>
+			{/if}
 			{foreachelse}
 			<p>Something went wrong!</p>
 			{/foreach}

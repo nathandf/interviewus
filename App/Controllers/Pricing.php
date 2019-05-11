@@ -13,20 +13,34 @@ class Pricing extends Controller
         $accountRepo = $this->load( "account-repository" );
         $accountUserRepo = $this->load( "account-user-repository" );
         $organizationRepo = $this->load( "organization-repository" );
+        $cartRepo = $this->load( "cart-repository" );
+        $productRepo = $this->load( "product-repository" );
+        $planRepo = $this->load( "plan-repository" );
 
         $this->user = $userAuth->getAuthenticatedUser();
         $this->account = null;
         $this->organization = null;
+        $this->cart = null;
 
         if ( !is_null( $this->user ) ) {
             $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
             $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
+            $this->cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
+
+            // Get all products for this cart
+            if ( !is_null( $this->cart ) ) {
+                $this->cart->products = $productRepo->get( [ "*" ], [ "cart_id" => $this->cart->id ] );
+                foreach ( $this->cart->products as $product ) {
+                    $product->plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
+                }
+            }
         }
 
         $this->view->assign( "countries", $countryRepo->get( [ "*" ] ) );
         $this->view->assign( "account", $this->account );
         $this->view->assign( "organization", $this->organization );
         $this->view->assign( "user", $this->user );
+        $this->view->assign( "cart", $this->cart );
     }
 
     public function indexAction()
@@ -56,7 +70,7 @@ class Pricing extends Controller
                         "required" => true,
                         "in_array" => $planRepo->get( [ "id" ], [], "raw" )
                     ],
-                    "billing_interval" => [
+                    "billing_frequency" => [
                         "required" => true,
                         "in_array" => [ "annually", "monthly" ]
                     ]
@@ -83,16 +97,14 @@ class Pricing extends Controller
 
                 // Update all products in cart
                 foreach ( $cart->products as $product ) {
-                    $productRepo->delete([
-                        "id" => $product->id
-                    ]);
+                    $productRepo->delete( [ "id" ], [ $product->id ] );
                 }
 
                 // Add new product to the cart
                 $product = $productRepo->insert([
                     "cart_id" => $cart->id,
                     "plan_id" => $input->get( "plan_id" ),
-                    "billing_frequency" => $input->get( "billing_interval" )
+                    "billing_frequency" => $input->get( "billing_frequency" )
                 ]);
 
                 $this->view->redirect( "cart/" );
@@ -103,7 +115,7 @@ class Pricing extends Controller
 
         $this->view->assign( "plans", $plans );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
-        $this->view->assign( "errors", $inputValidator->getErrors() );
+        $this->view->assign( "error_messages", $inputValidator->getErrors() );
 
         $this->view->setTemplate( "pricing/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
