@@ -296,3 +296,11 @@ UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 4;
 UPDATE `plan_details` SET `storage` = 'Unlimited' WHERE `plan_details`.`id` = 5;
 ALTER TABLE `user` ADD `current_account_id` BIGINT NULL DEFAULT NULL AFTER `image_id`, ADD `current_organization_id` BIGINT NULL DEFAULT NULL AFTER `current_account_id`;
 ALTER TABLE `user` ADD `token` VARCHAR(256) NULL DEFAULT NULL AFTER `password`;
+
+CREATE TABLE `cart` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `product` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `cart_id` BIGINT NOT NULL , `plan_id` BIGINT NULL , `billing_frequency` VARCHAR(256) NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `account` ADD `sms_interviews` BIGINT NOT NULL DEFAULT '1' AFTER `account_type_id`, ADD `web_interviews` BIGINT NOT NULL DEFAULT '1' AFTER `sms_interviews`, ADD `users` BIGINT NOT NULL DEFAULT '1' AFTER `web_interviews`, ADD `plan_id` BIGINT NULL AFTER `users`, ADD `recurs_on` BIGINT NULL AFTER `plan_id`, ADD `status` TINYINT NOT NULL DEFAULT '1' AFTER `recurs_on`;
+INSERT INTO `plan` (`id`, `name`, `description`, `price`, `featured`) VALUES ('0', 'free', NULL, '0', '0');
+INSERT INTO `plan_details` (`id`, `plan_id`, `sms_interviews`, `web_interviews`, `max_questions`, `storage`, `users`) VALUES (NULL, '0', '1', '1', '10', '1GB', '1');
+ALTER TABLE `account` CHANGE `plan_id` `plan_id` BIGINT(20) NULL DEFAULT '0';
+ALTER TABLE `account` CHANGE `account_type_id` `account_type_id` BIGINT(20) NULL DEFAULT '0';

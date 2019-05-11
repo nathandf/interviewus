@@ -1414,6 +1414,10 @@ td {
     color: #37BF91;
 }
 
+.tc-real-gold {
+    color: #FFA500;
+}
+
 .tc-forest {
     color: #00B478;
 }
@@ -1717,6 +1721,29 @@ td {
 
 /* Special */
 
+.fancy-line-text {
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+}
+.fancy-line-text:before, .fancy-line-text:after {
+    position: absolute;
+    top: 51%;
+    overflow: hidden;
+    width: 48%;
+    height: 1px;
+    content: '\a0';
+    background-color: #CCCCCC;
+}
+
+.fancy-line-text:before {
+    margin-left: -50%;
+    text-align: right;
+}
+
 .floatleft {
     float: left;
 }
@@ -1725,13 +1752,7 @@ td {
     float: right;
 }
 
-.first {
-    margin-top: var(--std-margin-top);
-}
-
-.last {
-    margin-bottom: var(--std-margin-top);
-}
+/* Spacing */
 
 .push-t {
     margin-top: 8px;

@@ -19,18 +19,18 @@
 		<form action="" method="post">
 			<input type="hidden" name="token" value="{$csrf_token}">
 			<p class="text-sml">Model name:</p>
-			<input id="model-name" type="text" name="model_name" class="inp inp-med-plus" required="required">
+			<input id="model-name" type="text" name="model_name" class="inp inp-med-plus --model-name" required="required">
 			<div class="hr"></div>
 			<h3>Properties</h3>
 			<button id="add-property" type="button" class="btn bg-deep-blue push-t-med">+ Property</button>
 			<table id="property-table" class="col-100 push-t-med">
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;">Name</th>
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;">Data Type</th>
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;">Values/Length</th>
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;">Null</th>
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;">Primary</th>
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;">AI</th>
-				<th class="bg-deep-blue tc-white text-sml" style="border: 1px solid #CCC;"></th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;">Name</th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;">Data Type</th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;">Values/Length</th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;">Null</th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;">Primary</th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;">AI</th>
+				<th class="bg-deep-blue tc-white text-sml pad-sml" style="border: 1px solid #CCC;"></th>
 			</table>
 			<div class="hr"></div>
 				<p class="text-sml">Engine:</p>
