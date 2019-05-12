@@ -18,11 +18,11 @@
 			{/if}
 			<div class="col-50 pad-xsml floatleft">
 				<p class="label">Selected plan:</p>
-				<p><span class="text-lrg-heavy" id="plan-name">Basic</span> - $<span id="price">19</span> / month</p>
+				<p><span class="text-lrg-heavy" id="plan-name">Basic</span> - $<span class="price">19</span> / month</p>
 			</div>
 			<div class="col-50 pad-xsml floatleft">
 				<p class="label">Billing frequency:</p>
-				<p><span id="billing-frequency-text">Yearly</span></p>
+				<p><span class="billing-frequency-text">annually</span></p>
 			</div>
 			<div class="clear"></div>
 			<div class="hr-full"></div>

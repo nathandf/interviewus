@@ -53,6 +53,7 @@ class Cart extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
+        $braintreeAPIManager = $this->load( "braintree-api-manager" );
 
         if (
             $input->exists() &&
@@ -78,7 +79,7 @@ class Cart extends Controller
             }
 
             $cartDestroyer->destroy( $this->cart->id );
-            
+
             $this->view->redirect( "profile/" );
         }
 

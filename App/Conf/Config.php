@@ -102,6 +102,17 @@ class Config
             "account_sid" => "", // TODO Create Sendgrid account
             "auth_token" => "" // TODO Create Sendgrid account
         ];
+
+        // Braintree API
+        $this->configs[ "braintree" ] = [
+            "environment" => "sandbox",
+            "credentials" => [
+                "merchant_id" => "m5wfnmpqf5gwz3fx",
+                "public_key" => "ck6j2s6fvwng3rnt",
+                "private_key" => "a35ec12071b162cf9e2b85d13b5689c9",
+                "tokenization_key" => ""
+            ]
+        ];
     }
 
     public function getEnv()

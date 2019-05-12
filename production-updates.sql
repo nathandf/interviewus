@@ -278,7 +278,6 @@ ALTER TABLE `phone` ADD `e164_phone_number` VARCHAR(256) NOT NULL AFTER `nationa
 
 CREATE TABLE `plan` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) NOT NULL , `description` VARCHAR(512) NULL , `price` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 INSERT INTO `plan` (`id`, `name`, `description`, `price`) VALUES (NULL, 'basic', NULL, '19'), (NULL, 'standard', NULL, '49'), (NULL, 'pro', NULL, '78'), (NULL, 'business', NULL, '124'), (NULL, 'enterprise', NULL, '198');
-
 CREATE TABLE `plan_details` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `plan_id` BIGINT NOT NULL , `sms_interviews` BIGINT NOT NULL , `web_interviews` BIGINT NOT NULL , `users` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 INSERT INTO `plan_details` (`id`, `plan_id`, `sms_interviews`, `web_interviews`, `users`) VALUES (NULL, '1', '9', '9', '1'), (NULL, '2', '25', '25', '2'), (NULL, '3', '50', '50', '5'), (NULL, '4', '100', '100', '10'), (NULL, '5', '175', '-1', '25');
 ALTER TABLE `plan` ADD `featured` TINYINT NOT NULL DEFAULT '0' AFTER `price`;
@@ -300,7 +299,22 @@ ALTER TABLE `user` ADD `token` VARCHAR(256) NULL DEFAULT NULL AFTER `password`;
 CREATE TABLE `cart` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `product` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `cart_id` BIGINT NOT NULL , `plan_id` BIGINT NULL , `billing_frequency` VARCHAR(256) NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `account` ADD `sms_interviews` BIGINT NOT NULL DEFAULT '1' AFTER `account_type_id`, ADD `web_interviews` BIGINT NOT NULL DEFAULT '1' AFTER `sms_interviews`, ADD `users` BIGINT NOT NULL DEFAULT '1' AFTER `web_interviews`, ADD `plan_id` BIGINT NULL AFTER `users`, ADD `recurs_on` BIGINT NULL AFTER `plan_id`, ADD `status` TINYINT NOT NULL DEFAULT '1' AFTER `recurs_on`;
-INSERT INTO `plan` (`id`, `name`, `description`, `price`, `featured`) VALUES ('0', 'free', NULL, '0', '0');
 INSERT INTO `plan_details` (`id`, `plan_id`, `sms_interviews`, `web_interviews`, `max_questions`, `storage`, `users`) VALUES (NULL, '0', '1', '1', '10', '1GB', '1');
-ALTER TABLE `account` CHANGE `plan_id` `plan_id` BIGINT(20) NULL DEFAULT '0';
+ALTER TABLE `account` CHANGE `plan_id` `plan_id` BIGINT(20) NULL DEFAULT '11';
 ALTER TABLE `account` CHANGE `account_type_id` `account_type_id` BIGINT(20) NULL DEFAULT '0';
+ALTER TABLE `plan` ADD `braintree_plan_id` VARCHAR(256) NULL AFTER `featured`;
+INSERT INTO `plan` (`id`, `name`, `description`, `price`, `featured`, `braintree_plan_id`) VALUES (NULL, 'basic', '', '24', '0', NULL), (NULL, 'standard', NULL, '62', '0', NULL), (NULL, 'pro', NULL, '98', '0', NULL), (NULL, 'business', NULL, '155', '0', NULL), (NULL, 'enterprise', NULL, '248', '0', NULL);
+INSERT INTO `plan_details` (`id`, `plan_id`, `sms_interviews`, `web_interviews`, `max_questions`, `storage`, `users`) VALUES (NULL, '6', '9', '9', '10', '5GB', '1'), (NULL, '7', '25', '25', '10', '25GB', '2'), (NULL, '8', '50', '50', '15', '50GB', '5'), (NULL, '9', '100', '100', '25', 'Unlimited', '10'), (NULL, '10', '175', '-1', '25', 'Unlimited', '25');
+UPDATE `plan` SET `braintree_plan_id` = 's2kr' WHERE `plan`.`id` = 1;
+UPDATE `plan` SET `braintree_plan_id` = '3n82' WHERE `plan`.`id` = 2;
+UPDATE `plan` SET `braintree_plan_id` = 'hkmb' WHERE `plan`.`id` = 3;
+UPDATE `plan` SET `braintree_plan_id` = '9mf6' WHERE `plan`.`id` = 4;
+UPDATE `plan` SET `braintree_plan_id` = 'qjsg' WHERE `plan`.`id` = 5;
+UPDATE `plan` SET `braintree_plan_id` = '84mw' WHERE `plan`.`id` = 6;
+UPDATE `plan` SET `braintree_plan_id` = 'p2z6' WHERE `plan`.`id` = 7;
+UPDATE `plan` SET `braintree_plan_id` = '552b' WHERE `plan`.`id` = 8;
+UPDATE `plan` SET `braintree_plan_id` = 'k3dm' WHERE `plan`.`id` = 9;
+UPDATE `plan` SET `braintree_plan_id` = 'c47g' WHERE `plan`.`id` = 10;
+UPDATE `plan` SET `featured` = 1 WHERE `plan`.`id` = 7;
+INSERT INTO `plan` (`id`, `name`, `description`, `price`, `featured`) VALUES ('11', 'free', NULL, '0', '0');
+UPDATE `plan_details` SET `plan_id` = '11' WHERE `plan_details`.`id` = 11;
