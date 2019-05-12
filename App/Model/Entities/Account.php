@@ -14,4 +14,5 @@ class Account implements EntityInterface
 	public $plan_id;
 	public $recurs_on;
 	public $status;
+	public $braintree_customer_id;
 }

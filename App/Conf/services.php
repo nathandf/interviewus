@@ -279,6 +279,14 @@ $container->register( "phone-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "payment-method-repository", function() use ( $container ) {
+	$repo = new \Model\Services\PaymentMethodRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "plan-details-repository", function() use ( $container ) {
 	$repo = new \Model\Services\PlanDetailsRepository(
 		$container->getService( "dao" ),
