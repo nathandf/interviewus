@@ -25,22 +25,12 @@ class Pricing extends Controller
         if ( !is_null( $this->user ) ) {
             $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
             $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
-            $this->cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
-
-            // Get all products for this cart
-            if ( !is_null( $this->cart ) ) {
-                $this->cart->products = $productRepo->get( [ "*" ], [ "cart_id" => $this->cart->id ] );
-                foreach ( $this->cart->products as $product ) {
-                    $product->plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
-                }
-            }
         }
 
         $this->view->assign( "countries", $countryRepo->get( [ "*" ] ) );
         $this->view->assign( "account", $this->account );
         $this->view->assign( "organization", $this->organization );
         $this->view->assign( "user", $this->user );
-        $this->view->assign( "cart", $this->cart );
     }
 
     public function indexAction()
@@ -83,8 +73,8 @@ class Pricing extends Controller
                 $productRepo = $this->load( "product-repository" );
 
                 // Get existing cart
-                $cart = $cartRepo->get( [ "*" ], [ "account_id", $this->account->id ], "single" );
-
+                $cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
+                
                 // If no cart exists, create a new one
                 if ( is_null( $cart ) ) {
                     $cart = $cartRepo->insert([

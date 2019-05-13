@@ -19,7 +19,7 @@
 		<div class="hr-full"></div>
 		{if $smarty.foreach.product_loop.last}
 		<div id="braintree-dropin-container"></div>
-		<button id="submit-button" class="button push-t-med"><i class="fas fa-dollar-sign push-r-sml"></i> Complete Purchase</button>
+		<button id="submit-button" class="button tc-white text-xlrg bg-good-green push-t-med">Complete Purchase</button>
 		<p class="text-sml push-t-med">By clicking "Complete Purchase" you agree to InterviewUs's <a target="_blank" href="{$HOME}terms-and-conditions">Terms and Conditions</a> and <a target="_blank" href="{$HOME}privacy-policy">Privacy Policy</a>, and consent to enroll your product(s) in our automatic renewal service, which can be cancelled at any time. Automatic renewals are billed to your default payment method until cancelled.</p>
 		{literal}
 		<script>

@@ -72,7 +72,7 @@
 				<input type="hidden" name="plan_id" value="" required="required">
 				<input id="billing-frequency" type="hidden" name="billing_frequency" value="annually">
 				<div id="checkout-button-container" {if is_null( $organization ) || is_null( $user )}style="display: none;"{/if}>
-					<button id="checkout-button" type="submit" class="button theme-secondary"><i class="fas fa-shopping-cart push-r-sml"></i>Checkout</button>
+					<button id="checkout-button" type="submit" class="button theme-secondary-dark"><i class="fas fa-shopping-cart push-r-sml"></i>Checkout</button>
 				</div>
 			</form>
 		</div>
