@@ -53,9 +53,10 @@ class Cart extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
+        $braintreeClientTokenGenerator = $this->load( "braintree-client-token-generator" );
 
         if (
-            $input->exists() &&
+            $input->exists( "get" ) &&
             $input->issetField( "purchase" ) &&
             $inputValidator->validate(
                 $input,
@@ -63,11 +64,15 @@ class Cart extends Controller
                     "token" => [
                         "required" => true,
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "payment_method_nonce" => [
+                        "required" => true
                     ]
                 ],
                 "purchase"
             )
         ) {
+            vdumpd( $input->get( "payment_method_nonce" ) );
             $accountUpgrader = $this->load( "account-upgrader" );
             $cartDestroyer = $this->load( "cart-destroyer" );
             $planRepo = $this->load( "plan-repository" );
@@ -85,6 +90,12 @@ class Cart extends Controller
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign(
+            "client_token",
+            $braintreeClientTokenGenerator->generate(
+                $this->account->braintree_customer_id
+            )
+        );
 
         $this->view->setTemplate( "cart/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

@@ -29,8 +29,6 @@ require_once( "App/Conf/routes.php" );
 
 $request = $Router->dispatch( $_SERVER[ "QUERY_STRING" ] );
 $controller_name = $request[ "controller" ];
-$method = $request[ "method" ];
-$params = $request[ "params" ];
 
-$controller = new $controller_name( $container, $config, $session, $params );
-$controller->$method();
+$controller = new $controller_name( $container, $config, $session, $request[ "params" ] );
+$controller->$request[ "method" ]();
