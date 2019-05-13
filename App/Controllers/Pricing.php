@@ -215,8 +215,23 @@ class Pricing extends Controller
 
                 // Create new Account
                 $account = $accountRepo->insert([
-                    "account_type_id" => 1
+                    "account_type_id" => 1,
+                    "plan_id" => 11
                 ]);
+
+                // Provision Account
+                $accountProvisioner = $this->load( "account-provisioner" );
+                $accountProvisioner->provision( $account->id );
+
+                // Create braintree customer
+                $braintreeCustomerRepo = $this->load( "braintree-customer-repository" );
+                $braintreeCustomer = $braintreeCustomerRepo->create( $user )->customer;
+
+                // Update Account's braintree_customer_id
+                $accountRepo->update(
+                    [ "braintree_customer_id" => $braintreeCustomer->id ],
+                    [ "id" => $account->id ]
+                );
 
                 // Update current_account_id to new account_id
                 $userRepo->update(

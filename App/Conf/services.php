@@ -102,8 +102,15 @@ $container->register( "industry-repository", function() use ( $container ) {
 } );
 
 $container->register( "braintree-gateway-initializer", function () use ( $container ) {
-	$service =  new \Model\Services\BraintreeGatewayInitializer(
+	$service =  new \Model\Services\BraintreeAPI\GatewayInitializer(
 		$container->getService( "config" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-customer-repository", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\CustomerRepository(
+		$container->getService( "braintree-gateway-initializer" )
 	);
 	return $service;
 } );

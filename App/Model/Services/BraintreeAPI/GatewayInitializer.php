@@ -1,8 +1,8 @@
 <?php
 
-namespace Model\Services;
+namespace Model\Services\BraintreeAPI;
 
-class BraintreeGatewayInitializer
+class GatewayInitializer
 {
     private $configs;
 

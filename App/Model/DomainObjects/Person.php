@@ -1,14 +1,19 @@
 <?php
 
-namespace Model\Entities;
+namespace Model\DomainObjects;
 
-class Person
+use Contracts\DomainObjectInterface;
+
+class Person implements DomainObjectInterface
 {
 	public $first_name;
     public $last_name;
     public $email;
     public $phone_id;
     public $address_id;
+	public $phone_number;
+	public $organization;
+	public $address;
 
 	public function setNames( $name )
 	{
@@ -24,11 +29,6 @@ class Person
     public function setLastName( $last_name )
     {
         $this->last_name = $last_name;
-    }
-
-    public function setEmail( $email )
-    {
-        $this->email = $email;
     }
 
 	public function getFullName()
@@ -53,6 +53,51 @@ class Person
 	{
 		if ( isset( $this->last_name ) ) {
 			return $this->last_name;
+		}
+
+		return null;
+	}
+
+	public function setEmail( $email )
+	{
+		$this->email = $email;
+		return $this;
+	}
+
+	public function getEmail()
+	{
+		if ( isset( $this->email ) ) {
+			return $this->email;
+		}
+
+		return null;
+	}
+
+	public function setPhoneNumber( $phone_number )
+	{
+		$this->phone_number = $phone_number;
+		return $this;
+	}
+
+	public function getPhoneNumber()
+	{
+		if ( isset( $this->phone_number ) ) {
+			return $this->phone_number;
+		}
+
+		return null;
+	}
+
+	public function setOrganization( $organization )
+	{
+		$this->organization = $organization;
+		return $this;
+	}
+
+	public function getOrganization()
+	{
+		if ( isset( $this->organization ) ) {
+			return $this->organization;
 		}
 
 		return null;

@@ -3,6 +3,7 @@
 namespace Model\Entities;
 
 use Contracts\EntityInterface;
+use Model\DomainObjects\Person;
 
 class User extends Person implements EntityInterface
 {
