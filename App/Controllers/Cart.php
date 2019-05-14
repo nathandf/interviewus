@@ -72,19 +72,33 @@ class Cart extends Controller
                 "purchase"
             )
         ) {
-            vdumpd( $input->get( "payment_method_nonce" ) );
-            $accountUpgrader = $this->load( "account-upgrader" );
-            $cartDestroyer = $this->load( "cart-destroyer" );
-            $planRepo = $this->load( "plan-repository" );
+            $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
 
-            foreach ( $this->cart->products as $product ) {
-                $plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
+            // Create a subscription with braintree api using payment nonce
+            // provided by braintree DropinUI
+            $result = $braintreeSubscriptionRepo->create(
+                $input->get( "payment_method_nonce" ),
+                $this->cart->products[ 0 ]->plan->braintree_plan_id
+            );
+
+            // If subscription successful, upgrade and provision account, destroy
+            // cart and related products, and save the payment method info
+            if ( $result->success ) {
+                $accountUpgrader = $this->load( "account-upgrader" );
+                $cartDestroyer = $this->load( "cart-destroyer" );
+                $planRepo = $this->load( "plan-repository" );
+
+                // Upgrade account
+                $plan = $planRepo->get( [ "*" ], [ "id" => $this->cart->products[ 0 ]->plan_id ] );
                 $accountUpgrader->upgrade( $this->account->id, $plan->id );
+
+                // Destroy cart and related products
+                $cartDestroyer->destroy( $this->cart->id );
+
+                $this->view->redirect( "profile/" );
             }
 
-            $cartDestroyer->destroy( $this->cart->id );
-
-            $this->view->redirect( "profile/" );
+            $inputValidator->addError( "purchase", $result->message );
         }
 
         $this->view->assign( "error_messages", $inputValidator->getErrors() );

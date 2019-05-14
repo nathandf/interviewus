@@ -41,4 +41,11 @@ class CustomerRepository
 
         return $result;
     }
+
+    public function get( $customer_id )
+    {
+        $result = $this->gateway->customer()->find( $customer_id );
+
+        return $result;
+    }
 }

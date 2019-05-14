@@ -34,7 +34,9 @@ class Billing extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
-        $paymentMethodRepo = $this->load( "payment-method-repository" );
+        $braintreeCustomerRepo = $this->load( "braintree-customer-repository" );
+
+        $creditCards = $braintreeCustomerRepo->get( $this->account->braintree_customer_id )->creditCards;
 
         if (
             $input->exists() &&
@@ -64,23 +66,17 @@ class Billing extends Controller
                     "token" => [
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
                     ],
-                    "payment_method_id" => [
-                        "required" => true,
-                        "in_array" => $paymentMethodRepo->get( [ "id" ], [ "account_id" => $this->account->id ], "raw" )
+                    "braintree_payment_method_id" => [
+                        "required" => true
                     ]
                 ],
                 "remove_payment_method"
             )
         ) {
-            $paymentMethods = $paymentMethodRepo->get( [ "*" ], [ "account_id" => $this->account->id ] );
 
-            if ( count( $pamentMethods ) > 1 ) {
-                $paymentMethodRepo->delete( [ "id" ], [ $input->get( "payment_method_id" ) ] );
-                $this->view->redirect( "profile/billing/" );
-            }
-
-            $inputValidator->addError( "remove_payment_method", "You cannot remove the only payment method on the account. Add a new payment method to remove the current payemnt method" );
         }
+        
+        $this->view->assign( "creditCards", $creditCards );
 
         $this->view->setTemplate( "profile/billing/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

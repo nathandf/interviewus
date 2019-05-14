@@ -294,6 +294,4 @@ ALTER TABLE `account` ADD `sms_interviews` BIGINT NOT NULL DEFAULT '1' AFTER `ac
 ALTER TABLE `account` CHANGE `plan_id` `plan_id` BIGINT(20) NULL DEFAULT '11';
 ALTER TABLE `account` CHANGE `account_type_id` `account_type_id` BIGINT(20) NULL DEFAULT '0';
 
-CREATE TABLE `payment_method` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `account_id` BIGINT NOT NULL , `braintree_payment_method_id` BIGINT NOT NULL , `address_id` BIGINT NULL , `last_4` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
-ALTER TABLE `payment_method` ADD `is_primary` TINYINT NULL DEFAULT '0' AFTER `last_4`;
 ALTER TABLE `account` ADD `braintree_customer_id` VARCHAR(256) NULL AFTER `status`;

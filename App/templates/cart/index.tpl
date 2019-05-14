@@ -15,7 +15,8 @@
 		<p class="label">Plan: {ucfirst( $product->plan->name )} - {$product->plan->braintree_plan_id}</p>
 		<p class="label">${$product->plan->price} / month ( billed {$product->billing_frequency} )</p>
 		<div class="hr-full"></div>
-		<p class="title text-right">Total: ${if $product->billing_frequency == "annually"}{$product->plan->price * 12}{else}{$product->plan->price}{/if}</p>
+		<p class="title floatleft push-t-sml push-b-sml">Total:</p><p class="title floatright push-t-sml push-b-sml">${if $product->billing_frequency == "annually"}{$product->plan->price * 12}{else}{$product->plan->price}{/if}</p>
+		<div class="clear"></div>
 		<div class="hr-full"></div>
 		{if $smarty.foreach.product_loop.last}
 		<div id="braintree-dropin-container"></div>

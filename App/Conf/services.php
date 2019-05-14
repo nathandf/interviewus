@@ -122,6 +122,20 @@ $container->register( "braintree-customer-repository", function () use ( $contai
 	return $service;
 } );
 
+$container->register( "braintree-payment-method-repository", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\PaymentMethodRepository(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-subscription-repository", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\SubscriptionRepository(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
 $container->register( "braintree-api-manager", function () use ( $container ) {
 	$service =  new \Model\Services\BraintreeAPIManager(
 		$container->getService( "braintree-gateway-initializer" )
@@ -287,14 +301,6 @@ $container->register( "organization-user-repository", function() use ( $containe
 
 $container->register( "phone-repository", function() use ( $container ) {
 	$repo = new \Model\Services\PhoneRepository(
-		$container->getService( "dao" ),
-		$container->getService( "entity-factory" )
-	);
-	return $repo;
-} );
-
-$container->register( "payment-method-repository", function() use ( $container ) {
-	$repo = new \Model\Services\PaymentMethodRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
