@@ -19,4 +19,17 @@ class PaymentMethodRepository
 
         return $result;
     }
+
+    public function create( $customer_id, $payment_method_nonce )
+    {
+        $result = $this->gateway->paymentMethod()->create([
+            "customerId" => $customer_id,
+            "paymentMethodNonce" => $payment_method_nonce,
+            "options" => [
+                "failOnDuplicatePaymentMethod" => true
+            ]
+        ]);
+
+        return $result;
+    }
 }

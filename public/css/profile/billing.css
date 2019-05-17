@@ -1,0 +1,12 @@
+.plan-container {
+	margin-top: 20px;
+}
+
+.plan-component-detail {
+	border: 1px solid #DDDDDD;
+	padding: 10px;
+	font-size: 14px;
+	color: #777777;
+	text-align: center;
+	background: #FFFFFF;
+}

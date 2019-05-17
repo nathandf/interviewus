@@ -295,3 +295,4 @@ ALTER TABLE `account` CHANGE `plan_id` `plan_id` BIGINT(20) NULL DEFAULT '11';
 ALTER TABLE `account` CHANGE `account_type_id` `account_type_id` BIGINT(20) NULL DEFAULT '0';
 
 ALTER TABLE `account` ADD `braintree_customer_id` VARCHAR(256) NULL AFTER `status`;
+ALTER TABLE `account` ADD `braintree_subscription_id` VARCHAR(256) NULL DEFAULT NULL AFTER `braintree_customer_id`;

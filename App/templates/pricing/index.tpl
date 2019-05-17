@@ -9,7 +9,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	{include file="includes/modals/pricing/payment-modal.tpl"}
+	{include file="includes/modals/pricing/checkout-modal.tpl"}
 	<div class="con-cnt-lrg">
 		<div class="pad-med">
 			<p class="title">Try it out for <span class="basic-text">free</span></p>

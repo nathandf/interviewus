@@ -89,8 +89,14 @@ class Cart extends Controller
                 $planRepo = $this->load( "plan-repository" );
 
                 // Upgrade account
-                $plan = $planRepo->get( [ "*" ], [ "id" => $this->cart->products[ 0 ]->plan_id ] );
-                $accountUpgrader->upgrade( $this->account->id, $plan->id );
+                $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
+
+                // Update braintree subscription id in account
+                $accountRepo = $this->load( "account-repository" );
+                $accountRepo->update(
+                    [ "braintree_subscription_id" => $result->subscription->id ],
+                    [ "id" => $this->account->id ]
+                );
 
                 // Destroy cart and related products
                 $cartDestroyer->destroy( $this->cart->id );

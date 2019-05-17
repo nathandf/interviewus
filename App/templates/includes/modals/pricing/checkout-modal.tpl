@@ -5,7 +5,7 @@
 	<div class="clear"></div>
 	<div class="con-cnt-med-plus-plus theme-tertiary-light --modal-content">
 		<div class="theme-primary pad-med">
-			<p>Payment</p>
+			<p>Checkout</p>
 		</div>
 		<div id="payment-content" class="pad-med">
 			<div id="user-name-container" style="display: none;">

@@ -22,4 +22,27 @@ class SubscriptionRepository
 
         return $result;
     }
+
+    public function get( $subscription_id )
+    {
+        try {
+            $result = $this->gateway->subscription()->find( $subscription_id );
+
+            return $result;
+        } catch ( \Exception $e ) {
+
+            return null;
+        }
+    }
+
+    public function delete( $subscription_id )
+    {
+        if ( !is_null( $this->get( $subscription_id ) ) ) {
+            $result = $this->gateway->subscription()->cancel( $subscription_id );
+
+            return true;
+        }
+
+        return false;
+    }
 }

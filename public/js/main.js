@@ -17,8 +17,8 @@ $( function() {
         }
     } );
 
-    $( ".--c-mp-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Confirm prospect to member conversion." );
+    $( ".--c-cancel-confirm" ).on( "click", function( event ) {
+        confirmation = confirm( "Cancelling your subscription is permanant. You're remaining interviews will be unaffected until the end of your billing cycle but access to advanced features will be limited immediately upon cancellation. Are you sure you want to continue?" );
         if ( confirmation === false ) {
             event.preventDefault();
         }
