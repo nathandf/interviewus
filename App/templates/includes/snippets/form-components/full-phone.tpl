@@ -12,7 +12,7 @@
 	</div>
 	<div class="container-national-number">
 		<p class="label">Phone number</p>
-		<input type="text" class="inp inp-full" name="national_number" required="required">
+		<input type="tel" class="inp inp-full" name="national_number" required="required">
 	</div>
 	<div class="clear"></div>
 </div>
