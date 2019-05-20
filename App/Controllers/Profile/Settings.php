@@ -4,7 +4,7 @@ namespace Controllers\Profile;
 
 use \Core\Controller;
 
-class Billing extends Controller
+class Settings extends Controller
 {
     public function before()
     {
@@ -13,6 +13,7 @@ class Billing extends Controller
         $accountRepo = $this->load( "account-repository" );
         $accountUserRepo = $this->load( "account-user-repository" );
         $organizationRepo = $this->load( "organization-repository" );
+        $this->industryRepo = $this->load( "industry-repository" );
 
         $this->user = $userAuth->getAuthenticatedUser();
 
@@ -25,6 +26,8 @@ class Billing extends Controller
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
 
         $this->view->assign( "countries", $countryRepo->get( [ "*" ] ) );
+        $this->view->assign( "industry", $this->industryRepo->get( [ "*" ], [ "id" => $this->organization->industry_id ], "single" ) );
+        $this->view->assign( "industries", $this->industryRepo->get( [ "*" ] ) );
         $this->view->assign( "account", $this->account );
         $this->view->assign( "organization", $this->organization );
         $this->view->assign( "user", $this->user );
@@ -72,6 +75,41 @@ class Billing extends Controller
             }
 
             $inputValidator->addError( "add_payment_method", $result->message );
+        }
+
+        if (
+            $input->exists() &&
+            $input->issetField( "update_organization" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "equals-hidden" => $this->session->getSession( "csrf-token" ),
+                        "required" => true
+                    ],
+                    "organization" => [
+                        "min" => 1
+                    ],
+                    "industry_id" => [
+                        "in_array" => $this->industryRepo->get( [ "id" ], [], "raw" )
+                    ]
+                ],
+                "udpate_organization"
+            )
+        ) {
+            $organizationRepo = $this->load( "organization-repository" );
+            $organizationRepo->update(
+                [
+                    "industry_id" => $input->get( "industry_id" ),
+                    "name" => $input->get( "organization" )
+                ],
+                [ "id" => $this->organization->id ]
+            );
+
+            $this->session->addFlashMessage( "Organization updated" );
+            $this->session->setFlashMessages();
+
+            $this->view->redirect( "profile/settings/" );
         }
 
         if (
@@ -142,7 +180,7 @@ class Billing extends Controller
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
-        $this->view->setTemplate( "profile/billing/index.tpl" );
+        $this->view->setTemplate( "profile/settings/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
     }
 }

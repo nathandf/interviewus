@@ -3,18 +3,14 @@
 		<i class="fa fa-2x fa-times" aria-hidden="true"></i>
 	</div>
 	<div class="clear"></div>
-	<div class="con-cnt-med-plus-plus theme-tertiary-light --modal-content">
-		<div class="theme-primary pad-med">
-			<p>Organziation</p>
+	<div class="con-cnt-med-plus theme-tertiary-light --modal-content">
+		<div class="theme-primary pad-sml">
+			<p>Organization</p>
 		</div>
-		<div class="pad-med">
-			<form action="{$HOME}profile/" method="post">
-				<input type="hidden" name="token" value="{$csrf_token}">
-				<input type="hidden" name="udpate_organization" value="{$csrf_token}">
-				<p class="label">Organization name</p>
-				<input type="text" name="name" required="required" class="inp inp-full" value="{$organization->name}">
-				<button type="submit" class="button push-t-med">Update Profile</button>
-			</form>
-		</div>
+		<a class="link" href="{$HOME}profile/settings/" style="text-decoration: none;">
+			<div class="pad-sml text-center bg-white tc-black text-med-heavy shade-on-hover" style="border-bottom: 1px solid #000000;">
+				<p>Settings</p>
+			</div>
+		</a>
 	</div>
 </div>

@@ -5,13 +5,8 @@
 	<div class="clear"></div>
 	<div class="con-cnt-med-plus theme-tertiary-light --modal-content">
 		<div class="theme-primary pad-sml">
-			<p>Settings</p>
+			<p>User</p>
 		</div>
-		<a class="link" href="{$HOME}profile/billing/" style="text-decoration: none;">
-			<div class="pad-sml text-center bg-white tc-black text-med-heavy shade-on-hover" style="border-bottom: 1px solid #000000;">
-				<p>Billing</p>
-			</div>
-		</a>
 		<a class="link" href="{$HOME}profile/logout" style="text-decoration: none;">
 			<div class="pad-sml text-center bg-white tc-black text-med-heavy shade-on-hover" style="border-bottom: 1px solid #000000;">
 				<p>Logout</p>

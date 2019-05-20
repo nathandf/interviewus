@@ -8,6 +8,41 @@
 
 {block name="profile-body"}
 	<div class="con-cnt-xlrg pad-med push-t-med">
+		{if !empty($error_messages.update_organization)}
+			{foreach from=$error_messages.update_organization item=message}
+				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
+		{include file="includes/snippets/flash-messages.tpl"}
+		<p class="sub-heading">Organization</p>
+		<div class="hr-full"></div>
+		<div class="con-cnt-med-plus-plus floatleft">
+			<form action="" method="post">
+				<input type="hidden" name="token" value="{$csrf_token}">
+				<input type="hidden" name="update_organization" value="{$csrf_token}">
+				<p class="label">Organization name</p>
+				<input type="text" name="organization" required="required" class="inp inp-full" value="{$organization->name}">
+				<p class="label">Industry</p>
+				<select name="industry_id" class="inp inp-full" required="required">
+					{if !is_null( $industry )}
+					<option value="{$industry->id}" selected="selected" hidden="hidden">{$industry->name}</option>
+					{else}
+					<option value="" selected="selected" hidden="hidden">Choose an industry</option>
+					{/if}
+					{if isset($industries)}
+					{foreach from=$industries item=industry}
+					<option value="{$industry->id}">{$industry->name}</option>
+					{/foreach}
+					{/if}
+				</select>
+				<button type="submit" class="btn btn-inline push-t-med">Update Profile</button>
+			</form>
+		</div>
+		<div class="clear"></div>
+		<p class="sub-heading">Billing</p>
+		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}
 			{foreach from=$error_messages.cancel_subscription item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
@@ -15,9 +50,6 @@
 				</div>
 			{/foreach}
 		{/if}
-		<p class="sub-heading">Billing</p>
-		<div class="hr-full"></div>
-		{include file="includes/snippets/flash-messages.tpl"}
 		<div class="con-cnt-med-plus-plus floatleft">
 			<p class="label">Current Plan: {ucfirst( $plan->name )}</p>
 			<a href="{$HOME}pricing/" class="btn btn-inline tc-white bg-good-green push-t-sml floatleft push-r-sml"><i class="far fa-arrow-alt-circle-up push-r-sml"></i>Upgrade Account</a>
@@ -57,45 +89,6 @@
 					<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 				</div>
 				<div class="clear"></div>
-			</div>
-		</div>
-		<div class="clear"></div>
-		<div class="hr-full"></div>
-		<div class="con-cnt-med-plus-plus floatleft">
-			{if !empty($error_messages.add_payment_method)}
-				{foreach from=$error_messages.add_payment_method item=message}
-					<div class="con-message-failure mat-hov cursor-pt --c-hide">
-						<p class="user-message-body">{$message}</p>
-					</div>
-				{/foreach}
-			{/if}
-			{if !empty($error_messages.remove_payment_method)}
-				{foreach from=$error_messages.remove_payment_method item=message}
-					<div class="con-message-failure mat-hov cursor-pt --c-hide">
-						<p class="user-message-body">{$message}</p>
-					</div>
-				{/foreach}
-			{/if}
-			<p class="label">Payment Methods</p>
-			<div class="bg-white border-std pad-med">
-				<div id="braintree-dropin-container"></div>
-				<button id="submit-button" class="button tc-white text-xlrg bg-good-green push-t-med">Add Payment Method</button>
-				{literal}
-				<script>
-					var button = document.querySelector( '#submit-button' );
-					braintree.dropin.create({
-						authorization: '{/literal}{$client_token}{literal}',
-						container: '#braintree-dropin-container'
-					}, function (createErr, instance) {
-						button.addEventListener('click', function () {
-							instance.requestPaymentMethod(function (err, payload) {
-								var payment_processing_url = "{/literal}{$HOME}{literal}profile/billing/?add_payment_method=true&token={/literal}{$csrf_token}{literal}&payment_method_nonce=" + payload.nonce;
-								window.location.replace( payment_processing_url );
-							} );
-						} );
-					});
-				</script>
-				{/literal}
 			</div>
 		</div>
 		<div class="clear"></div>
