@@ -73,9 +73,10 @@ class SignUp extends Controller
                     );
                 }
 
-                // Create new Account
+                // Create new Account with an upgraded plan to give user access
+                // to free interviews
                 $account = $accountRepo->insert([
-                    "account_type_id" => 1,
+                    "account_type_id" => 2,
                     "plan_id" => 11
                 ]);
 
@@ -83,7 +84,15 @@ class SignUp extends Controller
                 $accountProvisioner = $this->load( "account-provisioner" );
                 $accountProvisioner->provision( $account->id );
 
-                // Create braintree customer
+                // Update the account back to free to restrict access to premium
+                // features. This will not remove the extra interviews they were
+                // just provided.
+                $accountRepo->update(
+                    [ "account_type_id" => 1 ],
+                    [ "id" => $account->id ]
+                );
+
+                // Create braintree customer from a person
                 $braintreeCustomerRepo = $this->load( "braintree-customer-repository" );
                 $braintreeCustomer = $braintreeCustomerRepo->create( $user )->customer;
 

@@ -15,9 +15,13 @@ class ClientTokenGenerator
 
     public function generate( $customer_id )
     {
-        $clientToken = $this->gateway->clientToken()->generate([
-            "customerId" => $customer_id
-        ]);
+        try {
+            $clientToken = $this->gateway->clientToken()->generate([
+                "customerId" => $customer_id
+            ]);
+        } catch (\Exception $e) {
+            return null;
+        }
 
         return $clientToken;
     }

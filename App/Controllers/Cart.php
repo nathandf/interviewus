@@ -73,6 +73,7 @@ class Cart extends Controller
             )
         ) {
             $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
+            $paymentMethodRepo = $this->load( "payment-method-repository" );
 
             // Create a subscription with braintree api using payment nonce
             // provided by braintree DropinUI
@@ -80,6 +81,13 @@ class Cart extends Controller
                 $input->get( "payment_method_nonce" ),
                 $this->cart->products[ 0 ]->plan->braintree_plan_id
             );
+
+            // Create a native payment method for this subscription
+            $paymentMethodRepo->insert([
+                "account_id" => $this->account->id,
+                "braintree_payment_method_token" =>  $result->subscription->paymentMethodToken,
+                "is_default" => 1
+            ]);
 
             // If subscription successful, upgrade and provision account, destroy
             // cart and related products, and save the payment method info
