@@ -5,7 +5,7 @@
 	<div class="clear"></div>
 	<div class="con-cnt-med-plus theme-tertiary-light --modal-content">
 		<div class="theme-primary pad-sml">
-			<p>User</p>
+			<p class="text-center">User</p>
 		</div>
 		<a class="link" href="{$HOME}profile/logout" style="text-decoration: none;">
 			<div class="pad-sml text-center bg-white tc-black text-med-heavy shade-on-hover" style="border-bottom: 1px solid #000000;">

@@ -71,7 +71,7 @@ class Settings extends Controller
             if ( $result->success ) {
                 $this->session->addFlashMessage( "Payment Method Added" );
                 $this->session->setFlashMessages();
-                $this->view->redirect( "profile/billing/" );
+                $this->view->redirect( "profile/settings/" );
             }
 
             $inputValidator->addError( "add_payment_method", $result->message );
@@ -131,7 +131,7 @@ class Settings extends Controller
             $this->session->addFlashMessage( "Payment Method Deleted" );
             $this->session->setFlashMessages();
 
-            $this->view->redirect( "profile/billing/" );
+            $this->view->redirect( "profile/settings/" );
         }
 
         if (
@@ -159,7 +159,7 @@ class Settings extends Controller
             $this->session->addFlashMessage( "Subscription successfully canceled." );
             $this->session->setFlashMessages();
 
-            $this->view->redirect( "profile/billing/" );
+            $this->view->redirect( "profile/settings/" );
         }
 
         $this->view->assign(
