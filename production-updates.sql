@@ -296,3 +296,5 @@ ALTER TABLE `account` CHANGE `account_type_id` `account_type_id` BIGINT(20) NULL
 
 ALTER TABLE `account` ADD `braintree_customer_id` VARCHAR(256) NULL AFTER `status`;
 ALTER TABLE `account` ADD `braintree_subscription_id` VARCHAR(256) NULL DEFAULT NULL AFTER `braintree_customer_id`;
+
+CREATE TABLE `payment_method` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `braintree_payment_method_id` VARCHAR(256) NOT NULL , `is_default` TINYINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
