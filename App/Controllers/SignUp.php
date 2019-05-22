@@ -76,8 +76,8 @@ class SignUp extends Controller
                 // Create new Account with an upgraded plan to give user access
                 // to free interviews
                 $account = $accountRepo->insert([
-                    "account_type_id" => 2,
-                    "plan_id" => 11
+                    "account_type_id" => 1,
+                    "plan_id" => 1
                 ]);
 
                 // Provision Account
@@ -88,7 +88,7 @@ class SignUp extends Controller
                 // features. This will not remove the extra interviews they were
                 // just provided.
                 $accountRepo->update(
-                    [ "account_type_id" => 1 ],
+                    [ "plan_id" => 11 ],
                     [ "id" => $account->id ]
                 );
 

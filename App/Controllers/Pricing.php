@@ -74,7 +74,7 @@ class Pricing extends Controller
 
                 // Get existing cart
                 $cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
-                
+
                 // If no cart exists, create a new one
                 if ( is_null( $cart ) ) {
                     $cart = $cartRepo->insert([
@@ -206,12 +206,20 @@ class Pricing extends Controller
                 // Create new Account
                 $account = $accountRepo->insert([
                     "account_type_id" => 1,
-                    "plan_id" => 11
+                    "plan_id" => 1
                 ]);
 
                 // Provision Account
                 $accountProvisioner = $this->load( "account-provisioner" );
                 $accountProvisioner->provision( $account->id );
+
+                // Update the account back to free to restrict access to premium
+                // features. This will not remove the extra interviews they were
+                // just provided.
+                $accountRepo->update(
+                    [ "plan_id" => 11 ],
+                    [ "id" => $account->id ]
+                );
 
                 // Create braintree customer
                 $braintreeCustomerRepo = $this->load( "braintree-customer-repository" );

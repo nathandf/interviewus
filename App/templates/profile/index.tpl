@@ -40,6 +40,7 @@
 			</div>
 			<div class="clear"></div>
 		</div>
+		{include file="includes/snippets/flash-messages.tpl"}
 		<div class="pad-sml-mob-pos">
 			<div class="pad-sml-mob-neg"></div>
 			<div class="account-details-inner-container">
