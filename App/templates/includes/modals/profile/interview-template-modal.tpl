@@ -3,7 +3,7 @@
 		<i class="fa fa-2x fa-times" aria-hidden="true"></i>
 	</div>
 	<div class="clear"></div>
-	<div class="con-cnt-med-plus-plus theme-tertiary-light --modal-content">
+	<div class="con-cnt-med-plus-plus bg-white --modal-content">
 		<div class="theme-primary pad-med">
 			<p>New Interview Template</p>
 		</div>

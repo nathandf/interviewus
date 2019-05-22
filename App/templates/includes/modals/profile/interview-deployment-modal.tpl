@@ -3,7 +3,7 @@
 		<i class="fa fa-2x fa-times" aria-hidden="true"></i>
 	</div>
 	<div class="clear"></div>
-	<div class="con-cnt-med-plus-plus bg-white --modal-content theme-tertiary-light">
+	<div class="con-cnt-med-plus-plus bg-white --modal-content bg-white">
 		<form action="" method="post">
 			<input type="hidden" name="token" value="{$csrf_token}">
 			<input type="hidden" name="deploy-interview" value="{$csrf_token}">

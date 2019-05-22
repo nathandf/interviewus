@@ -25,7 +25,7 @@
 				<p class="label">Organization name</p>
 				<input type="text" name="organization" required="required" class="inp inp-full" value="{$organization->name}">
 				<p class="label">Industry</p>
-				<select name="industry_id" class="inp inp-full" required="required">
+				<select name="industry_id" class="inp inp-full cursor-pt" required="required">
 					{if !is_null( $industry )}
 					<option value="{$industry->id}" selected="selected" hidden="hidden">{$industry->name}</option>
 					{else}

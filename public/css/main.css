@@ -1284,6 +1284,10 @@ td {
     background: #0667D0;
 }
 
+.bg-teal {
+    background: #26a69a;
+}
+
 .bg-green {
     background: #37BF91;
 }
@@ -1421,6 +1425,10 @@ td {
 
 .tc-deep-blue {
     color: #0667D0;
+}
+
+.tc-teal {
+    color: #26a69a;
 }
 
 .tc-real-gold {

@@ -30,7 +30,7 @@
 			</tr>
 			{foreachelse}
 			<tr>
-				<td class="pad-sml text-med-heavy">No Positions</td>
+				<td class="pad-sml text-med-heavy bg-white" colspan="2">No Positions</td>
 			</tr>
 			{/foreach}
 		</table>

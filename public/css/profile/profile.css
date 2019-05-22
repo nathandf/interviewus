@@ -85,6 +85,36 @@ input[type=radio]:checked + .radio-label {
 	color: #FFFFFF;
 }
 
+.account-details-tag {
+	background: #FFF;
+	padding: 8px 11px 8px 11px;
+	border: 1px solid #888888;
+	background: #FFFFFF;
+	color: #333333;
+	float: left;
+	margin-right: -1px;
+}
+
+.adt-first {
+	border-radius: 3px 0px 0px 3px;
+}
+
+.adt-last {
+	border-radius: 0px 3px 3px 0px;
+}
+
+.account-details-icon {
+	display: block;
+	float: left;
+	margin-right: 10px;
+}
+
+.account-details{
+	display: block;
+	float: left;
+}
+
+
 @media screen and (max-width: 600px) {
 	.schedule-button {
 		font-size: 14px;

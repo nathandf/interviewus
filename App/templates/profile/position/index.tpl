@@ -15,6 +15,5 @@
 		<div class="theme-primary pad-sml">
 			<p>{$position->description|default:null}</p>
 		</div>
-
 	</div>
 {/block}

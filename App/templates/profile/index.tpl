@@ -40,6 +40,32 @@
 			</div>
 			<div class="clear"></div>
 		</div>
+		<div class="pad-sml-mob-pos">
+			<div class="pad-sml-mob-neg"></div>
+			<div class="account-details-inner-container">
+				<div class="account-details-tag adt-first">
+					<div class="account-details-icon tc-teal">
+						<i class="fas fa-2x fa-sms"></i>
+					</div>
+					<div class="account-details">
+						<p class="text-lrg-heavy text-center">{$account->sms_interviews}</p>
+						<p class="text-sml text-center">SMS interviews</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="account-details-tag adt-last">
+					<div class="account-details-icon tc-teal">
+						<i class="fas fa-2x fa-globe"></i>
+					</div>
+					<div class="account-details">
+						<p class="text-lrg-heavy text-center">{if $account->web_interviews < 0}Unlimited{else}{$account->web_interviews}{/if}</p>
+						<p class="text-sml text-center">Web interviews</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
 		{foreach from=$interviews item=interview name="fe_interviews"}
 		<div id="interview-details-{$interview->id}" class="interview-details" style="display: none;">
 			<div class="pad-sml-mob-neg"></div>
