@@ -75,11 +75,25 @@ class Cart extends Controller
             $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
             $paymentMethodRepo = $this->load( "payment-method-repository" );
 
-            // If a current subscription exists, cancel it.
+            // If a subscription exists, update it.
             if ( !is_null( $this->account->braintree_subscription_id ) ) {
-                $braintreeSubscriptionRepo->delete(
-                    $this->account->braintree_subscription_id
+                $braintreeSubscriptionRepo->updatePlan(
+                    $this->account->braintree_subscription_id,
+                    $this->cart->products[ 0 ]->plan->braintree_plan_id,
+                    $this->cart->products[ 0 ]->plan->price
                 );
+
+                // TODO Handle new payment method if one exists
+                
+                // Upgrade account
+                $accountUpgrader = $this->load( "account-upgrader" );
+                $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
+
+                // Destroy cart and related products
+                $cartDestroyer = $this->load( "cart-destroyer" );
+                $cartDestroyer->destroy( $this->cart->id );
+
+                $this->view->redirect( "profile/" );
             }
 
             // Create a subscription with braintree api using payment nonce

@@ -91,6 +91,8 @@
 						{/if}
 						<div class="clear"></div>
 					</div>
+				{foreachelse}
+					<p>No payment methods on this account</p>
 				{/foreach}
 			</div>
 			<div id="new-payment-method" style="display: none;">
