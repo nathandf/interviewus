@@ -39,6 +39,7 @@ class Settings extends Controller
         $inputValidator = $this->load( "input-validator" );
         $braintreeClientTokenGenerator = $this->load( "braintree-client-token-generator" );
         $braintreeCustomerRepo = $this->load( "braintree-customer-repository" );
+        $paymentMethodRepo = $this->load( "payment-method-repository" );
         $braintreePaymentMethodRepo = $this->load( "braintree-payment-method-repository" );
         $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
         $planRepo = $this->load( "plan-repository" );
@@ -46,6 +47,14 @@ class Settings extends Controller
 
         $plan = $planRepo->get( [ "*" ], [ "id" => $this->account->plan_id ], "single" );
         $plan->details = $planDetailsRepo->get( [ "*" ], [ "plan_id" => $plan->id ], "single" );
+
+        $paymentMethods = $paymentMethodRepo->get( [ "*" ], [ "account_id" => $this->account->id ] );
+
+        foreach ( $paymentMethods as $paymentMethod ) {
+            $paymentMethod->braintreePaymentMethod = $braintreePaymentMethodRepo->get(
+                $paymentMethod->braintree_payment_method_token
+            );
+        }
 
         if (
             $input->exists( "get" ) &&
@@ -114,6 +123,56 @@ class Settings extends Controller
 
         if (
             $input->exists() &&
+            $input->issetField( "update_default_payment_method" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "braintree_payment_method_token" => [
+                        "required" => true,
+                        "in_array" => $paymentMethodRepo->get(
+                            [ "braintree_payment_method_token" ],
+                            [ "account_id" => $this->account->id ],
+                            "raw"
+                        )
+                    ]
+                ],
+                "update_default_payment_method"
+            )
+        ) {
+            // Update payment method for this customer in braintree API
+            $result = $braintreeCustomerRepo->updateDefaultPaymentMethod(
+                $this->account->braintree_customer_id,
+                $input->get( "braintree_payment_method_token" )
+            );
+
+            if ( !is_null( $result ) ) {
+                // Unset all payment methods from default
+                $paymentMethodRepo->update(
+                    [ "is_default" => 0 ],
+                    [ "account_id" => $this->account->id ]
+                );
+
+                // Set the payment method as default based on the token submitted
+                $paymentMethodRepo->update(
+                    [ "is_default" => 1 ],
+                    [ "braintree_payment_method_token" => $input->get( "braintree_payment_method_token" ) ]
+                );
+
+                $this->session->addFlashMessage( "Payment Method Updated" );
+                $this->session->setFlashMessages();
+
+                $this->view->redirect( "profile/settings/" );
+            }
+
+            $inputValidator->addError( "update_default_payment_method", "Invalid Payment Method" );
+            $inputValidator->setErrors();
+        }
+
+        if (
+            $input->exists() &&
             $input->issetField( "remove_payment_method" ) &&
             $inputValidator->validate(
                 $input,
@@ -175,7 +234,9 @@ class Settings extends Controller
                 $this->account->braintree_subscription_id
             )
         );
+
         $this->view->assign( "plan", $plan );
+        $this->view->assign( "paymentMethods", $paymentMethods );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );

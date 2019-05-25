@@ -16,7 +16,7 @@
 			{/foreach}
 		{/if}
 		{include file="includes/snippets/flash-messages.tpl"}
-		<p class="sub-heading">Organization</p>
+		<p class="sub-heading"><i class="fas fa-building push-r-sml"></i>Organization</p>
 		<div class="hr-full"></div>
 		<div class="con-cnt-med-plus-plus floatleft">
 			<form action="" method="post">
@@ -41,7 +41,39 @@
 			</form>
 		</div>
 		<div class="clear"></div>
-		<p class="sub-heading">Billing</p>
+		<form action="" method="post">
+			<input type="hidden" name="update_default_payment_method" value="{$csrf_token}">
+			<input type="hidden" name="token" value="{$csrf_token}">
+			{foreach from=$paymentMethods item=paymentMethod name="pm_loop"}
+				{if $smarty.foreach.pm_loop.first}
+				<p class="sub-heading"><i class="far fa-credit-card push-r-sml"></i>Billing</p>
+				<div class="hr-full"></div>
+				{if !empty($error_messages.update_default_payment_method)}
+					{foreach from=$error_messages.update_default_payment_method item=message}
+						<div class="con-message-failure mat-hov cursor-pt --c-hide">
+							<p class="user-message-body">{$message}</p>
+						</div>
+					{/foreach}
+				{/if}
+				{/if}
+				<div class="bg-white border-std pad-sml push-b-sml">
+					<img src="{$paymentMethod->braintreePaymentMethod->imageUrl}" class="floatleft push-r-sml">
+					<div class="floatleft">
+						<p class="text-left text-xlrg-heavy">Ending in {$paymentMethod->braintreePaymentMethod->last4}</p>
+						<p class="text-left text-sml" style="margin-top: -3px">{$paymentMethod->braintreePaymentMethod->cardType}</p>
+					</div>
+					<div class="floatright">
+						{if !$paymentMethod->braintreePaymentMethod->default}
+						<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline text-sml">Make default</button>
+						{else}
+						<p class="tc-good-green" style="margin-top: 5px;"><i class="fas fa-2x fa-check"></i></p>
+						{/if}
+					</div>
+					<div class="clear"></div>
+				</div>
+			{/foreach}
+		</form>
+		<p class="sub-heading">Subscription</p>
 		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}
 			{foreach from=$error_messages.cancel_subscription item=message}

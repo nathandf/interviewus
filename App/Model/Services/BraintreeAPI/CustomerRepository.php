@@ -48,4 +48,21 @@ class CustomerRepository
 
         return $result;
     }
+
+    public function updateDefaultPaymentMethod( $braintree_customer_id, $payment_method_token )
+    {
+        try {
+            $result = $this->gateway->customer()->update(
+                $braintree_customer_id,
+                [
+                    "defaultPaymentMethodToken" => $payment_method_token
+                ]
+            );
+        } catch ( \Exception $e ) {
+
+            return null;
+        }
+
+        return $result;
+    }
 }
