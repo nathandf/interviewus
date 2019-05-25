@@ -67,19 +67,22 @@
 					<p class="text-left text-sml" style="margin-top: -3px">{$paymentMethod->braintreePaymentMethod->cardType}</p>
 				</div>
 				{if !$paymentMethod->braintreePaymentMethod->default}
-				<div class="floatright">
-					<form action="" method="post">
-						<input type="hidden" name="token" value="{$csrf_token}">
-						<input type="hidden" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}">
-						<button type="submit" name="remove_payment_method" value="{$csrf_token}" class="btn btn-inline tc-white bg-red --c-confirm"><i class="fas fa-trash"></i></button>
-					</form>
-				</div>
-				<div class="floatright">
-					<form action="" method="post">
-						<input type="hidden" name="update_default_payment_method" value="{$csrf_token}">
-						<input type="hidden" name="token" value="{$csrf_token}">
-						<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline text-sml push-r-sml">Make default</button>
-					</form>
+				<div class="floatright" style="display: table;">
+					<div class="floatright">
+						<form action="" method="post">
+							<input type="hidden" name="token" value="{$csrf_token}">
+							<input type="hidden" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}">
+							<button type="submit" name="remove_payment_method" value="{$csrf_token}" class="btn btn-inline tc-white bg-red --c-confirm"><i class="fas fa-trash"></i></button>
+						</form>
+					</div>
+					<div class="floatright">
+						<form action="" method="post">
+							<input type="hidden" name="update_default_payment_method" value="{$csrf_token}">
+							<input type="hidden" name="token" value="{$csrf_token}">
+							<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline text-sml push-r-sml">Make default</button>
+						</form>
+					</div>
+					<div class="clear"></div>
 				</div>
 				{else}
 				<div class="floatright">
@@ -89,7 +92,7 @@
 				<div class="clear"></div>
 			</div>
 		{/foreach}
-		<p class="sub-heading">Subscription</p>
+		<p class="sub-heading"><i class="fas fa-shopping-cart push-r-sml"></i>Subscription</p>
 		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}
 			{foreach from=$error_messages.cancel_subscription item=message}
