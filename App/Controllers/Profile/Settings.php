@@ -78,8 +78,49 @@ class Settings extends Controller
             );
 
             if ( $result->success ) {
-                $this->session->addFlashMessage( "Payment Method Added" );
-                $this->session->setFlashMessages();
+                // Save this payment method and make it default if a payment
+                // method doesn't exist with this token
+                if (
+                    empty(
+                        $paymentMethodRepo->get(
+                            [ "*" ],
+                            [
+                                "braintree_payment_method_token" => $result->paymentMethod->token,
+                                "account_id" => $this->account->id
+                            ],
+                            "raw"
+                        )
+                    )
+                ) {
+                    $paymentMethodRepo->insert([
+                        "account_id" => $this->account->id,
+                        "braintree_payment_method_token" =>  $result->paymentMethod->token
+                    ]);
+
+                    // Unset all payment methods from default
+                    $paymentMethodRepo->update(
+                        [ "is_default" => 0 ],
+                        [ "account_id" => $this->account->id ]
+                    );
+
+                    // Set the new payment method as default
+                    $paymentMethodRepo->update(
+                        [ "is_default" => 1 ],
+                        [ "braintree_payment_method_token" => $result->paymentMethod->token ]
+                    );
+
+                    // If a subscription exists, make this payment method the default
+                    if ( !is_null( $this->account->braintree_subscription_id ) ) {
+                        $braintreeSubscriptionRepo->updatePaymentMethod(
+                            $this->account->braintree_subscription_id,
+                            $result->paymentMethod->token
+                        );
+                    }
+
+                    $this->session->addFlashMessage( "Payment Method Added" );
+                    $this->session->setFlashMessages();
+                }
+
                 $this->view->redirect( "profile/settings/" );
             }
 
@@ -155,13 +196,21 @@ class Settings extends Controller
                     [ "account_id" => $this->account->id ]
                 );
 
-                // Set the payment method as default based on the token submitted
+                // Set the new payment method as default
                 $paymentMethodRepo->update(
                     [ "is_default" => 1 ],
                     [ "braintree_payment_method_token" => $input->get( "braintree_payment_method_token" ) ]
                 );
 
-                $this->session->addFlashMessage( "Payment Method Updated" );
+                // If a subscription exists, make this payment method the default
+                if ( !is_null( $this->account->braintree_subscription_id ) ) {
+                    $braintreeSubscriptionRepo->updatePaymentMethod(
+                        $this->account->braintree_subscription_id,
+                        $input->get( "braintree_payment_method_token" )
+                    );
+                }
+
+                $this->session->addFlashMessage( "Default payment method updated" );
                 $this->session->setFlashMessages();
 
                 $this->view->redirect( "profile/settings/" );

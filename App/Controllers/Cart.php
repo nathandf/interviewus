@@ -75,6 +75,13 @@ class Cart extends Controller
             $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
             $paymentMethodRepo = $this->load( "payment-method-repository" );
 
+            // If a current subscription exists, cancel it.
+            if ( !is_null( $this->account->braintree_subscription_id ) ) {
+                $braintreeSubscriptionRepo->delete(
+                    $this->account->braintree_subscription_id
+                );
+            }
+
             // Create a subscription with braintree api using payment nonce
             // provided by braintree DropinUI
             $result = $braintreeSubscriptionRepo->create(
@@ -82,12 +89,38 @@ class Cart extends Controller
                 $this->cart->products[ 0 ]->plan->braintree_plan_id
             );
 
-            // Create a native payment method for this subscription
-            $paymentMethodRepo->insert([
-                "account_id" => $this->account->id,
-                "braintree_payment_method_token" =>  $result->subscription->paymentMethodToken,
-                "is_default" => 1
-            ]);
+            // Save this payment method and make it default if a payment
+            // method doesn't exist with this token
+            if (
+                empty(
+                    $paymentMethodRepo->get(
+                        [ "*" ],
+                        [
+                            "braintree_payment_method_token" => $result->subscription->paymentMethodToken,
+                            "account_id" => $this->account->id
+                        ],
+                        "raw"
+                    )
+                )
+            ) {
+                // Create a native payment method for this subscription
+                $paymentMethodRepo->insert([
+                    "account_id" => $this->account->id,
+                    "braintree_payment_method_token" =>  $result->subscription->paymentMethodToken,
+                ]);
+
+                // Unset all payment methods from default
+                $paymentMethodRepo->update(
+                    [ "is_default" => 0 ],
+                    [ "account_id" => $this->account->id ]
+                );
+
+                // Set the new payment method as default
+                $paymentMethodRepo->update(
+                    [ "is_default" => 1 ],
+                    [ "braintree_payment_method_token" => $result->subscription->paymentMethodToken ]
+                );
+            }
 
             // If subscription successful, upgrade and provision account, destroy
             // cart and related products, and save the payment method info

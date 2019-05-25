@@ -35,6 +35,21 @@ class SubscriptionRepository
         }
     }
 
+    public function updatePaymentMethod( $subscription_id, $payment_method_token )
+    {
+        try {
+
+            $result = $this->gateway->subscription()->update( $subscription_id, [
+                "paymentMethodToken" => $payment_method_token
+            ]);
+        } catch ( \Exception $e ) {
+
+            return false;
+        }
+
+        return true;
+    }
+
     public function delete( $subscription_id )
     {
         if ( !is_null( $this->get( $subscription_id ) ) ) {
