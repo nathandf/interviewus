@@ -32,4 +32,15 @@ class PaymentMethodRepository
 
         return $result;
     }
+
+    public function delete( $payment_method_token )
+    {
+        try {
+            $this->gateway->paymentMethod()->delete( $payment_method_token );
+        } catch ( \Exception $e ) {
+            return false;
+        }
+
+        return true;
+    }
 }

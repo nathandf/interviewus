@@ -180,13 +180,33 @@ class Settings extends Controller
                     "token" => [
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
                     ],
-                    "braintree_payment_method_id" => [
-                        "required" => true
+                    "braintree_payment_method_token" => [
+                        "required" => true,
+                        "in_array" => $paymentMethodRepo->get(
+                            [ "braintree_payment_method_token" ],
+                            [
+                                "account_id" => $this->account->id,
+                                "is_default" => 0
+                            ],
+                            "raw"
+                        )
                     ]
                 ],
                 "remove_payment_method"
             )
         ) {
+            if ( $braintreePaymentMethodRepo->delete(
+                    $input->get(
+                        "braintree_payment_method_token"
+                    )
+                )
+            ) {
+                $paymentMethodRepo->delete(
+                    [ "braintree_payment_method_token", "is_default" ],
+                    [ $input->get( "braintree_payment_method_token" ), 0 ]
+                );
+            }
+
             $this->session->addFlashMessage( "Payment Method Deleted" );
             $this->session->setFlashMessages();
 

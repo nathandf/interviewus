@@ -41,13 +41,10 @@
 			</form>
 		</div>
 		<div class="clear"></div>
-		<form action="" method="post">
-			<input type="hidden" name="update_default_payment_method" value="{$csrf_token}">
-			<input type="hidden" name="token" value="{$csrf_token}">
-			{foreach from=$paymentMethods item=paymentMethod name="pm_loop"}
-				{if $smarty.foreach.pm_loop.first}
-				<p class="sub-heading"><i class="far fa-credit-card push-r-sml"></i>Billing</p>
-				<div class="hr-full"></div>
+		{foreach from=$paymentMethods item=paymentMethod name="pm_loop"}
+			{if $smarty.foreach.pm_loop.first}
+			<p class="sub-heading"><i class="far fa-credit-card push-r-sml"></i>Billing</p>
+			<div class="hr-full"></div>
 				{if !empty($error_messages.update_default_payment_method)}
 					{foreach from=$error_messages.update_default_payment_method item=message}
 						<div class="con-message-failure mat-hov cursor-pt --c-hide">
@@ -55,24 +52,43 @@
 						</div>
 					{/foreach}
 				{/if}
+				{if !empty($error_messages.remove_payment_method)}
+					{foreach from=$error_messages.remove_payment_method item=message}
+						<div class="con-message-failure mat-hov cursor-pt --c-hide">
+							<p class="user-message-body">{$message}</p>
+						</div>
+					{/foreach}
 				{/if}
-				<div class="bg-white border-std pad-sml push-b-sml">
-					<img src="{$paymentMethod->braintreePaymentMethod->imageUrl}" class="floatleft push-r-sml">
-					<div class="floatleft">
-						<p class="text-left text-xlrg-heavy">Ending in {$paymentMethod->braintreePaymentMethod->last4}</p>
-						<p class="text-left text-sml" style="margin-top: -3px">{$paymentMethod->braintreePaymentMethod->cardType}</p>
-					</div>
-					<div class="floatright">
-						{if !$paymentMethod->braintreePaymentMethod->default}
-						<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline text-sml">Make default</button>
-						{else}
-						<p class="tc-good-green" style="margin-top: 5px;"><i class="fas fa-2x fa-check"></i></p>
-						{/if}
-					</div>
-					<div class="clear"></div>
+			{/if}
+			<div class="bg-white border-std pad-sml push-b-sml">
+				<img src="{$paymentMethod->braintreePaymentMethod->imageUrl}" class="floatleft push-r-sml">
+				<div class="floatleft">
+					<p class="text-left text-xlrg-heavy">Ending in {$paymentMethod->braintreePaymentMethod->last4}</p>
+					<p class="text-left text-sml" style="margin-top: -3px">{$paymentMethod->braintreePaymentMethod->cardType}</p>
 				</div>
-			{/foreach}
-		</form>
+				{if !$paymentMethod->braintreePaymentMethod->default}
+				<div class="floatright">
+					<form action="" method="post">
+						<input type="hidden" name="token" value="{$csrf_token}">
+						<input type="hidden" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}">
+						<button type="submit" name="remove_payment_method" value="{$csrf_token}" class="btn btn-inline tc-white bg-red --c-confirm"><i class="fas fa-trash"></i></button>
+					</form>
+				</div>
+				<div class="floatright">
+					<form action="" method="post">
+						<input type="hidden" name="update_default_payment_method" value="{$csrf_token}">
+						<input type="hidden" name="token" value="{$csrf_token}">
+						<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline text-sml push-r-sml">Make default</button>
+					</form>
+				</div>
+				{else}
+				<div class="floatright">
+					<p class="tc-good-green" style="margin-top: 5px;"><i class="fas fa-2x fa-check"></i></p>
+				</div>
+				{/if}
+				<div class="clear"></div>
+			</div>
+		{/foreach}
 		<p class="sub-heading">Subscription</p>
 		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}

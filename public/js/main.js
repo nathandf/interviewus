@@ -24,6 +24,13 @@ $( function() {
         }
     } );
 
+    $( ".--c-confirm" ).on( "click", function( event ) {
+        confirmation = confirm( "Are you sure you want to continue? This action is permanant." );
+        if ( confirmation === false ) {
+            event.preventDefault();
+        }
+    } );
+
     $( "input:file" ).change(
         function() {
             if ( $( this ).val() ) {
