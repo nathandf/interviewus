@@ -25,22 +25,12 @@ class Pricing extends Controller
         if ( !is_null( $this->user ) ) {
             $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
             $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
-            $this->cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
-
-            // Get all products for this cart
-            if ( !is_null( $this->cart ) ) {
-                $this->cart->products = $productRepo->get( [ "*" ], [ "cart_id" => $this->cart->id ] );
-                foreach ( $this->cart->products as $product ) {
-                    $product->plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
-                }
-            }
         }
 
         $this->view->assign( "countries", $countryRepo->get( [ "*" ] ) );
         $this->view->assign( "account", $this->account );
         $this->view->assign( "organization", $this->organization );
         $this->view->assign( "user", $this->user );
-        $this->view->assign( "cart", $this->cart );
     }
 
     public function indexAction()
@@ -83,7 +73,7 @@ class Pricing extends Controller
                 $productRepo = $this->load( "product-repository" );
 
                 // Get existing cart
-                $cart = $cartRepo->get( [ "*" ], [ "account_id", $this->account->id ], "single" );
+                $cart = $cartRepo->get( [ "*" ], [ "account_id" => $this->account->id ], "single" );
 
                 // If no cart exists, create a new one
                 if ( is_null( $cart ) ) {
@@ -215,8 +205,31 @@ class Pricing extends Controller
 
                 // Create new Account
                 $account = $accountRepo->insert([
-                    "account_type_id" => 1
+                    "account_type_id" => 1,
+                    "plan_id" => 1
                 ]);
+
+                // Provision Account
+                $accountProvisioner = $this->load( "account-provisioner" );
+                $accountProvisioner->provision( $account->id );
+
+                // Update the account back to free to restrict access to premium
+                // features. This will not remove the extra interviews they were
+                // just provided.
+                $accountRepo->update(
+                    [ "plan_id" => 11 ],
+                    [ "id" => $account->id ]
+                );
+
+                // Create braintree customer
+                $braintreeCustomerRepo = $this->load( "braintree-customer-repository" );
+                $braintreeCustomer = $braintreeCustomerRepo->create( $user )->customer;
+
+                // Update Account's braintree_customer_id
+                $accountRepo->update(
+                    [ "braintree_customer_id" => $braintreeCustomer->id ],
+                    [ "id" => $account->id ]
+                );
 
                 // Update current_account_id to new account_id
                 $userRepo->update(

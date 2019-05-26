@@ -31,6 +31,5 @@ $request = $Router->dispatch( $_SERVER[ "QUERY_STRING" ] );
 $controller_name = $request[ "controller" ];
 $method = $request[ "method" ];
 $params = $request[ "params" ];
-
 $controller = new $controller_name( $container, $config, $session, $params );
 $controller->$method();

@@ -10,4 +10,6 @@ class Plan implements EntityInterface
 	public $name;
 	public $description;
 	public $price;
+	public $featured;
+	public $braintree_plan_id;
 }

@@ -101,6 +101,48 @@ $container->register( "industry-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "braintree-client-token-generator", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\ClientTokenGenerator(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-gateway-initializer", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\GatewayInitializer(
+		$container->getService( "config" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-customer-repository", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\CustomerRepository(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-payment-method-repository", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\PaymentMethodRepository(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-subscription-repository", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPI\SubscriptionRepository(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
+$container->register( "braintree-api-manager", function () use ( $container ) {
+	$service =  new \Model\Services\BraintreeAPIManager(
+		$container->getService( "braintree-gateway-initializer" )
+	);
+	return $service;
+} );
+
 $container->register( "account-provisioner", function() use ( $container ) {
 	$repo = new \Model\Services\AccountProvisioner(
 		$container->getService( "account-repository" ),
@@ -251,6 +293,14 @@ $container->register( "organization-repository", function() use ( $container ) {
 
 $container->register( "organization-user-repository", function() use ( $container ) {
 	$repo = new \Model\Services\OrganizationUserRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "payment-method-repository", function() use ( $container ) {
+	$repo = new \Model\Services\PaymentMethodRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);

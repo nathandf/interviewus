@@ -53,9 +53,10 @@ class Cart extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
+        $braintreeClientTokenGenerator = $this->load( "braintree-client-token-generator" );
 
         if (
-            $input->exists() &&
+            $input->exists( "get" ) &&
             $input->issetField( "purchase" ) &&
             $inputValidator->validate(
                 $input,
@@ -63,28 +64,120 @@ class Cart extends Controller
                     "token" => [
                         "required" => true,
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "payment_method_nonce" => [
+                        "required" => true
                     ]
                 ],
                 "purchase"
             )
         ) {
-            $accountUpgrader = $this->load( "account-upgrader" );
-            $cartDestroyer = $this->load( "cart-destroyer" );
-            $planRepo = $this->load( "plan-repository" );
+            // If a subscription exists, update it. If not, create a subscription
+            // using payment method nonce
+            $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
 
-            foreach ( $this->cart->products as $product ) {
-                $plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
-                $accountUpgrader->upgrade( $this->account->id, $plan->id );
+            if ( !is_null( $this->account->braintree_subscription_id ) ) {
+                // Create a braintree payment method. If this payment method already
+                // exists, it will return the payment method details. If it doesn't,
+                // it will create a new payment method for this customer
+                $braintreePaymentMethodRepo = $this->load( "braintree-payment-method-repository" );
+                $paymentMethodResult = $braintreePaymentMethodRepo->create(
+                    $this->account->braintree_customer_id,
+                    $input->get( "payment_method_nonce" )
+                );
+
+                $result = $braintreeSubscriptionRepo->updatePlan(
+                    $this->account->braintree_subscription_id,
+                    $paymentMethodResult->paymentMethod->token,
+                    $this->cart->products[ 0 ]->plan->braintree_plan_id,
+                    $this->cart->products[ 0 ]->plan->price
+                );
+            } else {
+                $result = $braintreeSubscriptionRepo->create(
+                    $input->get( "payment_method_nonce" ),
+                    $this->cart->products[ 0 ]->plan->braintree_plan_id
+                );
             }
 
-            $cartDestroyer->destroy( $this->cart->id );
-            
-            $this->view->redirect( "profile/" );
+            // If subscription successful, upgrade and provision account, destroy
+            // cart and related products, and save the payment method info
+            if ( $result->success ) {
+                // Save this payment method and make it default if a payment
+                // method doesn't exist with this token
+                $paymentMethodRepo = $this->load( "payment-method-repository" );
+
+                if (
+                    empty(
+                        $paymentMethodRepo->get(
+                            [ "*" ],
+                            [
+                                "braintree_payment_method_token" => $result->subscription->paymentMethodToken,
+                                "account_id" => $this->account->id
+                            ]
+                        )
+                    )
+                ) {
+                    // Create a native payment method for this subscription
+                    $paymentMethodRepo->insert([
+                        "account_id" => $this->account->id,
+                        "braintree_payment_method_token" =>  $result->subscription->paymentMethodToken,
+                    ]);
+
+                    // Unset all payment methods from default
+                    $paymentMethodRepo->update(
+                        [ "is_default" => 0 ],
+                        [ "account_id" => $this->account->id ]
+                    );
+
+                    // Set the new payment method as default
+                    $paymentMethodRepo->update(
+                        [ "is_default" => 1 ],
+                        [ "braintree_payment_method_token" => $result->subscription->paymentMethodToken ]
+                    );
+                }
+                $accountUpgrader = $this->load( "account-upgrader" );
+                $cartDestroyer = $this->load( "cart-destroyer" );
+                $planRepo = $this->load( "plan-repository" );
+
+                // Upgrade account
+                $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
+
+                // Update braintree subscription id in account
+                $accountRepo = $this->load( "account-repository" );
+                $accountRepo->update(
+                    [ "braintree_subscription_id" => $result->subscription->id ],
+                    [ "id" => $this->account->id ]
+                );
+
+                // Destroy cart and related products
+                $cartDestroyer->destroy( $this->cart->id );
+
+                $this->view->redirect( "profile/" );
+            }
+
+            $error_codes = [];
+            foreach( $result->errors->deepAll() as $error ) {
+                $error_codes[] = $error->code;
+            }
+
+            // If billing frequency error, add additonal error message
+            $additional_message = null;
+            if ( in_array( 91922, $error_codes ) ) {
+                $additional_message = "Cancel your current subscription and try again.";
+            }
+
+            $inputValidator->addError( "purchase", $result->message . " " . $additional_message );
         }
 
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
         $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign(
+            "client_token",
+            $braintreeClientTokenGenerator->generate(
+                $this->account->braintree_customer_id
+            )
+        );
 
         $this->view->setTemplate( "cart/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

@@ -156,54 +156,6 @@
         ]
     },
     {
-        "name": "twilio/sdk",
-        "version": "5.31.1",
-        "version_normalized": "5.31.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twilio/twilio-php.git",
-            "reference": "7bf7fc2912720122a37df1bc330eaffe382de65b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/twilio/twilio-php/zipball/7bf7fc2912720122a37df1bc330eaffe382de65b",
-            "reference": "7bf7fc2912720122a37df1bc330eaffe382de65b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.0"
-        },
-        "require-dev": {
-            "apigen/apigen": "^4.1",
-            "phpunit/phpunit": "4.5.*"
-        },
-        "time": "2019-04-12T23:00:47+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Twilio\\": "Twilio/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Twilio API Team",
-                "email": "api@twilio.com"
-            }
-        ],
-        "description": "A PHP wrapper for Twilio's API",
-        "homepage": "http://github.com/twilio/twilio-php",
-        "keywords": [
-            "api",
-            "sms",
-            "twilio"
-        ]
-    },
-    {
         "name": "sendgrid/php-http-client",
         "version": "3.9.6",
         "version_normalized": "3.9.6.0",
@@ -306,5 +258,102 @@
             "send",
             "sendgrid"
         ]
+    },
+    {
+        "name": "twilio/sdk",
+        "version": "5.31.3",
+        "version_normalized": "5.31.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twilio/twilio-php.git",
+            "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twilio/twilio-php/zipball/58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
+            "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "require-dev": {
+            "apigen/apigen": "^4.1",
+            "phpunit/phpunit": "4.5.*"
+        },
+        "time": "2019-05-01T17:36:14+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Twilio\\": "Twilio/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Twilio API Team",
+                "email": "api@twilio.com"
+            }
+        ],
+        "description": "A PHP wrapper for Twilio's API",
+        "homepage": "http://github.com/twilio/twilio-php",
+        "keywords": [
+            "api",
+            "sms",
+            "twilio"
+        ]
+    },
+    {
+        "name": "braintree/braintree_php",
+        "version": "3.34.0",
+        "version_normalized": "3.34.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/braintree/braintree_php.git",
+            "reference": "fd55c466d0d0088c67705d7ba0b3876d9767bfda"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/braintree/braintree_php/zipball/fd55c466d0d0088c67705d7ba0b3876d9767bfda",
+            "reference": "fd55c466d0d0088c67705d7ba0b3876d9767bfda",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-dom": "*",
+            "ext-hash": "*",
+            "ext-openssl": "*",
+            "ext-xmlwriter": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2018-05-21T18:14:47+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Braintree": "lib/"
+            },
+            "psr-4": {
+                "Braintree\\": "lib/Braintree"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Braintree",
+                "homepage": "https://www.braintreepayments.com"
+            }
+        ],
+        "description": "Braintree PHP Client Library"
     }
 ]

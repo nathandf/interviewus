@@ -598,27 +598,25 @@ td {
 .con-message-success {
     display: block;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 20px;
     margin-top: 15px;
-    margin-bottom: 8px;
-    border: 1px solid #F6F6F6;
-    border-left: 3px solid green;
+    margin-bottom: 15px;
+    border: 3px solid green;
     background: #FFF;
-    width: 85%;
-    max-width: 600px;
+    width: 100%;
+    color: #555555;
 }
 
 .con-message-failure {
     display: block;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 20px;
     margin-top: 15px;
-    margin-bottom: 8px;
-    border: 1px solid #F6F6F6;
-    border-left: 3px solid #CA2A2A;
+    margin-bottom: 15px;
+    border: 3px solid #CA2A2A;
     background: #FFF;
-    width: 85%;
-    max-width: 300px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .con-half-min-320 {
@@ -1127,6 +1125,27 @@ td {
     box-shadow: none;
 }
 
+.button-text-only {
+    min-height: 46px;
+    line-height: 23px;
+    font-size: 16px;
+    text-align: center;
+    justify-content: center;
+    font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+    background: none;
+    display: block;
+    border-radius: 3px;
+    transition: .4s;
+    text-decoration: none;
+    padding: 8px;
+    -webkit-appearance: none;
+}
+
+.button-text-only:hover {
+    background-color: rgba( 0, 0, 0, .1 );
+    cursor: pointer;
+}
+
 .button-label {
     line-height: 46px;
 }
@@ -1263,6 +1282,10 @@ td {
     background: #0667D0;
 }
 
+.bg-teal {
+    background: #26a69a;
+}
+
 .bg-green {
     background: #37BF91;
 }
@@ -1292,7 +1315,7 @@ td {
 }
 
 .bg-good-green {
-    background: #00C853;
+    background: #219653;
 }
 
 .bg-algae
@@ -1402,12 +1425,16 @@ td {
     color: #0667D0;
 }
 
+.tc-teal {
+    color: #26a69a;
+}
+
 .tc-real-gold {
     color: #FFA500;
 }
 
 .tc-good-green {
-    color: #00C853;
+    color: #219653;
 }
 
 .tc-green {
@@ -1565,6 +1592,14 @@ td {
     margin-bottom: 20px;
 }
 
+.sub-heading {
+    color: #2F3033;
+    font-weight: 700;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .text-resp-sml {
     font-size: 12px
 }
@@ -1679,25 +1714,9 @@ td {
 }
 
 .user-message-body {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #555555;
-}
-
-.msg-err {
-    text-align: center;
-    font weight: 100;
-    color: #CA2A2A;
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.msg-appr {
-    text-align: center;
-    font weight: 100;
-    color: green;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .tool-tip {
@@ -1729,6 +1748,7 @@ td {
     overflow: hidden;
     text-align: center;
 }
+
 .fancy-line-text:before, .fancy-line-text:after {
     position: absolute;
     top: 51%;

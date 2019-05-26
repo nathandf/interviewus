@@ -9,7 +9,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	{include file="includes/modals/pricing/payment-modal.tpl"}
+	{include file="includes/modals/pricing/checkout-modal.tpl"}
 	<div class="con-cnt-lrg">
 		<div class="pad-med">
 			<p class="title">Try it out for <span class="basic-text">free</span></p>
@@ -28,9 +28,9 @@
 		<div class="pad-sml">
 			<form id="pricing-form" action="" method="post">
 				<input id="yearly" type="radio" name="billing_frequency" class="--billing-frequency" value="2" required="required" checked="checked" style="display: none;">
-				<label data-multiple="1" data-frequency_text="annually" data-radio="yearly" for="yearly" class="pad-sml radio-label btn btn-inline push-r-sml --c-billing-frequency-label">Yearly Save > 25%</label>
+				<label data-multiple="1" data-frequency_text="annually" data-radio="yearly" for="yearly" class="pad-sml radio-label btn btn-inline push-r-sml --c-billing-frequency-label --c-annually">Yearly Save > 25%</label>
 				<input id="monthly" type="radio" name="billing_frequency" class="--billing-frequency" value="1" required="required" style="display: none;">
-				<label data-multiple="1.25" data-frequency_text="monthly" data-radio="monthly" for="monthly" class="pad-sml radio-label btn btn-inline --c-billing-frequency-label">Monthly</label>
+				<label data-frequency_text="monthly" data-radio="monthly" for="monthly" class="pad-sml radio-label btn btn-inline --c-billing-frequency-label --c-monthly">Monthly</label>
 			</form>
 		</div>
 	</div>
@@ -38,15 +38,15 @@
 		<div class="clear"></div>
 		<div class="pricing-container">
 			{foreach from=$plans item=plan name=fe_plans}
-			{if $plan->id != 6}
-			<div class="pricing-component{if $smarty.foreach.fe_plans.last} pricing-component-last{/if}">
+			{if $plan->id != 11}
+			<div class="pricing-component{if $smarty.foreach.fe_plans.last} pricing-component-last{/if} {if $plan->id < 6}annual-plan{else}monthly-plan{/if}"{if $plan->id > 5} style="display: none;"{/if}>
 				<div class="pricing-component-header {$plan->name}">{ucfirst( $plan->name )}</div>
 				<div class="pricing-component-content {if $plan->featured} {$plan->name}-border pricing-component-featured{/if}">
 					<div class="pricing-component-popularity {$plan->name}-text">{if $plan->featured}Featured{else}&nbsp;{/if}</div>
 					<div class="pricing-component-price {$plan->name}-text">
 						<p data-base_price="{$plan->price}" class="plan-price">${$plan->price}</p>
 						<p class="text-sml-heavy">USD / month</p>
-						<p class="text-sml-heavy tc-gun-metal">Billed <span class="frequency-text">annually</span></p>
+						<p class="text-sml-heavy tc-gun-metal">Billed <span class="billing-frequency-text">annually</span></p>
 					</div>
 					<div class="pricing-cta-container">
 						<button id="payment" data-plan_name="{ucfirst( $plan->name )}" data-base_price="{$plan->price}" data-plan_id="{$plan->id}" type="button" class="pricing-cta cursor-pt --c-plan-id --modal-trigger">Get Started</button>

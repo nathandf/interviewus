@@ -57,6 +57,10 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
             'Contracts\\' => 10,
             'Conf\\' => 5,
         ),
+        'B' => 
+        array (
+            'Braintree\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -116,6 +120,20 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
         array (
             0 => __DIR__ . '/../..' . '/Conf',
         ),
+        'Braintree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'B' => 
+        array (
+            'Braintree' => 
+            array (
+                0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (
@@ -127,6 +145,7 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit78dc808f4f283431745450a0bb20ab63::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit78dc808f4f283431745450a0bb20ab63::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit78dc808f4f283431745450a0bb20ab63::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit78dc808f4f283431745450a0bb20ab63::$classMap;
 
         }, null, ClassLoader::class);

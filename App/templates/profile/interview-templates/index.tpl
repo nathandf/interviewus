@@ -31,7 +31,7 @@
 			</tr>
 			{foreachelse}
 			<tr>
-				<td class="pad-sml text-med-heavy"><i>No Interview Templates</i></td>
+				<td class="pad-sml text-med-heavy bg-white" colspan="2"><i>No Interview Templates</i></td>
 			</tr>
 			{/foreach}
 		</table>

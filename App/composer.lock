@@ -4,8 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "81f86944c497f56247d6b635eb2fbb57",
+    "content-hash": "4c15f19669876bd687f45e6b4e4bc9c5",
     "packages": [
+        {
+            "name": "braintree/braintree_php",
+            "version": "3.34.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/braintree/braintree_php.git",
+                "reference": "fd55c466d0d0088c67705d7ba0b3876d9767bfda"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/fd55c466d0d0088c67705d7ba0b3876d9767bfda",
+                "reference": "fd55c466d0d0088c67705d7ba0b3876d9767bfda",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Braintree": "lib/"
+                },
+                "psr-4": {
+                    "Braintree\\": "lib/Braintree"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Braintree",
+                    "homepage": "https://www.braintreepayments.com"
+                }
+            ],
+            "description": "Braintree PHP Client Library",
+            "time": "2018-05-21T18:14:47+00:00"
+        },
         {
             "name": "katzgrau/klogger",
             "version": "dev-master",
@@ -258,16 +305,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "5.31.1",
+            "version": "5.31.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php.git",
-                "reference": "7bf7fc2912720122a37df1bc330eaffe382de65b"
+                "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/7bf7fc2912720122a37df1bc330eaffe382de65b",
-                "reference": "7bf7fc2912720122a37df1bc330eaffe382de65b",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
+                "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
                 "shasum": ""
             },
             "require": {
@@ -300,7 +347,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2019-04-12T23:00:47+00:00"
+            "time": "2019-05-01T17:36:14+00:00"
         }
     ],
     "packages-dev": [],
