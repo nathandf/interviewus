@@ -598,27 +598,25 @@ td {
 .con-message-success {
     display: block;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 20px;
     margin-top: 15px;
-    margin-bottom: 8px;
-    border: 1px solid #F6F6F6;
-    border-left: 3px solid green;
+    margin-bottom: 15px;
+    border: 3px solid green;
     background: #FFF;
-    width: 85%;
-    max-width: 600px;
+    width: 100%;
+    color: #555555;
 }
 
 .con-message-failure {
     display: block;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 20px;
     margin-top: 15px;
-    margin-bottom: 8px;
-    border: 1px solid #F6F6F6;
-    border-left: 3px solid #CA2A2A;
+    margin-bottom: 15px;
+    border: 3px solid #CA2A2A;
     background: #FFF;
-    width: 85%;
-    max-width: 300px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .con-half-min-320 {
@@ -1716,25 +1714,9 @@ td {
 }
 
 .user-message-body {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: #555555;
-}
-
-.msg-err {
-    text-align: center;
-    font weight: 100;
-    color: #CA2A2A;
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.msg-appr {
-    text-align: center;
-    font weight: 100;
-    color: green;
-    padding-top: 8px;
-    padding-bottom: 8px;
 }
 
 .tool-tip {
@@ -1766,6 +1748,7 @@ td {
     overflow: hidden;
     text-align: center;
 }
+
 .fancy-line-text:before, .fancy-line-text:after {
     position: absolute;
     top: 51%;

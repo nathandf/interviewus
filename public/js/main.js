@@ -88,4 +88,7 @@ $( function() {
     $( ".lightbox-close" ).on( "click", function () {
         $( this ).parent().hide();
     } );
+
+    $( ".con-message-success" ).delay( 5000 ).fadeOut( 1000 );
+
 } );

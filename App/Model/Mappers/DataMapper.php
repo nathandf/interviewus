@@ -156,7 +156,7 @@ abstract class DataMapper implements DataMapperInterface
                 $sql->bindParam( $token, $value );
             }
         }
-        
+
         $sql->execute();
     }
 
@@ -268,7 +268,7 @@ abstract class DataMapper implements DataMapperInterface
             $where_query = $where_query . "{$key} = :{$token_prefix}{$key}" . $and;
             $iteration++;
         }
-        echo( $where_query . "<br>" );
+        
         return $where_query;
     }
 
