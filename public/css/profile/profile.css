@@ -87,7 +87,7 @@ input[type=radio]:checked + .radio-label {
 
 .account-details-tag {
 	background: #FFF;
-	padding: 8px 11px 8px 11px;
+	padding: 8px 9px 8px 9px;
 	border: 1px solid #888888;
 	background: #FFFFFF;
 	color: #333333;
