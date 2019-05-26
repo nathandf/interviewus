@@ -280,7 +280,10 @@ class Settings extends Controller
             // Update account to Free plan but do not provision
             $accountRepo = $this->load( "account-repository" );
             $accountRepo->update(
-                [ "plan_id" => 11 ],
+                [
+                    "plan_id" => 11,
+                    "braintree_subscription_id" => ""
+                ],
                 [ "id" => $this->account->id ]
             );
 

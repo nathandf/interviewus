@@ -35,11 +35,11 @@ class SubscriptionRepository
         }
     }
 
-    public function updatePlan( $subscription_id, $plan_id, $price )
+    public function updatePlan( $subscription_id, $payment_method_token, $plan_id, $price )
     {
         try {
-
             $result = $this->gateway->subscription()->update( $subscription_id, [
+                "paymentMethodToken" => $payment_method_token,
                 "planId" => $plan_id,
                 "price" => $price
             ]);

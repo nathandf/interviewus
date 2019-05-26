@@ -73,12 +73,27 @@ class Cart extends Controller
             )
         ) {
             // If a subscription exists, update it. If not, create a subscription
-            // with braintree api using payment nonce provided by braintree DropinUI
+            // using payment method nonce
             $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
 
-            if ( !is_null( $this->account->braintree_subscription_id ) ) {
+            if (
+                    !is_null( $this->account->braintree_subscription_id ) &&
+                    $this->account->braintree_subscription_id != ""
+                ) {
+                // Create a braintree payment method. If this payment method already
+                // exists, it will return the payment method details. If it doesn't,
+                // it will create a new payment method for this customer
+                $braintreePaymentMethodRepo = $this->load( "braintree-payment-method-repository" );
+                $paymentMethodResult = $braintreePaymentMethodRepo->create(
+                    $this->account->braintree_customer_id,
+                    $input->get( "payment_method_nonce" )
+                );
+
+                // Update plan. NOTE: Cannot upgrade plans with different billing
+                // frequencies
                 $result = $braintreeSubscriptionRepo->updatePlan(
                     $this->account->braintree_subscription_id,
+                    $paymentMethodResult->paymentMethod->token,
                     $this->cart->products[ 0 ]->plan->braintree_plan_id,
                     $this->cart->products[ 0 ]->plan->price
                 );
@@ -142,7 +157,7 @@ class Cart extends Controller
 
                 // Destroy cart and related products
                 $cartDestroyer->destroy( $this->cart->id );
-                vdumpd( $result );
+
                 $this->view->redirect( "profile/" );
             }
 
