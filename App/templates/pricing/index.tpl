@@ -11,6 +11,7 @@
 	{include file="includes/navigation/main-menu.tpl"}
 	{include file="includes/modals/pricing/checkout-modal.tpl"}
 	<div class="con-cnt-lrg">
+		{if isset( $account ) == false}
 		<div class="pad-med">
 			<p class="title">Try it out for <span class="basic-text">free</span></p>
 			<p class="sub-title">No credit card needed</p>
@@ -18,6 +19,7 @@
 				<a href="{$HOME}sign-up/" class="button-link">Get started</a>
 			</div>
 		</div>
+		{/if}
 		{if !empty($error_messages.add_to_cart)}
 			{foreach from=$error_messages.add_to_cart item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">
