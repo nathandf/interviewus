@@ -72,39 +72,27 @@ class Cart extends Controller
                 "purchase"
             )
         ) {
+            // If a subscription exists, update it. If not, create a subscription
+            // with braintree api using payment nonce provided by braintree DropinUI
             $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
-            $paymentMethodRepo = $this->load( "payment-method-repository" );
 
-            // If a subscription exists, update it.
             if ( !is_null( $this->account->braintree_subscription_id ) ) {
-                $braintreeSubscriptionRepo->updatePlan(
+                $result = $braintreeSubscriptionRepo->updatePlan(
                     $this->account->braintree_subscription_id,
                     $this->cart->products[ 0 ]->plan->braintree_plan_id,
                     $this->cart->products[ 0 ]->plan->price
                 );
-
-                // TODO Handle new payment method if one exists
-                
-                // Upgrade account
-                $accountUpgrader = $this->load( "account-upgrader" );
-                $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
-
-                // Destroy cart and related products
-                $cartDestroyer = $this->load( "cart-destroyer" );
-                $cartDestroyer->destroy( $this->cart->id );
-
-                $this->view->redirect( "profile/" );
+            } else {
+                $result = $braintreeSubscriptionRepo->create(
+                    $input->get( "payment_method_nonce" ),
+                    $this->cart->products[ 0 ]->plan->braintree_plan_id
+                );
             }
-
-            // Create a subscription with braintree api using payment nonce
-            // provided by braintree DropinUI
-            $result = $braintreeSubscriptionRepo->create(
-                $input->get( "payment_method_nonce" ),
-                $this->cart->products[ 0 ]->plan->braintree_plan_id
-            );
 
             // Save this payment method and make it default if a payment
             // method doesn't exist with this token
+            $paymentMethodRepo = $this->load( "payment-method-repository" );
+
             if (
                 empty(
                     $paymentMethodRepo->get(
@@ -112,8 +100,7 @@ class Cart extends Controller
                         [
                             "braintree_payment_method_token" => $result->subscription->paymentMethodToken,
                             "account_id" => $this->account->id
-                        ],
-                        "raw"
+                        ]
                     )
                 )
             ) {
@@ -155,7 +142,7 @@ class Cart extends Controller
 
                 // Destroy cart and related products
                 $cartDestroyer->destroy( $this->cart->id );
-
+                vdumpd( $result );
                 $this->view->redirect( "profile/" );
             }
 

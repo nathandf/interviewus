@@ -45,10 +45,10 @@ class SubscriptionRepository
             ]);
         } catch ( \Exception $e ) {
 
-            return false;
+            return null;
         }
 
-        return true;
+        return $result;
     }
 
     public function updatePaymentMethod( $subscription_id, $payment_method_token )

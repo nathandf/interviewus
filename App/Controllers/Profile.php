@@ -21,7 +21,6 @@ class Profile extends Controller
         }
 
         $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
-
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
 
         $this->view->assign( "countries", $countryRepo->get( [ "*" ] ) );

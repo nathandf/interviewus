@@ -59,6 +59,7 @@
 		{/if}
 		<div class="con-cnt-med-plus-plus border-std bg-white pad-med floatleft">
 			<div id="payment-methods">
+				<p class="label">Payment Methods</p>
 				{foreach from=$paymentMethods item=paymentMethod name="pm_loop"}
 					<div class="bg-white border-std pad-sml push-b-sml">
 						<img src="{$paymentMethod->braintreePaymentMethod->imageUrl}" class="floatleft push-r-sml">
