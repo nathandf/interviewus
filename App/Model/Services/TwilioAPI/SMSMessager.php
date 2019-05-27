@@ -27,8 +27,8 @@ class SMSMessager implements SMSMessagerInterface
     {
         // Send using E164 formatted phone numbers if not null
         if (
-            !is_null( $recipient_E164_phone_number ) &&
-            !is_null( $sender_E164_phone_number )
+            !is_null( $this->recipient_E164_phone_number ) &&
+            !is_null( $this->sender_E164_phone_number )
         ) {
             $message = $this->client->messages->create(
                 $this->recipient_E164_phone_number,

@@ -413,30 +413,30 @@ $container->register( "twilio-phone-number-repository", function() use ( $contai
 	return $repo;
 } );
 
-$container->register( "twilio-api-initializer", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioAPIInitializer(
+$container->register( "twilio-client-initializer", function() use ( $container ) {
+	$obj = new \Model\Services\TwilioAPI\ClientInitializer(
 	    $container->getService( "config" )
 	);
 	return $obj;
 } );
 
 $container->register( "twilio-phone-number-buyer", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioPhoneNumberBuyer(
-	    $container->getService( "twilio-api-initializer" )
+	$obj = new \Model\Services\TwilioAPI\PhoneNumberBuyer(
+	    $container->getService( "twilio-client-initializer" )
 	);
 	return $obj;
 } );
 
 $container->register( "twilio-service-dispatcher", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioServiceDispatcher(
-	    $container->getService( "twilio-api-initializer" )
+	$obj = new \Model\Services\TwilioAPI\ServiceDispatcher(
+	    $container->getService( "twilio-client-initializer" )
 	);
 	return $obj;
 } );
 
 $container->register( "twilio-sms-messager", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioSMSMessager(
-	    $container->getService( "twilio-api-initializer" )
+	$obj = new \Model\Services\TwilioAPI\SMSMessager(
+	    $container->getService( "twilio-client-initializer" )
 	);
 	return $obj;
 } );
