@@ -79,7 +79,7 @@ class InterviewDispatcher
 		// Get organization
 		$organization = $this->organizationRepo->get(
 			[ "*" ],
-			[ "id" => $interviewee->orgainzation_id ],
+			[ "id" => $interviewee->organization_id ],
 			"single"
 		);
 

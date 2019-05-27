@@ -131,23 +131,33 @@ class SMSMessager implements SMSMessagerInterface
 
     public function getRecipientFullPhoneNumber()
     {
+        if ( !is_null( $this->recipient_E164_phone_number ) ) {
+
+            return $this->recipient_E164_phone_number;
+        }
+
         return "+" . $this->getRecipientCountryCode() . $this->getRecipientNationalNumber();
     }
 
     public function getSenderFullPhoneNumber()
     {
+        if ( !is_null( $this->sender_E164_phone_number ) ) {
+
+            return $this->sender_E164_phone_number;
+        }
+
         return "+" . $this->getSenderCountryCode() . $this->getSenderNationalNumber();
     }
 
     public function setRecipientE164PhoneNumber( $phone_number )
     {
-        $this->$recipient_E164_phone_number = $phone_number;
+        $this->recipient_E164_phone_number = $phone_number;
         return $this;
     }
 
     public function setSenderE164PhoneNumber( $phone_number )
     {
-        $this->$sender_E164_phone_number = $phone_number;
+        $this->sender_E164_phone_number = $phone_number;
         return $this;
     }
 }
