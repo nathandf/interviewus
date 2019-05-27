@@ -302,3 +302,4 @@ ALTER TABLE `payment_method` CHANGE `is_default` `is_default` TINYINT(4) NOT NUL
 ALTER TABLE `payment_method` ADD `account_id` BIGINT NOT NULL AFTER `id`;
 ALTER TABLE `account` ADD `twilio_phone_number_id` BIGINT NULL DEFAULT NULL AFTER `braintree_subscription_id`;
 ALTER TABLE `twilio_phone_number` DROP `organization_id`;
+INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PNb3e9c12b31f5a9923eb9befb32bcef32', '+18327694054', '(832) 769-4054');

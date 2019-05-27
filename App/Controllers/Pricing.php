@@ -206,7 +206,8 @@ class Pricing extends Controller
                 // Create new Account
                 $account = $accountRepo->insert([
                     "account_type_id" => 1,
-                    "plan_id" => 1
+                    "plan_id" => 1,
+                    "twilio_phone_number_id" => 1
                 ]);
 
                 // Provision Account
