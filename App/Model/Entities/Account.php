@@ -16,5 +16,4 @@ class Account implements EntityInterface
 	public $status;
 	public $braintree_customer_id;
 	public $braintree_subscription_id;
-	public $twilio_phone_number_id;
 }

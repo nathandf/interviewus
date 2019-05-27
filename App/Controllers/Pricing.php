@@ -248,7 +248,8 @@ class Pricing extends Controller
                 $organization = $organizationRepo->insert([
                     "account_id" => $account->id,
                     "name" => "My Organization",
-                    "user_id" => $user->id
+                    "user_id" => $user->id,
+                    "twilio_phone_number_id" => 1
                 ]);
 
                 // Update current_organization_id to new organization_id

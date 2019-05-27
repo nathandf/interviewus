@@ -8,6 +8,7 @@ use Model\DomainObjects\Person;
 class Interviewee extends Person implements EntityInterface
 {
 	public $id;
+	public $organization_id;
 	public $first_name;
 	public $last_name;
 	public $email;
