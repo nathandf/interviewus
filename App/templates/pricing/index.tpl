@@ -50,9 +50,21 @@
 						<p class="text-sml-heavy">USD / month</p>
 						<p class="text-sml-heavy tc-gun-metal">Billed <span class="billing-frequency-text">annually</span></p>
 					</div>
+					{if isset( $account )}
+						{if $account->plan_id == $plan->id}
+						<div class="pricing-cta-container">
+							<button type="button" class="current-plan" disabled="disabled">Current Plan</button>
+						</div>
+						{else}
+						<div class="pricing-cta-container">
+							<button id="payment" data-plan_name="{ucfirst( $plan->name )}" data-base_price="{$plan->price}" data-plan_id="{$plan->id}" type="button" class="pricing-cta cursor-pt --c-plan-id --modal-trigger">Change Plan</button>
+						</div>
+						{/if}
+					{else}
 					<div class="pricing-cta-container">
 						<button id="payment" data-plan_name="{ucfirst( $plan->name )}" data-base_price="{$plan->price}" data-plan_id="{$plan->id}" type="button" class="pricing-cta cursor-pt --c-plan-id --modal-trigger">Get Started</button>
 					</div>
+					{/if}
 					<div class="pricing-component-details">
 						<div class="pricing-component-detail">
 							<p class="text-sml-heavy">SMS Interviews</p>

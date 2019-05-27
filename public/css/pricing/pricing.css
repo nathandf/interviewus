@@ -78,6 +78,18 @@
 	background: #4A148C;
 }
 
+.current-plan {
+	border-radius: 25px;
+	background: #FFFFFF;
+	border: 1px solid #666666;
+	color: #666666;
+	font-weight: 600;
+	padding: 8px 12px 8px 12px;
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+}
+
 .pricing-component-details {
 	border-top: 1px solid #DDDDDD;
 }
