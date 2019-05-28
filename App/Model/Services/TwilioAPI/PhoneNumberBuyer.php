@@ -56,7 +56,13 @@ class PhoneNumberBuyer
             return null;
         }
 
-        return $this->configs[ "primary_number" ];
+        // Development only
+        $number = new \stdClass;
+        $number->sid = "PNb3e9c12b31f5a9923eb9befb32bcef32";
+        $number->phoneNumber = "+18327694054";
+        $number->friendlyName = "(832) 769-4054";
+
+        return $number;
     }
 
     public function provision( $phone_number_instance )

@@ -135,12 +135,33 @@ class Cart extends Controller
                         [ "braintree_payment_method_token" => $result->subscription->paymentMethodToken ]
                     );
                 }
+
                 $accountUpgrader = $this->load( "account-upgrader" );
                 $cartDestroyer = $this->load( "cart-destroyer" );
                 $planRepo = $this->load( "plan-repository" );
 
                 // Upgrade account
                 $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
+
+                // Purchase a twilio phone number for this organization if
+                // one doesn't exist. The default twilio phone id is 1.
+                if ( $this->organization->twilio_phone_number_id == 1 ) {
+                    $phoneNumberBuyer = $this->load( "twilio-phone-number-buyer" );
+                    $twilioPhoneNumberRepo = $this->load( "twilio-phone-number-repository" );
+
+                    $twilioPhoneNumberInstance = $phoneNumberPurchaser->quickBuy();
+
+                    $twilioPhoneNumber = $twilioPhoneNumberRepo->insert([
+                        "sid" => $twilioPhoneNumberInstance->sid,
+                        "phone_number" => $twilioPhoneNumberInstance->phoneNumber,
+                        "friendly_number" => $twilioPhoneNumberInstance->friendlyName
+                    ]);
+
+                    $organizationRepo->update(
+                        [ "twilio_phone_number_id" => $twilioPhoneNumber->id ],
+                        [ "id" => $this->organization->id ]
+                    );
+                }
 
                 // Update braintree subscription id in account
                 $accountRepo = $this->load( "account-repository" );
