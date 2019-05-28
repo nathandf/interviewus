@@ -426,7 +426,8 @@ $container->register( "twilio-client-initializer", function() use ( $container )
 
 $container->register( "twilio-phone-number-buyer", function() use ( $container ) {
 	$obj = new \Model\Services\TwilioAPI\PhoneNumberBuyer(
-	    $container->getService( "twilio-client-initializer" )
+	    $container->getService( "twilio-client-initializer" ),
+		$container->getService( "config" )
 	);
 	return $obj;
 } );

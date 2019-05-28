@@ -3,37 +3,63 @@
 namespace Model\Services\TwilioAPI;
 
 use Twilio\Twiml;
+use Conf\Config;
 
 class PhoneNumberBuyer
 {
     private $clientInitializer;
     private $client;
     public $twilio_phone_number_instance;
+    public $environment;
+    public $configs;
 
     public function __construct(
-        ClientInitializer $clientInitializer
+        ClientInitializer $clientInitializer,
+        Config $config
     ){
         $this->clientInitializer = $clientInitializer;
         $this->client = $clientInitializer->init();
+        $this->environment = $config->getEnv();
+        $this->configs = $config->configs[ "twilio" ];
     }
 
-    public function buy( $twilio_phone_number_instance )
+    public function getNumber( $iso )
     {
-        die( "delete this die to purchase" );
-        // Purchase the first number on the list.
-        $number = $this->client->incomingPhoneNumbers
-            ->create(
-                [
-                    "phoneNumber" => $twilio_phone_number_instance->phoneNumber,
-                ]
-            );
+        try {
+            $number = $this->client
+                ->availablePhoneNumbers( $iso )->local
+                ->read()[ 0 ];
+        } catch (\Exception $e) {
 
-        $number = $this->configure( $number );
+            return null;
+        }
 
         return $number;
     }
 
-    public function configure( $phone_number_instance )
+    public function quickBuy( $iso = "US" )
+    {
+        if ( $this->environment == "production" ) {
+            // Purchase the first number on the list.
+            $number = $this->getNumber( $iso );
+
+            if ( !is_null( $number ) ) {
+                $number = $this->client->incomingPhoneNumbers->create([
+                    "phoneNumber" => $number->phoneNumber,
+                ]);
+
+                $number = $this->provision( $number );
+
+                return $number;
+            }
+
+            return null;
+        }
+
+        return $this->configs[ "primary_number" ];
+    }
+
+    public function provision( $phone_number_instance )
     {
         $number = $this->client->incomingPhoneNumbers( $phone_number_instance->sid )
             ->update(
@@ -47,27 +73,4 @@ class PhoneNumberBuyer
 
         return $number;
     }
-
-    public function fetchByPhoneNumber( $twilio_phone_number )
-    {
-        // Purchase the first number on the list.
-        $number = $this->client->incomingPhoneNumbers
-            ->create(
-                [
-                    "phoneNumber" => $twilio_phone_number,
-                ]
-            );
-
-        return $number;
-    }
-
-    // Arg twilio_phone_number should be E164 Formatted
-    public function updateByPhoneNumber( $twilio_phone_number )
-    {
-        $number = $this->fetchByPhoneNumber( $twilio_phone_number );
-        $number = $this->configure( $number );
-
-        return $number;
-    }
-
 }
