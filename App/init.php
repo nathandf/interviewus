@@ -7,9 +7,9 @@ require_once( "App/vendor/autoload.php" );
 require_once( "App/Helpers/debug.php" );
 
 // Dependency injection container
-$container = new Core\DI_Container;
+$container = new Core\DIContainer;
 
-// Load services using DI_Container
+// Load services using DIContainer
 require_once( "App/Conf/services.php" );
 
 // Initialize configs

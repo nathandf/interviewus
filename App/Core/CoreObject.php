@@ -8,7 +8,7 @@ abstract class CoreObject implements CoreObjectInterface
 {
     protected $container;
 
-    public function setContainer( DI_Container $container )
+    public function setContainer( DIContainer $container )
     {
         $this->container = $container;
     }

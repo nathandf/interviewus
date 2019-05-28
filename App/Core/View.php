@@ -16,9 +16,9 @@ class View extends CoreObject
 
     /**
      * View constructor.
-     * @param DI_Container $container
+     * @param DIContainer $container
      */
-    public function __construct( DI_Container $container )
+    public function __construct( DIContainer $container )
     {
         $this->setContainer( $container );
     }
