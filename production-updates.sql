@@ -304,3 +304,4 @@ INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number
 ALTER TABLE `organization` ADD `twilio_phone_number_id` BIGINT NULL DEFAULT NULL AFTER `user_id`;
 
 CREATE TABLE `conversation` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `twilio_phone_number_id` BIGINT NOT NULL , `phone_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `interview` ADD `conversation_id` BIGINT NULL DEFAULT NULL AFTER `organization_id`;
