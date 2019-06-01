@@ -118,8 +118,7 @@ class SignUp extends Controller
                 $organization = $organizationRepo->insert([
                     "account_id" => $account->id,
                     "name" => "My Organization",
-                    "user_id" => $user->id,
-                    "twilio_phone_number_id" => 1
+                    "user_id" => $user->id
                 ]);
 
                 // Update current_organization_id to new organization_id

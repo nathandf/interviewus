@@ -301,7 +301,5 @@ CREATE TABLE `payment_method` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `braintree
 ALTER TABLE `payment_method` CHANGE `is_default` `is_default` TINYINT(4) NOT NULL DEFAULT '0';
 ALTER TABLE `payment_method` ADD `account_id` BIGINT NOT NULL AFTER `id`;
 INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PNb3e9c12b31f5a9923eb9befb32bcef32', '+18327694054', '(832) 769-4054');
-ALTER TABLE `organization` ADD `twilio_phone_number_id` BIGINT NULL DEFAULT NULL AFTER `user_id`;
-
 CREATE TABLE `conversation` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `twilio_phone_number_id` BIGINT NOT NULL , `phone_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `interview` ADD `conversation_id` BIGINT NULL DEFAULT NULL AFTER `organization_id`;

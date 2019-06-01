@@ -23,7 +23,8 @@ class Incoming extends Controller
         // If no twilio phone number exists
         if ( is_null( $this->twilioPhoneNumber ) ) {
             $this->logger->error( "Twilio number with sid '{$this->params[ "sid" ]}' does not exist" );
-            return;
+            die();
+            exit();
         }
 
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->twilioPhoneNumber->organization_id ], "single" );

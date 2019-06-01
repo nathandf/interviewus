@@ -13,5 +13,4 @@ class Organization implements EntityInterface
 	public $phone_id;
 	public $address_id;
 	public $user_id;
-	public $twilio_phone_number_id;
 }
