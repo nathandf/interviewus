@@ -303,3 +303,6 @@ ALTER TABLE `payment_method` ADD `account_id` BIGINT NOT NULL AFTER `id`;
 INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PNb3e9c12b31f5a9923eb9befb32bcef32', '+18327694054', '(832) 769-4054');
 CREATE TABLE `conversation` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `twilio_phone_number_id` BIGINT NOT NULL , `phone_id` BIGINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `interview` ADD `conversation_id` BIGINT NULL DEFAULT NULL AFTER `organization_id`;
+
+CREATE TABLE `deployment_type` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+INSERT INTO `deployment_type` (`id`, `name`) VALUES (NULL, 'sms'), (NULL, 'web');

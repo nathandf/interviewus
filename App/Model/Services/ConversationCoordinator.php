@@ -8,21 +8,24 @@ class ConversationCoordinator
 {
 	private $phoneRepo;
 	private $twilioPhoneNumberRepo;
+	private $conversationRepo;
 	private $interview_type_id;
 	private $interview_type;
 	private $interview;
 
 	public function __construct(
+		ConversationRepository $conversationRepo,
 		PhoneRepository $phoneRepo,
 		TwilioPhoneNumberRepository $twilioPhoneNumberRepo
 	) {
 		$this->phoneRepo = $phoneRepo;
 		$this->twilioPhoneNumberRepo = $twilioPhoneNumberRepo;
+		$this->conversationRepo = $conversationRepo;
 	}
 
 	// Create conversation
-	public function create( $phone_id )
+	public function start( $phone_id )
 	{
-		return null;
+		$phone = $this->phoneRepo->get( [ "*" ], [ "id" => $phone_id ], "single" );
 	}
 }

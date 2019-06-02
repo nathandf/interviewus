@@ -16,4 +16,15 @@ class Account implements EntityInterface
 	public $status;
 	public $braintree_customer_id;
 	public $braintree_subscription_id;
+
+	public function validateInterviewCredit( DeploymentType $deploymentType, $debits = 1 ) {
+		if (
+			( $this->{$deploymentType->name . "_interviews"} - $debits ) >= 0 ||
+			$this->{$deploymentType->name . "_interviews"} == -1 // -1 means unlimited
+		) {
+			return true;
+		}
+
+		return false;
+	}
 }

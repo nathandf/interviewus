@@ -6,11 +6,16 @@ use \Core\Controller;
 
 class Interviewee extends Controller
 {
+    private $accountRepo;
+    private $account;
+    private $user;
+    private $organization;
+
     public function before()
     {
         $userAuth = $this->load( "user-authenticator" );
         $countryRepo = $this->load( "country-repository" );
-        $accountRepo = $this->load( "account-repository" );
+        $this->accountRepo = $this->load( "account-repository" );
         $accountUserRepo = $this->load( "account-user-repository" );
         $organizationRepo = $this->load( "organization-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
@@ -21,7 +26,7 @@ class Interviewee extends Controller
             $this->view->redirect( "sign-in" );
         }
 
-        $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
+        $this->account = $this->accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
 
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
 
@@ -56,6 +61,7 @@ class Interviewee extends Controller
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
         $positionRepo = $this->load( "position-repository" );
         $interviewRepo = $this->load( "interview-repository" );
+        $deploymentTypeRepo = $this->load( "deployment-type-repository" );
         $interviewDispatcher = $this->load( "interview-dispatcher" );
 
         $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
@@ -109,41 +115,53 @@ class Interviewee extends Controller
                 ]);
             }
 
-            // Build and dispatch the interview. Will return null if insufficient
-            // interview credits in the account
-            $interviewBuilder = $this->load( "interview-builder" );
+            // Ensure account has enough of the correct interview credits to create
+            // this interview
+            $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $input->get( "deployment_type_id" ) ], "single" );
+            if ( $this->account->validateInterviewCredit( $deploymentType ) ) {
+                // Build and dispatch the interview. Will return null if insufficient
+                // interview credits in the account
+                $interviewBuilder = $this->load( "interview-builder" );
 
-            // Set scheduled time and status if deploying later. Default status
-            // is "active"
-            if (
-                $input->get( "schedule_type" ) == 2 &&
-                $input->get( "date" ) != ""
-            ) {
-                $interviewBuilder->setStatus( "scheduled" )
-                    ->setScheduledTime(
-                        $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" )
-                    );
-            }
-
-            $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
-                ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
-                ->setDeploymentTypeID( $input->get( "deployment_type_id" ) )
-                ->setAccount( $this->account )
-                ->setPositionID( $position->id )
-                ->setOrganizationID( $this->organization->id )
-                ->build();
-
-            if ( !is_null( $interview ) ) {
-                // Dispatch the first interview question immediately if interview
-                // status is active
-                if ( $interview->status == "active" ) {
-                    $interviewDispatcher->dispatch( $interview->id );
+                // Set scheduled time and status if deploying later. Default status
+                // is "active"
+                if (
+                    $input->get( "schedule_type" ) == 2 &&
+                    $input->get( "date" ) != ""
+                ) {
+                    $interviewBuilder->setStatus( "scheduled" )
+                        ->setScheduledTime(
+                            $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" )
+                        );
                 }
 
-                $this->session->addFlashMessage( "Interview successfully deployed" );
-                $this->session->setFlashMessages();
+                $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
+                    ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
+                    ->setDeploymentTypeID( $input->get( "deployment_type_id" ) )
+                    ->setAccount( $this->account )
+                    ->setPositionID( $position->id )
+                    ->setOrganizationID( $this->organization->id )
+                    ->build();
 
-                $this->view->redirect( "profile/" );
+                if ( !is_null( $interview ) ) {
+                    // Debit the account of the interview credits for the deployment
+                    // type provided
+                    $this->account = $this->accountRepo->debitInterviewCredits(
+                        $this->account,
+                        $deploymentType
+                    );
+
+                    // Dispatch the first interview question immediately if interview
+                    // status is active
+                    if ( $interview->status == "active" ) {
+                        //$interviewDispatcher->dispatch( $interview->id );
+                    }
+
+                    $this->session->addFlashMessage( "Interview successfully deployed" );
+                    $this->session->setFlashMessages();
+
+                    $this->view->redirect( "profile/" );
+                }
             }
 
             $inputValidator->addError( "deploy_interview", "You have reached your {$interviewBuilder->getInterviewType()} interview deployment limit. Upgrade your account for more interviews." );

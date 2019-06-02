@@ -202,7 +202,7 @@ $container->register( "cart-repository", function() use ( $container ) {
 } );
 
 $container->register( "conversation-repository", function() use ( $container ) {
-	$repo = new \Model\Services\UserRepository(
+	$repo = new \Model\Services\ConversationRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
@@ -210,15 +210,24 @@ $container->register( "conversation-repository", function() use ( $container ) {
 } );
 
 $container->register( "conversation-coordinator", function() use ( $container ) {
-	$repo = new \Model\Services\ConversationCoordinator(
+	$service = new \Model\Services\ConversationCoordinator(
+		$container->getService( "conversation-repository" ),
 		$container->getService( "phone-repository" ),
 		$container->getService( "twilio-phone-number-repository" )
 	);
-	return $repo;
+	return $service;
 } );
 
 $container->register( "country-repository", function() use ( $container ) {
 	$repo = new \Model\Services\CountryRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "deployment-type-repository", function() use ( $container ) {
+	$repo = new \Model\Services\DeploymentTypeRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
