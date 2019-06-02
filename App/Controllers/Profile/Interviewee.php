@@ -100,85 +100,53 @@ class Interviewee extends Controller
                 "deploy_interview"
             )
         ) {
-            $interview_type = "sms";
-            $interview_type_account_property = "sms_interviews";
-            if ( $input->get( "deployment_type_id" ) == 2 ) {
-                $interview_type = "web";
-                $interview_type_account_property = "web_interviews";
+            $position = $positionRepo->get( [ "*" ], [ "id" => $input->get( "position_id" ) ], "single" );
+            // Create a new position if the one submitted does not exist
+            if ( $input->get( "position" ) != "" ) {
+                $position = $positionRepo->insert([
+                    "organization_id" => $this->organization->id,
+                    "name" => $input->get( "position" )
+                ]);
             }
 
-            // Ensure there are sufficient interview credits in the account
+            // Build and dispatch the interview. Will return null if insufficient
+            // interview credits in the account
+            $interviewBuilder = $this->load( "interview-builder" );
+
+            // Set scheduled time and status if deploying later. Default status
+            // is "active"
             if (
-                $this->account->{$interview_type_account_property} > 0 ||
-                $this->account->{$interview_type_account_property} == -1
+                $input->get( "schedule_type" ) == 2 &&
+                $input->get( "date" ) != ""
             ) {
-                $position_id = $input->get( "position_id" );
+                $interviewBuilder->setStatus( "scheduled" )
+                    ->setScheduledTime(
+                        $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" )
+                    );
+            }
 
-                if ( $input->get( "position" ) != "" ) {
-                    $position = $positionRepo->insert([
-                        "organization_id" => $this->organization->id,
-                        "name" => $input->get( "position" )
-                    ]);
+            $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
+                ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
+                ->setDeploymentTypeID( $input->get( "deployment_type_id" ) )
+                ->setAccount( $this->account )
+                ->setPositionID( $position->id )
+                ->setOrganizationID( $this->organization->id )
+                ->build();
 
-                    $position_id = $position->id;
-                }
-
-                $scheduled_time = null;
-                $status = "active";
-
-                if (
-                    $input->get( "schedule_type" ) == 2 &&
-                    $input->get( "date" ) != ""
-                ) {
-                    $status = "scheduled";
-                    $scheduled_time = $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" );
-                }
-
-                $interview = $interviewRepo->insert([
-                    "deployment_type_id" => $input->get( "deployment_type_id" ),
-                    "organization_id" => $this->organization->id,
-                    "interviewee_id" => $input->get( "interviewee_id" ),
-                    "interview_template_id" => $input->get( "interview_template_id" ),
-                    "position_id" => $position_id,
-                    "status" => $status,
-                    "scheduled_time" => $scheduled_time,
-                    "token" => md5( microtime() ) . "-" . $this->organization->id . "-" . $input->get( "interviewee_id" )
-                ]);
-
-                // Create the questions for this interview from the interview template
-                // questions
-                $questions = $questionRepo->getAllByInterviewTemplateID(
-                    $interview->interview_template_id
-                );
-
-                foreach ( $questions as $question ) {
-                    $interviewQuestionRepo->insert([
-                        "interview_id" => $interview->id,
-                        "placement" => $question->placement,
-                        "body" => $question->body
-                    ]);
-                }
-
+            if ( !is_null( $interview ) ) {
                 // Dispatch the first interview question immediately if interview
                 // status is active
-                if ( $status == "active" ) {
+                if ( $interview->status == "active" ) {
                     $interviewDispatcher->dispatch( $interview->id );
                 }
 
-                // Reduce the number of interviews in the account by 1
-                $accountRepo = $this->load( "account-repository" );
-                $accountRepo->update(
-                [ $interview_type_account_property => ( $this->account->{$interview_type_account_property} - 1 ) ],
-                [ "id" => $this->account->id ]
-                );
-
-                $this->session->addFlashMessage( "Interview deployed successfully" );
+                $this->session->addFlashMessage( "Interview successfully deployed" );
                 $this->session->setFlashMessages();
 
                 $this->view->redirect( "profile/" );
             }
 
-            $inputValidator->addError( "deploy_interview", "You have reached your {$interview_type} interview deployment limit. Upgrade your account for more interviews." );
+            $inputValidator->addError( "deploy_interview", "You have reached your {$interviewBuilder->getInterviewType()} interview deployment limit. Upgrade your account for more interviews." );
         }
 
         $this->view->assign( "interviewee", $interviewee );

@@ -201,6 +201,22 @@ $container->register( "cart-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "conversation-repository", function() use ( $container ) {
+	$repo = new \Model\Services\UserRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "conversation-coordinator", function() use ( $container ) {
+	$repo = new \Model\Services\ConversationCoordinator(
+		$container->getService( "phone-repository" ),
+		$container->getService( "twilio-phone-number-repository" )
+	);
+	return $repo;
+} );
+
 $container->register( "country-repository", function() use ( $container ) {
 	$repo = new \Model\Services\CountryRepository(
 		$container->getService( "dao" ),
@@ -237,6 +253,18 @@ $container->register( "interview-repository", function() use ( $container ) {
 	$repo = new \Model\Services\InterviewRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "interview-builder", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewBuilder(
+		$container->getService( "account-repository" ),
+		$container->getService( "interview-repository" ),
+		$container->getService( "question-repository" ),
+		$container->getService( "interview-question-repository" ),
+		$container->getService( "interviewee-repository" ),
+		$container->getService( "conversation-coordinator" )
 	);
 	return $repo;
 } );
