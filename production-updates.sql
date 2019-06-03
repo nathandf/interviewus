@@ -306,3 +306,4 @@ ALTER TABLE `interview` ADD `conversation_id` BIGINT NULL DEFAULT NULL AFTER `or
 
 CREATE TABLE `deployment_type` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 INSERT INTO `deployment_type` (`id`, `name`) VALUES (NULL, 'sms'), (NULL, 'web');
+INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PN159a6b15c933f1ceec13c9cbc20084a9', '+19147757270', '(914) 775-7270');
