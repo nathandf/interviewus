@@ -110,7 +110,7 @@
 				</div>
 				<div class="clear"></div>
 				<div id="date-time-picker-container" class="pad-sml" style="display: none;">
-					<p class="label">Date:</p>
+					<p class="label push-r-sml">Date: <span class="text-sml tc-gun-metal">MM/DD/YYYY</span></p>
 					<input type="text" name="date" id="datepicker" class="inp inp-full scheduled-time-input --c-deployment-requirement" autocomplete="off">
 					<p class="label">Time:</p>
 					{html_select_time class="inp inp-ful time-picker-input cursor-pt push-b-sml" minute_interval=15 display_seconds=false use_24_hours=false prefix=false}

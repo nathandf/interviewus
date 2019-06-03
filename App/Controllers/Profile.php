@@ -248,7 +248,7 @@ class Profile extends Controller
                     // Dispatch the first interview question immediately if interview
                     // status is active
                     if ( $interview->status == "active" ) {
-                        //$interviewDispatcher->dispatch( $interview->id );
+                        $interviewDispatcher->dispatch( $interview->id );
                     }
 
                     $this->session->addFlashMessage( "Interview successfully deployed" );
