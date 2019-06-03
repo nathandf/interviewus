@@ -209,10 +209,9 @@ $container->register( "conversation-repository", function() use ( $container ) {
 	return $repo;
 } );
 
-$container->register( "conversation-coordinator", function() use ( $container ) {
-	$service = new \Model\Services\ConversationCoordinator(
+$container->register( "conversation-provisioner", function() use ( $container ) {
+	$service = new \Model\Services\ConversationProvisioner(
 		$container->getService( "conversation-repository" ),
-		$container->getService( "phone-repository" ),
 		$container->getService( "twilio-phone-number-repository" )
 	);
 	return $service;
@@ -272,8 +271,7 @@ $container->register( "interview-builder", function() use ( $container ) {
 		$container->getService( "interview-repository" ),
 		$container->getService( "question-repository" ),
 		$container->getService( "interview-question-repository" ),
-		$container->getService( "interviewee-repository" ),
-		$container->getService( "conversation-coordinator" )
+		$container->getService( "interviewee-repository" )
 	);
 	return $repo;
 } );

@@ -4,27 +4,21 @@ namespace Model\Services;
 
 use Contracts\SMSMessagerInterface;
 
-class ConversationCoordinator
+class ConversationProvisioner
 {
-	private $phoneRepo;
 	private $twilioPhoneNumberRepo;
 	private $conversationRepo;
-	private $interview_type_id;
-	private $interview_type;
-	private $interview;
 
 	public function __construct(
 		ConversationRepository $conversationRepo,
-		PhoneRepository $phoneRepo,
 		TwilioPhoneNumberRepository $twilioPhoneNumberRepo
 	) {
-		$this->phoneRepo = $phoneRepo;
-		$this->twilioPhoneNumberRepo = $twilioPhoneNumberRepo;
 		$this->conversationRepo = $conversationRepo;
+		$this->twilioPhoneNumberRepo = $twilioPhoneNumberRepo;
 	}
 
 	// Create conversation
-	public function start( $phone_id )
+	public function provision( $e164_phone_number )
 	{
 		$phone = $this->phoneRepo->get( [ "*" ], [ "id" => $phone_id ], "single" );
 	}

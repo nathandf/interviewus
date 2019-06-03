@@ -45,6 +45,7 @@ class Profile extends Controller
         $interviewBuilder = $this->load( "interview-builder" );
         $interviewDispatcher = $this->load( "interview-dispatcher" );
         $deploymentTypeRepo = $this->load( "deployment-type-repository" );
+        $conversationProvisioner = $this->load( "conversation-provisioner" );
 
         $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
@@ -63,6 +64,7 @@ class Profile extends Controller
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+
         if (
             $input->exists() &&
             $input->issetField( "new_interviewee" ) &&
@@ -244,6 +246,29 @@ class Profile extends Controller
                         $this->account,
                         $deploymentType
                     );
+
+                    // Provision a new converation for this interview if sms deployment
+                    if ( $interview->deployment_type_id == 1 ) {
+
+                        // Get the interviewee from the inteview
+                        $interviewee = $interviewBuilder->getInterviewee();
+
+                        // Get the interviewee's phone
+                        $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
+
+                        // Create a new conversation between a twilio numbe and
+                        // the interviewee's phone number
+                        $conversation = $conversationProvisioner->provision(
+                            $interviewee->phone->e164_phone_number
+                        );
+
+                        // Update the interview with a conversation id so it can
+                        // be dispatched to the right phone number
+                        $interviewRepo->update(
+                            [ "conversation_id" => $conversation->id ],
+                            [ "id" => $interview->id ]
+                        );
+                    }
 
                     // Dispatch the first interview question immediately if interview
                     // status is active

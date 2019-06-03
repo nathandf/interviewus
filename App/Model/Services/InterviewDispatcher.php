@@ -3,6 +3,7 @@
 namespace Model\Services;
 
 use Contracts\SMSMessagerInterface;
+use Model\Entities\Interview;
 
 class InterviewDispatcher
 {
@@ -39,11 +40,8 @@ class InterviewDispatcher
 
 	// Sends out interview questions to interviewees using the method specified
 	// in the interview data.
-	public function dispatch( $interview_id )
+	public function dispatch( Interview $interview )
 	{
-		// Retrieve and set interview
-		$interview = $this->interviewRepo->get( [ "*" ], [ "id" => $interview_id ], "single" );
-
 		$this->setInterview( $interview );
 
 		// Retrieve and set interviewee and interviewee phone
@@ -178,6 +176,43 @@ class InterviewDispatcher
 		);
 
 		return;
+	}
+
+	public function answerNextQuestion( Interview $interview, $answer, $dispatch = true )
+	{
+		// Interview questions will be orderd in placement in ascending order
+		$interview->questions = $this->interviewQuestionRepo->getAllByInterviewID(
+			[ "*" ],
+			[ "interview_id" => $interview->id ]
+		);
+
+		// Retrieve the interviewee's anwers to the interview questions.
+		foreach ( $interview->questions as $question ) {
+			$question->answer = $this->intervieweeAnswerRepo->get(
+				[ "*" ],
+				[ "interview_question_id" => $question->id ],
+				"single"
+			);
+
+			// The first interview question for which the answer comes up null
+			// is the next answerable question in the interview.
+			if ( is_null( $question->answer ) ) {
+				// Save the sms message body as the nterviewee answer
+				$this->intervieweeAnswerRepo->insert([
+					"interview_question_id" => $question->id,
+					"body" => $answer
+				]);
+				// Once the interviewee's answer is saved. Break the loop and
+				// dispatch the interview.
+				break;
+			}
+		}
+
+		// If there are more questions, they will be dispatched. If not, then
+		// this interview's status will be updated to "complete"
+		if ( $dispatch ) {
+			$this->dispatch( $interview );
+		}
 	}
 
 	private function setInterview( \Model\Entities\Interview $interview )

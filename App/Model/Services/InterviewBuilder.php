@@ -3,6 +3,7 @@
 namespace Model\Services;
 
 use Model\Entities\Account;
+use Model\Entities\Interviewee;
 
 class InterviewBuilder
 {
@@ -16,6 +17,8 @@ class InterviewBuilder
 	private $interview_type_account_property;
 	private $interview;
 	private $interview_template_id;
+	private $interviewee_id;
+	private $interviewee;
 	private $position_id;
 	private $account;
 	private $organization_id;
@@ -50,38 +53,34 @@ class InterviewBuilder
 			"single"
 		);
 
-		// Ensure interviewee is valid
-		if ( !is_null( $interviewee ) ) {
+		$this->setInterviewee( $interviewee );
 
-			$interview = $this->interviewRepo->insert([
-				"deployment_type_id" => $this->getDeploymentTypeID(),
-				"organization_id" => $this->getOrganizationID(),
-				"interviewee_id" => $interviewee->id,
-				"interview_template_id" => $this->getInterviewTemplateID(),
-				"position_id" => $this->getPositionID(),
-				"status" => $this->getStatus(),
-				"scheduled_time" => $this->getScheduledTime(),
-				"token" => md5( microtime() ) . "-" . $this->getOrganizationID() . "-" . $interviewee->id
+		$interview = $this->interviewRepo->insert([
+			"deployment_type_id" => $this->getDeploymentTypeID(),
+			"organization_id" => $this->getOrganizationID(),
+			"interviewee_id" => $interviewee->id,
+			"interview_template_id" => $this->getInterviewTemplateID(),
+			"position_id" => $this->getPositionID(),
+			"status" => $this->getStatus(),
+			"scheduled_time" => $this->getScheduledTime(),
+			"token" => md5( microtime() ) . "-" . $this->getOrganizationID() . "-" . $interviewee->id
+		]);
+
+		// Create the questions for this interview from the interview template
+		// questions
+		$questions = $this->questionRepo->getAllByInterviewTemplateID(
+			$interview->interview_template_id
+		);
+
+		foreach ( $questions as $question ) {
+			$this->interviewQuestionRepo->insert([
+				"interview_id" => $interview->id,
+				"placement" => $question->placement,
+				"body" => $question->body
 			]);
-
-			// Create the questions for this interview from the interview template
-			// questions
-			$questions = $this->questionRepo->getAllByInterviewTemplateID(
-				$interview->interview_template_id
-			);
-
-			foreach ( $questions as $question ) {
-				$this->interviewQuestionRepo->insert([
-					"interview_id" => $interview->id,
-					"placement" => $question->placement,
-					"body" => $question->body
-				]);
-			}
-
-			return $interview;
 		}
 
-		throw new \Exception( "Invalid interviewee" );
+		return $interview;
 	}
 
 	public function setIntervieweeID( $interviewee_id )
@@ -94,6 +93,21 @@ class InterviewBuilder
 	{
 		if ( isset( $this->interviewee_id ) ) {
 			return $this->interviewee_id;
+		}
+
+		throw new \Exception( "Invalid interviewee_id" );
+	}
+
+	public function setInterviewee( Interviewee $interviewee )
+	{
+		$this->interviewee = $interviewee;
+		return $this;
+	}
+
+	public function getInterviewee()
+	{
+		if ( isset( $this->interviewee ) ) {
+			return $this->interviewee;
 		}
 
 		throw new \Exception( "Invalid interviewee" );
