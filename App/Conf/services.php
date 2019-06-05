@@ -282,7 +282,7 @@ $container->register( "interview-dispatcher", function() use ( $container ) {
 		$container->getService( "interview-question-repository" ),
 		$container->getService( "interviewee-answer-repository" ),
 		$container->getService( "interviewee-repository" ),
-		$container->getService( "organization-repository" ),
+		$container->getService( "conversation-repository" ),
 		$container->getService( "twilio-phone-number-repository" ),
 		$container->getService( "phone-repository" ),
 		$container->getService( "sms-messager" )

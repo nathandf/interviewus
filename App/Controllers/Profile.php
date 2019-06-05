@@ -275,7 +275,7 @@ class Profile extends Controller
                             // Dispatch the first interview question immediately if interview
                             // status is active
                             if ( $interview->status == "active" ) {
-                                $interviewDispatcher->dispatch( $interview->id );
+                                $interviewDispatcher->dispatch( $interview );
                             }
 
                             $this->session->addFlashMessage( "Interview successfully deployed" );
@@ -288,9 +288,10 @@ class Profile extends Controller
                         }
                     }
                 }
+            } else {
+                $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
             }
 
-            $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
         }
 
         $this->view->assign( "interviews", $interviews );

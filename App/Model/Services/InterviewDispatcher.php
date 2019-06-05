@@ -13,7 +13,7 @@ class InterviewDispatcher
 	private $intervieweeAnswerRepo;
 	private $interview;
 	private $interviewee;
-	private $organizationRepo;
+	private $conversationRepo;
 	private $twilioPhoneNumberRepo;
 	private $phoneRepo;
 	private $smsMessager;
@@ -23,7 +23,7 @@ class InterviewDispatcher
 		InterviewQuestionRepository $interviewQuestionRepo,
 		IntervieweeAnswerRepository $intervieweeAnswerRepo,
 		IntervieweeRepository $intervieweeRepo,
-		OrganizationRepository $organizationRepo,
+		ConversationRepository $conversationRepo,
 		TwilioPhoneNumberRepository $twilioPhoneNumberRepo,
 		PhoneRepository $phoneRepo,
 		SMSMessagerInterface $smsMessager
@@ -32,7 +32,7 @@ class InterviewDispatcher
 		$this->interviewQuestionRepo = $interviewQuestionRepo;
 		$this->intervieweeAnswerRepo = $intervieweeAnswerRepo;
 		$this->intervieweeRepo = $intervieweeRepo;
-		$this->organizationRepo = $organizationRepo;
+		$this->conversationRepo = $conversationRepo;
 		$this->twilioPhoneNumberRepo = $twilioPhoneNumberRepo;
 		$this->phoneRepo = $phoneRepo;
 		$this->smsMessager = $smsMessager;
@@ -74,17 +74,13 @@ class InterviewDispatcher
 		// Get Interviewee
 		$interviewee = $this->getInterviewee();
 
-		// Get organization
-		$organization = $this->organizationRepo->get(
-			[ "*" ],
-			[ "id" => $interviewee->organization_id ],
-			"single"
-		);
+		// Get the conversation for this interview
+		$conversation = $this->conversationRepo->get( [ "*" ], [ "id" => $this->interview->conversation_id ], "single" );
 
-		// Get organizations twilio phone number
-		$organization->twilioPhoneNumber = $this->twilioPhoneNumberRepo->get(
+		// Get twilio phone number from conversation
+		$twilioPhoneNumber = $this->twilioPhoneNumberRepo->get(
 			[ "*" ],
-			[ "id" => $organization->twilio_phone_number_id ],
+			[ "id" => $conversation->twilio_phone_number_id ],
 			"single"
 		);
 
@@ -107,7 +103,7 @@ class InterviewDispatcher
 				// in the interview data
 				if ( $question->dispatched == false ) {
 					$this->smsMessager->setSenderE164PhoneNumber(
-							$organization->twilioPhoneNumber->phone_number
+							$twilioPhoneNumber->phone_number
 						)
 						->setRecipientCountryCode( $interviewee->phone->country_code )
 						->setRecipientNationalNumber( $interviewee->phone->national_number )
@@ -133,7 +129,7 @@ class InterviewDispatcher
 
 		// if all questions have been dispatched, send interview complete message...
 		$this->smsMessager->setSenderE164PhoneNumber(
-				$organization->twilioPhoneNumber->phone_number
+				$twilioPhoneNumber->phone_number
 			)
 			->setRecipientCountryCode( $interviewee->phone->country_code )
 			->setRecipientNationalNumber( $interviewee->phone->national_number )
