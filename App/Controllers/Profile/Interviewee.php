@@ -19,6 +19,7 @@ class Interviewee extends Controller
         $accountUserRepo = $this->load( "account-user-repository" );
         $organizationRepo = $this->load( "organization-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
+        $this->logger = $this->load( "logger" );
 
         $this->user = $userAuth->getAuthenticatedUser();
 
@@ -64,6 +65,7 @@ class Interviewee extends Controller
         $deploymentTypeRepo = $this->load( "deployment-type-repository" );
         $interviewDispatcher = $this->load( "interview-dispatcher" );
         $conversationProvisioner = $this->load( "conversation-provisioner" );
+        $phoneRepo = $this->load( "phone-repository" );
 
         $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
@@ -161,34 +163,40 @@ class Interviewee extends Controller
                         // Get the interviewee's phone
                         $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
 
-                        // Create a new conversation between a twilio numbe and
-                        // the interviewee's phone number
-                        $conversation = $conversationProvisioner->provision(
-                            $interviewee->phone->e164_phone_number
-                        );
+                        // Try to create a conversation for an sms interview deployement
+                        try {
+                            // Create a new conversation between a twilio numbe and
+                            // the interviewee's phone number
+                            $conversation = $conversationProvisioner->provision(
+                                $interviewee->phone->e164_phone_number
+                            );
 
-                        // Update the interview with a conversation id so it can
-                        // be dispatched to the right phone number
-                        $interviewRepo->update(
-                            [ "conversation_id" => $conversation->id ],
-                            [ "id" => $interview->id ]
-                        );
+                            // Update the interview with a conversation id so it can
+                            // be dispatched to the right phone number
+                            $interviewRepo->update(
+                                [ "conversation_id" => $conversation->id ],
+                                [ "id" => $interview->id ]
+                            );
+
+                            // Dispatch the first interview question immediately if interview
+                            // status is active
+                            if ( $interview->status == "active" ) {
+                                $interviewDispatcher->dispatch( $interview->id );
+                            }
+
+                            $this->session->addFlashMessage( "Interview successfully deployed" );
+                            $this->session->setFlashMessages();
+
+                            $this->view->redirect( "profile/" );
+
+                        } catch ( \Exception $e ) {
+                            $this->logger->error( $e );
+                        }
                     }
-
-                    // Dispatch the first interview question immediately if interview
-                    // status is active
-                    if ( $interview->status == "active" ) {
-                        $interviewDispatcher->dispatch( $interview->id );
-                    }
-
-                    $this->session->addFlashMessage( "Interview successfully deployed" );
-                    $this->session->setFlashMessages();
-
-                    $this->view->redirect( "profile/" );
                 }
             }
 
-            $inputValidator->addError( "deploy_interview", "You have reached your {$interviewBuilder->getInterviewType()} interview deployment limit. Upgrade your account for more interviews." );
+            $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
         }
 
         $this->view->assign( "interviewee", $interviewee );
