@@ -619,6 +619,34 @@ td {
     max-width: 600px;
 }
 
+.application-errors {
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba( 0, 0, 0, .9 );
+    height: 100%;
+    z-index: 999;
+    overflow-y: scroll;
+}
+
+.application-error-message-container {
+    display: block;
+    padding: 20px;
+    border: 3px solid #CA2A2A;
+    background: #FFF;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    background: #FFFFFF;
+}
+
+.application-error-message {
+    margin-top: 20px;
+}
+
 .con-half-min-320 {
     display: block;
     box-sizing: border-box;

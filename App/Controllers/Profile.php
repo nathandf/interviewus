@@ -275,7 +275,9 @@ class Profile extends Controller
                             // Dispatch the first interview question immediately if interview
                             // status is active
                             if ( $interview->status == "active" ) {
-                                $interviewDispatcher->dispatch( $interview );
+                                $interviewDispatcher->dispatch(
+                                    $interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" )
+                                );
                             }
 
                             $this->session->addFlashMessage( "Interview successfully deployed" );
@@ -285,6 +287,14 @@ class Profile extends Controller
 
                         } catch ( \Exception $e ) {
                             $this->logger->error( $e );
+                            $this->view->addApplicationError( $e->getMessage() );
+
+                            // Update the interview with a conversation id so it can
+                            // be dispatched to the right phone number
+                            $interviewRepo->update(
+                                [ "status" => "error" ],
+                                [ "id" => $interview->id ]
+                            );
                         }
                     }
                 }
