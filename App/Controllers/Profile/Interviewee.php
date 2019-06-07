@@ -140,7 +140,7 @@ class Interviewee extends Controller
 
                 $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
                     ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
-                    ->setDeploymentTypeID( $input->get( "deployment_type_id" ) )
+                    ->setDeploymentTypeID( $deploymentType->id )
                     ->setAccount( $this->account )
                     ->setPositionID( $position->id )
                     ->setOrganizationID( $this->organization->id )
@@ -204,11 +204,16 @@ class Interviewee extends Controller
                                 [ "id" => $interview->id ]
                             );
                         }
+                    } else {
+                        $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                        $this->session->setFlashMessages();
+
+                        $this->view->redirect( "profile/" );
                     }
                 }
+            } else {
+                $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
             }
-
-            $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
         }
 
         $this->view->assign( "interviewee", $interviewee );

@@ -215,6 +215,7 @@ class Profile extends Controller
             // Ensure account has enough of the correct interview credits to create
             // this interview
             $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $input->get( "deployment_type_id" ) ], "single" );
+
             if ( $this->account->validateInterviewCredit( $deploymentType ) ) {
                 // Build and dispatch the interview. Will return null if insufficient
                 // interview credits in the account
@@ -234,7 +235,7 @@ class Profile extends Controller
 
                 $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
                     ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
-                    ->setDeploymentTypeID( $input->get( "deployment_type_id" ) )
+                    ->setDeploymentTypeID( $deploymentType->id )
                     ->setAccount( $this->account )
                     ->setPositionID( $position->id )
                     ->setOrganizationID( $this->organization->id )
@@ -280,7 +281,7 @@ class Profile extends Controller
                                 );
                             }
 
-                            $this->session->addFlashMessage( "Interview successfully deployed" );
+                            $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
                             $this->session->setFlashMessages();
 
                             $this->view->redirect( "profile/" );
@@ -296,12 +297,16 @@ class Profile extends Controller
                                 [ "id" => $interview->id ]
                             );
                         }
+                    } else {
+                        $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                        $this->session->setFlashMessages();
+
+                        $this->view->redirect( "profile/" );
                     }
                 }
             } else {
                 $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
             }
-
         }
 
         $this->view->assign( "interviews", $interviews );
