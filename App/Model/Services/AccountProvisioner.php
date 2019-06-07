@@ -2,6 +2,9 @@
 
 namespace Model\Services;
 
+use Model\Entities\Account;
+use Model\Entities\Interview;
+
 class AccountProvisioner
 {
     private $accountRepo;
@@ -33,5 +36,29 @@ class AccountProvisioner
             ],
             [ "id" => $account->id ]
         );
+    }
+
+    public function refundInterview( Account $account, Interview $interview )
+    {
+        switch ( $interview->deployment_type_id ) {
+
+            case 1:
+                $this->accountRepo->update(
+                    [ "sms_interviews" => ( $account->sms_interviews + 1 ) ],
+                    [ "id" => $account->id ]
+                );
+                break;
+
+            case 2:
+                // -1 web interviews indicates unlimited. Adding 1 to this will
+                // take the account off of unlimited status
+                if ( $account->web_interviews != -1 ) {
+                    $this->accountRepo->update(
+                        [ "web_interviews" => ( $account->web_interviews + 1 ) ],
+                        [ "id" => $account->id ]
+                    );
+                }
+                break;
+        }
     }
 }

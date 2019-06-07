@@ -287,14 +287,19 @@ class Profile extends Controller
                             $this->view->redirect( "profile/" );
 
                         } catch ( \Exception $e ) {
+                            // Log the error and pass the error message to the view
                             $this->logger->error( $e );
                             $this->view->addApplicationError( $e->getMessage() );
 
-                            // Update the interview with a conversation id so it can
-                            // be dispatched to the right phone number
-                            $interviewRepo->update(
-                                [ "status" => "error" ],
-                                [ "id" => $interview->id ]
+                            // Refund the account for the interview
+                            $accountProvisioner = $this->load( "account-provisioner" );
+                            $accountProvisioner->refundInterview( $this->account, $interview );
+
+
+                            // Remove the interview from the records
+                            $interviewRepo->delete(
+                                [ "id" ],
+                                [ $interview->id ]
                             );
                         }
                     } else {
