@@ -66,8 +66,8 @@ input[type=radio]:checked + .radio-label {
 }
 
 .status-active {
-	background: #ffee58;
-	color: #000000;
+	background: #26a69a;
+	color: #FFFFFF;
 }
 
 .status-complete {
@@ -81,6 +81,11 @@ input[type=radio]:checked + .radio-label {
 }
 
 .status-canceled {
+	background: #ffee58;
+	color: #000000;
+}
+
+.status-error {
 	background: #e53935;
 	color: #FFFFFF;
 }
