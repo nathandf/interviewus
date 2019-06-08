@@ -2,12 +2,14 @@
 
 namespace Model\Mappers;
 
+use Model\Entities\Interview;
+
 class InterviewQuestionMapper extends DataMapper
 {
-	public function getAllByInterviewIDOrderPlacementAsc( $interview_id )
+	public function getAllByInterviewOrderPlacementAsc( Interview $interview )
 	{
 		$sql = $this->DB->prepare( "SELECT * FROM `{$this->getTable()}` WHERE interview_id = :interview_id ORDER BY placement ASC" );
-		$sql->bindParam( ":interview_id", $interview_id );
+		$sql->bindParam( ":interview_id", $interview->id );
 		$sql->execute();
 
 		$interview_questions = [];

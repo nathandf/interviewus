@@ -85,7 +85,7 @@ class InterviewDispatcher
 		);
 
 		// Get questions data related to this ineterview
-		$this->interview->questions = $this->interviewQuestionRepo->getAllByInterviewID( $this->interview->id );
+		$this->interview->questions = $this->interviewQuestionRepo->getAllByInterview( $this->interview );
 
 		// Retrieve the answer for each question from the database if one exists
 		foreach ( $this->interview->questions as $question ) {
@@ -148,7 +148,7 @@ class InterviewDispatcher
 	private function dispatchWebInterview()
 	{
 		// Get questions data related to this ineterview
-		$this->interview->questions = $this->interviewQuestionRepo->getAllByInterviewID( $this->interview->id );
+		$this->interview->questions = $this->interviewQuestionRepo->getAllByInterview( $this->interview );
 
 		// Retrieve the answer for each question from the database if one exists
 		foreach ( $this->interview->questions as $question ) {
@@ -177,9 +177,8 @@ class InterviewDispatcher
 	public function answerNextQuestion( Interview $interview, $answer, $dispatch = true )
 	{
 		// Interview questions will be orderd in placement in ascending order
-		$interview->questions = $this->interviewQuestionRepo->getAllByInterviewID(
-			[ "*" ],
-			[ "interview_id" => $interview->id ]
+		$interview->questions = $this->interviewQuestionRepo->getAllByInterview(
+			$interview
 		);
 
 		// Retrieve the interviewee's anwers to the interview questions.

@@ -38,33 +38,55 @@ class Incoming extends Controller
         $interviewDispatcher = $this->load( "interview-dispatcher" );
         $conversationRepo = $this->load( "conversation-repository" );
 
-        // Get the conversation
-        $conversation = $conversationRepo->get(
-            [ "*" ],
-            [
-                "twilio_phone_number_id" => $this->twilioPhoneNumber->id,
-                "e164_phone_number" => $input->get( "from" )
-            ],
-            "single"
-        );
+        if (
+            $input->exists() &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "From" => [
+                        "required" => true
+                    ],
+                    "Body" => [
+                        "required" => true
+                    ]
+                ],
+                "recieve_sms"
+            )
+        ) {
+            // Get the conversation
+            $conversation = $conversationRepo->get(
+                [ "*" ],
+                [
+                    "twilio_phone_number_id" => $this->twilioPhoneNumber->id,
+                    "e164_phone_number" => $input->get( "From" )
+                ],
+                "single"
+            );
 
-        $interview = $interviewRepo->get(
-            [ "*" ],
-            [
-                "conversation_id" => $conversation->id,
-                "status" => "active",
-                "deployment_type_id" => 1
-            ],
-            "single"
-        );
+            if ( !is_null( $conversation ) ) {
+                $interview = $interviewRepo->get(
+                    [ "*" ],
+                    [
+                        "conversation_id" => $conversation->id,
+                        "status" => "active",
+                        "deployment_type_id" => 1
+                    ],
+                    "single"
+                );
 
-        if ( !is_null( $interview ) ) {
-            $interviewDispatcher->answerNextQuestion( $interview, $input->get( "message" ) );
+                if ( !is_null( $interview ) ) {
+                    $interviewDispatcher->answerNextQuestion( $interview, $input->get( "Body" ) );
+
+                    return;
+                }
+                $this->logger->error( "Interview not found for converation_id '{$conversation->id}'" );
+
+                return;
+            }
+            $this->logger->error( "Conversation does not exist between '{$this->twilioPhoneNumber->phone_number}' and '{$input->get( "from" )}'" );
+
+            return;
         }
-
-        $this->logger->error( "Interview not found for converation_id '{$conversation->id}'" );
-
-        return;
     }
 
     public function voiceAction()
