@@ -295,7 +295,6 @@ class Profile extends Controller
                             $accountProvisioner = $this->load( "account-provisioner" );
                             $accountProvisioner->refundInterview( $this->account, $interview );
 
-
                             // Remove the interview from the records
                             $interviewRepo->delete(
                                 [ "id" ],
