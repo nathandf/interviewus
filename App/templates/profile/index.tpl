@@ -103,7 +103,7 @@
 				{foreach from=$interview->questions item=question name=fe_questions}
 				<tr class="bg-white">
 					<td class="text-left pad-sml text-med-heavy"><p class="text-med-heavy">{$smarty.foreach.fe_questions.iteration}.<span class="push-l-sml">{$question->body}</span></p></td>
-					<td class="text-left pad-sml text-med-heavy"><i>{$question->sms_status|default:"pending"}</i></p></td></td>
+					<td class="pad-sml text-med"><i>{$question->sms_status|default:"pending"}</i></p></td></td>
 					<td class="text-left pad-sml text-med-heavy"><i>{$question->answer->body|default:"Not Answered"}</i></p></td></td>
 				</tr>
 				{foreachelse}
