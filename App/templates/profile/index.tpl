@@ -94,14 +94,16 @@
 				{/if}
 			</table>
 			<table class="col-100 text-center mat-box-shadow push-t-med" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-primary pad-sml" colspan="2">Interview Details</th>
+				<th class="theme-primary pad-sml" colspan="3">Interview Details</th>
 				<tr>
 					<td class="theme-primary-light pad-sml text-sml-heavy">Question</td>
+					<td class="theme-primary-light pad-sml text-sml-heavy">Status</td>
 					<td class="theme-primary-light pad-sml text-sml-heavy">Answer</td>
 				</tr>
 				{foreach from=$interview->questions item=question name=fe_questions}
 				<tr class="bg-white">
 					<td class="text-left pad-sml text-med-heavy"><p class="text-med-heavy">{$smarty.foreach.fe_questions.iteration}.<span class="push-l-sml">{$question->body}</span></p></td>
+					<td class="text-left pad-sml text-med-heavy"><i>{$question->sms_status|default:"pending"}</i></p></td></td>
 					<td class="text-left pad-sml text-med-heavy"><i>{$question->answer->body|default:"Not Answered"}</i></p></td></td>
 				</tr>
 				{foreachelse}

@@ -20,7 +20,7 @@ class ClientInitializer
 
 		switch ( $this->server_environment ) {
 			case "development":
-				$this->setStatusCallback( "https://postb.in/oYxlZsq2" );
+				$this->setStatusCallback( "http://baad33de.ngrok.io/interviewus.net/webhooks/twilio/status/" );
 				break;
 			case "production":
 				$this->setStatusCallback( "https://www.interviewus.net/webhooks/twilio/status/" );

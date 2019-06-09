@@ -102,7 +102,7 @@ class InterviewDispatcher
 				// dispatched(sent), then send the question via the method specified
 				// in the interview data
 				if ( $question->dispatched == false ) {
-					$this->smsMessager->setSenderE164PhoneNumber(
+					$message = $this->smsMessager->setSenderE164PhoneNumber(
 							$twilioPhoneNumber->phone_number
 						)
 						->setRecipientCountryCode( $interviewee->phone->country_code )
@@ -112,7 +112,10 @@ class InterviewDispatcher
 
 					// Update the dispatch status of this question
 					$this->interviewQuestionRepo->update(
-						[ "dispatched" => 1 ],
+						[
+							"dispatched" => 1,
+							"sms_sid" => $message->sid
+						],
 						[ "id" => $question->id ]
 					);
 

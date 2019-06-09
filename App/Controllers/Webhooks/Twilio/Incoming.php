@@ -6,7 +6,6 @@ use \Core\Controller;
 
 class Incoming extends Controller
 {
-
     public function before()
     {
         $this->requireParam( "sid" );
@@ -53,6 +52,9 @@ class Incoming extends Controller
                 "recieve_sms"
             )
         ) {
+            // TODO Remove input logging
+            $this->logger->info( json_encode( $input ) );
+
             // Get the conversation
             $conversation = $conversationRepo->get(
                 [ "*" ],

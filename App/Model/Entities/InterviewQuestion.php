@@ -11,4 +11,6 @@ class InterviewQuestion implements EntityInterface
 	public $placement;
 	public $body;
 	public $dispatched;
+	public $sms_sid;
+	public $sms_status;
 }

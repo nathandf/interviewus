@@ -39,7 +39,7 @@ class SMSMessager implements SMSMessagerInterface
                 ]
             );
 
-            return $this;
+            return $message;
         }
 
         $message = $this->client->messages->create(
@@ -51,7 +51,7 @@ class SMSMessager implements SMSMessagerInterface
             ]
         );
 
-        return $this;
+        return $message;
     }
 
     public function setRecipientCountryCode( $country_code )
