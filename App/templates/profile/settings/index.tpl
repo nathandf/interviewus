@@ -135,7 +135,7 @@
 		<div class="con-cnt-med-plus-plus border-std bg-white pad-med floatleft">
 			<p class="label">Current Plan: {ucfirst( $plan->name )}</p>
 			<a href="{$HOME}pricing/" class="btn btn-inline tc-white bg-good-green push-t-sml floatleft push-r-sml"><i class="far fa-arrow-alt-circle-up push-r-sml"></i>Upgrade Account</a>
-			<button id="view-plan-details" class="btn btn-line bg-salmon tc-white push-t-sml floatleft"><i class="fas fa-eye push-r-sml"></i>View Plan Details</button>
+			<button id="view-plan-details" class="btn btn-line theme-primary push-t-sml floatleft"><i class="fas fa-eye push-r-sml"></i>View Plan Details</button>
 			<div class="clear"></div>
 			<div id="plan-container" class="plan-container" style="display: none;">
 				<div class="plan-component-detail">
