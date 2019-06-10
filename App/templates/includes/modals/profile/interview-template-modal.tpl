@@ -33,7 +33,7 @@
 			<div class="theme-tertiary-dark pad-sml">
 			</div>
 			<div class="pad-med">
-				<button type="submit" class="button"><i aria-hidden="true" class="far fa-file-alt push-r-med"></i>Save Template</button>
+				<button type="submit" class="button theme-primary"><i aria-hidden="true" class="far fa-file-alt push-r-med"></i>Save Template</button>
 			</div>
 			</form>
 	</div>

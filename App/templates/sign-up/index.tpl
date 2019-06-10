@@ -29,7 +29,7 @@
 			<div class="clear push-t-med"></div>
 			<input type="hidden" name="terms_conditions_agreement" value="true"><label class="text-sml">By pressing "Create Account", you accept and agree to the<br><a target="_blank" href="{$HOME}terms-and-conditions">Terms and Conditions</a> and <a target="_blank" href="{$HOME}privacy-policy">Privacy Policy</a></label>
 			<div class="clear last"></div>
-			<input type="submit" class="button push-t-med" name="button" value="Create Account"/>
+			<input type="submit" class="button theme-primary push-t-med" name="button" value="Create Account"/>
 		</form>
 	</div>
 {/block}

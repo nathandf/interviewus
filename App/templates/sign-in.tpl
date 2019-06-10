@@ -25,7 +25,7 @@
 			<input type="text" name="email" class="inp inp-full push-b-sml">
 			<p class="label">Password</p>
 			<input type="password" name="password" class="inp inp-full push-b-sml">
-			<button type="submit" class="button tc-white push-t-med">Sign In</button>
+			<button type="submit" class="button theme-primary push-t-med">Sign In</button>
 			<p class="text-med push-t-sml"><a class="link text-med" href="{$HOME}sign-up/">Sign up</a></p>
 		</form>
 	</div>
