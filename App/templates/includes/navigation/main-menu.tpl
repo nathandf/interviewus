@@ -1,4 +1,4 @@
-<div class="nav-top-main" itemscope itemtype="http://schema.org/SiteNavigationElement">
+<div class="nav-top theme-primary" itemscope itemtype="http://schema.org/SiteNavigationElement">
     <a href="{$HOME}">
         <img src="{$HOME}public/static/img/initials-logo.jpg" class="floatleft cursor-pt login-menu-logo" alt="Main Logo">
     </a>
@@ -9,9 +9,9 @@
     </div>
     <ul class="nav-top-ul" itemscope itemtype="http://schema.org/BreadcrumbList">
         <div id="nav-items-container" class="nav-items-container">
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}sign-in"><span itemprop="name">Sign in</span></a><meta itemprop="position" content="3" /></li>
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}sign-up/"><span itemprop="name">Sign Up</span></a><meta itemprop="position" content="2" /></li>
-            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link-main" itemprop="item" href="{$HOME}pricing/"><span itemprop="name">Pricing</span></a><meta itemprop="position" content="1" /></li>
+            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link theme-primary" itemprop="item" href="{$HOME}sign-in"><span itemprop="name">Sign in</span></a><meta itemprop="position" content="3" /></li>
+            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link theme-primary" itemprop="item" href="{$HOME}sign-up/"><span itemprop="name">Sign Up</span></a><meta itemprop="position" content="2" /></li>
+            <li class="nav-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a class="nav-link theme-primary" itemprop="item" href="{$HOME}pricing/"><span itemprop="name">Pricing</span></a><meta itemprop="position" content="1" /></li>
         </div>
     </ul>
     <div class="clear"></div>

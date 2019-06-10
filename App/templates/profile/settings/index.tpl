@@ -37,7 +37,7 @@
 					{/foreach}
 					{/if}
 				</select>
-				<button type="submit" class="btn btn-inline push-t-med">Update Profile</button>
+				<button type="submit" class="btn btn-inline theme-primary push-t-med">Update Profile</button>
 			</form>
 		</div>
 		<div class="clear"></div>
@@ -80,7 +80,7 @@
 								<form action="" method="post">
 									<input type="hidden" name="update_default_payment_method" value="{$csrf_token}">
 									<input type="hidden" name="token" value="{$csrf_token}">
-									<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline text-sml push-r-sml">Make default</button>
+									<button type="submit" name="braintree_payment_method_token" value="{$paymentMethod->braintree_payment_method_token}" class="btn btn-inline theme-primary text-sml push-r-sml">Make default</button>
 								</form>
 							</div>
 							<div class="clear"></div>
@@ -119,7 +119,7 @@
 				{/literal}
 			</div>
 			<div class="clear"></div>
-			<button id="add-payment-method" class="btn btn-inline push-t-med"><i class="fas fa-plus push-r-sml"></i>Add payment method</button>
+			<button id="add-payment-method" class="btn btn-inline theme-primary push-t-med"><i class="fas fa-plus push-r-sml"></i>Add payment method</button>
 			<div class="clear"></div>
 		</div>
 		<div class="clear"></div>

@@ -12,7 +12,7 @@
 			<div class="push-t-med"></div>
 			<img class="img-lrg" src="{$HOME}public/static/img/robo-logo.jpg" style="display: block; margin: 0 auto;" alt="">
 			<p class="sub-title push-t-med">Your HR workflow on Autopilot.</p>
-			<a href="{$HOME}sign-up/" class="button-link tc-white">Create your first interview</a>
+			<a href="{$HOME}sign-up/" class="button-link theme-primary tc-white">Create your first interview</a>
 		</div>
 	</div>
 {/block}

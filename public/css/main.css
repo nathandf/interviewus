@@ -24,8 +24,6 @@
     --std-font-family: 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
     --secondary-font-family: 'Roboto Slab', 'Roboto', 'Noto Sans', 'Source Sans Pro', sans-serif;
     --tertiary-font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
-    --std-weight: 300;
-    --heavy-weight: 600;
     /* widths */
     --width-offset: calc(var(--std-padding-left) + var(--std-padding-right));
     --xxsml: calc(50px - var(--width-offset));
@@ -40,7 +38,6 @@
     --xxlrg: calc(1100px - var(--width-offset));
     --col-gutter: 20px;
     /* main colors */
-    --main-bg-dark: #448AFF;
     --main-bg-light: #EEF2F5;
     --secondary-bg-light: #FFFFFF;
     --secondary-bg-dark: #448AFF;
@@ -102,40 +99,15 @@ td {
 }
 
 /* menus */
-.login-menu {
-    box-sizing: border-box;
-    font-family: var(--std-font-family);
-    background: #4A148C;
-    color: var(--main-font-dark);
-}
-
 .login-menu-logo {
     height: 50px;
     margin: 5px;
     border-radius: 1px;
 }
 
-.nav-top-alt {
-    font-family: var(--std-font-family);
-    /* background: #0667D0;
-    color: var(--main-font-dark); */
-    color: #333;
-    background: #FFF;
-}
-
-.nav-top-main {
-    font-family: var(--std-font-family);
-    background: #4A148C;
-    border-bottom: 1px solid #CCC;
-}
-
 .nav-top {
     font-family: var(--std-font-family);
-    background: var(--secondary-bg-dark);
-    background-image: url("../img/flatbluetriangles.png");
-    background: #0667D0;
-    background-position-y: 30%;
-    color: var(--main-font-dark);
+    border-bottom: 1px solid #CCC;
 }
 
 .nav-top-ul {
@@ -149,17 +121,11 @@ td {
     height: 100%;
 }
 
-.nav-item-l {
-    float: left;
-    position: relative;
-    height: 100%;
-}
-
 .nav-title {
     float: left;
     position: relative;
     height: 100%;
-    font-weight: var(--heavy-weight);
+    font-weight: 600;
 }
 
 .nav-logo {
@@ -179,33 +145,14 @@ td {
     padding-right: var(--std-padding-right);
     display: block;
     text-decoration: none;
-    color: var(--main-font-light);
-    font-weight: var(--heavy-weight);
+    font-weight: 600;
     font-size: 14px;
     box-sizing: border-box;
+
 }
 
 .nav-link:hover {
     border-bottom: 2px solid #FFFFFF;
-}
-
-.nav-link-main {
-    font-family: var(--std-font-family);
-    height: 60px;
-    line-height: 60px;
-    padding-left: var(--std-padding-left);
-    padding-right: var(--std-padding-right);
-    display: block;
-    text-decoration: none;
-    color: #FFFFFF;
-    font-weight: var(--heavy-weight);
-    font-size: 14px;
-    box-sizing: border-box;
-
-}
-
-.nav-link-main:hover {
-    border-bottom: 2px solid #00e676;
 }
 
 .footer {
@@ -913,7 +860,7 @@ td {
 
 .form-title {
     font-size: 25px;
-    font-weight: var(--heavy-weight);
+    font-weight: 600;
     margin-bottom: var(--std-margin);
 }
 
@@ -1131,8 +1078,6 @@ td {
     text-align: center;
     justify-content: center;
     font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
-    background: var(--main-btn-bg);
-    color: var(--main-btn-color);
     width: 100%;
     display: block;
     margin: 0 auto;
@@ -1184,8 +1129,6 @@ td {
     font-size: 16px;
     text-align: center;
     justify-content: center;
-    background: var(--main-btn-bg);
-    color: var(--main-btn-color);
     font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
     width: 100%;
     display: block;
@@ -1206,8 +1149,6 @@ td {
 .btn {
     -webkit-appearance: none;
     font-family: "Rubik", 'Noto Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
-    background: var(--main-btn-bg);
-    color: var(--main-btn-color);
     font-size: 14px;
     font-weight: 600;
     display: block;
@@ -2082,6 +2023,12 @@ td {
 
 }
 
+@media screen and (max-width: 851px) {
+    .nav-items-container {
+        display: block;
+    }
+}
+
 @media screen and (max-width: 850px) {
 
     .nav-dropdown-button {
@@ -2102,7 +2049,7 @@ td {
         border-top: 1px solid #CCC;
     }
 
-    .nav-link-main {
+    .nav-link {
         height: 35px;
         line-height: 35px;
     }
