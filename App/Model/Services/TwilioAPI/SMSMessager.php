@@ -116,7 +116,7 @@ class SMSMessager implements SMSMessagerInterface
 
     public function setSMSBody( $body )
     {
-        $this->sms_body = $body;
+        $this->sms_body = html_entity_decode( $body );
         return $this;
     }
 

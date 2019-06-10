@@ -20,13 +20,13 @@ class ClientInitializer
 
 		switch ( $this->server_environment ) {
 			case "development":
-				$this->setStatusCallback( "http://baad33de.ngrok.io/interviewus.net/webhooks/twilio/status/" );
+				$this->setStatusCallback( $this->configs[ "development" ][ "status_callback" ] );
 				break;
 			case "production":
-				$this->setStatusCallback( "https://www.interviewus.net/webhooks/twilio/status/" );
+				$this->setStatusCallback( $this->configs[ "production" ][ "status_callback" ] );
 				break;
 			default:
-				$this->setStatusCallback( "https://www.interviewus.net/webhooks/twilio/status/" );
+				$this->setStatusCallback( $this->configs[ "production" ][ "status_callback" ] );
 				break;
 		}
 	}
