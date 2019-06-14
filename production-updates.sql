@@ -308,3 +308,6 @@ CREATE TABLE `deployment_type` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VA
 INSERT INTO `deployment_type` (`id`, `name`) VALUES (NULL, 'sms'), (NULL, 'web');
 INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PN159a6b15c933f1ceec13c9cbc20084a9', '+19147757270', '(914) 775-7270');
 ALTER TABLE `interview_question` ADD `sms_sid` VARCHAR(256) NULL DEFAULT NULL AFTER `dispatched`, ADD `sms_status` VARCHAR(256) NULL DEFAULT NULL AFTER `sms_sid`;
+
+CREATE TABLE `inbound_sms` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `conversation_id` BIGINT NOT NULL , `body` VARCHAR(2056) NOT NULL , `recieved_at` VARCHAR(256) NOT NULL , `concatenated_sms_id` BIGINT NULL , `twilio_sms_sid` VARCHAR(256) NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `concatenated_sms` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `conversation_id` BIGINT NOT NULL , `body` VARCHAR(2048) NOT NULL , `update_at` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
