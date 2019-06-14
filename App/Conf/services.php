@@ -201,6 +201,14 @@ $container->register( "cart-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "concatenated-sms-repository", function() use ( $container ) {
+	$repo = new \Model\Services\ConcatenatedSmsRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "conversation-repository", function() use ( $container ) {
 	$repo = new \Model\Services\ConversationRepository(
 		$container->getService( "dao" ),
@@ -243,6 +251,14 @@ $container->register( "file-repository", function() use ( $container ) {
 
 $container->register( "image-repository", function() use ( $container ) {
 	$repo = new \Model\Services\ImageRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "inbound-sms-repository", function() use ( $container ) {
+	$repo = new \Model\Services\InboundSmsRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
