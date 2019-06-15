@@ -105,4 +105,39 @@ abstract class Repository implements RepositoryInterface
         $mapper = $this->getMapper();
         $mapper->delete( $keys, $values );
     }
+
+    public function deleteEntities( $entities )
+    {
+        $mapper = $this->getMapper();
+
+        // If entities is an array, iterate through the array and delete all
+        // entities from the database
+        if ( is_array( $entities ) ) {
+            foreach ( $entities as $entity ) {
+                $this->validateEntity( $entity );
+                // Delete this entity
+                $mapper->delete(
+                    [ "id" ],
+                    [ $entity->id ]
+                );
+            }
+
+            return;
+        }
+
+        // If entites arg is a single entity, then delete this entity
+        $this->validateEntity( $entities );
+        $mapper->delete( [ "id" ], [ $entities->id ] );
+        return;
+    }
+
+    private function validateEntity( $entity )
+    {
+
+        if ( !is_a( $entity, "Model\\Entities\\{$this->entityName}" ) ) {
+            throw new \Exception( "Entity invalid. Must be of class 'Model\\Entities\\{$this->entityName}' - '" . get_class( $entity ) . "' provided" );
+        }
+
+        return;
+    }
 }

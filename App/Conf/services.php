@@ -434,6 +434,16 @@ $container->register( "question-type-repository", function() use ( $container ) 
 	return $repo;
 } );
 
+$container->register( "inbound-sms-concatenator", function() use ( $container ) {
+	$service = new \Model\Services\InboundSmsConcatenator(
+		$container->getService( "concatenated-sms-repository" ),
+		$container->getService( "inbound-sms-repository" ),
+		$container->getService( "logger" )
+	);
+
+	return $service;
+} );
+
 $container->register( "sendgrid-mailer", function() use ( $container ) {
 	$sendGridMailer = new \Model\Services\SendGridMailer( $container->getService( "config" ) );
 	return $sendGridMailer;
