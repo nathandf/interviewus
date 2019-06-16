@@ -444,9 +444,18 @@ $container->register( "inbound-sms-concatenator", function() use ( $container ) 
 	return $service;
 } );
 
+$container->register( "sendgrid-client-initializer", function() use ( $container ) {
+	$service = new \Model\Services\SendGridAPI\ClientInitializer(
+		$container->getService( "config" )
+	);
+	return $service;
+} );
+
 $container->register( "sendgrid-mailer", function() use ( $container ) {
-	$sendGridMailer = new \Model\Services\SendGridMailer( $container->getService( "config" ) );
-	return $sendGridMailer;
+	$service = new \Model\Services\SendGridAPI\Mailer(
+		$container->getService("sendgrid-client-initializer" )
+	);
+	return $service;
 } );
 
 $container->register( "mailer", function() use ( $container ) {

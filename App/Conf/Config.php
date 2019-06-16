@@ -93,7 +93,7 @@ class Config
 
         // SendGrid API
         $this->configs[ "sendgrid" ] = [
-            "api_key" => "" // TODO Create Sendgrid account
+            "api-key" => "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"
         ];
 
         // Twilio API
