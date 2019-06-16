@@ -15,7 +15,7 @@
 				<input type="text" name="name" required="required" class="inp inp-full">
 				<p class="label">Description</p>
 				<textarea name="description" class="inp textarea inp-full"></textarea>
-				<button type="submit" class="button push-t-med">Create Position</button>
+				<button type="submit" class="button theme-primary push-t-med">Create Position</button>
 			</form>
 		</div>
 	</div>

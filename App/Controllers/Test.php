@@ -8,6 +8,6 @@ class Test extends Controller
 {
     public function indexAction()
     {
-
+        
     }
 }

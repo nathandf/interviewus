@@ -1,20 +1,19 @@
 <?php
 
-namespace Model\Services;
+namespace Model\Services\TwilioAPI;
 
-use \Model\Services\TwilioAPIInitializer;
 use Twilio\Twiml;
 
-class TwilioServiceDispatcher
+class ServiceDispatcher
 {
-    private $api;
+    private $clientInitializer;
     private $client;
 
     public function __construct(
-        TwilioAPIInitializer $twilioAPIInitializer
+        ClientInitializer $clientInitializer
     ){
-        $this->api = $twilioAPIInitializer;
-        $this->client = $this->api->init();
+        $this->clientInitializer = $clientInitializer;
+        $this->client = $this->clientInitializer->init();
     }
 
     // $iso -> ISO6631-1 alpha-2 format

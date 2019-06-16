@@ -1,39 +1,38 @@
 <?php
 
-namespace Model\Services;
+namespace Model\Services\TwilioAPI;
 
 use Twilio\Rest\Client;
 
-class TwilioAPIInitializer
+class ClientInitializer
 {
 	public $configs;
 	public $server_environment;
 	public $status_callback;
 
-	public function __construct( \Conf\Config $config )
+	public function __construct( \Conf\Config $Config )
 	{
 		// Get facebook configs
-		$this->setConfigs( $config->configs[ "twilio" ] );
+		$this->setConfigs( $Config->configs[ "twilio" ] );
 
 		// Set server environment
-		$this->setServerEnv( $config->getEnv() );
+		$this->setServerEnv( $Config->getEnv() );
 
 		switch ( $this->server_environment ) {
 			case "development":
-				$this->setStatusCallback( "https://postb.in/oYxlZsq2" );
+				$this->setStatusCallback( $this->configs[ "development" ][ "status_callback" ] );
 				break;
 			case "production":
-				$this->setStatusCallback( "https://www.interviewus.net/webhooks/twilio/status/" );
+				$this->setStatusCallback( $this->configs[ "production" ][ "status_callback" ] );
 				break;
 			default:
-				$this->setStatusCallback( "https://www.interviewus.net/webhooks/twilio/status/" );
+				$this->setStatusCallback( $this->configs[ "production" ][ "status_callback" ] );
 				break;
 		}
 	}
 
 	public function init()
 	{
-		// Get initialize facebook api
 		$client = new Client(
 			$this->configs[ "account_sid" ],
 			$this->configs[ "auth_token" ]

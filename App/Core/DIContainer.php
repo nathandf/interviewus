@@ -4,7 +4,7 @@
 */
 namespace Core;
 
-class DI_Container
+class DIContainer
 {
   protected $services = [];
 
@@ -27,7 +27,7 @@ class DI_Container
   public function listServices()
   {
     if ( empty( $this->services ) ) {
-      throw new \Exception( "No services are registered with the DI_Container" );
+      throw new \Exception( "No services are registered with the DIContainer" );
     }
     return array_keys( $this->services );
   }

@@ -1,13 +1,12 @@
 <?php
 
-namespace Model\Services;
+namespace Model\Services\TwilioAPI;
 
 use Contracts\SMSMessagerInterface;
-use \Model\Services\TwilioAPIInitializer;
 
-class TwilioSMSMessager implements SMSMessagerInterface
+class SMSMessager implements SMSMessagerInterface
 {
-    private $api;
+    private $clientInitializer;
     private $client;
     private $recipient_country_code;
     private $recipient_national_number;
@@ -18,29 +17,29 @@ class TwilioSMSMessager implements SMSMessagerInterface
     private $sms_body;
 
     public function __construct(
-        TwilioAPIInitializer $twilioAPIInitializer
+        ClientInitializer $clientInitializer
     ){
-        $this->api = $twilioAPIInitializer;
-        $this->client = $this->api->init();
+        $this->clientInitializer = $clientInitializer;
+        $this->client = $this->clientInitializer->init();
     }
 
     public function send()
     {
         // Send using E164 formatted phone numbers if not null
         if (
-            !is_null( $recipient_E164_phone_number ) &&
-            !is_null( $sender_E164_phone_number )
+            !is_null( $this->recipient_E164_phone_number ) &&
+            !is_null( $this->sender_E164_phone_number )
         ) {
             $message = $this->client->messages->create(
                 $this->recipient_E164_phone_number,
                 [
                     "from" => $this->sender_E164_phone_number,
                     "body" => $this->getSMSBody(),
-                    "statusCallback" => $this->api->getStatusCallback()
+                    "statusCallback" => $this->clientInitializer->getStatusCallback()
                 ]
             );
 
-            return $this;
+            return $message;
         }
 
         $message = $this->client->messages->create(
@@ -48,11 +47,11 @@ class TwilioSMSMessager implements SMSMessagerInterface
             [
                 "from" => $this->getSenderFullPhoneNumber(),
                 "body" => $this->getSMSBody(),
-                "statusCallback" => $this->api->getStatusCallback()
+                "statusCallback" => $this->clientInitializer->getStatusCallback()
             ]
         );
 
-        return $this;
+        return $message;
     }
 
     public function setRecipientCountryCode( $country_code )
@@ -117,7 +116,7 @@ class TwilioSMSMessager implements SMSMessagerInterface
 
     public function setSMSBody( $body )
     {
-        $this->sms_body = $body;
+        $this->sms_body = html_entity_decode( $body );
         return $this;
     }
 
@@ -132,23 +131,33 @@ class TwilioSMSMessager implements SMSMessagerInterface
 
     public function getRecipientFullPhoneNumber()
     {
+        if ( !is_null( $this->recipient_E164_phone_number ) ) {
+
+            return $this->recipient_E164_phone_number;
+        }
+
         return "+" . $this->getRecipientCountryCode() . $this->getRecipientNationalNumber();
     }
 
     public function getSenderFullPhoneNumber()
     {
+        if ( !is_null( $this->sender_E164_phone_number ) ) {
+
+            return $this->sender_E164_phone_number;
+        }
+
         return "+" . $this->getSenderCountryCode() . $this->getSenderNationalNumber();
     }
 
     public function setRecipientE164PhoneNumber( $phone_number )
     {
-        $this->$recipient_E164_phone_number = $phone_number;
+        $this->recipient_E164_phone_number = $phone_number;
         return $this;
     }
 
     public function setSenderE164PhoneNumber( $phone_number )
     {
-        $this->$sender_E164_phone_number = $phone_number;
+        $this->sender_E164_phone_number = $phone_number;
         return $this;
     }
 }

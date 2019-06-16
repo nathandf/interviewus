@@ -13,7 +13,7 @@
 				<input type="hidden" name="new_question" value="{$csrf_token}">
 				<p class="label">Question</p>
 				<textarea name="body" class="inp textarea inp-full"></textarea>
-				<button type="submit" class="button push-t-med">Add Question</button>
+				<button type="submit" class="button theme-primary push-t-med">Add Question</button>
 			</form>
 		</div>
 	</div>

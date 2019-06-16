@@ -1,0 +1,44 @@
+.theme-primary {
+	background: #880e4f;
+	color: #FFFFFF;
+}
+
+.theme-primary-light {
+	background: #bc477b;
+	color: #FFFFFF;
+}
+
+.theme-primary-dark {
+	background: #560027;
+	color: #FFFFFF;
+}
+
+.theme-secondary {
+	background: #4a148c;
+	color: #FFFFFF;
+}
+
+.theme-secondary-light {
+	background: #7c43bd;
+	color: #FFFFFF;
+}
+
+.theme-secondary-dark {
+	background: #12005e;
+	color: #FFFFFF;
+}
+
+.theme-tertiary {
+	background: #E1E2E1;
+	color: #000000;
+}
+
+.theme-tertiary-light {
+	background: #F5F5F6;
+	color: #000000;
+}
+
+.theme-tertiary-dark {
+	background: #C0C0C0;
+	color: #000000;
+}

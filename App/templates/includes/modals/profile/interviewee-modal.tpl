@@ -16,7 +16,7 @@
 				<p class="label push-t-sml">Email</p>
 				<input type="email" name="email" required="required" class="inp inp-full">
 				{include file="includes/snippets/form-components/full-phone.tpl"}
-				<button type="submit" class="button push-t-med">Create Interviewee</button>
+				<button type="submit" class="button theme-primary push-t-med">Create Interviewee</button>
 			</form>
 		</div>
 	</div>

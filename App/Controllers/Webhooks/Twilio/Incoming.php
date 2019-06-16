@@ -6,27 +6,19 @@ use \Core\Controller;
 
 class Incoming extends Controller
 {
-    public $organization;
-    public $organization_phone = null;
-
     public function before()
     {
         $this->requireParam( "sid" );
-        $organizationRepo = $this->load( "organization-repository" );
-        $phoneRepo = $this->load( "phone-repository" );
-        $this->twilioServiceDispatcher = $this->load( "twilio-service-dispatcher" );
         $twilioPhoneNumberRepo = $this->load( "twilio-phone-number-repository" );
+        $this->logger = $this->load( "logger" );
 
         $this->twilioPhoneNumber = $twilioPhoneNumberRepo->get( [ "*" ], [ "sid" => $this->params[ "sid" ] ], "single" );
 
         // If no twilio phone number exists
         if ( is_null( $this->twilioPhoneNumber ) ) {
-            return;
-        }
-
-        $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->twilioPhoneNumber->organization_id ], "single" );
-        if ( !is_null( $this->organization ) ) {
-            $this->organization_phone = $phoneRepo->get( [ "*" ], [ "id" => $this->organization->phone_id ], "single" );
+            $this->logger->error( "Twilio number with sid '{$this->params[ "sid" ]}' does not exist" );
+            die();
+            exit();
         }
     }
 
@@ -34,72 +26,56 @@ class Incoming extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
-        $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewRepo = $this->load( "interview-repository" );
-        $interviewQuestionRepo = $this->load( "interview-question-repository" );
-        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
-        $phoneRepo = $this->load( "phone-repository" );
-        $interviewDispatcher = $this->load( "interview-dispatcher" );
+        $conversationRepo = $this->load( "conversation-repository" );
+        $inboundSmsRepo = $this->load( "inbound-sms-repository" );
+        $inboundSmsConcatenator = $this->load( "inbound-sms-concatenator" );
 
-        // Get the phone
-        $phone = $phoneRepo->get( [ "*" ], [ "e164_phone_number" => $input->get( "from" ) ], "single" );
-
-        $interviewee = $intervieweeRepo->get( [ "*" ], [ "phone_id" => $phone->id ], "single" );
-
-        $interview = $interviewRepo->get(
-            [ "*" ],
-            [
-                "interviewee_id" => $interviewee->id,
-                "status" => "active",
-                "deployment_type" => 1
-            ],
-            "single"
-        );
-
-        if ( !is_null( $interview ) ) {
-            // Interview questions will be orderd in placement in ascending order
-            $interview->questions = $interviewQuestionRepo->getAllByInterviewID(
+        if (
+            $input->exists() &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "From" => [
+                        "required" => true
+                    ],
+                    "Body" => [
+                        "required" => true
+                    ]
+                ],
+                "recieve_sms"
+            )
+        ) {
+            // Get the conversation
+            $conversation = $conversationRepo->get(
                 [ "*" ],
-                [ "interview_id" => $interview->id ]
+                [
+                    "twilio_phone_number_id" => $this->twilioPhoneNumber->id,
+                    "e164_phone_number" => $input->get( "From" )
+                ],
+                "single"
             );
 
-            // Retrieve the interviewee's anwers to the interview questions.
-            foreach ( $interview->questions as $question ) {
-                $question->answer = $intervieweeAnswerRepo->get(
-                    [ "*" ],
-                    [ "interview_question_id" => $question->id ],
-                    "single"
-                );
+            if ( !is_null( $conversation ) ) {
+                $inboundSms = $inboundSmsRepo->insert([
+                    "conversation_id" => $conversation->id,
+                    "body" => $input->get( "Body" ),
+                    "recieved_at" => time()
+                ]);
 
-                // The first interview question for which the answer comes up null
-                // is the next answerable question in the interview.
-                if ( is_null( $question->answer ) ) {
-                    // Save the sms message body as the nterviewee answer
-                    $intervieweeAnswerRepo->insert([
-                        "interview_question_id" => $question->id,
-                        "body" => $input->get( "message" )
-                    ]);
-                    // Once the interviewee's answer is saved. Break the loop and
-                    // dispatch the interview.
-                    break;
-                }
+                $inboundSmsConcatenator->concatenate( $inboundSms );
+
+                return;
             }
 
-            // If there are more questions, they will be dispatched. If not, then
-            // this interview's status will be updated to "complete"
-            $interviewDispatcher->dispatch( $interview->id );
-        }
+            $this->logger->error( "Conversation does not exist between '{$this->twilioPhoneNumber->phone_number}' and '{$input->get( "from" )}'" );
 
-        return;
+            return;
+        }
     }
 
     public function voiceAction()
     {
-        // Forward the call the organization's phone number
-        if ( !is_null( $this->organization_phone ) ) {
-            $this->twilioServiceDispatcher->forwardCall(
-                $this->organization_phone->getE164FormattedPhoneNumber()
-            );
-        }
+
     }
 }

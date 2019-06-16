@@ -12,13 +12,14 @@ class View extends CoreObject
     private $templatingEngine;
     public $container;
     public $template;
+    public $application_error_messages = [];
     public $data = [];
 
     /**
      * View constructor.
-     * @param DI_Container $container
+     * @param DIContainer $container
      */
-    public function __construct( DI_Container $container )
+    public function __construct( DIContainer $container )
     {
         $this->setContainer( $container );
     }
@@ -53,6 +54,23 @@ class View extends CoreObject
         $this->templatingEngine->assign( "HOME", HOME );
         $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
 
+    }
+
+    public function addApplicationError( $error_messages )
+    {
+        if ( is_array( $error_messages ) ) {
+            foreach ( $error_messages as $message ) {
+                if ( !is_string( $message ) ) {
+                    throw new \Exception( "Error message must be of type string; Type '" . gettype( $message ) . "' provided" );
+                }
+
+                $this->application_error_messages[] = $message;
+            }
+        }
+
+        $this->application_error_messages[] = $error_messages;
+
+        $this->assign( "application_errors", $this->application_error_messages );
     }
 
     /**

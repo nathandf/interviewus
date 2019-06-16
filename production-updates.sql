@@ -300,3 +300,15 @@ ALTER TABLE `account` ADD `braintree_subscription_id` VARCHAR(256) NULL DEFAULT 
 CREATE TABLE `payment_method` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `braintree_payment_method_token` VARCHAR(256) NOT NULL , `is_default` TINYINT NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `payment_method` CHANGE `is_default` `is_default` TINYINT(4) NOT NULL DEFAULT '0';
 ALTER TABLE `payment_method` ADD `account_id` BIGINT NOT NULL AFTER `id`;
+INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PNb3e9c12b31f5a9923eb9befb32bcef32', '+18327694054', '(832) 769-4054');
+CREATE TABLE `conversation` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `twilio_phone_number_id` BIGINT NOT NULL , `e164_phone_number` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `interview` ADD `conversation_id` BIGINT NULL DEFAULT NULL AFTER `organization_id`;
+
+CREATE TABLE `deployment_type` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `name` VARCHAR(128) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+INSERT INTO `deployment_type` (`id`, `name`) VALUES (NULL, 'sms'), (NULL, 'web');
+INSERT INTO `twilio_phone_number` (`id`, `sid`, `phone_number`, `friendly_number`) VALUES (NULL, 'PN159a6b15c933f1ceec13c9cbc20084a9', '+19147757270', '(914) 775-7270');
+ALTER TABLE `interview_question` ADD `sms_sid` VARCHAR(256) NULL DEFAULT NULL AFTER `dispatched`, ADD `sms_status` VARCHAR(256) NULL DEFAULT NULL AFTER `sms_sid`;
+
+CREATE TABLE `inbound_sms` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `conversation_id` BIGINT NOT NULL , `body` VARCHAR(2056) NOT NULL , `recieved_at` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+CREATE TABLE `concatenated_sms` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `conversation_id` BIGINT NOT NULL , `body` VARCHAR(2048) NOT NULL , `updated_at` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+ALTER TABLE `concatenated_sms` ADD `created_at` VARCHAR(256) NOT NULL AFTER `body`;

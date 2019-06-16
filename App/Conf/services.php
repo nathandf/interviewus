@@ -56,7 +56,7 @@ $container->register( "templating-engine", function() use ( $container ) {
 
 $container->register( "logger", function() use ( $container ) {
 	$Config = $container->getService( "config" );
-	$logsDir = $Config::$configs[ "logs_directory" ];
+	$logsDir = $Config->configs[ "logs_directory" ];
 	$logger = new Katzgrau\KLogger\Logger( $logsDir );
 	return $logger;
 } );
@@ -201,8 +201,40 @@ $container->register( "cart-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "concatenated-sms-repository", function() use ( $container ) {
+	$repo = new \Model\Services\ConcatenatedSmsRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "conversation-repository", function() use ( $container ) {
+	$repo = new \Model\Services\ConversationRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "conversation-provisioner", function() use ( $container ) {
+	$service = new \Model\Services\ConversationProvisioner(
+		$container->getService( "conversation-repository" ),
+		$container->getService( "twilio-phone-number-repository" )
+	);
+	return $service;
+} );
+
 $container->register( "country-repository", function() use ( $container ) {
 	$repo = new \Model\Services\CountryRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
+$container->register( "deployment-type-repository", function() use ( $container ) {
+	$repo = new \Model\Services\DeploymentTypeRepository(
 		$container->getService( "dao" ),
 		$container->getService( "entity-factory" )
 	);
@@ -225,6 +257,14 @@ $container->register( "image-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "inbound-sms-repository", function() use ( $container ) {
+	$repo = new \Model\Services\InboundSmsRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "industry-repository", function() use ( $container ) {
 	$repo = new \Model\Services\IndustryRepository(
 		$container->getService( "dao" ),
@@ -241,12 +281,27 @@ $container->register( "interview-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "interview-builder", function() use ( $container ) {
+	$repo = new \Model\Services\InterviewBuilder(
+		$container->getService( "account-repository" ),
+		$container->getService( "interview-repository" ),
+		$container->getService( "question-repository" ),
+		$container->getService( "interview-question-repository" ),
+		$container->getService( "interviewee-repository" )
+	);
+	return $repo;
+} );
+
 $container->register( "interview-dispatcher", function() use ( $container ) {
 	$repo = new \Model\Services\InterviewDispatcher(
 		$container->getService( "interview-repository" ),
 		$container->getService( "interview-question-repository" ),
 		$container->getService( "interviewee-answer-repository" ),
-		$container->getService( "interviewee-repository" )
+		$container->getService( "interviewee-repository" ),
+		$container->getService( "conversation-repository" ),
+		$container->getService( "twilio-phone-number-repository" ),
+		$container->getService( "phone-repository" ),
+		$container->getService( "sms-messager" )
 	);
 	return $repo;
 } );
@@ -379,6 +434,16 @@ $container->register( "question-type-repository", function() use ( $container ) 
 	return $repo;
 } );
 
+$container->register( "inbound-sms-concatenator", function() use ( $container ) {
+	$service = new \Model\Services\InboundSmsConcatenator(
+		$container->getService( "concatenated-sms-repository" ),
+		$container->getService( "inbound-sms-repository" ),
+		$container->getService( "logger" )
+	);
+
+	return $service;
+} );
+
 $container->register( "sendgrid-mailer", function() use ( $container ) {
 	$sendGridMailer = new \Model\Services\SendGridMailer( $container->getService( "config" ) );
 	return $sendGridMailer;
@@ -413,30 +478,31 @@ $container->register( "twilio-phone-number-repository", function() use ( $contai
 	return $repo;
 } );
 
-$container->register( "twilio-api-initializer", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioAPIInitializer(
+$container->register( "twilio-client-initializer", function() use ( $container ) {
+	$obj = new \Model\Services\TwilioAPI\ClientInitializer(
 	    $container->getService( "config" )
 	);
 	return $obj;
 } );
 
 $container->register( "twilio-phone-number-buyer", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioPhoneNumberBuyer(
-	    $container->getService( "twilio-api-initializer" )
+	$obj = new \Model\Services\TwilioAPI\PhoneNumberBuyer(
+	    $container->getService( "twilio-client-initializer" ),
+		$container->getService( "config" )
 	);
 	return $obj;
 } );
 
 $container->register( "twilio-service-dispatcher", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioServiceDispatcher(
-	    $container->getService( "twilio-api-initializer" )
+	$obj = new \Model\Services\TwilioAPI\ServiceDispatcher(
+	    $container->getService( "twilio-client-initializer" )
 	);
 	return $obj;
 } );
 
 $container->register( "twilio-sms-messager", function() use ( $container ) {
-	$obj = new \Model\Services\TwilioSMSMessager(
-	    $container->getService( "twilio-api-initializer" )
+	$obj = new \Model\Services\TwilioAPI\SMSMessager(
+	    $container->getService( "twilio-client-initializer" )
 	);
 	return $obj;
 } );

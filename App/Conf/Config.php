@@ -71,7 +71,7 @@ class Config
                 "url_prefix" => "http://localhost/interviewus.net/"
             ],
             "production" => [
-                "url_prefix" => "https://interviewus.net/"
+                "url_prefix" => "https://www.interviewus.net/"
             ],
         ];
 
@@ -98,9 +98,14 @@ class Config
 
         // Twilio API
         $this->configs[ "twilio" ] = [
-            "primary_number" => "", // TODO Create Sendgrid account
-            "account_sid" => "", // TODO Create Sendgrid account
-            "auth_token" => "" // TODO Create Sendgrid account
+            "account_sid" => "AC594867e02250c1d3bb129379cf0021c9",
+            "auth_token" => "d9421fc6876d85e18b0dd1d95315c92d",
+            "development" => [
+                "status_callback" => "http://1428890c.ngrok.io/interviewus.net/webhooks/twilio/status/"
+            ],
+            "production" => [
+                "status_callback" => "http://www.interviewus.net/webhooks/twilio/status/"
+            ]
         ];
 
         // Braintree API

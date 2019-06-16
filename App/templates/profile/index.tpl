@@ -71,7 +71,7 @@
 		<div id="interview-details-{$interview->id}" class="interview-details" style="display: none;">
 			<div class="pad-sml-mob-neg"></div>
 			<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-secondary text-left pad-sml" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table push-r-sml"><span class="pad-sml"><i class="fas fa-chevron-left no-deco tc-black"></i></span></a><span>{$interview->interviewee->getFullName()}</span></th>
+				<th class="theme-secondary text-left pad-sml" colspan="3"><a href="#interview-{$interview->id}" data-id="{$interview->id}" class="cursor-pt --c-interview-table push-r-sml"><span class="pad-sml"><i class="fas fa-chevron-left no-deco theme-secondary"></i></span></a><span>{$interview->interviewee->getFullName()}</span></th>
 				<tr>
 					<td class="theme-secondary-light pad-sml text-sml-heavy">Postion</td>
 					<td class="theme-secondary-light pad-sml text-sml-heavy">Type</td>
@@ -94,15 +94,17 @@
 				{/if}
 			</table>
 			<table class="col-100 text-center mat-box-shadow push-t-med" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-primary pad-sml" colspan="2">Interview Details</th>
+				<th class="theme-primary pad-sml" colspan="3">Interview Details</th>
 				<tr>
 					<td class="theme-primary-light pad-sml text-sml-heavy">Question</td>
+					<td class="theme-primary-light pad-sml text-sml-heavy">Status</td>
 					<td class="theme-primary-light pad-sml text-sml-heavy">Answer</td>
 				</tr>
 				{foreach from=$interview->questions item=question name=fe_questions}
 				<tr class="bg-white">
 					<td class="text-left pad-sml text-med-heavy"><p class="text-med-heavy">{$smarty.foreach.fe_questions.iteration}.<span class="push-l-sml">{$question->body}</span></p></td>
-					<td class="text-left pad-sml text-med-heavy"><i>{$question->answer->body|default:"Not Answered"}</i></p></td></td>
+					<td class="pad-sml text-med"><i>{$question->sms_status|default:"pending"}</i></p></td></td>
+					<td class="text-left pad-sml text-med-heavy text-breakable"><i>{$question->answer->body|default:"Not Answered"}</i></p></td></td>
 				</tr>
 				{foreachelse}
 				<tr class="bg-white">

@@ -103,7 +103,7 @@ class I extends Controller
                 }
             }
 
-            $interviewDispatcher->dispatch( $interview->id );
+            $interviewDispatcher->dispatch( $interview );
 
             $this->view->redirect( "i/" . $this->params[ "token" ] );
         }

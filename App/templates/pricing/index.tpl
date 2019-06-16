@@ -16,7 +16,7 @@
 			<p class="title">Try it out for <span class="basic-text">free</span></p>
 			<p class="sub-title">No credit card needed</p>
 			<div class="con-cnt-sml">
-				<a href="{$HOME}sign-up/" class="button-link">Get started</a>
+				<a href="{$HOME}sign-up/" class="button-link theme-primary">Get started</a>
 			</div>
 		</div>
 		{/if}
