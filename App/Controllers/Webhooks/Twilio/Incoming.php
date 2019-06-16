@@ -9,9 +9,6 @@ class Incoming extends Controller
     public function before()
     {
         $this->requireParam( "sid" );
-        $organizationRepo = $this->load( "organization-repository" );
-        $phoneRepo = $this->load( "phone-repository" );
-        $this->twilioServiceDispatcher = $this->load( "twilio-service-dispatcher" );
         $twilioPhoneNumberRepo = $this->load( "twilio-phone-number-repository" );
         $this->logger = $this->load( "logger" );
 
@@ -29,13 +26,10 @@ class Incoming extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
-        $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewRepo = $this->load( "interview-repository" );
-        $interviewQuestionRepo = $this->load( "interview-question-repository" );
-        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
-        $phoneRepo = $this->load( "phone-repository" );
-        $interviewDispatcher = $this->load( "interview-dispatcher" );
         $conversationRepo = $this->load( "conversation-repository" );
+        $inboundSmsRepo = $this->load( "inbound-sms-repository" );
+        $inboundSmsConcatenator = $this->load( "inbound-sms-concatenator" );
 
         if (
             $input->exists() &&
@@ -52,9 +46,6 @@ class Incoming extends Controller
                 "recieve_sms"
             )
         ) {
-            // TODO Remove input logging
-            $this->logger->info( json_encode( $input ) );
-
             // Get the conversation
             $conversation = $conversationRepo->get(
                 [ "*" ],
@@ -66,25 +57,17 @@ class Incoming extends Controller
             );
 
             if ( !is_null( $conversation ) ) {
-                $interview = $interviewRepo->get(
-                    [ "*" ],
-                    [
-                        "conversation_id" => $conversation->id,
-                        "status" => "active",
-                        "deployment_type_id" => 1
-                    ],
-                    "single"
-                );
+                $inboundSms = $inboundSmsRepo->insert([
+                    "conversation_id" => $conversation->id,
+                    "body" => $input->get( "Body" ),
+                    "recieved_at" => time()
+                ]);
 
-                if ( !is_null( $interview ) ) {
-                    $interviewDispatcher->answerNextQuestion( $interview, $input->get( "Body" ) );
-
-                    return;
-                }
-                $this->logger->error( "Interview not found for converation_id '{$conversation->id}'" );
+                $inboundSmsConcatenator->concatenate( $inboundSms );
 
                 return;
             }
+
             $this->logger->error( "Conversation does not exist between '{$this->twilioPhoneNumber->phone_number}' and '{$input->get( "from" )}'" );
 
             return;
@@ -93,11 +76,6 @@ class Incoming extends Controller
 
     public function voiceAction()
     {
-        // // Forward the call the organization's phone number
-        // if ( !is_null( $this->organization_phone ) ) {
-        //     $this->twilioServiceDispatcher->forwardCall(
-        //         $this->organization_phone->getE164FormattedPhoneNumber()
-        //     );
-        // }
+
     }
 }
