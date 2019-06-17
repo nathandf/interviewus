@@ -312,3 +312,5 @@ ALTER TABLE `interview_question` ADD `sms_sid` VARCHAR(256) NULL DEFAULT NULL AF
 CREATE TABLE `inbound_sms` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `conversation_id` BIGINT NOT NULL , `body` VARCHAR(2056) NOT NULL , `recieved_at` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 CREATE TABLE `concatenated_sms` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `conversation_id` BIGINT NOT NULL , `body` VARCHAR(2048) NOT NULL , `updated_at` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `concatenated_sms` ADD `created_at` VARCHAR(256) NOT NULL AFTER `body`;
+
+CREATE TABLE `unsubscribe` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `email` VARCHAR(512) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;

@@ -3,30 +3,41 @@
 namespace Model\Services\SendgridAPI;
 
 use Contracts\MailerInterface;
+use Model\Services\UnsubscribeRepository;
 
 class Mailer implements MailerInterface
 {
     private $client;
+    private $unsubscribeRepo;
     private $from;
     private $to;
     private $subject;
     private $content;
     private $content_types = [ "text/html", "text/plain" ];
 
-    public function __construct( ClientInitializer $clientInitializer )
-    {
-        $this->client = $clientInitializer->init();
+    public function __construct(
+        ClientInitializer $clientInitializer,
+        UnsubscribeRepository $unsubscribeRepo
+    ) {
+        $this->clientInitializer = $clientInitializer;
+        $this->client = $this->clientInitializer->init();
+        $this->unsubscribeRepo = $unsubscribeRepo;
     }
 
     public function mail()
     {
+        if ( $this->clientInitializer->getEnv() != "production" ) {
+            $this->setTo( "interview.us.app@gmail.com", "Testy To" );
+            $this->setFrom( "noreplydev@interviewus.net", "Testy From" );
+        }
+
         $mail = new \SendGrid\Mail(
             $this->getFrom(),
             $this->getSubject(),
             $this->getTo(),
             $this->getContent()
         );
-
+        
         $response = $this->client->mail()->send()->post( $mail );
 
         return $response;
@@ -50,6 +61,10 @@ class Mailer implements MailerInterface
 
     public function setTo( $email_address, $name="" )
     {
+        if ( $this->isUnsubscribed( trim( strtolower( $email_address ) ) ) ) {
+            throw new \Exception( "Cannot send email to {$email_address}. They are unsubscribed." );
+        }
+
         $this->to = new \SendGrid\Email( $name, $email_address );
 
         return $this;
@@ -98,5 +113,14 @@ class Mailer implements MailerInterface
         }
 
         return $this->subject;
+    }
+
+    private function isUnsubscribed( $email_address )
+    {
+        if ( in_array( $email_address, $this->unsubscribeRepo->get( [ "email" ], [], "raw" ) ) ) {
+            return true;
+        }
+
+        return false;
     }
 }

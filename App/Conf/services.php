@@ -453,7 +453,8 @@ $container->register( "sendgrid-client-initializer", function() use ( $container
 
 $container->register( "sendgrid-mailer", function() use ( $container ) {
 	$service = new \Model\Services\SendGridAPI\Mailer(
-		$container->getService("sendgrid-client-initializer" )
+		$container->getService( "sendgrid-client-initializer" ),
+		$container->getService( "unsubscribe-repository" )
 	);
 	return $service;
 } );
@@ -519,6 +520,14 @@ $container->register( "twilio-sms-messager", function() use ( $container ) {
 $container->register( "sms-messager", function() use ( $container ) {
 	$smsMessager = $container->getService( "twilio-sms-messager" );
 	return $smsMessager;
+} );
+
+$container->register( "unsubscribe-repository", function() use ( $container ) {
+	$repo = new \Model\Services\UnsubscribeRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
 } );
 
 $container->register( "user-authenticator", function() use ( $container ) {
