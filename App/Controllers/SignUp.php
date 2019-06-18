@@ -47,6 +47,7 @@ class SignUp extends Controller
             $accountUserRepo = $this->load( "account-user-repository" );
             $organizationRepo = $this->load( "organization-repository" );
             $organizationUserRepo = $this->load( "organization-user-repository" );
+            $mailer = $this->load( "mailer" );
 
             // Ensure email is unique and create the new account, and user.
             if ( !in_array( $input->get( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
@@ -134,7 +135,7 @@ class SignUp extends Controller
                 ]);
 
                 // Send welcome and confirmation email
-                // TODO Send welcome and confirmation email
+                // TODO Send welcome email
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );

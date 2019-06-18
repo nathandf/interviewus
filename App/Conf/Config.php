@@ -34,6 +34,20 @@ class Config
 
     public function initConfigs()
     {
+        // Only use _ for keys in app-details configs
+        $this->configs[ "app-details" ] = [
+            "app_name" => "InterviewUs",
+            "business_name" => "InterviewUs LLC",
+            "founder" => "Nathan Freeman",
+            "business_contact" => "+1 (812) 276-3172",
+            "customer_support-number" => "+1 (812) 276-3172",
+            "customer_support-email" => "interview.us.app@gmail.com"
+        ];
+
+        $this->configs[ "dir" ] = [
+            "email-templates" => "App/templates/email-templates/"
+        ];
+
         $this->configs[ "environment" ] = "development";
 
         $this->configs[ "approved_server_names" ] = [
@@ -48,8 +62,6 @@ class Config
             "www.interviewus.net"
         ];
 
-        $this->configs[ "sitemap_base_url" ] = "https://www.interviewus.net/";
-        $this->configs[ "facebook" ][ "pixel_id" ] = "";
         $this->configs[ "max_upload_filesize" ] = "2GB";
 
         // Logging

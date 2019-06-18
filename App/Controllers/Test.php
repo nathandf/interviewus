@@ -9,12 +9,18 @@ class Test extends Controller
     public function indexAction()
     {
         $mailer = $this->load( "mailer" );
-        $resp = $mailer->setTo( "interview.us.app@gmail.com", "Nate" )
-            ->setFrom( "noreplydev@interviewus.net", "Nate the dev" )
-            ->setSubject( "Testing unsubscribe" )
-            ->setContent( "This is a test of the unsubscribe footer" )
-            ->mail();
+        $emailBuilder = $this->load( "email-builder" );
+        $domainObjectFactory = $this->load( "domain-object-factory" );
 
-        vdumpd( $resp );
+        $emailContext = $domainObjectFactory->build( "EmailContext" );
+        $emailContext->addProps([
+            "first_name" => "Nathan Freeman"
+        ]);
+        
+        $resp = $mailer->setTo( "interview.us.app@gmail.com", "Nate" )
+            ->setFrom( "noreplydev@interviewus.net", "Nathan Freeman" )
+            ->setSubject( "HTML Test fiddy" )
+            ->setContent( $emailBuilder->build( "welcome-email.html", $emailContext ) )
+            ->mail();
     }
 }

@@ -86,6 +86,11 @@ $container->register( "entity-factory", function() {
 	return $factory;
 } );
 
+$container->register( "domain-object-factory", function() {
+	$factory = new \Model\Services\DomainObjectFactory;
+	return $factory;
+} );
+
 $container->register( "quick-boi", function() use ( $container ) {
 	$service = new \Model\Services\QuickBoi(
 		$container->getService( "dao" )
@@ -550,6 +555,13 @@ $container->register( "user-repository", function() use ( $container ) {
 
 $container->register( "access-control", function() {
 	$helper = new \Helpers\AccessControl;
+	return $helper;
+} );
+
+$container->register( "email-builder", function() use ( $container ) {
+	$helper = new \Helpers\EmailBuilder(
+		$container->getService( "config" )
+	);
 	return $helper;
 } );
 
