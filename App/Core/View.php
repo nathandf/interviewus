@@ -56,8 +56,8 @@ class View extends CoreObject
         $this->templatingEngine->assign( "HOME", HOME );
         $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
         $this->templatingEngine->assign( "APP_NAME", $this->configs[ "app-details" ][ "app_name" ] );
-        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_NUMBER", $this->configs[ "app-details" ][ "customer_support_number" ] );
-        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_EMAIL", $this->configs[ "app-details" ][ "customer_support_email" ] );
+        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_NUMBER", $this->configs[ "app-details" ][ "app_customer_support_number" ] );
+        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_EMAIL", $this->configs[ "app-details" ][ "app_customer_support_email" ] );
 
     }
 

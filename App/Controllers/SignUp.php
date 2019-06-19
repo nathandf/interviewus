@@ -47,7 +47,6 @@ class SignUp extends Controller
             $accountUserRepo = $this->load( "account-user-repository" );
             $organizationRepo = $this->load( "organization-repository" );
             $organizationUserRepo = $this->load( "organization-user-repository" );
-            $mailer = $this->load( "mailer" );
 
             // Ensure email is unique and create the new account, and user.
             if ( !in_array( $input->get( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
@@ -135,7 +134,20 @@ class SignUp extends Controller
                 ]);
 
                 // Send welcome and confirmation email
-                // TODO Send welcome email
+                $mailer = $this->load( "mailer" );
+                $emailBuilder = $this->load( "email-builder" );
+                $domainObjectFactory = $this->load( "domain-object-factory" );
+
+                $emailContext = $domainObjectFactory->build( "EmailContext" );
+                $emailContext->addProps([
+                    "first_name" => $user->getFirstName()
+                ]);
+
+                $resp = $mailer->setTo( "interview.us.app@gmail.com", $user->getFullName() )
+                    ->setFrom( "getstarted@interviewus.net", "InterviewUs" )
+                    ->setSubject( "Welcome! - Your first 9 interviews are on Us! - InterviewUs" )
+                    ->setContent( $emailBuilder->build( "welcome-email.html", $emailContext ) )
+                    ->mail();
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );

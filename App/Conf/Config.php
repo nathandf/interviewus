@@ -34,14 +34,14 @@ class Config
 
     public function initConfigs()
     {
-        // Only use _ for keys in app-details configs
+        // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
         $this->configs[ "app-details" ] = [
             "app_name" => "InterviewUs",
-            "business_name" => "InterviewUs LLC",
-            "founder" => "Nathan Freeman",
-            "business_contact" => "+1 (812) 276-3172",
-            "customer_support-number" => "+1 (812) 276-3172",
-            "customer_support-email" => "interview.us.app@gmail.com"
+            "app_business_name" => "InterviewUs LLC",
+            "app_founder" => "Nathan Freeman",
+            "app_business_contact" => "+1 (812) 276-3172",
+            "app_customer_support_number" => "+1 (812) 276-3172",
+            "app_customer_support_email" => "interview.us.app@gmail.com"
         ];
 
         $this->configs[ "dir" ] = [
