@@ -36,6 +36,7 @@ class Config
     {
         // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
         $this->configs[ "app-details" ] = [
+            "app_url" => "https://www.interviewus.net/",
             "app_name" => "InterviewUs",
             "app_business_name" => "InterviewUs LLC",
             "app_founder" => "Nathan Freeman",

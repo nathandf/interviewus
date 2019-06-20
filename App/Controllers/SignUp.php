@@ -143,9 +143,9 @@ class SignUp extends Controller
                     "first_name" => $user->getFirstName()
                 ]);
 
-                $resp = $mailer->setTo( "interview.us.app@gmail.com", $user->getFullName() )
+                $resp = $mailer->setTo( $user->email, $user->getFullName() )
                     ->setFrom( "getstarted@interviewus.net", "InterviewUs" )
-                    ->setSubject( "Welcome! - Your first 9 interviews are on Us! - InterviewUs" )
+                    ->setSubject( "Here's 9 Free interviews on Us. Welcome to InterviewUs!" )
                     ->setContent( $emailBuilder->build( "welcome-email.html", $emailContext ) )
                     ->mail();
 

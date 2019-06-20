@@ -1,21 +1,38 @@
 <body style="margin: 0; padding: 0;">
-	<div style="background: #E1E2E1; color: #333333; font-family: Verdana, Tahoma, arial;">
-		<div style="background: #E1E2E1; color: #FFFFFF; padding: 15px; box-sizing: border-box;">
-			<h1 style="color: #FFFFFF; text-align: center;">InterviewUs</h1>
-		</div>
-		<div style="padding: 15px;  background: #4A148C;">
-			<!-- TODO -->
-		</div>
-		<div style="background: #CCCCCC; color: #000000; padding: 10px; box-sizing: border-box;">
-			<div>
-				<a href="https://www.interviewus.net/privacy-policy" style="text-decoration: none;">Privacy Policy</a>
+	<div style="background: #FFFFFF; color: #333333; font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;">
+		<div style="border: 1px solid #CCCCCC; border-radius: 2px; max-width: 600px; margin: 0 auto;">
+			<div style="background: #4A148C; color: #4A148C; padding: 20px; box-sizing: border-box;">
+				<a href="{{app_url}}"><img src="https://s3-us-west-2.amazonaws.com/interviewus.net/assets/images/InterviewUs_initials.jpg" alt="" style="height: 50px;"></a>
 			</div>
-			<div>
-				<a href="https://www.interviewus.net/terms-and-conditions" style="text-decoration: none;">Terms and Conditions</a>
+			<div style="padding: 20px; background: #F5F5F6;">
+				<h1 style="margin: 0;">Hey, {{first_name}}!</h1>
+				<div style="padding: 15px;"></div>
+				<h2 style="margin: 0;">We gave you 9 SMS interviews to experiment with. Here's all you need to do to get started.</h2>
+				<div style="padding: 15px;"></div>
+				<p style="font-size: 20px;"><span style="padding-right: 5px;">✅</span> <a href="{{app_url}}profile/">Login to your account</a></p>
+				<p style="font-size: 20px;"><span style="padding-right: 5px;">✅</span> Create or import an interview template</p>
+				<p style="font-size: 20px;"><span style="padding-right: 5px;">✅</span> Add the person you want to interview</p>
+				<p style="font-size: 20px;"><span style="padding-right: 5px;">✅</span> Hit the "Deploy" button</p>
+				<div style="padding: 15px;"></div>
+				<h2 style="margin: 0;">And just like that, your done! We'll automatically carry out the interview for you.</h2>
 			</div>
-		</div>
-		<div style="background: #777777; padding: 10px; text-align: center;">
-			<a href="https://www.interviewus.net/email/unsubscribe" style="text-align: center; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-block; text-align: center; text-decoration: none;">Unsubscribe</a>
+			<div style="background: #52565A; padding: 10px; text-align: center;">
+				<a href="{{app_url}}sign-in" style="text-align: center; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-block; text-align: center; text-decoration: none; font-size: 12px;">LOGIN TO MY ACCOUNT</a>
+			</div>
+			<div style="background: #EEEEEE; color: #000000; padding: 10px; box-sizing: border-box; border-top: 1px solid #CCCCCC;">
+				<div>
+					<a href="{{app_url}}privacy-policy" style="text-decoration: none;">Privacy Policy</a>
+				</div>
+				<div>
+					<a href="{{app_url}}terms-and-conditions" style="text-decoration: none;">Terms and Conditions</a>
+				</div>
+				<div>
+					<p style="color: #666666;">{{app_business_name}}</p>
+				</div>
+			</div>
+			<div style="background: #52565A; padding: 10px; text-align: center;">
+				<a href="{{app_url}}email/unsubscribe" style="text-align: center; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-block; text-align: center; text-decoration: none;">UNSUBSCRIBE</a>
+			</div>
 		</div>
 	</div>
 </body>

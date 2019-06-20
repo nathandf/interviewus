@@ -242,6 +242,9 @@ class Profile extends Controller
                     ->build();
 
                 if ( !is_null( $interview ) ) {
+                    // Interview deployment flag. Default true.
+                    $interview_deployment_successful = true;
+
                     // Debit the account of the interview credits for the deployment
                     // type provided
                     $this->account = $this->accountRepo->debitInterviewCredits(
@@ -249,7 +252,7 @@ class Profile extends Controller
                         $deploymentType
                     );
 
-                    // Provision a new converation for this interview if sms deployment
+                    // Provision a new conversation for this interview if sms deployment
                     if ( $interview->deployment_type_id == 1 ) {
 
                         // Get the interviewee from the inteview
@@ -280,12 +283,6 @@ class Profile extends Controller
                                     $interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" )
                                 );
                             }
-
-                            $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                            $this->session->setFlashMessages();
-
-                            $this->view->redirect( "profile/" );
-
                         } catch ( \Exception $e ) {
                             // Log the error and pass the error message to the view
                             $this->logger->error( $e );
@@ -300,12 +297,37 @@ class Profile extends Controller
                                 [ "id" ],
                                 [ $interview->id ]
                             );
-                        }
-                    } else {
-                        $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                        $this->session->setFlashMessages();
 
-                        $this->view->redirect( "profile/" );
+                            $interview_deployment_successful = false;
+                        }
+                    }
+
+                    if ( $interview_deployment_successful ) {
+                        // Send interviewee email prompting to start interview
+                        $mailer = $this->load( "mailer" );
+                        $emailBuilder = $this->load( "email-builder" );
+                        $domainObjectFactory = $this->load( "domain-object-factory" );
+
+                        $interviewee = $interviewBuilder->getInterviewee();
+
+                        $emailContext = $domainObjectFactory->build( "EmailContext" );
+                        $emailContext->addProps([
+                            "full_name" => $interviewee->getFullName(),
+                            "first_name" => $interviewee->getFirstName(),
+                            "interview_token" => $interview->token,
+                            "sent_by" => $this->user->getFullName()
+                        ]);
+
+                        $resp = $mailer->setTo( $interviewee->email, $interviewee->getFullName() )
+                            ->setFrom( "noreply@interviewus.net", "InterviewUs" )
+                            ->setSubject( "You have a pending interivew: {$interviewee->getFullName()}" )
+                            ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
+                            ->mail();
+
+                            $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                            $this->session->setFlashMessages();
+
+                            $this->view->redirect( "profile/" );
                     }
                 }
             } else {
