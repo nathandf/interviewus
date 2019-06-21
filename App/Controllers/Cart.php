@@ -149,7 +149,7 @@ class Cart extends Controller
                     [ "braintree_subscription_id" => $result->subscription->id ],
                     [ "id" => $this->account->id ]
                 );
-
+                
                 // Send account upgrade email
                 $mailer = $this->load( "mailer" );
                 $emailBuilder = $this->load( "email-builder" );
@@ -169,8 +169,8 @@ class Cart extends Controller
 
                 $resp = $mailer->setTo( $this->user->email, $this->user->getFullName() )
                     ->setFrom( "getstarted@interviewus.net", "InterviewUs" )
-                    ->setSubject( "InterviewUs - Payment Processed Successfully - Account Updated" )
-                    ->setContent( $emailBuilder->build( "payment-receipt.html", $emailContext ) )
+                    ->setSubject( "InterviewUs - Payment Confirmation" )
+                    ->setContent( $emailBuilder->build( "payment-confirmation.html", $emailContext ) )
                     ->mail();
 
                 // Authenticate and log in User

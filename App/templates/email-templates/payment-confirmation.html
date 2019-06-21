@@ -5,17 +5,19 @@
 				<a href="{{app_url}}"><img src="https://s3-us-west-2.amazonaws.com/interviewus.net/assets/images/InterviewUs_initials.jpg" alt="" style="height: 50px;"></a>
 			</div>
 			<div style="padding: 20px; background: #F5F5F6;">
-				<h1 style="margin: 0; text-align: center;">Reciept of Payment</h1>
+				<h1 style="margin: 0; text-align: center;">Payment Confirmation</h1>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
 				<h2 style="margin: 0;">Payment Details</h2>
-				<p>Transaction ID: {{transaction_id}}</p>
-				<p>Name: {{full_name}}</p>
-				<p>Card: xxxx xxxx xxxx xxxx {{last_4}}</p>
-				<p>Sub total: <b>{{sub_total}}</b></p>
-				<p>Total: <b>{{total}}</b></p>
-				<p>Processed on {{datetime}}</p>
+				<p><b>Transaction ID:</b> {{transaction_id}}</p>
+				<p><b>Name:</b> {{full_name}}</p>
+				<p><b>Card:</b> xxxx xxxx xxxx xxxx {{last_4}}</p>
+				<p><b>Processed on</b> {{datetime}}</p>
+				<div style="padding: 10px;">
+					<div style="border-top: 1px solid #CCC;"></div>
+				</div>
+				<h2 style="color: #219653;">Total: ${{total}}.00</h2>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
