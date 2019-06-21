@@ -275,14 +275,6 @@ class Profile extends Controller
                                 [ "conversation_id" => $conversation->id ],
                                 [ "id" => $interview->id ]
                             );
-
-                            // Dispatch the first interview question immediately if interview
-                            // status is active
-                            if ( $interview->status == "active" ) {
-                                $interviewDispatcher->dispatch(
-                                    $interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" )
-                                );
-                            }
                         } catch ( \Exception $e ) {
                             // Log the error and pass the error message to the view
                             $this->logger->error( $e );

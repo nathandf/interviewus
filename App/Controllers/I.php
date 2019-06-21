@@ -22,6 +22,8 @@ class I extends Controller
         $inputValidator = $this->load( "input-validator" );
 
         $interview = $interviewRepo->get( [ "*" ], [ "token" => $this->params[ "token" ] ], "single" );
+
+        // Redirect to error page if interview is invalid
         if ( is_null( $interview ) ) {
             $this->view->setTemplate( "i/invalid-interview.tpl" );
             $this->view->render( "App/Views/Home.php" );
@@ -29,8 +31,27 @@ class I extends Controller
             return;
         }
 
-        $interview->questions = $interviewQuestionRepo->getAllByInterviewID( $interview->id );
+        // Load the organization that owns this interview
+        $organization = $organizationRepo->get( [ "*" ], [ "id" => $interview->organization_id ], "single" );
 
+        // Redirect to interview is complete, redirect to the interview complete page
+        if ( $interview->status == "complete" ) {
+            $this->view->redirect( "i/{$this->params[ "token" ]}/interview-complete" );
+        }
+
+        // Redirect to interview deployment success screen if the interview status
+        // is active and interview is of the SMS deployment type
+        if (
+            $interview->deployment_type_id == 1 &&
+            $interview->status == "active"
+        ) {
+            $this->view->redirect( "i/{$this->params[ "token" ]}/deployment-successful" );
+        }
+
+        // Load interview questions
+        $interview->questions = $interviewQuestionRepo->getAllByInterview( $interview );
+
+        // Load the answers to the interview questions
         foreach ( $interview->questions as $question ) {
             $question->answer = $intervieweeAnswerRepo->get(
                 [ "*" ],
@@ -39,7 +60,32 @@ class I extends Controller
             );
         }
 
-        $organization = $organizationRepo->get( [ "*" ], [ "id" => $interview->organization_id ], "single" );
+        // Dispatch the interview
+        if (
+            $input->exists() &&
+            $input->issetField( "start_interview" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ]
+                ],
+                "start_interview"
+            )
+        ) {
+            // Dispatch this pending sms or web interview
+            if ( $interview->status == "pending" ) {
+                $interviewDispatcher->dispatch( $interview );
+
+                // If the interview is an sms interview, redirect the deployment
+                // successful page
+                if ( $interview->deployment_type_id == 1 ) {
+                    $this->view->redirect( "i/{$this->params[ "token" ]}/deployment-successful" );
+                }
+            }
+        }
 
         if (
             $input->exists() &&
@@ -105,7 +151,7 @@ class I extends Controller
 
             $interviewDispatcher->dispatch( $interview );
 
-            $this->view->redirect( "i/" . $this->params[ "token" ] );
+            $this->view->redirect( "i/" . $this->params[ "token" ] . "/" );
         }
 
         $this->view->assign( "interview", $interview );
@@ -117,5 +163,17 @@ class I extends Controller
         $this->view->render( "App/Views/Home.php" );
 
         return;
+    }
+
+    public function deploymentSuccessfulAction()
+    {
+        $this->view->setTemplate( "i/sms-interview-deployment-success.tpl" );
+        $this->view->render( "App/Views/Home.php" );
+    }
+
+    public function interviewCompleteAction()
+    {
+        $this->view->setTemplate( "i/interview-complete.tpl" );
+        $this->view->render( "App/Views/Home.php" );
     }
 }

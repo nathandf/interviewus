@@ -169,7 +169,7 @@ class Interviewee extends Controller
 
                         // Try to create a conversation for an sms interview deployement
                         try {
-                            // Create a new conversation between a twilio numbe and
+                            // Create a new conversation between a twilio number and
                             // the interviewee's phone number
                             $conversation = $conversationProvisioner->provision(
                                 $interviewee->phone->e164_phone_number
@@ -181,16 +181,11 @@ class Interviewee extends Controller
                                 [ "conversation_id" => $conversation->id ],
                                 [ "id" => $interview->id ]
                             );
-
-                            // Dispatch the first interview question immediately if interview
-                            // status is active
-                            // Dispatch the first interview question immediately if interview
-                            // status is active
-                            if ( $interview->status == "active" ) {
-                                $interviewDispatcher->dispatch(
-                                    $interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" )
-                                );
-                            }
+                        // An exception will be thrown if conversation limit between
+                        // the inteviewee's phone number and the twilio phone number
+                        // has been reached or if the this interviewee's phone number
+                        // currently has a conversation with every twilio phone number.
+                        // The later is unlikely but still possible.
                         } catch ( \Exception $e ) {
                             // Log the error and pass the error message to the view
                             $this->logger->error( $e );
@@ -199,7 +194,6 @@ class Interviewee extends Controller
                             // Refund the account for the interview
                             $accountProvisioner = $this->load( "account-provisioner" );
                             $accountProvisioner->refundInterview( $this->account, $interview );
-
 
                             // Remove the interview from the records
                             $interviewRepo->delete(

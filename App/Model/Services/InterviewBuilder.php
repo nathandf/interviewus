@@ -24,8 +24,8 @@ class InterviewBuilder
 	private $organization_id;
 	private $schedule_type; // 1 = immidiately; 2 = scheduled.
 	private $scheduled_time = null;
-	private $status = "active";
-	private $statuses = [ "active", "scheduled" ];
+	private $status = "pending";
+	private $statuses = [ "pending", "active", "scheduled" ];
 	private $deployment_type_ids = [ 1, 2 ];
 
 	public function __construct(

@@ -18,21 +18,21 @@
 		<div class="pad-sml-mob-pos">
 			<p class="label">Interviewer: {$organization->name}</p>
 		</div>
-		<div class="con-cnt-lrg pad-med push-b-lrg bg-white border-std">
-			{if $interview->status == "complete"}
-			<p class="sub-title">Interview Complete <i class="fas fa-check tc-good-green"></i></p>
-			{else}
-			<div id="interview-intro">
-				{if $interview->deployment_type_id == 1}
-				<p class="title">Text Message Interview</p>
-				{elseif $interview->deployment_type_id == 2}
-				<p class="title" style="margin-top: 0;">Start your interview</p>
-				<div class="con-cnt-med-plus">
-					<button type="button" id="start-interview" class="button-link tc-white push-t-lrg"><i aria-hidden="true" class="fas fa-play push-r-med"></i>Start</button>
+		{if $interview->deployment_type_id == 1}
+		<div class="bg-white border-std">
+			<p class="title title-h2">Start your text message interview</p>
+			<form action="" method="post">
+				<input type="hidden" name="start_interview" value="{$csrf_token}">
+				<input type="hidden" name="token" value="{$csrf_token}">
+				<div class="con-cnt-med-plus push-t-sml">
+					<button class="button theme-primary" type="submit"><i aria-hidden="true" class="fas fa-play push-r-med"></i>Start interview</button>
 				</div>
-				{/if}
-			</div>
-			<div id="interview" style="display: none;">
+			</form>
+			<div class="pad-sml"></div>
+		</div>
+		{else}
+		<div class="con-cnt-lrg pad-med push-b-lrg bg-white border-std">
+			<div id="interview" style="">
 				<form action="" method="post">
 					<input type="hidden" name="web_interview" value="{$csrf_token}">
 					<input type="hidden" name="token" value="{$csrf_token}">
@@ -42,12 +42,12 @@
 					<div class="push-t-med"></div>
 					{/foreach}
 					<div class="con-cnt-med-plus">
-						<button class="button" type="submit"><i aria-hidden="true" class="fas fa-paper-plane push-r-med"></i>Submit answers</button>
+						<button class="button theme-primary" type="submit"><i aria-hidden="true" class="fas fa-paper-plane push-r-med"></i>Submit answers</button>
 					</div>
 				</form>
 			</div>
-			{/if}
 		</div>
+		{/if}
 	</div>
 {/block}
 
