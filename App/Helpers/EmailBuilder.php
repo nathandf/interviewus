@@ -23,7 +23,7 @@ class EmailBuilder
 		);
 
 		// Replace tags with data from emailContext object
-		preg_match_all( "/\{\{([a-zA-Z_]+)\}\}/", $template, $matches );
+		preg_match_all( "/\{\{([a-zA-Z_0-9]+)\}\}/", $template, $matches );
 
 		foreach ( $matches[ 1 ] as $match ) {
 			$template = preg_replace( "/\{\{" . $match . "\}\}/", $emailContext->$match, $template  );
