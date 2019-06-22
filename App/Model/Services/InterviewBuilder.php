@@ -20,6 +20,7 @@ class InterviewBuilder
 	private $interviewee_id;
 	private $interviewee;
 	private $position_id;
+	private $user_id;
 	private $account;
 	private $organization_id;
 	private $schedule_type; // 1 = immidiately; 2 = scheduled.
@@ -61,6 +62,7 @@ class InterviewBuilder
 			"interviewee_id" => $interviewee->id,
 			"interview_template_id" => $this->getInterviewTemplateID(),
 			"position_id" => $this->getPositionID(),
+			"user_id" => $this->getUserID(),
 			"status" => $this->getStatus(),
 			"scheduled_time" => $this->getScheduledTime(),
 			"token" => md5( microtime() ) . "-" . $this->getOrganizationID() . "-" . $interviewee->id
@@ -190,6 +192,21 @@ class InterviewBuilder
 		}
 
 		throw new \Exception( "position_id not set" );
+	}
+
+	public function setUserID( $user_id )
+	{
+		$this->user_id = $user_id;
+		return $this;
+	}
+
+	private function getUserID()
+	{
+		if ( isset( $this->user_id ) ) {
+			return $this->user_id;
+		}
+
+		throw new \Exception( "user_id not set" );
 	}
 
 	public function setInterviewTemplateID( $interview_template_id )

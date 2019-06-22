@@ -13,6 +13,7 @@ class Interview implements EntityInterface
 	public $interviewee_id;
 	public $interview_template_id;
 	public $position_id;
+	public $user_id;
 	public $status;
 	public $last_interview_question_id;
 	public $scheduled_time;

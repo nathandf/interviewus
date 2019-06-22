@@ -67,6 +67,9 @@ class InterviewDispatcher
 				$this->dispatchWebInterview();
 				break;
 		}
+
+		// Return updated interview
+		return $this->interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" );
 	}
 
 	private function dispatchSMSInterview()
@@ -208,9 +211,7 @@ class InterviewDispatcher
 
 		// If there are more questions, they will be dispatched. If not, then
 		// this interview's status will be updated to "complete"
-		if ( $dispatch ) {
-			$this->dispatch( $interview );
-		}
+		return $this->dispatch( $interview );
 	}
 
 	private function setInterview( \Model\Entities\Interview $interview )

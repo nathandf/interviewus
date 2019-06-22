@@ -149,7 +149,34 @@ class I extends Controller
                 }
             }
 
-            $interviewDispatcher->dispatch( $interview );
+            $interview = $interviewDispatcher->dispatch( $interview );
+
+            // If the interview is complete, send the dispatching user a
+            // a completion email
+            if ( $interview->status == "complete" ) {
+                $mailer = $this->load( "mailer" );
+                $emailBuilder = $this->load( "email-builder" );
+                $domainObjectFactory = $this->load( "domain-object-factory" );
+
+                // Get the interviewee from the interview
+                $intervieweeRepo = $this->load( "interviewee-repository" );
+                $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
+
+                // Get the user that dispatched the interiew
+                $userRepo = $this->load( "user-repository" );
+                $user = $userRepo->get( [ "*" ], [ "id" => $interview->user_id ], "single" );
+
+                $emailContext = $domainObjectFactory->build( "EmailContext" );
+                $emailContext->addProps([
+                    "interviewee_name" => $interviewee->getFullName()
+                ]);
+
+                $resp = $mailer->setTo( $user->email, $user->getFullName() )
+                    ->setFrom( "noreply@interviewus.net", "InterviewUs" )
+                    ->setSubject( $interviewee->getFirstName() . " has completed their interview" )
+                    ->setContent( $emailBuilder->build( "interview-completion-notification.html", $emailContext ) )
+                    ->mail();
+            }
 
             $this->view->redirect( "i/" . $this->params[ "token" ] . "/" );
         }

@@ -144,6 +144,7 @@ class Interviewee extends Controller
                     ->setDeploymentTypeID( $deploymentType->id )
                     ->setAccount( $this->account )
                     ->setPositionID( $position->id )
+                    ->setUserID( $this->user->id )
                     ->setOrganizationID( $this->organization->id )
                     ->build();
 
