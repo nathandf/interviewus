@@ -45,6 +45,33 @@ class Cron extends Controller
 
 					// Dispatch interview
 					$interviewDispatcher->dispatch( $interview );
+
+					// Send interviewee email prompting to start interview
+					$mailer = $this->load( "mailer" );
+					$emailBuilder = $this->load( "email-builder" );
+					$domainObjectFactory = $this->load( "domain-object-factory" );
+					$intervieweeRepo = $this->load( "interviewee-repository" );
+					$userRepo = $this->load( "user-repository" );
+
+					// Get interviewee for this interview
+					$interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
+
+					// Get the user that dispatched this interview
+					$user = $userRepo->get( [ "*" ] [ "id" => $interview->user_id ], "single" );
+
+					$emailContext = $domainObjectFactory->build( "EmailContext" );
+					$emailContext->addProps([
+						"full_name" => $interviewee->getFullName(),
+						"first_name" => $interviewee->getFirstName(),
+						"interview_token" => $interview->token,
+						"sent_by" => $user->getFullName()
+					]);
+
+					$resp = $mailer->setTo( $interviewee->email, $interviewee->getFullName() )
+						->setFrom( "noreply@interviewus.net", "InterviewUs" )
+						->setSubject( "You have a pending interivew: {$interviewee->getFullName()}" )
+						->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
+						->mail();
 				}
 			}
 		}
