@@ -11,9 +11,43 @@ class Cron extends Controller
 		$this->view->redirect( "" );
 	}
 
-	public function cullTwilioNumbers()
+	public function dispatchScheduledInterviews()
 	{
-		// Destroy twilio numbers that are about renew and have no conversations
+		$input = $this->load( "input" );
+		$inputValidator = $this->load( "input-validator" );
+		$interviewRepo = $this->load( "interview-repository" );
+		$interviewDispatcher = $this->load( "interview-dispatcher" );
+
+		if (
+			$input->exists( "get" ) &&
+			$inputValidator->validate(
+				$input,
+				[
+					"cron-token" => [
+						"required" => true,
+						"equals" => "1234"
+					]
+				],
+				"dispatch_pending_interviews"
+			)
+		) {
+			$interviews = $interviewRepo->get( [ "*" ], [ "status" => "scheduled" ] );
+
+			$now = time();
+
+			foreach ( $interviews as $interview ) {
+				if ( strtotime( $interview->scheduled_time ) <= $now ) {
+					// Update the inteview status to pending
+					$interviewRepo->update(
+						[ "status" => "pending" ],
+						[ "id" => $interview->id ]
+					);
+
+					// Dispatch interview
+					$interviewDispatcher->dispatch( $interview );
+				}
+			}
+		}
 	}
 
 	public function dispatchSmsInterviewQuestions()
