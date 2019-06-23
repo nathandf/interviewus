@@ -43,8 +43,10 @@ class Cron extends Controller
 						[ "id" => $interview->id ]
 					);
 
-					// Dispatch interview
-					$interviewDispatcher->dispatch( $interview );
+					// Dipatch the interview if it's web based
+					if ( $interview->deployment_type_id == 2 ) {
+						$interviewDispatcher->dispatch( $interview );
+					}
 
 					// Send interviewee email prompting to start interview
 					$mailer = $this->load( "mailer" );
@@ -57,7 +59,7 @@ class Cron extends Controller
 					$interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
 
 					// Get the user that dispatched this interview
-					$user = $userRepo->get( [ "*" ] [ "id" => $interview->user_id ], "single" );
+					$user = $userRepo->get( [ "*" ], [ "id" => $interview->user_id ], "single" );
 
 					$emailContext = $domainObjectFactory->build( "EmailContext" );
 					$emailContext->addProps([

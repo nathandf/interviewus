@@ -295,7 +295,7 @@ class Profile extends Controller
                         }
                     }
 
-                    if ( $interview_deployment_successful ) {
+                    if ( $interview_deployment_successful && $interview->status != "scheduled" ) {
                         // Send interviewee email prompting to start interview
                         $mailer = $this->load( "mailer" );
                         $emailBuilder = $this->load( "email-builder" );
