@@ -144,7 +144,10 @@ class InterviewDispatcher
 
 		// ...and update the interview's status to complete
 		$this->interviewRepo->update(
-			[ "status" => "complete" ],
+			[
+				"status" => "complete",
+				"conversation_id" => null
+			],
 			[ "id" => $this->interview->id ]
 		);
 
