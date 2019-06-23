@@ -5,25 +5,19 @@
 				<a href="{{app_url}}"><img src="https://s3-us-west-2.amazonaws.com/interviewus.net/assets/images/InterviewUs_initials.jpg" alt="" style="height: 50px;"></a>
 			</div>
 			<div style="padding: 20px; background: #F5F5F6;">
-				<h1 style="margin: 0; text-align: center;">Payment Confirmation</h1>
+				<h1 style="margin: 0; text-align: center;">Account Successfully Renewed</h1>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
-				<h2 style="margin: 0;">Payment Details</h2>
-				<p><b>Transaction ID:</b> {{transaction_id}}</p>
+				<h2 style="margin: 0; text-align: center;">Your interviews have been refilled</h2>
+				<div style="padding: 10px;"></div>
 				<p><b>Name:</b> {{full_name}}</p>
-				<p><b>Card:</b> xxxx xxxx xxxx xxxx {{last_4}}</p>
 				<p><b>Processed on</b> {{datetime}}</p>
+				<p><b>Transaciton ID:</b> {{transaction_id}}</p>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
-				<h2 style="color: #219653;">Total: ${{total}}.00</h2>
-				<div style="padding: 10px;">
-					<div style="border-top: 1px solid #CCC;"></div>
-				</div>
-				<h2 style="margin: 0;">Product Details</h2>
-				<p>Plan: {{plan_name}}</p>
-				<p>Billed {{billing_frequency}}</p>
+				<h2>Amount charged: <span style="color: #219653;">${{amount}}.00</span></h2>
 			</div>
 			<div style="background: #52565A; padding: 10px; text-align: center;">
 				<a href="{{app_url}}sign-in" style="text-align: center; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-block; text-align: center; text-decoration: none; font-size: 12px;">LOGIN TO MY ACCOUNT</a>

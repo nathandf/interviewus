@@ -21,9 +21,8 @@ class AccountProvisioner
         $this->planDetailsRepo = $planDetailsRepo;
     }
 
-    public function provision( $account_id )
+    public function provision( $account )
     {
-        $account = $this->accountRepo->get( [ "*" ], [ "id" => $account_id ], "single" );
         $account->plan = $this->planRepo->get( [ "*" ], [ "id" => $account->plan_id ], "single" );
         $account->plan->details = $this->planDetailsRepo->get( [ "*" ], [ "plan_id" => $account->plan->id ], "single" );
 

@@ -5,25 +5,25 @@
 				<a href="{{app_url}}"><img src="https://s3-us-west-2.amazonaws.com/interviewus.net/assets/images/InterviewUs_initials.jpg" alt="" style="height: 50px;"></a>
 			</div>
 			<div style="padding: 20px; background: #F5F5F6;">
-				<h1 style="margin: 0; text-align: center;">Payment Confirmation</h1>
+				<h1 style="margin: 0; text-align: center;">Payment Failure</h1>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
-				<h2 style="margin: 0;">Payment Details</h2>
-				<p><b>Transaction ID:</b> {{transaction_id}}</p>
-				<p><b>Name:</b> {{full_name}}</p>
-				<p><b>Card:</b> xxxx xxxx xxxx xxxx {{last_4}}</p>
-				<p><b>Processed on</b> {{datetime}}</p>
+				<h2 style="margin: 0; text-align: center;">Hey, {{first_name}}. We had an issue charging the payment method you have on file</h2>
+				<p><b>Issue:</b> {{payment_issue}}</p>
+				<p><b>Amount:</b> ${{amount}}.00</p>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
-				<h2 style="color: #219653;">Total: ${{total}}.00</h2>
+				<p>No biggie! It happens from time to time.</p>
+				<p>You can update your existing payment method or add a new one in your profile settings when you log in</p>
+				<p>If you have any difficulties, don't hesitate to contact us!</p>
 				<div style="padding: 10px;">
 					<div style="border-top: 1px solid #CCC;"></div>
 				</div>
-				<h2 style="margin: 0;">Product Details</h2>
-				<p>Plan: {{plan_name}}</p>
-				<p>Billed {{billing_frequency}}</p>
+				<h2 style="margin: 0; text-align: center;">Contact us here</h2>
+				<p><b>Email:</b> {{app_customer_support_email}}</p>
+				<p><b>Phone Nuber:</b> {{app_customer_support_email}}</p>
 			</div>
 			<div style="background: #52565A; padding: 10px; text-align: center;">
 				<a href="{{app_url}}sign-in" style="text-align: center; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-block; text-align: center; text-decoration: none; font-size: 12px;">LOGIN TO MY ACCOUNT</a>

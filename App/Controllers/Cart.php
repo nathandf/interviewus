@@ -141,7 +141,7 @@ class Cart extends Controller
                 $planRepo = $this->load( "plan-repository" );
 
                 // Upgrade account
-                $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
+                $accountUpgrader->upgrade( $this->account, $this->cart->products[ 0 ]->plan->id );
 
                 // Update braintree subscription id in account
                 $accountRepo = $this->load( "account-repository" );
@@ -149,7 +149,7 @@ class Cart extends Controller
                     [ "braintree_subscription_id" => $result->subscription->id ],
                     [ "id" => $this->account->id ]
                 );
-                
+
                 // Send account upgrade email
                 $mailer = $this->load( "mailer" );
                 $emailBuilder = $this->load( "email-builder" );
