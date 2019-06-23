@@ -142,10 +142,17 @@ class InterviewDispatcher
 			->setSMSBody( "Interview complete! Thanks for your time. Your answers are being reviewed." )
 			->send();
 
-		// ...and update the interview's status to dispatched
+		// ...and update the interview's status to complete
 		$this->interviewRepo->update(
 			[ "status" => "complete" ],
 			[ "id" => $this->interview->id ]
+		);
+
+		// Delete the conversation for this interview to free up the interviewee's
+		// phone nubmer for another interview
+		$this->conversationRepo->delete(
+			[ "id" ],
+			[ $this->interview->conversation_id ]
 		);
 
 		return;
