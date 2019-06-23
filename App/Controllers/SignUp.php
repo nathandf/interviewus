@@ -134,7 +134,20 @@ class SignUp extends Controller
                 ]);
 
                 // Send welcome and confirmation email
-                // TODO Send welcome and confirmation email
+                $mailer = $this->load( "mailer" );
+                $emailBuilder = $this->load( "email-builder" );
+                $domainObjectFactory = $this->load( "domain-object-factory" );
+
+                $emailContext = $domainObjectFactory->build( "EmailContext" );
+                $emailContext->addProps([
+                    "first_name" => $user->getFirstName()
+                ]);
+
+                $resp = $mailer->setTo( $user->email, $user->getFullName() )
+                    ->setFrom( "getstarted@interviewus.net", "InterviewUs" )
+                    ->setSubject( "Here's 9 Free interviews on Us. Welcome to InterviewUs!" )
+                    ->setContent( $emailBuilder->build( "welcome-email.html", $emailContext ) )
+                    ->mail();
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );

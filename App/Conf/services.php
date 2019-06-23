@@ -86,6 +86,11 @@ $container->register( "entity-factory", function() {
 	return $factory;
 } );
 
+$container->register( "domain-object-factory", function() {
+	$factory = new \Model\Services\DomainObjectFactory;
+	return $factory;
+} );
+
 $container->register( "quick-boi", function() use ( $container ) {
 	$service = new \Model\Services\QuickBoi(
 		$container->getService( "dao" )
@@ -444,9 +449,19 @@ $container->register( "inbound-sms-concatenator", function() use ( $container ) 
 	return $service;
 } );
 
+$container->register( "sendgrid-client-initializer", function() use ( $container ) {
+	$service = new \Model\Services\SendGridAPI\ClientInitializer(
+		$container->getService( "config" )
+	);
+	return $service;
+} );
+
 $container->register( "sendgrid-mailer", function() use ( $container ) {
-	$sendGridMailer = new \Model\Services\SendGridMailer( $container->getService( "config" ) );
-	return $sendGridMailer;
+	$service = new \Model\Services\SendGridAPI\Mailer(
+		$container->getService( "sendgrid-client-initializer" ),
+		$container->getService( "unsubscribe-repository" )
+	);
+	return $service;
 } );
 
 $container->register( "mailer", function() use ( $container ) {
@@ -512,6 +527,14 @@ $container->register( "sms-messager", function() use ( $container ) {
 	return $smsMessager;
 } );
 
+$container->register( "unsubscribe-repository", function() use ( $container ) {
+	$repo = new \Model\Services\UnsubscribeRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "user-authenticator", function() use ( $container ) {
 	$repo = new \Model\Services\UserAuthenticator(
 		$container->getService( "user-repository" ),
@@ -532,6 +555,13 @@ $container->register( "user-repository", function() use ( $container ) {
 
 $container->register( "access-control", function() {
 	$helper = new \Helpers\AccessControl;
+	return $helper;
+} );
+
+$container->register( "email-builder", function() use ( $container ) {
+	$helper = new \Helpers\EmailBuilder(
+		$container->getService( "config" )
+	);
 	return $helper;
 } );
 

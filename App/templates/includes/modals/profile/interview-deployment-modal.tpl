@@ -39,7 +39,7 @@
 					<label for="interviewee-radio-{$interviewee->id}" id="interviewee-tag-{$interviewee->id}" class="deployment-tag pad-sml cursor-pt radio-label" style="display: block;"><i aria-hidden="true" class="fas fa-user push-r-sml"></i>{$interviewee->getFullName()}</label>
 					{foreachelse}
 					<div class="">
-						<a href="{$HOME}profile/interviewees/" class="btn btn-inline tc-deep-purple"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add an inteviewee</a>
+						<a href="{$HOME}profile/interviewees/" class="btn btn-inline theme-primary"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add an inteviewee</a>
 					</div>
 					{/foreach}
 				{else}
@@ -91,7 +91,7 @@
 				</label>
 				{foreachelse}
 				<div class="">
-					<a href="{$HOME}profile/interview-templates/" class="btn btn-inline tc-deep-purple"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add an inteview template</a>
+					<a href="{$HOME}profile/interview-templates/" class="btn btn-inline theme-primary"><i aria-hidden="true" class="fas fa-plus push-r-sml"></i>Add an inteview template</a>
 				</div>
 				{/foreach}
 			</div>

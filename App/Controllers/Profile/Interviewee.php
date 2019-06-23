@@ -121,6 +121,7 @@ class Interviewee extends Controller
             // Ensure account has enough of the correct interview credits to create
             // this interview
             $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $input->get( "deployment_type_id" ) ], "single" );
+
             if ( $this->account->validateInterviewCredit( $deploymentType ) ) {
                 // Build and dispatch the interview. Will return null if insufficient
                 // interview credits in the account
@@ -143,10 +144,14 @@ class Interviewee extends Controller
                     ->setDeploymentTypeID( $deploymentType->id )
                     ->setAccount( $this->account )
                     ->setPositionID( $position->id )
+                    ->setUserID( $this->user->id )
                     ->setOrganizationID( $this->organization->id )
                     ->build();
 
                 if ( !is_null( $interview ) ) {
+                    // Interview deployment flag. Default true.
+                    $interview_deployment_successful = true;
+
                     // Debit the account of the interview credits for the deployment
                     // type provided
                     $this->account = $this->accountRepo->debitInterviewCredits(
@@ -165,7 +170,7 @@ class Interviewee extends Controller
 
                         // Try to create a conversation for an sms interview deployement
                         try {
-                            // Create a new conversation between a twilio numbe and
+                            // Create a new conversation between a twilio number and
                             // the interviewee's phone number
                             $conversation = $conversationProvisioner->provision(
                                 $interviewee->phone->e164_phone_number
@@ -177,22 +182,11 @@ class Interviewee extends Controller
                                 [ "conversation_id" => $conversation->id ],
                                 [ "id" => $interview->id ]
                             );
-
-                            // Dispatch the first interview question immediately if interview
-                            // status is active
-                            // Dispatch the first interview question immediately if interview
-                            // status is active
-                            if ( $interview->status == "active" ) {
-                                $interviewDispatcher->dispatch(
-                                    $interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" )
-                                );
-                            }
-
-                            $this->session->addFlashMessage( "Interview successfully deployed" );
-                            $this->session->setFlashMessages();
-
-                            $this->view->redirect( "profile/" );
-
+                        // An exception will be thrown if conversation limit between
+                        // the inteviewee's phone number and the twilio phone number
+                        // has been reached or if the this interviewee's phone number
+                        // currently has a conversation with every twilio phone number.
+                        // The later is unlikely but still possible.
                         } catch ( \Exception $e ) {
                             // Log the error and pass the error message to the view
                             $this->logger->error( $e );
@@ -202,18 +196,42 @@ class Interviewee extends Controller
                             $accountProvisioner = $this->load( "account-provisioner" );
                             $accountProvisioner->refundInterview( $this->account, $interview );
 
-
                             // Remove the interview from the records
                             $interviewRepo->delete(
                                 [ "id" ],
                                 [ $interview->id ]
                             );
-                        }
-                    } else {
-                        $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                        $this->session->setFlashMessages();
 
-                        $this->view->redirect( "profile/" );
+                            $interview_deployment_successful = false;
+                        }
+                    }
+
+                    if ( $interview_deployment_successful && $interview->status != "scheduled" ) {
+                        // Send interviewee email prompting to start interview
+                        $mailer = $this->load( "mailer" );
+                        $emailBuilder = $this->load( "email-builder" );
+                        $domainObjectFactory = $this->load( "domain-object-factory" );
+
+                        $interviewee = $interviewBuilder->getInterviewee();
+
+                        $emailContext = $domainObjectFactory->build( "EmailContext" );
+                        $emailContext->addProps([
+                            "full_name" => $interviewee->getFullName(),
+                            "first_name" => $interviewee->getFirstName(),
+                            "interview_token" => $interview->token,
+                            "sent_by" => $this->user->getFullName()
+                        ]);
+
+                        $resp = $mailer->setTo( $interviewee->email, $interviewee->getFullName() )
+                            ->setFrom( "noreply@interviewus.net", "InterviewUs" )
+                            ->setSubject( "You have a pending interivew: {$interviewee->getFullName()}" )
+                            ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
+                            ->mail();
+
+                            $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                            $this->session->setFlashMessages();
+
+                            $this->view->redirect( "profile/" );
                     }
                 }
             } else {

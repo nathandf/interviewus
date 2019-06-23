@@ -70,6 +70,11 @@ input[type=radio]:checked + .radio-label {
 	color: #FFFFFF;
 }
 
+.status-pending {
+	background: #F3C13A;
+	color: #000000;
+}
+
 .status-complete {
 	background: #2ecc71;
 	color: #FFFFFF;

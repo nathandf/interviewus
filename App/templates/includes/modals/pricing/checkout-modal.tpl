@@ -31,11 +31,11 @@
 			<div class="hr-full"></div>
 			{if is_null( $organization ) || is_null( $user )}
 			<div id="account-options">
-				<button class="button theme-primary --sign-in"><i class="fas fa-sign-in-alt push-r-sml"></i>Sign In</button>
-				<p class="fancy-line-text push-t-med tc-gun-metal"><span class="push-r-sml">Or</span></p>
-				<div class="col-100 text-center push-t-med">
-					<a class="link tc-deep-blue --create-account" style="display: block; margin: 0 auto;"><i class="fas fa-robot push-r-sml"></i>Create account</a>
+				<div class="col-100 text-center">
+					<a class="link tc-deep-blue --sign-in" style="display: block; margin: 0 auto;"><i class="fas fa-sign-in-alt push-r-sml"></i>Sign in</a>
 				</div>
+				<p class="fancy-line-text push-t-med tc-gun-metal"><span class="push-r-sml">Or</span></p>
+				<button class="button theme-primary --create-account push-t-med"><i class="fas fa-robot push-r-sml"></i>Create account</button>
 			</div>
 			<div id="create-account-container" style="display: none;">
 				<p class="sub-title">Create a new account</p>
@@ -60,7 +60,7 @@
 					<input type="email" name="email"  autocomplete="username" class="inp inp-full" required="required">
 					<p class="label">Password</p>
 					<input type="password" name="password" autocomplete="current-password" class="inp inp-full" required="required">
-					<button id="sign-in-submit" type="submit" class="button push-t-med">Sign in</button>
+					<button id="sign-in-submit" type="submit" class="button theme-primary push-t-med">Sign in</button>
 				</form>
 				<div class="clear push-t-med"></div>
 				<a class="--create-account link tc-deep-blue">Create new account</a>

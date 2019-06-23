@@ -34,6 +34,21 @@ class Config
 
     public function initConfigs()
     {
+        // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
+        $this->configs[ "app-details" ] = [
+            "app_url" => "https://www.interviewus.net/",
+            "app_name" => "InterviewUs",
+            "app_business_name" => "InterviewUs LLC",
+            "app_founder" => "Nathan Freeman",
+            "app_business_contact" => "+1 (812) 276-3172",
+            "app_customer_support_number" => "+1 (812) 276-3172",
+            "app_customer_support_email" => "interview.us.app@gmail.com"
+        ];
+
+        $this->configs[ "dir" ] = [
+            "email-templates" => "App/templates/email-templates/"
+        ];
+
         $this->configs[ "environment" ] = "development";
 
         $this->configs[ "approved_server_names" ] = [
@@ -48,8 +63,6 @@ class Config
             "www.interviewus.net"
         ];
 
-        $this->configs[ "sitemap_base_url" ] = "https://www.interviewus.net/";
-        $this->configs[ "facebook" ][ "pixel_id" ] = "";
         $this->configs[ "max_upload_filesize" ] = "2GB";
 
         // Logging
@@ -93,7 +106,7 @@ class Config
 
         // SendGrid API
         $this->configs[ "sendgrid" ] = [
-            "api_key" => "" // TODO Create Sendgrid account
+            "api-key" => "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"
         ];
 
         // Twilio API

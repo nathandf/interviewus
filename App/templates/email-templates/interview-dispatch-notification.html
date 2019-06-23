@@ -1,0 +1,25 @@
+<body style="margin: 0; padding: 0;">
+	<div style="background: #FFFFFF; color: #333333; font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;">
+		<div style="border: 1px solid #CCCCCC; border-radius: 2px; max-width: 600px; margin: 0 auto;">
+			<div style="background: #4A148C; color: #4A148C; padding: 20px; box-sizing: border-box;">
+				<a href="{{app_url}}"><img src="https://s3-us-west-2.amazonaws.com/interviewus.net/assets/images/InterviewUs_initials.jpg" alt="" style="height: 50px;"></a>
+			</div>
+			<div style="padding: 20px; background: #F5F5F6;">
+				<h1 style="margin: 0;">Hi, {{first_name}}.</h1>
+				<div style="padding: 20px;"></div>
+				<h2 style="margin: 0;">You have a pending interview. Press the button below to get started.</h2>
+				<div style="padding: 60px;"></div>
+				<a href="{{app_url}}i/{{interview_token}}/" style="text-decoration: none; display: block; margin: 0 auto;">
+					<div style="background: #4A148C; color: #FFFFFF; padding: 13px 15px; font-size: 14px; text-decoration: none; width: 60%; max-width: 300px; margin: 0 auto; text-align: center; border-radius: 3px;">Start your interview</div>
+					<div style="clear: both;"></div>
+				</a>
+				<p style="text-align: center;">Sent by: <b>{{sent_by}}</b> via <b>{{app_name}}</b></p>
+				<div style="padding: 10px;"></div>
+				<p style="text-align: center;">If you have recieved this message in error, please ignore.</p>
+			</div>
+			<div style="background: #52565A; padding: 10px; text-align: center;">
+				<a href="{{app_url}}email/unsubscribe" style="text-align: center; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-block; text-align: center; text-decoration: none;">UNSUBSCRIBE</a>
+			</div>
+		</div>
+	</div>
+</body>

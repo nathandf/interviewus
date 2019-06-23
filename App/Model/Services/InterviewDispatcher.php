@@ -67,6 +67,9 @@ class InterviewDispatcher
 				$this->dispatchWebInterview();
 				break;
 		}
+
+		// Return updated interview
+		return $this->interviewRepo->get( [ "*" ], [ "id" => $interview->id ], "single" );
 	}
 
 	private function dispatchSMSInterview()
@@ -76,8 +79,8 @@ class InterviewDispatcher
 
 		// Get the conversation for this interview
 		$conversation = $this->conversationRepo->get( [ "*" ], [ "id" => $this->interview->conversation_id ], "single" );
-		// Get twilio phone number from conversation
 
+		// Get twilio phone number from conversation
 		$twilioPhoneNumber = $this->twilioPhoneNumberRepo->get(
 			[ "*" ],
 			[ "id" => $conversation->twilio_phone_number_id ],
@@ -139,10 +142,20 @@ class InterviewDispatcher
 			->setSMSBody( "Interview complete! Thanks for your time. Your answers are being reviewed." )
 			->send();
 
-		// ...and update the interview's status to dispatched
+		// ...and update the interview's status to complete
 		$this->interviewRepo->update(
-			[ "status" => "complete" ],
+			[
+				"status" => "complete",
+				"conversation_id" => null
+			],
 			[ "id" => $this->interview->id ]
+		);
+
+		// Delete the conversation for this interview to free up the interviewee's
+		// phone nubmer for another interview
+		$this->conversationRepo->delete(
+			[ "id" ],
+			[ $this->interview->conversation_id ]
 		);
 
 		return;
@@ -208,9 +221,7 @@ class InterviewDispatcher
 
 		// If there are more questions, they will be dispatched. If not, then
 		// this interview's status will be updated to "complete"
-		if ( $dispatch ) {
-			$this->dispatch( $interview );
-		}
+		return $this->dispatch( $interview );
 	}
 
 	private function setInterview( \Model\Entities\Interview $interview )

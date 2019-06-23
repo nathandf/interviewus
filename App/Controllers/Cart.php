@@ -143,32 +143,39 @@ class Cart extends Controller
                 // Upgrade account
                 $accountUpgrader->upgrade( $this->account->id, $this->cart->products[ 0 ]->plan->id );
 
-                // Purchase a twilio phone number for this organization if
-                // one doesn't exist. The default twilio phone id is 1.
-                if ( $this->organization->twilio_phone_number_id == 1 ) {
-                    $phoneNumberBuyer = $this->load( "twilio-phone-number-buyer" );
-                    $twilioPhoneNumberRepo = $this->load( "twilio-phone-number-repository" );
-
-                    $twilioPhoneNumberInstance = $phoneNumberPurchaser->quickBuy();
-
-                    $twilioPhoneNumber = $twilioPhoneNumberRepo->insert([
-                        "sid" => $twilioPhoneNumberInstance->sid,
-                        "phone_number" => $twilioPhoneNumberInstance->phoneNumber,
-                        "friendly_number" => $twilioPhoneNumberInstance->friendlyName
-                    ]);
-
-                    $organizationRepo->update(
-                        [ "twilio_phone_number_id" => $twilioPhoneNumber->id ],
-                        [ "id" => $this->organization->id ]
-                    );
-                }
-
                 // Update braintree subscription id in account
                 $accountRepo = $this->load( "account-repository" );
                 $accountRepo->update(
                     [ "braintree_subscription_id" => $result->subscription->id ],
                     [ "id" => $this->account->id ]
                 );
+                
+                // Send account upgrade email
+                $mailer = $this->load( "mailer" );
+                $emailBuilder = $this->load( "email-builder" );
+                $domainObjectFactory = $this->load( "domain-object-factory" );
+
+                $emailContext = $domainObjectFactory->build( "EmailContext" );
+                $emailContext->addProps([
+                    "transaction_id" => $result->subscription->transactions[ 0 ]->id,
+                    "plan_name" => $this->cart->products[ 0 ]->plan->name . " (" . $this->cart->products[ 0 ]->plan->braintree_plan_id . ")",
+                    "billing_frequency" => $this->cart->products[ 0 ]->billing_frequency,
+                    "sub_total" => ( $this->cart->products[ 0 ]->billing_frequency == "annually" ) ? $this->cart->products[ 0 ]->plan->price * 12 : $this->cart->products[ 0 ]->plan->price,
+                    "total" => ( $this->cart->products[ 0 ]->billing_frequency == "annually" ) ? $this->cart->products[ 0 ]->plan->price * 12 : $this->cart->products[ 0 ]->plan->price,
+                    "full_name" => $this->user->getFullName(),
+                    "last_4" => $result->subscription->transactions[ 0 ]->creditCard[ "last4" ],
+                    "datetime" => date( "c" )
+                ]);
+
+                $resp = $mailer->setTo( $this->user->email, $this->user->getFullName() )
+                    ->setFrom( "getstarted@interviewus.net", "InterviewUs" )
+                    ->setSubject( "InterviewUs - Payment Confirmation" )
+                    ->setContent( $emailBuilder->build( "payment-confirmation.html", $emailContext ) )
+                    ->mail();
+
+                // Authenticate and log in User
+                $userAuth = $this->load( "user-authenticator" );
+                $userAuth->authenticate( $user->email, $input->get( "password" ) );
 
                 // Destroy cart and related products
                 $cartDestroyer->destroy( $this->cart->id );
