@@ -98,7 +98,7 @@ class Subscriptions extends Controller
                         $emailContext = $domainObjectFactory->build( "EmailContext" );
                         $emailContext->addProps([
                             "first_name" => $user->getFirstName(),
-                            "issue" => $webhookNotification->subscription->transactions[ 0 ]->status,
+                            "issue" => $webhookNotification->subscription->transactions[ 0 ]->processorResponseText,
                             "amount" => $webhookNotification->subscription->transactions[ 0 ]->amount,
                             "datetime" => $webhookNotification->timestamp->format( "D M j G:i:s T Y" )
                         ]);
