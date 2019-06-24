@@ -315,3 +315,4 @@ ALTER TABLE `concatenated_sms` ADD `created_at` VARCHAR(256) NOT NULL AFTER `bod
 
 CREATE TABLE `unsubscribe` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `email` VARCHAR(512) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
 ALTER TABLE `interview` ADD `user_id` BIGINT NOT NULL AFTER `position_id`;
+ALTER TABLE `account` ADD `user_id` BIGINT NOT NULL AFTER `account_type_id`;

@@ -77,12 +77,13 @@ class SignUp extends Controller
                 // to free interviews
                 $account = $accountRepo->insert([
                     "account_type_id" => 1,
+                    "user_id" => $user->id,
                     "plan_id" => 1
                 ]);
 
                 // Provision Account
                 $accountProvisioner = $this->load( "account-provisioner" );
-                $accountProvisioner->provision( $account->id );
+                $accountProvisioner->provision( $account );
 
                 // Update the account back to free to restrict access to premium
                 // features. This will not remove the extra interviews they were
