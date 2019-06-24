@@ -966,6 +966,13 @@ td {
     box-sizing: border-box;
     text-indent: 0px;
     padding: 8px;
+    height: 120px;
+}
+
+.textarea-short {
+    box-sizing: border-box;
+    text-indent: 0px;
+    padding: 8px;
     height: 80px;
 }
 
