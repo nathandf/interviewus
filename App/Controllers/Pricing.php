@@ -206,7 +206,7 @@ class Pricing extends Controller
                 // Create new Account
                 $account = $accountRepo->insert([
                     "account_type_id" => 1,
-                    "user_id" => $user->id
+                    "user_id" => $user->id,
                     "plan_id" => 1
                 ]);
 
