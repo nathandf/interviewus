@@ -130,6 +130,8 @@ class Subscriptions extends Controller
             } catch ( \Exception $e ) {
                 $logger->error( $e->getMessage() );
             }
+
+            header( "HTTP/1.1 200 OK" );
         }
     }
 }
