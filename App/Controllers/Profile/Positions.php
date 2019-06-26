@@ -69,7 +69,6 @@ class Positions extends Controller
 
         $this->view->assign( "positions", $positions );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         $this->view->setTemplate( "profile/positions/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

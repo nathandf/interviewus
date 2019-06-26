@@ -183,7 +183,6 @@ class I extends Controller
 
         $this->view->assign( "interview", $interview );
         $this->view->assign( "organization", $organization );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
 
         $this->view->setTemplate( "i/index.tpl" );

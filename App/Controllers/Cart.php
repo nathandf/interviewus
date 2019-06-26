@@ -198,7 +198,6 @@ class Cart extends Controller
         }
 
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
         $this->view->assign(
             "client_token",

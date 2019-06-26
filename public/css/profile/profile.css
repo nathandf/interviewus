@@ -124,6 +124,41 @@ input[type=radio]:checked + .radio-label {
 	float: left;
 }
 
+.user-feedback-trigger {
+	padding: 10px;
+	border: 2px solid #FFFFFF;
+	border-radius: 3px 3px 0px 0px;
+	border-bottom: none;
+	position: fixed;
+	transform: rotate( -90deg );
+	bottom: 10%;
+	right: -35px;
+	background-color: rgba( 38, 166, 154, .8 );
+}
+
+.recommendation {
+	display: inline-block;
+	width: 10%;
+	border: 1px solid #666666;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 5px;
+	transition: .4s;
+	background: #FFFFFF;
+}
+
+.recommendation:hover {
+	cursor: pointer;
+}
+.user-feedback-trigger:hover {
+	cursor: pointer;
+}
+
+.selected-recommendation {
+	background: #4A148C;
+	color: #FFFFFF;
+}
+
 
 @media screen and (max-width: 600px) {
 	.schedule-button {
@@ -138,5 +173,11 @@ input[type=radio]:checked + .radio-label {
 @media screen and (max-width: 510px) {
 	.immediately {
 		display: none;
+	}
+
+	.user-feedback-trigger {
+		transform: rotate( 0deg );
+		bottom: 0;
+		right: 0;
 	}
 }

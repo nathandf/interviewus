@@ -89,7 +89,6 @@ class InterviewTemplates extends Controller
 
         $this->view->assign( "positions", $positions );
         $this->view->assign( "interviewTemplates", $interviewTemplates );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         $this->view->setTemplate( "profile/interview-templates/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

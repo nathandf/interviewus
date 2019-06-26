@@ -59,7 +59,6 @@ class Home extends Controller
             $inputValidator->addError( "sign_in", "The credentials you have provided are invalid. Please try again." );
         }
 
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
 
         $this->view->setTemplate( "sign-in.tpl" );

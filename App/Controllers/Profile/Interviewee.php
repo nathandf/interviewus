@@ -243,7 +243,6 @@ class Interviewee extends Controller
         $this->view->assign( "interviewTemplates", $interviewTemplates );
         $this->view->assign( "positions", $positions );
         $this->view->setErrorMessages( $inputValidator->getErrors() );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "profile/interviewee/index.tpl" );
