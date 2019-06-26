@@ -10,6 +10,7 @@ class Feedback extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
+        $logger = $this->load( "logger" );
 
         if (
             $input->exists() &&
@@ -28,7 +29,7 @@ class Feedback extends Controller
                 "feedback"
             )
         ) {
-            vdumpd( $input );
+            $logger->info( "feedback form submitted" );
         }
 
         vdumpd( $inputValidator );

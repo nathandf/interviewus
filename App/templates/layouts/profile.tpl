@@ -2,6 +2,8 @@
 
 {block name="head"}
 	<link rel="stylesheet" href="{$HOME}public/css/profile/profile.css">
+	<script src="http://malsup.github.com/jquery.form.js"></script>
+	<script type="application/javascript" src="{$HOME}{$JS_SCRIPTS}feedback.js"></script>
 	<script type="application/javascript" src="{$HOME}{$JS_SCRIPTS}profile/profile.js"></script>
 	{block name="profile-head"}{/block}
 {/block}
