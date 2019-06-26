@@ -11,6 +11,8 @@
 			<div class="pad-med">
 				<form id="user-feedback-form" action="{$HOME}feedback/" method="post">
 					<input type="hidden" name="token" value="{$csrf_token}">
+					<input type="hidden" name="user" value="{$user->getFullName()}">
+					<input type="hidden" name="account" value="{$account->id}">
 					<p class="label">What do you think about InterviewUs?</p>
 					<select name="opinion" class="inp inp-full cursor-pt" required="required">
 						<option value="" selected="selected" hidden="hidden"></option>

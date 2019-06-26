@@ -10,7 +10,9 @@ class Feedback extends Controller
     {
         $input = $this->load( "input" );
         $inputValidator = $this->load( "input-validator" );
-        $logger = $this->load( "logger" );
+        $mailer = $this->load( "mailer" );
+        $emailBuilder = $this->load( "email-builder" );
+        $domainObjectFactory = $this->load( "domain-object-factory" );
 
         if (
             $input->exists() &&
@@ -21,17 +23,45 @@ class Feedback extends Controller
                         "required" => true,
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
                     ],
-                    "opinion" => [],
-                    "subject" => [],
-                    "message" => [],
-                    "recommendation" => []
+                    "user" => [
+                        "required" => true
+                    ],
+                    "account" => [
+                        "required" => true
+                    ],
+                    "opinion" => [
+                        "required" => true
+                    ],
+                    "subject" => [
+                        "required" => true
+                    ],
+                    "message" => [
+                        "required" => true
+                    ],
+                    "recommendation" => [
+                        "required" => true
+                    ]
                 ],
                 "feedback"
             )
         ) {
-            $logger->info( "feedback form submitted" );
-        }
+            echo("test");
+            $emailContext = $domainObjectFactory->build( "EmailContext" );
+            $emailContext->addProps([
+                "user" => $input->get( "user" ),
+                "account" => $input->get( "account" ),
+                "opinion" => $input->get( "opinion" ),
+                "subject" => $input->get( "subject" ),
+                "message" => $input->get( "message" ),
+                "recommendation" => $input->get( "recommendation" ),
+            ]);
 
-        vdumpd( $inputValidator );
+            // Notify admin of user feedback
+            $resp = $mailer->setTo( "interview.us.app@gmail.com", "InterviewUs" )
+                ->setFrom( "noreply@interviewus.net" )
+                ->setSubject( "User Feedback Notification | {$input->get( "subject" )}" )
+                ->setContent( $emailBuilder->build( "user-feedback.html", $emailContext ) )
+                ->mail();
+        }
     }
 }
