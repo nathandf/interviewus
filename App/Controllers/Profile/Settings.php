@@ -309,7 +309,6 @@ class Settings extends Controller
 
         $this->view->assign( "plan", $plan );
         $this->view->assign( "paymentMethods", $paymentMethods );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 

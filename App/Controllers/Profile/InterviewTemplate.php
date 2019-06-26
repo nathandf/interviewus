@@ -107,7 +107,6 @@ class InterviewTemplate extends Controller
         $this->view->assign( "interviewTemplate", $interviewTemplate );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         $this->view->setTemplate( "profile/interview-template/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

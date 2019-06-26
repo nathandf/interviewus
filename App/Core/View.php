@@ -11,6 +11,7 @@ class View extends CoreObject
 
     private $templatingEngine;
     public $container;
+    public $session;
     public $template;
     public $application_error_messages = [];
     public $data = [];
@@ -24,6 +25,7 @@ class View extends CoreObject
     {
         $this->setContainer( $container );
         $this->configs = $container->getService( "config" )->configs;
+        $this->session = $this->container->getService( "session" );
     }
 
     /**
@@ -52,13 +54,16 @@ class View extends CoreObject
         // All templates are pulled from here
         $this->templatingEngine->template_dir = "App/templates";
         $this->templatingEngine->compile_dir = "App/templates/tmp";
+
+        // Set csrf token
+        $this->templatingEngine->assign( "csrf_token", $this->session->generateCSRFToken() );
+
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );
         $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
         $this->templatingEngine->assign( "APP_NAME", $this->configs[ "app-details" ][ "app_name" ] );
         $this->templatingEngine->assign( "CUSTOMER_SUPPORT_NUMBER", $this->configs[ "app-details" ][ "app_customer_support_number" ] );
         $this->templatingEngine->assign( "CUSTOMER_SUPPORT_EMAIL", $this->configs[ "app-details" ][ "app_customer_support_email" ] );
-
     }
 
     public function addApplicationError( $error_messages )

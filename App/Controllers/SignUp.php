@@ -171,7 +171,6 @@ class SignUp extends Controller
         }
 
         $this->view->assign( "fields", $fields );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->setErrorMessages( $inputValidator->getErrors() );
 
         $this->view->setTemplate( "sign-up/index.tpl" );

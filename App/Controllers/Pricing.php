@@ -104,7 +104,6 @@ class Pricing extends Controller
         }
 
         $this->view->assign( "plans", $plans );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
         $this->view->assign( "error_messages", $inputValidator->getErrors() );
 
         $this->view->setTemplate( "pricing/index.tpl" );

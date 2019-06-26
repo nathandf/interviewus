@@ -103,7 +103,6 @@ class Interviewees extends Controller
 
         $this->view->assign( "interviewees", $interviewees );
         $this->view->setErrorMessages( $inputValidator->getErrors() );
-        $this->view->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         $this->view->setTemplate( "profile/interviewees/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
