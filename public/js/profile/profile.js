@@ -18,16 +18,12 @@ $( function () {
 	} );
 
 	$( ".--c-interview-details" ).on( "click", function () {
-		$( ".interviews-table" ).hide( "slide", { direction: "left" }, 333 );
-		$( "#interview-details-" + this.dataset.id ).show( "slide", { direction: "right" }, 333 );
-		$( "body,html" ).animate( { scrollTop: 0 }, 300 );
-	} );
-
-	$( ".--c-interview-table" ).on( "click", function () {
-		$( "#interview-details-" + this.dataset.id ).effect( "fold", function () {
-			$( ".interviews-table" ).show( "slide", { direction: "left" }, 333 );
-		} );
-
+		$( "#interview-details-" + this.dataset.id ).toggle( "slide", { direction: "up" }, 333 );
+		if ( $( "#interview-" + this.dataset.id ).hasClass( "selected-interview" ) ) {
+			$( "#interview-" + this.dataset.id ).removeClass( "selected-interview" );
+		} else {
+			$( "#interview-" + this.dataset.id ).addClass( "selected-interview" );
+		}
 	} );
 
 	var InterviewDeploymentWidget = {
