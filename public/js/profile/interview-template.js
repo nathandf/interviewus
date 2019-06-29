@@ -7,6 +7,12 @@ $( function () {
 		$( "#existing-question-" + this.dataset.id ).val( $( this ).text() );
 	} );
 
+	$( ".template-property" ).on( "keyup change", function () {
+		$( ".--update-questions-button" ).each( function () {
+			$( this ).prop( "disabled", false )
+		} );
+	} );
+
 	$( ".sortable" ).sortable({
     	revert: false,
 		cursor: "grabbing",

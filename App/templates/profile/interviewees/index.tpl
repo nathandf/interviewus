@@ -8,7 +8,7 @@
 	{include file="includes/modals/profile/interviewee-modal.tpl"}
 	<div class="con-cnt-xxlrg pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
-			<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
+			<button id="interviewee" class="btn btn-inline theme-primary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.new_interviewee)}
@@ -36,7 +36,7 @@
 			</div>
 			<div class="pad-sml"></div>
 			{foreachelse}
-			<div class="interviewee-tag pad-sml border-std bg-white">No Interviewees</div>
+			<p>No interviewees to show</p>
 			{/foreach}
 		</div>
 	</div>

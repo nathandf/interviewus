@@ -18,13 +18,14 @@
 				</div>
 			{/foreach}
 		{/if}
+		<div class="pad-sml-mob-pos">
 		{foreach from=$interviewTemplates item=interviewTemplate name=interview_templates_loop}
 			<div class="card">
 				<div class="pad-sml">
 					<p class="thumbnail-med theme-secondary-dark floatleft push-r-sml"><i class="fas fa-scroll"></i></p>
 					<div class="floatleft header">
-						<a class="header tc-black" href="{$HOME}profile/interview-template/{$interviewTemplate->id}/">{$interviewTemplate->name}</a>
-						<p class="sub-header">{$interviewTemplate->description}</p>
+						<a class="header tc-black" href="{$HOME}profile/interview-template/{$interviewTemplate->id}/">{$interviewTemplate->name|truncate:"27"}</a>
+						<p class="sub-header">{$interviewTemplate->description|truncate:"40"}</p>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -35,5 +36,6 @@
 			</div>
 			<div class="pad-sml"></div>
 		{/foreach}
+		</div>
 	</div>
 {/block}

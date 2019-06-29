@@ -34,7 +34,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="floatleft">
-				<button id="interviewee" class="btn btn-inline theme-secondary-light --modal-trigger"><i class="push-r-sml fa fa-plus"></i>Interviewee</button>
+				<button id="interviewee" class="btn btn-inline theme-primary-dark --modal-trigger"><i class="push-r-sml fa fa-plus"></i>Interviewee</button>
 				<div class="pad-xxsml-mob-pos"></div>
 				<div class="clear"></div>
 			</div>

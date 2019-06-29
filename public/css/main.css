@@ -1747,6 +1747,9 @@ td {
     font-weight: 600;
 }
 
+.card .icon {
+    color: #757575;
+}
 
 /* Icons */
 .thumbnail {
