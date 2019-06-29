@@ -18,7 +18,7 @@ $( function () {
 	} );
 
 	$( ".--c-interview-details" ).on( "click", function () {
-		$( "#interview-details-" + this.dataset.id ).toggle( "slide", { direction: "up" }, 333 );
+		$( "#interview-details-" + this.dataset.id ).toggle( "slide", { direction: "dwon" }, 222 );
 		if ( $( "#interview-" + this.dataset.id ).hasClass( "selected-interview" ) ) {
 			$( "#interview-" + this.dataset.id ).removeClass( "selected-interview" );
 		} else {

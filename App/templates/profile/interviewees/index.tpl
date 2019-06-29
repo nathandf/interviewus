@@ -22,7 +22,7 @@
 			{foreach from=$interviewees item=interviewee name=interviewee_loop}
 			<div class="card">
 				<div class="pad-sml">
-					<p class="thumbnail-med theme-primary-dark floatleft push-r-sml"><i class="fas fa-user"></i></p>
+					<p class="thumbnail-med theme-primary floatleft push-r-sml"><i class="fas fa-user"></i></p>
 					<div class="floatleft header">
 						<a class="header tc-black" href="{$HOME}profile/interviewee/{$interviewee->id}/">{$interviewee->getFullName()}</a>
 						<p class="sub-header">{$interviewee->email|truncate:"35"}</p>

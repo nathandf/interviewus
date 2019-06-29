@@ -1,6 +1,8 @@
 {extends file="layouts/profile.tpl"}
 
 {block name="profile-head"}
+	<link rel="stylesheet" href="{$HOME}public/css/profile/interviewee.css">
+	<script src="{$HOME}{$JS_SCRIPTS}profile/interviewee.js"></script>
 {/block}
 
 {block name="profile-body"}
@@ -9,7 +11,6 @@
 	<div class="con-cnt-xxlrg pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
 			<a href="{$HOME}profile/interviewees/" class="btn btn-inline theme-primary "><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Interviewees</a>
-			<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.deploy_interview)}
@@ -27,8 +28,58 @@
 			{/foreach}
 		{/if}
 		<div class="pad-sml-mob-pos">
-			<p>{$interviewee->getFullName()}</p>
-			<button id="interviewee-details" class="btn btn-inline theme-primary --modal-trigger">Edit</button>
+			<div class="interviewee-header card">
+				<div class="pad-sml">
+					<div class="thumbnail-lrg floatleft theme-primary push-r-med"><i class="fas fa-user"></i></div>
+					<div class="floatleft details">
+						<p class="name">{$interviewee->getFullName()|truncate:"30"}</p>
+						<p class="sub-header">{$interviewee->email|truncate:"30"}</p>
+						<p class="sub-header">{$interviewee->phone->getNiceNumber()}</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="divider"></div>
+				<div class="pad-xsml">
+					<button id="interviewee-details" class="button-text-only tc-deep-purple --modal-trigger action">UPDATE</button>
+					<button id="interview-deployment" class="button-text-only icon floatright tc-deep-purple --modal-trigger action"><i class="fas fa-rocket"></i></button>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<h2 class="push-t-med">Interviews:</h2>
+			<div class="hr-full"></div>
+			<div class="interviews">
+				{foreach from=$interviewee->interviews item=interview}
+				<div class="card interview-card push-t-sml">
+					<div class="pad-sml">
+						<div class="thumbnail-med theme-tertiary floatleft push-r-med">
+							{if $interview->deployment_type_id == 1}
+							<i class="far fa-comment"></i>
+							{else}
+							<i class="fa fa-globe"></i>
+							{/if}
+						</div>
+						<div class="floatleft">
+							<p class="header">{$interview->position->name}</p>
+							<p class="sub-header">Started: {$interview->start_time}</p>
+							<p class="sub-header">Completed at: {$interview->end_time}</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="interview-details-{$interview->id}" style="display: none;">
+						<div class="divider"></div>
+						<div class="pad-sml">
+							<p>Details</p>
+						</div>
+					</div>
+					<div class="divider"></div>
+					<div class="pad-xsml">
+						<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
+					</div>
+				</div>
+				{foreachelse}
+				<p>No interviews for this person</p>
+				{/foreach}
+			</div>
 		</div>
 	</div>
 {/block}

@@ -18,6 +18,10 @@ class Interviewee extends Controller
         $this->accountRepo = $this->load( "account-repository" );
         $accountUserRepo = $this->load( "account-user-repository" );
         $organizationRepo = $this->load( "organization-repository" );
+        $interviewRepo = $this->load( "interview-repository" );
+        $interviewQuestionRepo = $this->load( "interview-question-repository" );
+        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
+        $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $this->logger = $this->load( "logger" );
 
@@ -62,6 +66,7 @@ class Interviewee extends Controller
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
         $positionRepo = $this->load( "position-repository" );
         $interviewRepo = $this->load( "interview-repository" );
+        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
         $deploymentTypeRepo = $this->load( "deployment-type-repository" );
         $interviewDispatcher = $this->load( "interview-dispatcher" );
         $conversationProvisioner = $this->load( "conversation-provisioner" );
@@ -69,6 +74,21 @@ class Interviewee extends Controller
 
         $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
         $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
+
+        // Retrieve all interviews for this interviewee
+        $interviewee->interviews = $interviewRepo->get( [ "*" ], [ "interviewee_id" => $interviewee->id ] );
+
+        // Get all questons for each interview
+        foreach ( $interviewee->interviews as $interview ) {
+            $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
+            $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
+            // Get all interview questions
+            foreach ( $interview->questions as $question ) {
+                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
+            }
+        }
+
+        // Get all interview templates
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
