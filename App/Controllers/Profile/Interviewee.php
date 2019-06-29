@@ -68,9 +68,64 @@ class Interviewee extends Controller
         $phoneRepo = $this->load( "phone-repository" );
 
         $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
+        $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
         $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+
+        if (
+            $input->exists() &&
+            $input->issetField( "update_interviewee" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "first_name" => [
+                        "required" => true,
+                        "max" => 128
+                    ],
+                    "last_name" => [
+                        "max" => 128
+                    ],
+                    "email" => [
+                        "required" => true,
+                        "email" => true
+                    ],
+                    "country_code" => [
+                        "required" => true,
+                        "number" => true
+                    ],
+                    "national_number" => [
+                        "required" => true
+                    ]
+                ],
+                "update_interviewee"
+            )
+        ) {
+            $intervieweeRepo->update(
+                [
+                    "first_name" => $input->get( "first_name" ),
+                    "last_name" => $input->get( "last_name" ),
+                    "email" => $input->get( "email" )
+                ],
+                [ "id" => $this->params[ "id" ] ]
+            );
+
+            $phoneRepo->update(
+                [
+                    "country_code" => $input->get( "country_code" ),
+                    "national_number" => $input->get( "national_number" )
+                ],
+                [ "id" => $interviewee->phone_id ]
+            );
+
+            $this->session->addFlashMessage( "Interviewee Updated" );
+            $this->session->setFlashMessages();
+            $this->view->redirect( "profile/interviewee/{$this->params[ "id" ]}/" );
+        }
 
         if (
             $input->exists() &&
