@@ -88,15 +88,15 @@
 						</div>
 						<div class="pricing-component-detail">
 							<p class="text-sml-heavy">Unlimited template imports</p>
-							<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
+							<div class="thumbnail {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 						</div>
 						<div class="pricing-component-detail">
 							<p class="text-sml-heavy">Email/Phone Support</p>
-							<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
+							<div class="thumbnail {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 						</div>
 						<div class="pricing-component-detail pricing-component-detail-last">
 							<p class="text-sml-heavy">Self-serve knowledge base</p>
-							<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
+							<div class="thumbnail {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 						</div>
 					</div>
 				</div>

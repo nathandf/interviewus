@@ -160,15 +160,15 @@
 				</div>
 				<div class="plan-component-detail">
 					<p class="text-sml-heavy">Unlimited template imports</p>
-					<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
+					<div class="thumbnail {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 				</div>
 				<div class="plan-component-detail">
 					<p class="text-sml-heavy">Email/Phone Support</p>
-					<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
+					<div class="thumbnail {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 				</div>
 				<div class="plan-component-detail plan-component-detail-last">
 					<p class="text-sml-heavy">Self-serve knowledge base</p>
-					<div class="circle-icon {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
+					<div class="thumbnail {$plan->name} push-t-sml"><i class="fas fa-check"></i></div>
 				</div>
 				<div class="clear"></div>
 			</div>

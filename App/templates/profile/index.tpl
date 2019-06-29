@@ -29,7 +29,7 @@
 				<div class="clear"></div>
 			</div>
 			<div class="floatleft push-r-xsml">
-				<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interview Template</button>
+				<button id="interview-template" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Template</button>
 				<div class="pad-xxsml-mob-pos"></div>
 				<div class="clear"></div>
 			</div>
@@ -111,7 +111,7 @@
 						<table class="col-100 text-center" style="border-collapse: separate; table-layout: auto;">
 							<th class="theme-secondary text-left pad-sml" colspan="3">Interview URL</th>
 							<tr>
-								<td colspan="3" class="pad-sml text-sml text-left"><span class="text-breakable">https://www.interviewus.net/i/{$interview->token}/</span></td>
+								<td colspan="3" class="pad-sml text-sml text-left bg-white"><span class="text-breakable">https://www.interviewus.net/i/{$interview->token}/</span></td>
 							</tr>
 						</table>
 					</div>

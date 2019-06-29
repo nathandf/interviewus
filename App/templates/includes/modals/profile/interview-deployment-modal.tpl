@@ -83,7 +83,7 @@
 				{/if}
 				<input type="radio" name="interview_template_id" value="{$interviewTemplate->id}" id="interview-template-radio-{$interviewTemplate->id}" class="interview-template-radio --c-deployment-requirement" required="required" style="display: none;">
 				<label for="interview-template-radio-{$interviewTemplate->id}" class="radio-label pad-sml cursor-pt deployment-tag" style="display: block;">
-					<p class="text-med-heavy"><i aria-hidden="true" class="far fa-file-alt push-r-sml"></i>{$interviewTemplate->name}</p>
+					<p class="text-med-heavy"><i aria-hidden="true" class="fas fa-scroll push-r-sml"></i>{$interviewTemplate->name}</p>
 					{if $interviewTemplate->description != "" && $interviewTemplate->description != null}
 					<div class="hr-std push-t-sml"></div>
 					<p class="text-sml push-t-sml">{$interviewTemplate->description|truncate:"300":"..."}</p>
