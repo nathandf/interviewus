@@ -12,18 +12,14 @@
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{include file="includes/snippets/flash-messages.tpl"}
-		<div>
+		<div class="con-cnt-lrg floatleft pad-sml-mob-pos">
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="update_template" value="{$csrf_token}">
-				<div class="con-cnt-lrg floatleft">
-					<p class="label">Name:</p>
-					<input type="text" class="inp inp-full template-property" name="name" value="{$interviewTemplate->name}">
-					<p class="label">Description:</p>
-					<textarea name="description" class="inp textarea inp-full template-property">{$interviewTemplate->description|default:null}</textarea>
-				</div>
-				<div class="clear"></div>
-
+				<p class="label">Name:</p>
+				<input type="text" class="inp inp-full template-property" name="name" value="{$interviewTemplate->name}">
+				<p class="label">Description:</p>
+				<textarea name="description" class="inp textarea inp-full template-property">{$interviewTemplate->description|default:null}</textarea>
 				<div class="hr-full"></div>
 				<input id="update-existing-questions-input" type="hidden" name="update_existing_questions">
 				<div class="pad-sml-mob-pos">
@@ -55,5 +51,6 @@
 				{/if}
 			</form>
 		</div>
+		<div class="clear"></div>
 	</div>
 {/block}

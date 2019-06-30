@@ -1732,6 +1732,7 @@ td {
 }
 
 .card .header {
+    color: #222222;
     font-size: 18px;
     font-weight: 600;
 }
@@ -1749,6 +1750,10 @@ td {
 
 .card .icon {
     color: #757575;
+}
+
+.card .expandable-content {
+    color: #84878B;
 }
 
 /* Icons */

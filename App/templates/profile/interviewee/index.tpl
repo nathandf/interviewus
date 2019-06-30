@@ -47,7 +47,7 @@
 			</div>
 			<h2 class="push-t-med">Interviews:</h2>
 			<div class="hr-full"></div>
-			<div class="interviews">
+			<div class="interviews con-cnt-med-plus-plus floatleft">
 				{foreach from=$interviewee->interviews item=interview}
 				<div class="card interview-card push-t-sml">
 					<div class="pad-sml">
@@ -65,21 +65,36 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-					<div class="interview-details-{$interview->id}" style="display: none;">
+					<div class="interview-details-{$interview->id} expandable-content" style="display: none;">
 						<div class="divider"></div>
 						<div class="pad-sml">
-							<p>Details</p>
+							{foreach from=$interview->questions item=question name=questions_loop}
+							<div>
+								<p class="label" style="color: #222222;">Question {$smarty.foreach.questions_loop.iteration}:</p>
+								<p class="text-lrg">{$question->body}</p>
+								<p class="label push-t-sml" style="color: #222222;">Answer:</p>
+								<p class="text-lrg">{$question->answer->body|default:"Not answered"}</p>
+							</div>
+							{if !$smarty.foreach.questions_loop.last}
+							<div class="hr-full"></div>
+							{/if}
+							{foreachelse}
+							<p>There are not questions for this interview</p>
+							{/foreach}
 						</div>
 					</div>
 					<div class="divider"></div>
 					<div class="pad-xsml">
 						<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
+						<button class="button-text-only action icon floatright"><i class="fas fa-envelope"></i></button>
+						<div class="clear"></div>
 					</div>
 				</div>
 				{foreachelse}
 				<p>No interviews for this person</p>
 				{/foreach}
 			</div>
+			<div class="clear"></div>
 		</div>
 	</div>
 {/block}
