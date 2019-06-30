@@ -17,13 +17,15 @@ $( function () {
 		$( "#questions-container" ).append( questionBuilder.newQuestion() );
 	} );
 
-	$( ".--c-interview-details" ).on( "click", function () {
-		$( "#interview-details-" + this.dataset.id ).toggle( "slide", { direction: "up" }, 333 );
-		if ( $( "#interview-" + this.dataset.id ).hasClass( "selected-interview" ) ) {
-			$( "#interview-" + this.dataset.id ).removeClass( "selected-interview" );
-		} else {
-			$( "#interview-" + this.dataset.id ).addClass( "selected-interview" );
-		}
+	$( function () {
+		$( ".--expand" ).on( "click", function () {
+			$( ".interview-details-" + this.dataset.interview_id ).toggle( 333 );
+			if ( $( this ).text() == "EXPAND" ) {
+				$( this ).text( "COLLAPSE" );
+			} else {
+				$( this ).text( "EXPAND" );
+			}
+		} );
 	} );
 
 	var InterviewDeploymentWidget = {

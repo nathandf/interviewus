@@ -68,62 +68,67 @@
 			</div>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
-		<table class="col-100 text-center mat-box-shadow interviews-table" style="border-collapse: separate; table-layout: auto;">
-			<th class="theme-primary pad-sml" colspan="3">Interviews</th>
-			<tr>
-				<td class="text-sml-heavy theme-primary-light pad-sml">Interviewee</td>
-				<td class="text-sml-heavy theme-primary-light pad-sml">Type</td>
-				<td class="text-sml-heavy theme-primary-light pad-sml">Status</td>
-			</tr>
-			{foreach from=$interviews item=interview name="fe_interviews"}
-			<tr id="interview-{$interview->id}" data-id="{$interview->id}" class="bg-white shade-on-hover cursor-pt --c-interview-details">
-				<td class="text-med-heavy">{$interview->interviewee->getFullName()}</td>
-				<td class="text-med-heavy pad-sml">{if $interview->deployment_type_id == 1}SMS{else}Web{/if}</td>
-				<td class="pad-sml" style="max-width: 100px;">
-					<div class="status-indicator status-{$interview->status}">
+		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+			<table class="col-100 text-center interviews-table" style="border-collapse: separate; table-layout: auto;">
+				<th class="theme-primary pad-sml" colspan="3">Interviews</th>
+			</table>
+			{foreach from=$interviews item=interview}
+			<div class="card interview-card push-t-sml">
+				<div class="pad-sml">
+					<div class="floatleft push-r-med">
+						{if $interview->deployment_type_id == 1}
+						<div class="thumbnail-med theme-primary">
+							<i class="far fa-comment"></i>
+						</div>
+						{else}
+						<div class="thumbnail-med theme-secondary-light">
+							<i class="fa fa-globe"></i>
+						</div>
+						{/if}
+						<div class="clear"></div>
+						<div class="pad-xsml">
+							<p class="text-center text-xsml-heavy">{strtoupper( $interview->deploymentType->name )}</p>
+						</div>
+					</div>
+					<div class="floatleft">
+						<p class="header push-r-sml">{$interview->interviewee->getFullName()}</p>
+						<p class="sub-header">{$interview->position->name}</p>
+						<div class="clear"></div>
+					</div>
+					<div class="status-indicator status-{$interview->status} floatright">
 						<p>{ucfirst( $interview->status )}</p>
 					</div>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<div id="interview-details-{$interview->id}" class="interview-details" style="display: none;">
-						<table class="col-100 text-center" style="border-collapse: separate; table-layout: auto;">
-							<th class="theme-secondary pad-sml" colspan="3">Interview Details</th>
-							<tr>
-								<td class="theme-secondary-light pad-sml text-sml-heavy">Question</td>
-								<td class="theme-secondary-light pad-sml text-sml-heavy">Status</td>
-								<td class="theme-secondary-light pad-sml text-sml-heavy">Answer</td>
-							</tr>
-							{foreach from=$interview->questions item=question name=fe_questions}
-							<tr class="bg-white">
-								<td class="text-left pad-sml text-med-heavy"><p class="text-med-heavy">{$smarty.foreach.fe_questions.iteration}.<span class="push-l-sml">{$question->body}</span></p></td>
-								<td class="pad-sml text-med"><i>{$question->sms_status|default:"pending"}</i></p></td></td>
-								<td class="text-left pad-sml text-med-heavy text-breakable"><i>{$question->answer->body|default:"Not Answered"}</i></p></td></td>
-							</tr>
-							{foreachelse}
-							<tr class="bg-white">
-								<td class="text-left pad-sml text-med-heavy">No Questions</td>
-								<td></td>
-							</tr>
-							{/foreach}
-						</table>
-						<table class="col-100 text-center" style="border-collapse: separate; table-layout: auto;">
-							<th class="theme-secondary text-left pad-sml" colspan="3">Interview URL</th>
-							<tr>
-								<td colspan="3" class="pad-sml text-sml text-left bg-white"><span class="text-breakable">https://www.interviewus.net/i/{$interview->token}/</span></td>
-							</tr>
-						</table>
+					<div class="clear"></div>
+				</div>
+				<div class="interview-details-{$interview->id} expandable-content" style="display: none;">
+					<div class="divider"></div>
+					<div class="pad-sml">
+						{foreach from=$interview->questions item=question name=questions_loop}
+						<div>
+							<p class="label" style="color: #222222;">Question {$smarty.foreach.questions_loop.iteration}:</p>
+							<p class="text-lrg">{$question->body}</p>
+							<p class="label push-t-sml" style="color: #222222;">Answer:</p>
+							<p class="text-lrg">{$question->answer->body|default:"Not answered"}</p>
+						</div>
+						{if !$smarty.foreach.questions_loop.last}
+						<div class="hr-full"></div>
+						{/if}
+						{foreachelse}
+						<p>There are not questions for this interview</p>
+						{/foreach}
 					</div>
-				</td>
-			</tr>
+				</div>
+				<div class="divider"></div>
+				<div class="pad-xsml">
+					<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
+					<button class="button-text-only action icon floatright"><i class="fas fa-envelope"></i></button>
+					<div class="clear"></div>
+				</div>
+			</div>
 			{foreachelse}
-			<tr class="bg-white">
-				<td class="text-med-heavy">No Interviews</td>
-				<td class="text-med-heavy pad-sml">--</td>
-				<td class="pad-sml">--</td>
-			</tr>
+			<p>No interviews yet.</p>
 			{/foreach}
-		<table>
+		</div>
+		<div class="clear"></div>
 	</div>
 {/block}
