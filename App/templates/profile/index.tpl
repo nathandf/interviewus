@@ -77,11 +77,11 @@
 				<div class="pad-sml">
 					<div class="floatleft push-r-med">
 						{if $interview->deployment_type_id == 1}
-						<div class="thumbnail-med theme-primary">
+						<div class="thumbnail-med theme-primary-dark">
 							<i class="far fa-comment"></i>
 						</div>
 						{else}
-						<div class="thumbnail-med theme-secondary-light">
+						<div class="thumbnail-med theme-primary">
 							<i class="fa fa-globe"></i>
 						</div>
 						{/if}
@@ -91,8 +91,16 @@
 						</div>
 					</div>
 					<div class="floatleft">
-						<p class="header push-r-sml">{$interview->interviewee->getFullName()}</p>
+						<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
 						<p class="sub-header">{$interview->position->name}</p>
+						<div class="progress-bar">
+							{foreach from=$interview->questions item=question name=questions_loop}
+							<div class="progress-increment floatleft{if !is_null( $question->answer )} status-complete{/if}" style="width: {(1/count($interview->questions))*100}%;">
+
+							</div>
+							{/foreach}
+							<div class="clear"></div>
+						</div>
 						<div class="clear"></div>
 					</div>
 					<div class="status-indicator status-{$interview->status} floatright">
@@ -122,6 +130,7 @@
 				<div class="pad-xsml">
 					<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
 					<button class="button-text-only action icon floatright"><i class="fas fa-envelope"></i></button>
+					<button class="button-text-only action icon floatright"><i class="fas fa-share-alt"></i></button>
 					<div class="clear"></div>
 				</div>
 			</div>

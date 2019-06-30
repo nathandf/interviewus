@@ -2,7 +2,6 @@
 
 {block name="profile-head"}
 	<link rel="stylesheet" href="{$HOME}public/css/profile/interviewee.css">
-	<script src="{$HOME}{$JS_SCRIPTS}profile/interviewee.js"></script>
 {/block}
 
 {block name="profile-body"}

@@ -3,6 +3,17 @@
 	max-width: 100%;
 }
 
+.progress-bar {
+	width: 150px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	border: 1px solid #666666;
+}
+
+.progress-increment {
+	padding-top: 10px;
+}
+
 .interviews-container {
 	border: 1px solid #CCCCCC;
 	background: #FFFFFF;
