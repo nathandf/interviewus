@@ -93,15 +93,22 @@
 					<div class="floatleft">
 						<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
 						<p class="sub-header">{$interview->position->name}</p>
-						<div class="progress-bar">
-							{foreach from=$interview->questions item=question name=questions_loop}
-							<div class="progress-increment floatleft{if !is_null( $question->answer )} status-complete{/if}" style="width: {(1/count($interview->questions))*100}%;">
+						<div class="progress-container">
+							<div class="progress-bar floatleft push-r-sml">
+								{assign var="total_answers" value=0}
+								{foreach from=$interview->questions item=question name=qa_progress_bar}
+									{assign var="width" value=(1/count($interview->questions))*100}
+									{if !is_null( $question->answer ) && $smarty.foreach.qa_progress_bar.last}{assign var="width" value=( 1/count( $interview->questions ) ) * 100}{/if}
 
+									<div class="progress-increment floatleft{if !is_null( $question->answer )}{assign var='total_answers' value=$total_answers + 1 } status-complete{/if}" style='width: {$width}%;'></div>
+								{/foreach}
+								<div class="clear"></div>
 							</div>
-							{/foreach}
+							<div class="question-count floatleft">
+								<p class="sub-header">{$total_answers}/{count( $interview->questions )}</p>
+							</div>
 							<div class="clear"></div>
 						</div>
-						<div class="clear"></div>
 					</div>
 					<div class="status-indicator status-{$interview->status} floatright">
 						<p>{ucfirst( $interview->status )}</p>
@@ -111,18 +118,22 @@
 				<div class="interview-details-{$interview->id} expandable-content" style="display: none;">
 					<div class="divider"></div>
 					<div class="pad-sml">
+						<p class="label text-breakable">URL:&nbsp;https://www.interviewus.net/i/{$interview->token}/</p>
+					</div>
+					<div class="divider"></div>
+					<div class="pad-sml">
 						{foreach from=$interview->questions item=question name=questions_loop}
 						<div>
 							<p class="label" style="color: #222222;">Question {$smarty.foreach.questions_loop.iteration}:</p>
 							<p class="text-lrg">{$question->body}</p>
 							<p class="label push-t-sml" style="color: #222222;">Answer:</p>
-							<p class="text-lrg">{$question->answer->body|default:"Not answered"}</p>
+							<p class="text-lrg">{$question->answer->body|default:"<i>Not answered</i>"}</p>
 						</div>
 						{if !$smarty.foreach.questions_loop.last}
 						<div class="hr-full"></div>
 						{/if}
 						{foreachelse}
-						<p>There are not questions for this interview</p>
+						<p>There are no questions for this interview</p>
 						{/foreach}
 					</div>
 				</div>

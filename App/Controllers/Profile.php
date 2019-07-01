@@ -48,7 +48,7 @@ class Profile extends Controller
         $deploymentTypeRepo = $this->load( "deployment-type-repository" );
         $conversationProvisioner = $this->load( "conversation-provisioner" );
 
-        $interviews = $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+        $interviews = array_reverse( $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
 
         foreach ( $interviews as $interview ) {
             $interview->deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $interview->deployment_type_id ], "single" );

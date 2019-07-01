@@ -4,14 +4,20 @@
 }
 
 .progress-bar {
-	width: 150px;
+	min-width: 150px;
 	margin-top: 4px;
 	margin-bottom: 4px;
-	border: 1px solid #666666;
+	outline-style: solid;
+	outline-width: 1px;
+	outline-color: #888888;
 }
 
 .progress-increment {
 	padding-top: 10px;
+}
+
+.question-count {
+	margin-top: 2px;
 }
 
 .interviews-container {
