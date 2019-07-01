@@ -142,6 +142,8 @@
 					<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
 					<button class="button-text-only action icon floatright"><i class="fas fa-envelope"></i></button>
 					<button class="button-text-only action icon floatright"><i class="fas fa-share-alt"></i></button>
+					<button class="button-text-only action icon floatright"><i class="fas fa-archive"></i></button>
+					<button class="button-text-only action icon floatright"><i class="fas fa-download"></i></button>
 					<div class="clear"></div>
 				</div>
 			</div>
