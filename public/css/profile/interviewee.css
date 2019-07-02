@@ -1,0 +1,17 @@
+.interviewee-header {
+	border-radius: 3px;
+}
+
+.interviewee-header .details {
+	margin-top: 4px;
+}
+
+.interviewee-header .details .name {
+	font-weight: 600;
+	color: #000000;
+}
+
+.interview-card {
+	display: block;
+	max-width: 100%;
+}

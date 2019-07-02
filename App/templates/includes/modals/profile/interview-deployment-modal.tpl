@@ -17,11 +17,11 @@
 			<div class="pad-med">
 				<div class="pad-sml floatleft col-50">
 					<input id="sms-deployment" type="radio" name="deployment_type_id" value="1" style="display: none;" class="--c-deployment-requirement deployment-type-radio" required="required">
-					<label for="sms-deployment" class="button button-label radio-label"><i aria-hidden="true" class="far fa-comment push-r-sml"></i>SMS</label>
+					<label for="sms-deployment" class="button button-label radio-label"><i class="far fa-comment push-r-sml"></i>SMS</label>
 				</div>
 				<div class="pad-sml floatleft col-50">
 					<input id="web-deployment" type="radio" name="deployment_type_id" value="2" style="display: none;"class="--c-deployment-requirement deployment-type-radio" required="required">
-					<label for="web-deployment" class="button button-label radio-label"><i aria-hidden="true" class="fa fa-globe push-r-sml"></i>Web</lable>
+					<label for="web-deployment" class="button button-label radio-label"><i class="fa fa-globe push-r-sml"></i>Web</lable>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -83,7 +83,7 @@
 				{/if}
 				<input type="radio" name="interview_template_id" value="{$interviewTemplate->id}" id="interview-template-radio-{$interviewTemplate->id}" class="interview-template-radio --c-deployment-requirement" required="required" style="display: none;">
 				<label for="interview-template-radio-{$interviewTemplate->id}" class="radio-label pad-sml cursor-pt deployment-tag" style="display: block;">
-					<p class="text-med-heavy"><i aria-hidden="true" class="far fa-file-alt push-r-sml"></i>{$interviewTemplate->name}</p>
+					<p class="text-med-heavy"><i aria-hidden="true" class="fas fa-scroll push-r-sml"></i>{$interviewTemplate->name}</p>
 					{if $interviewTemplate->description != "" && $interviewTemplate->description != null}
 					<div class="hr-std push-t-sml"></div>
 					<p class="text-sml push-t-sml">{$interviewTemplate->description|truncate:"300":"..."}</p>

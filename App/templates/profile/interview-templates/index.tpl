@@ -18,22 +18,24 @@
 				</div>
 			{/foreach}
 		{/if}
-		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
-			<th class="theme-primary pad-sml" colspan="2">Interview Templates</th>
-			<tr>
-				<td class="theme-primary-light pad-sml text-sml-heavy">Name</td>
-				<td class="theme-primary-light pad-sml text-sml-heavy">Description</td>
-			</tr>
-			{foreach from=$interviewTemplates item=interviewTemplate name=interview_templates_loop}
-			<tr class="bg-white shade-on-hover row-link" data-href="{$HOME}profile/interview-template/{$interviewTemplate->id}/">
-				<td class="pad-sml text-med-heavy text-left">{$interviewTemplate->name}</td>
-				<td class="pad-sml text-med-heavy text-left">{$interviewTemplate->description|default:"<i>No description</i>"|truncate:"300":"..."}</td>
-			</tr>
-			{foreachelse}
-			<tr>
-				<td class="pad-sml text-med-heavy bg-white" colspan="2"><i>No Interview Templates</i></td>
-			</tr>
-			{/foreach}
-		</table>
+		<div class="pad-sml-mob-pos">
+		{foreach from=$interviewTemplates item=interviewTemplate name=interview_templates_loop}
+			<div class="card">
+				<div class="pad-sml">
+					<p class="thumbnail-med theme-secondary-dark floatleft push-r-sml"><i class="fas fa-scroll"></i></p>
+					<div class="floatleft header">
+						<a class="header tc-black" href="{$HOME}profile/interview-template/{$interviewTemplate->id}/">{$interviewTemplate->name|truncate:"27"}</a>
+						<p class="sub-header">{$interviewTemplate->description|truncate:"40"}</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="divider"></div>
+				<div class="pad-xsml">
+					<a href="{$HOME}profile/interview-template/{$interviewTemplate->id}/" class="button-text-only action tc-deep-purple">EDIT</a>
+				</div>
+			</div>
+			<div class="pad-sml"></div>
+		{/foreach}
+		</div>
 	</div>
 {/block}

@@ -56,26 +56,62 @@ class InterviewTemplate extends Controller
         $interviewTemplate = $interviewTemplateRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
         $interviewTemplate->questions = $questionRepo->getAllByInterviewTemplateID( $interviewTemplate->id );
 
-        if ( $input->exists() && $input->issetField( "update_existing_questions" ) ) {
-            $existing_questions = $input->get( "existing_question" );
-            if ( is_array( $existing_questions ) ) {
-                $iteration = 1;
-                foreach ( $existing_questions as $id => $body ) {
-                    // Ensure question body isn't empty
-                    if ( !is_null( $body ) && $body != "" ) {
-                        $questionRepo->update(
-                            [ "body" => $body, "placement" => $iteration ],
-                            [ "id" => $id, "interview_template_id" => $this->params[ "id" ] ]
-                        );
+        // If a form has been submitted, save the new order and value of the questions
+        // and name and description of the template
+        if (
+            $input->exists() &&
+            $input->issetField( "update_template" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "name" => [
+                        "required" => true,
+                        "max" => 128
+                    ],
+                    "description" => [
+                        "min" => 1,
+                        "max" => 256
+                    ]
+                ],
+                "update_template"
+            )
+        ) {
+            $interviewTemplateRepo->update(
+                [
+                    "name" => $input->get( "name" ),
+                    "description" => $input->get( "description" )
+                ],
+                [ "id" => $this->params[ "id" ] ]
+            );
+
+            // Process new question order and values
+            if ( $input->issetField( "update_existing_questions" ) ) {
+                $existing_questions = $input->get( "existing_question" );
+                if ( is_array( $existing_questions ) ) {
+                    $iteration = 1;
+                    foreach ( $existing_questions as $id => $body ) {
+                        // Ensure question body isn't empty
+                        if ( !is_null( $body ) && $body != "" ) {
+                            $questionRepo->update(
+                                [ "body" => $body, "placement" => $iteration ],
+                                [ "id" => $id, "interview_template_id" => $this->params[ "id" ] ]
+                            );
+                        }
+                        $iteration++;
                     }
-                    $iteration++;
+                    $this->session->addFlashMessage( "Questions updated" );
                 }
-                $this->session->addFlashMessage( "Questions updated" );
-                $this->session->setFlashMessages();
-                $this->view->redirect( "profile/interview-template/" . $this->params[ "id" ] . "/" );
             }
+
+            $this->session->setFlashMessages();
+            $this->view->redirect( "profile/interview-template/" . $this->params[ "id" ] . "/" );
         }
 
+        // Add new questions to the interivew template
         if (
             $input->exists() &&
             $input->issetField( "new_question" ) &&
@@ -99,6 +135,7 @@ class InterviewTemplate extends Controller
                 "placement" => count( $interviewTemplate->questions ) + 1,
                 "body" => $input->get( "body" )
             ]);
+
             $this->session->addFlashMessage( "Question added" );
             $this->session->setFlashMessages();
             $this->view->redirect( "profile/interview-template/" . $this->params[ "id" ] . "/" );
