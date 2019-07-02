@@ -100,7 +100,7 @@
 									{assign var="width" value=(1/count($interview->questions))*100}
 									{if !is_null( $question->answer ) && $smarty.foreach.qa_progress_bar.last}{assign var="width" value=( 1/count( $interview->questions ) ) * 100}{/if}
 
-									<div class="progress-increment floatleft{if !is_null( $question->answer )}{assign var='total_answers' value=$total_answers + 1 } status-complete{/if}" style='width: {$width}%;'></div>
+									<div class="progress-increment {if !is_null( $question->answer )}{assign var='total_answers' value=$total_answers + 1 } status-complete floatleft{else}floatright{/if}" style='width: {$width}%;'></div>
 								{/foreach}
 								<div class="clear"></div>
 							</div>

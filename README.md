@@ -21,3 +21,6 @@ Start an interview process by sending vCard information to your Funnel Numbers.
 When created an Interview Funnel, you can specify the deployment type and time,
 which interview template to use, which job is being interviewed for,
 where and to who to send the completed interview data to and by what method.
+
+## Facebook Messenger Interviews
+## Automated Voice Interviews
