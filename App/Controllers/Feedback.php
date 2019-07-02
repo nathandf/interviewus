@@ -45,7 +45,6 @@ class Feedback extends Controller
                 "feedback"
             )
         ) {
-            echo("test");
             $emailContext = $domainObjectFactory->build( "EmailContext" );
             $emailContext->addProps([
                 "user" => $input->get( "user" ),
