@@ -77,7 +77,7 @@
 				<div class="pad-sml">
 					<div class="floatleft push-r-med">
 						{if $interview->deployment_type_id == 1}
-						<div class="thumbnail-med theme-primary-dark">
+						<div class="thumbnail-med sms-theme">
 							<i class="far fa-comment"></i>
 						</div>
 						{else}
@@ -148,10 +148,19 @@
 				<div class="divider"></div>
 				<div class="pad-xsml">
 					<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
-					<button class="button-text-only action icon floatright"><i class="fas fa-envelope"></i></button>
-					<button class="button-text-only action icon floatright"><i class="fas fa-share-alt"></i></button>
-					<button class="button-text-only action icon floatright"><i class="fas fa-archive"></i></button>
-					<button class="button-text-only action icon floatright"><i class="fas fa-download"></i></button>
+					<button class="button-text-only action icon floatright tooltip-icon" title="Send interview via email"><i class="fas fa-envelope"></i></button>
+					<button class="button-text-only action icon floatright tooltip-icon" title="Share interview"><i class="fas fa-share-alt"></i></button>
+					<button class="button-text-only action icon floatright tooltip-icon" title="Archive interview"><i class="fas fa-archive"></i></button>
+					<div class="floatright">
+						<form action="{$HOME}downloads/interviewCSV" method="post">
+							<input type="hidden" name="token" value="{$csrf_token}">
+							<input type="hidden" name="account_id" value="{$account->id}">
+							<input type="hidden" name="user_id" value="{$user->id}">
+							<input type="hidden" name="organization_id" value="{$organization->id}">
+							<input type="hidden" name="interview_id" value="{$interview->id}">
+							<button type="submit" class="button-text-only action icon tooltip-icon" title="Download CSV File"><i class="fas fa-download"></i></button>
+						</form>
+					</div>
 					<div class="clear"></div>
 				</div>
 			</div>

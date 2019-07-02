@@ -558,6 +558,11 @@ $container->register( "access-control", function() {
 	return $helper;
 } );
 
+$container->register( "csv-generator", function() use ( $container ) {
+	$helper = new \Helpers\CSVGenerator;
+	return $helper;
+} );
+
 $container->register( "email-builder", function() use ( $container ) {
 	$helper = new \Helpers\EmailBuilder(
 		$container->getService( "config" )
