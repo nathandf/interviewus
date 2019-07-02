@@ -1,4 +1,6 @@
 $( function () {
+	$( ".tooltip-icon" ).tooltip( 0 );
+
 	var questionBuilder = {
 		questionCount: 1,
 		newQuestion: function () {

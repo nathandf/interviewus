@@ -9,6 +9,10 @@ class CSVGenerator
 
 	public function addColumns( $column_names )
 	{
+		if ( $this->entries > 0 && !empty( $this->cells ) ) {
+			throw new \Exception( "Cannot add new columns once entries are added to the file." );
+		}
+
 		if ( is_array( $column_names ) ) {
 			foreach ( $column_names as $name ) {
 				$this->cells[ 0 ][] = $name;
@@ -50,5 +54,10 @@ class CSVGenerator
         }
 
         fclose( $fp );
+	}
+
+	public function resetEntryCounter()
+	{
+		$this->entries = 0;
 	}
 }
