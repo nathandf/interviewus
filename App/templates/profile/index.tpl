@@ -69,9 +69,9 @@
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
-			<table class="col-100 text-center interviews-table" style="border-collapse: separate; table-layout: auto;">
-				<th class="theme-primary pad-sml" colspan="3">Interviews</th>
-			</table>
+			<div class="theme-primary pad-sml">
+				<p class="text-center text-xlrg-heavy">Interviews</p>
+			</div>
 			{foreach from=$interviews item=interview}
 			<div class="card interview-card push-t-sml">
 				<div class="pad-sml">
@@ -117,17 +117,25 @@
 				</div>
 				<div class="interview-details-{$interview->id} expandable-content" style="display: none;">
 					<div class="divider"></div>
+					<div class="theme-secondary pad-sml">
+						<p class="text-center text-xlrg-heavy">Interviews Details</p>
+					</div>
 					<div class="pad-sml">
 						<p class="label text-breakable">URL:&nbsp;https://www.interviewus.net/i/{$interview->token}/</p>
 					</div>
 					<div class="divider"></div>
 					<div class="pad-sml">
 						{foreach from=$interview->questions item=question name=questions_loop}
-						<div>
-							<p class="label" style="color: #222222;">Question {$smarty.foreach.questions_loop.iteration}:</p>
-							<p class="text-lrg">{$question->body}</p>
-							<p class="label push-t-sml" style="color: #222222;">Answer:</p>
-							<p class="text-lrg">{$question->answer->body|default:"<i>Not answered</i>"}</p>
+						<div class="qa-container">
+							<div class="question-answer pad-xsml">
+								<p class="label" style="color: #222222;">Question {$smarty.foreach.questions_loop.iteration}:</p>
+								<p class="text-lrg">{$question->body}</p>
+							</div>
+							<div class="question-answer pad-xsml">
+								<p class="label" style="color: #222222;">Answer:</p>
+								<p class="text-lrg">{$question->answer->body|default:"<i>Not answered</i>"}</p>
+							</div>
+							<div class="clear"></div>
 						</div>
 						{if !$smarty.foreach.questions_loop.last}
 						<div class="hr-full"></div>

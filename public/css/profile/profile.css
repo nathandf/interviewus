@@ -20,6 +20,11 @@
 	margin-top: 2px;
 }
 
+.question-answer {
+	float: left;
+	width: 50%;
+}
+
 .interviews-container {
 	border: 1px solid #CCCCCC;
 	background: #FFFFFF;
