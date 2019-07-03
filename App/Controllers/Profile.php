@@ -48,7 +48,15 @@ class Profile extends Controller
         $deploymentTypeRepo = $this->load( "deployment-type-repository" );
         $conversationProvisioner = $this->load( "conversation-provisioner" );
 
-        $interviews = array_reverse( $interviewRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
+        $interviews = array_reverse(
+            $interviewRepo->get(
+                [ "*" ],
+                [
+                    "organization_id" => $this->organization->id,
+                    "mode" => "visible"
+                ]
+            )
+        );
 
         foreach ( $interviews as $interview ) {
             $interview->deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $interview->deployment_type_id ], "single" );
@@ -338,6 +346,51 @@ class Profile extends Controller
 
         $this->view->setTemplate( "profile/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
+    }
+
+    public function archiveAction()
+    {
+        $input = $this->load( "input" );
+        $inputValidator = $this->load( "input-validator" );
+        $interviewRepo = $this->load( "interview-repository" );
+
+        if (
+            $input->exists() &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "interview_id" => [
+                        "required" => true,
+                        "in_array" => $interviewRepo->get(
+                            [ "id" ],
+                            [
+                                "id" => $input->get( "interview_id" ),
+                                "organization_id" => $this->organization->id
+                            ],
+                            "raw"
+                        )
+                    ],
+                ],
+                "archive"
+            )
+        ) {
+            $interviewRepo->update(
+                [ "mode" => "archived" ],
+                [ "id" => $input->get( "interview_id" ) ]
+            );
+
+            echo( "success" );
+            die();
+            exit();
+        }
+
+        echo( $inputValidator->getError()[ 0 ] );
+        die();
+        exit();
     }
 
     public function logout()

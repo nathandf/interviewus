@@ -134,4 +134,28 @@ $( function () {
 	} );
 
 	$( "#datepicker" ).datepicker();
+
+	$( ".archive-form" ).submit( function( e ) {
+        e.preventDefault();
+        $.ajax( {
+            type : "post",
+            url : $( this ).attr( "action" ),
+            data : $( this ).serialize(),
+            success : function( response ) {
+				if ( response != "success" ) {
+					alert( response );
+
+					return;
+				}
+
+				$( "#interview-" + e.target[ 1 ].value ).css( "transition", "0s" ).toggle( "fade", 333 );
+
+                return;
+            },
+            error : function() {
+                alert( "Something went wrong." );
+            }
+        } );
+        e.preventDefault();
+    } );
 } );

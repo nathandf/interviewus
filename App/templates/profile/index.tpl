@@ -73,7 +73,7 @@
 				<p class="text-center text-xlrg-heavy">Interviews</p>
 			</div>
 			{foreach from=$interviews item=interview}
-			<div class="card interview-card push-t-sml">
+			<div id="interview-{$interview->id}" class="card interview-card push-t-sml">
 				<div class="pad-sml">
 					<div class="floatleft push-r-med">
 						{if $interview->deployment_type_id == 1}
@@ -148,9 +148,15 @@
 				<div class="divider"></div>
 				<div class="pad-xsml">
 					<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
-					<button class="button-text-only action icon floatright tooltip-icon" title="Send interview via email"><i class="fas fa-envelope"></i></button>
-					<button class="button-text-only action icon floatright tooltip-icon" title="Share interview"><i class="fas fa-share-alt"></i></button>
-					<button class="button-text-only action icon floatright tooltip-icon" title="Archive interview"><i class="fas fa-archive"></i></button>
+					<button class="button-text-only action icon floatright tooltip-icon" title="Send via email"><i class="fas fa-envelope"></i></button>
+					<button class="button-text-only action icon floatright tooltip-icon" title="Share"><i class="fas fa-share-alt"></i></button>
+					<div class="floatright">
+						<form class="archive-form" action="archive" method="post">
+							<input type="hidden" name="token" value="{$csrf_token}">
+							<input type="hidden" name="interview_id" value="{$interview->id}">
+							<button type="submit" class="button-text-only action icon tooltip-icon" title="Archive"><i class="fas fa-archive"></i></button>
+						</form>
+					</div>
 					<div class="floatright">
 						<form action="{$HOME}downloads/interviewCSV" method="post">
 							<input type="hidden" name="token" value="{$csrf_token}">
@@ -158,7 +164,7 @@
 							<input type="hidden" name="user_id" value="{$user->id}">
 							<input type="hidden" name="organization_id" value="{$organization->id}">
 							<input type="hidden" name="interview_id" value="{$interview->id}">
-							<button type="submit" class="button-text-only action icon tooltip-icon" title="Download CSV File"><i class="fas fa-download"></i></button>
+							<button type="submit" class="button-text-only action icon tooltip-icon" title="Download as CSV"><i class="fas fa-download"></i></button>
 						</form>
 					</div>
 					<div class="clear"></div>
