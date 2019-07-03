@@ -171,7 +171,16 @@
 				</div>
 			</div>
 			{foreachelse}
-			<p>No interviews yet.</p>
+			<div class="card interview-card push-t-sml">
+				<div class="pad-sml">
+					<p class="header">No interviews to show</p>
+				</div>
+				<div class="divider"></div>
+				<div class="pad-xsml">
+					<button id="interview-deployment" class="button-text-only icon floatright --modal-trigger action"><i class="fas fa-rocket push-r-sml"></i>Deploy an interview</button>
+					<div class="clear"></div>
+				</div>
+			</div>
 			{/foreach}
 		</div>
 		<div class="clear"></div>
