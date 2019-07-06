@@ -169,8 +169,12 @@ $( function () {
             success : function( response ) {
 				if ( response != "success" ) {
 					alert( response );
+					return;
 				}
 
+				alert( "Email(s) were successfully sent" );
+				$( "#share-interview-modal" ).toggle();
+				
 				return;
             },
             error : function() {

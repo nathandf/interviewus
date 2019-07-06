@@ -458,7 +458,7 @@ class Profile extends Controller
                 $i = 0;
                 foreach ( $recipients as $email ) {
                     // Only send an email to the first 5 recipients...
-                    while ( $i < 5 ) {
+                    if ( $i < 5 ) {
                         // ... and the email provided is a valid email address
                         if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
                             // Build the email context to be used by the email template
@@ -479,11 +479,11 @@ class Profile extends Controller
                     }
                     $i++;
                 }
-
-                echo( "success" );
-                die();
-                exit();
             }
+
+            echo( "success" );
+            die();
+            exit();
         }
 
         if ( isset( $inputValidator->getErrors()[ "share" ] ) == true ) {
