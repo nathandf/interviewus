@@ -15,6 +15,7 @@ class Interview implements EntityInterface
 	public $position_id;
 	public $user_id;
 	public $status;
+	public $mode;
 	public $last_interview_question_id;
 	public $scheduled_time;
 	public $start_time;

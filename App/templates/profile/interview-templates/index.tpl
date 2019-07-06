@@ -18,7 +18,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="pad-sml-mob-pos">
+		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
 		{foreach from=$interviewTemplates item=interviewTemplate name=interview_templates_loop}
 			<div class="card">
 				<div class="pad-sml">
@@ -37,5 +37,6 @@
 			<div class="pad-sml"></div>
 		{/foreach}
 		</div>
+		<div class="clear"></div>
 	</div>
 {/block}

@@ -1,5 +1,5 @@
 $( function () {
-	$( ".tooltip-icon" ).tooltip( 0 );
+	$( ".tooltip-icon" ).tooltip();
 
 	var questionBuilder = {
 		questionCount: 1,
@@ -21,13 +21,17 @@ $( function () {
 
 	$( function () {
 		$( ".--expand" ).on( "click", function () {
-			$( ".interview-details-" + this.dataset.interview_id ).toggle( 250 );
+			$( ".interview-details-" + this.dataset.interview_id ).toggle( "fade", 250 );
 			if ( $( this ).text() == "EXPAND" ) {
 				$( this ).text( "COLLAPSE" );
 			} else {
 				$( this ).text( "EXPAND" );
 			}
 		} );
+	} );
+
+	$( ".share-interview-button" ).on( "click", function () {
+		$( "#interview-id-field" ).val( this.dataset.interview_id );
 	} );
 
 	var InterviewDeploymentWidget = {
@@ -134,4 +138,49 @@ $( function () {
 	} );
 
 	$( "#datepicker" ).datepicker();
+
+	$( ".archive-form" ).submit( function( e ) {
+        e.preventDefault();
+		$( "#interview-" + e.target[ 1 ].value ).css( "transition", "0s" ).toggle( "fade", 333 );
+        $.ajax( {
+            type : "post",
+            url : $( this ).attr( "action" ),
+            data : $( this ).serialize(),
+            success : function( response ) {
+				if ( response != "success" ) {
+					alert( response );
+				}
+
+				return;
+            },
+            error : function() {
+                alert( "Something went wrong." );
+            }
+        } );
+        e.preventDefault();
+    } );
+
+	$( "#share-interview-form" ).submit( function( e ) {
+        e.preventDefault();
+		$.ajax( {
+            type : "post",
+            url : $( this ).attr( "action" ),
+            data : $( this ).serialize(),
+            success : function( response ) {
+				if ( response != "success" ) {
+					alert( response );
+					return;
+				}
+
+				alert( "Email(s) were successfully sent" );
+				$( "#share-interview-modal" ).toggle();
+				
+				return;
+            },
+            error : function() {
+                alert( "Something went wrong." );
+            }
+        } );
+        e.preventDefault();
+    } );
 } );

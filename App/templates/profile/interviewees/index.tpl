@@ -18,7 +18,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="pad-sml-mob-pos">
+		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
 			{foreach from=$interviewees item=interviewee name=interviewee_loop}
 			<div class="card">
 				<div class="pad-sml">
@@ -39,5 +39,6 @@
 			<p>No interviewees to show</p>
 			{/foreach}
 		</div>
+		<div class="clear"></div>
 	</div>
 {/block}

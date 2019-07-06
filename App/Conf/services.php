@@ -570,6 +570,11 @@ $container->register( "email-builder", function() use ( $container ) {
 	return $helper;
 } );
 
+$container->register( "html-interview-results-builder", function() use ( $container ) {
+	$helper = new \Helpers\HTMLInterviewResultsBuilder;
+	return $helper;
+} );
+
 $container->register( "time-converter", function() use ( $container ) {
 	$helper = new \Helpers\TimeConverter;
 	return $helper;

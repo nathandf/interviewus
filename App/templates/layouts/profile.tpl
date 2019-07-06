@@ -14,6 +14,7 @@
 	{include file="includes/modals/profile/user-modal.tpl"}
 	{include file="includes/modals/profile/settings-modal.tpl"}
 	{include file="includes/modals/user-feedback.tpl"}
+	{include file="includes/modals/profile/share-interview-modal.tpl"}
 	{block name="profile-body"}{/block}
 	<div class="section-seperator"></div>
 	<div id="user-feedback" class="user-feedback-trigger tc-white mat-box-shadow --modal-trigger">
