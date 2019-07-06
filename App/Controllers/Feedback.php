@@ -52,7 +52,7 @@ class Feedback extends Controller
                 "opinion" => $input->get( "opinion" ),
                 "subject" => $input->get( "subject" ),
                 "message" => $input->get( "message" ),
-                "recommendation" => $input->get( "recommendation" ),
+                "recommendation" => $input->get( "recommendation" )
             ]);
 
             // Notify admin of user feedback

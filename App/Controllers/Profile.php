@@ -265,7 +265,7 @@ class Profile extends Controller
                     // Provision a new conversation for this interview if sms deployment
                     if ( $interview->deployment_type_id == 1 ) {
 
-                        // Get the interviewee from the inteview
+                        // Get the interviewee from the interview
                         $interviewee = $interviewBuilder->getInterviewee();
 
                         // Get the interviewee's phone
@@ -389,6 +389,99 @@ class Profile extends Controller
         }
 
         echo( $inputValidator->getError()[ 0 ] );
+        die();
+        exit();
+    }
+
+    public function shareInterviewAction()
+    {
+        $input = $this->load( "input" );
+        $inputValidator = $this->load( "input-validator" );
+        $interviewRepo = $this->load( "interview-repository" );
+
+        if (
+            $input->exists() &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "interview_id" => [
+                        "required" => true,
+                        "in_array" => $interviewRepo->get(
+                            [ "id" ],
+                            [
+                                "id" => $input->get( "interview_id" ),
+                                "organization_id" => $this->organization->id
+                            ],
+                            "raw"
+                        )
+                    ],
+                    "recipients" => [
+                        "required" => true
+                    ]
+                ],
+                "share"
+            )
+        ) {
+            $interviewRepo = $this->load( "interview-repository" );
+            $interviewQuestionRepo = $this->load( "interview-question-repository" );
+            $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
+            $intervieweeRepo = $this->load( "interviewee-repository" );
+            $positionRepo = $this->load( "position-repository" );
+            $domainObjectFactory = $this->load( "domain-object-factory" );
+            $emailBuilder = $this->load( "email-builder" );
+            $mailer = $this->load( "mailer" );
+
+            $htmlInterviewResultsBuilder = $this->load( "html-interview-results-builder" );
+
+            $interview = $interviewRepo->get( [ "*" ], [ "id" => $input->get( "interview_id" ) ], "single" );
+
+            $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
+            $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
+            $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
+
+            foreach ( $interview->questions as $question ) {
+                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
+            }
+
+            $html_interview_results = $htmlInterviewResultsBuilder->build( $interview );
+            
+            // Parse interview recipients
+            $recipients = explode( ",", strtolower( str_replace( ", ", ",", $input->get( "recipients" ) ) ) );
+
+            if ( is_array( $recipients ) ) {
+                foreach ( $recipients as $recipient ) {
+                    $emailContext = $domainObjectFactory->build( "EmailContext" );
+                    $emailContext->addProps([
+                        "user" =>  $this->user->getFullName(),
+                        "interviewee" => $interview->interviewee->getFullName(),
+                        "interview_results" => $html_interview_results
+                    ]);
+
+                    // Notify admin of user feedback
+                    $resp = $mailer->setTo( "interview.us.app@gmail.com", "InterviewUs" )
+                        ->setFrom( $this->user->email, $this->user->getFullName() )
+                        ->setSubject( "Interview Results | {$interview->interviewee->getFullName()} | {$interview->position->name}" )
+                        ->setContent( $emailBuilder->build( "interview-results.html", $emailContext ) )
+                        ->mail();
+                }
+
+                echo( "success" );
+                die();
+                exit();
+            }
+        }
+
+        if ( isset( $inputValidator->getErrors()[ "share" ] ) == true ) {
+            echo( $inputValidator->getErrors()[ "share" ][ 0 ] );
+            die();
+            exit();
+        }
+
+        echo( "failure" );
         die();
         exit();
     }

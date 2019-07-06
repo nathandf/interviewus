@@ -26,7 +26,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="pad-sml-mob-pos">
+		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
 			<div class="interviewee-header card">
 				<div class="pad-sml">
 					<div class="thumbnail-lrg floatleft theme-primary push-r-med"><i class="fas fa-user"></i></div>
@@ -46,7 +46,7 @@
 			</div>
 			<h2 class="push-t-med">Interviews:</h2>
 			<div class="hr-full"></div>
-			<div class="interviews con-cnt-med-plus-plus floatleft">
+			<div class="interviews">
 				{foreach from=$interviewee->interviews item=interview}
 				<div class="card interview-card push-t-sml">
 					<div class="pad-sml">
@@ -95,5 +95,6 @@
 			</div>
 			<div class="clear"></div>
 		</div>
+		<div class="clear"></div>
 	</div>
 {/block}

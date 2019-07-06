@@ -117,11 +117,9 @@
 				</div>
 				<div class="interview-details-{$interview->id} expandable-content" style="display: none;">
 					<div class="divider"></div>
-					<div class="theme-secondary pad-sml">
-						<p class="text-center text-xlrg-heavy">Interviews Details</p>
-					</div>
+					<div class="theme-secondary pad-sml"></div>
 					<div class="pad-sml">
-						<p class="label text-breakable">URL:&nbsp;https://www.interviewus.net/i/{$interview->token}/</p>
+						<p class="label text-breakable text-sml">URL:&nbsp;https://www.interviewus.net/i/{$interview->token}/</p>
 					</div>
 					<div class="divider"></div>
 					<div class="pad-sml">
@@ -148,8 +146,7 @@
 				<div class="divider"></div>
 				<div class="pad-xsml">
 					<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
-					<button class="button-text-only action icon floatright tooltip-icon" title="Send via email"><i class="fas fa-envelope"></i></button>
-					<button class="button-text-only action icon floatright tooltip-icon" title="Share"><i class="fas fa-share-alt"></i></button>
+					<button id="share-interview" data-interview_id="{$interview->id}" class="share-interview-button button-text-only action icon floatright tooltip-icon --modal-trigger" title="Share"><i class="fas fa-share-alt"></i></button>
 					<div class="floatright">
 						<form class="archive-form" action="archive" method="post">
 							<input type="hidden" name="token" value="{$csrf_token}">
