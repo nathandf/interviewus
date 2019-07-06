@@ -11,8 +11,8 @@
 			<form id="share-interview-form" action="{$HOME}profile/share-interview" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input id="interview-id-field" type="hidden" name="interview_id" value="" required="required">
-				<p class="label">Email Recipients: <span class="text-sml-heavy">(Limit: 5)</span></p>
-				<p class="label text-med"><i class="fas fa-exclamation-triangle tc-mango push-r-sml"></i>Separate each email address by a comma.</p>
+				<p class="label">Email Recipients: <i class="fas fa-exclamation-triangle tc-mango push-r-sml"></i><span class="text-sml-heavy">(Limit: 5)</span></p>
+				<p class="label text-med">Separate each email address by a comma.</p>
 				<textarea type="text" name="recipients" required="required" class="inp textarea inp-full text-med"></textarea>
 				<button type="submit" class="button theme-primary push-t-med">Share interview</button>
 			</form>

@@ -434,9 +434,9 @@ class Profile extends Controller
             $domainObjectFactory = $this->load( "domain-object-factory" );
             $emailBuilder = $this->load( "email-builder" );
             $mailer = $this->load( "mailer" );
-
             $htmlInterviewResultsBuilder = $this->load( "html-interview-results-builder" );
 
+            // Compile all interview questions and their answers into one large object
             $interview = $interviewRepo->get( [ "*" ], [ "id" => $input->get( "interview_id" ) ], "single" );
 
             $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
@@ -447,26 +447,37 @@ class Profile extends Controller
                 $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
             }
 
+            // Build the inteview results into a nice html form to be used in the
+            // email template
             $html_interview_results = $htmlInterviewResultsBuilder->build( $interview );
-            
+
             // Parse interview recipients
             $recipients = explode( ",", strtolower( str_replace( ", ", ",", $input->get( "recipients" ) ) ) );
 
             if ( is_array( $recipients ) ) {
-                foreach ( $recipients as $recipient ) {
-                    $emailContext = $domainObjectFactory->build( "EmailContext" );
-                    $emailContext->addProps([
-                        "user" =>  $this->user->getFullName(),
-                        "interviewee" => $interview->interviewee->getFullName(),
-                        "interview_results" => $html_interview_results
-                    ]);
+                $i = 0;
+                foreach ( $recipients as $email ) {
+                    // Only send an email to the first 5 recipients...
+                    while ( $i < 5 ) {
+                        // ... and the email provided is a valid email address
+                        if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+                            // Build the email context to be used by the email template
+                            $emailContext = $domainObjectFactory->build( "EmailContext" );
+                            $emailContext->addProps([
+                                "user" =>  $this->user->getFullName(),
+                                "interviewee" => $interview->interviewee->getFullName(),
+                                "interview_results" => $html_interview_results
+                            ]);
 
-                    // Notify admin of user feedback
-                    $resp = $mailer->setTo( "interview.us.app@gmail.com", "InterviewUs" )
-                        ->setFrom( $this->user->email, $this->user->getFullName() )
-                        ->setSubject( "Interview Results | {$interview->interviewee->getFullName()} | {$interview->position->name}" )
-                        ->setContent( $emailBuilder->build( "interview-results.html", $emailContext ) )
-                        ->mail();
+                            // Notify admin of user feedback
+                            $resp = $mailer->setTo( $email, "Contact" )
+                                ->setFrom( $this->user->email, $this->user->getFullName() )
+                                ->setSubject( "Interview Results | {$interview->interviewee->getFullName()} | {$interview->position->name}" )
+                                ->setContent( $emailBuilder->build( "interview-results.html", $emailContext ) )
+                                ->mail();
+                        }
+                    }
+                    $i++;
                 }
 
                 echo( "success" );
