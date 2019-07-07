@@ -48,11 +48,49 @@ class Position extends Controller
             $this->view->redirect( "profile/" );
         }
 
+        $input = $this->load( "input" );
+        $inputValidator = $this->load( "input-validator" );
         $positionRepo = $this->load( "position-repository" );
 
         $position = $positionRepo->get( [ "*" ], [ "id" => $this->params[ "id" ] ], "single" );
 
+        if (
+            $input->exists() &&
+            $input->issetField( "update_position" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "name" => [
+                        "required" => true,
+                        "max" => 128
+                    ],
+                    "description" => [
+                        "max" => 512
+                    ]
+                ],
+                "update_position"
+            )
+        ) {
+            $positionRepo->update(
+                [
+                    "name" => trim( $input->get( "name" ) ),
+                    "description" => trim( $input->get( "description" ) )
+                ],
+                [ "id" => $this->params[ "id" ] ]
+            );
+
+            $this->session->addFlashMessage( "Position details updated" );
+            $this->session->setFlashMessages();
+
+            $this->view->redirect( "profile/position/{$this->params[ "id" ]}/" );
+        }
+
         $this->view->assign( "position", $position );
+        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "profile/position/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
