@@ -32,6 +32,7 @@
 				<div class="divider"></div>
 				<div class="pad-xsml">
 					<a href="{$HOME}profile/interview-template/{$interviewTemplate->id}/" class="button-text-only action tc-deep-purple">EDIT</a>
+					<button class="button-text-only action tc-deep-purple">DUPLICATE</button>
 				</div>
 			</div>
 			<div class="pad-sml"></div>

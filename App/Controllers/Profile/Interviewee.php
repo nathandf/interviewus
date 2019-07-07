@@ -80,6 +80,7 @@ class Interviewee extends Controller
 
         // Get all questons for each interview
         foreach ( $interviewee->interviews as $interview ) {
+            $interview->deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $interview->deployment_type_id ], "single" );
             $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
             $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
             // Get all interview questions
