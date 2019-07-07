@@ -174,7 +174,7 @@ $( function () {
 
 				alert( "Email(s) were successfully sent" );
 				$( "#share-interview-modal" ).toggle();
-				
+
 				return;
             },
             error : function() {
@@ -182,5 +182,12 @@ $( function () {
             }
         } );
         e.preventDefault();
+    } );
+
+	$( ".--c-duplicate-interview-template" ).on( "click", function( event ) {
+        confirmation = confirm( "Confirm interview template duplication" );
+        if ( confirmation === false ) {
+            event.preventDefault();
+        }
     } );
 } );

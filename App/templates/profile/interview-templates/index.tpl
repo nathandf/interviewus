@@ -18,6 +18,13 @@
 				</div>
 			{/foreach}
 		{/if}
+		{if !empty($error_messages.duplicate_interview_template)}
+			{foreach from=$error_messages.duplicate_interview_template item=message}
+				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
 		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
 		{foreach from=$interviewTemplates item=interviewTemplate name=interview_templates_loop}
 			<div class="card">
@@ -31,7 +38,14 @@
 				</div>
 				<div class="divider"></div>
 				<div class="pad-xsml">
-					<a href="{$HOME}profile/interview-template/{$interviewTemplate->id}/" class="button-text-only action tc-deep-purple">EDIT</a>
+					<a href="{$HOME}profile/interview-template/{$interviewTemplate->id}/" class="button-text-only action tc-deep-purple floatleft">EDIT</a>
+					<form action="" method="post">
+						<input type="hidden" name="token" value="{$csrf_token}">
+						<input type="hidden" name="duplicate_interview_template" value="{$csrf_token}">
+						<input type="hidden" name="interview_template_id" value="{$interviewTemplate->id}">
+						<button type="submit" class="button-text-only action tc-deep-purple --c-duplicate-interview-template floatleft">DUPLICATE</button>
+					</form>
+					<div class="clear"></div>
 				</div>
 			</div>
 			<div class="pad-sml"></div>

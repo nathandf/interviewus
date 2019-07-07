@@ -317,3 +317,4 @@ CREATE TABLE `unsubscribe` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `email` VARCH
 ALTER TABLE `interview` ADD `user_id` BIGINT NOT NULL AFTER `position_id`;
 ALTER TABLE `account` ADD `user_id` BIGINT NOT NULL AFTER `account_type_id`;
 ALTER TABLE `interview` ADD `mode` VARCHAR(16) NOT NULL DEFAULT 'visible' AFTER `status`;
+INSERT INTO `question_type` (`id`, `name`) VALUES (NULL, 'open'), (NULL, 'single'), (NULL, 'multiple');

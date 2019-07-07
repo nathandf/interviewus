@@ -7,7 +7,7 @@
 	{include file="includes/modals/profile/position-modal.tpl"}
 	<div class="con-cnt-xxlrg pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
-			<button id="position" class="btn btn-inline theme-primary-light --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Position</button>
+			<button id="position" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-plus"></i>Position</button>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.new_position)}
@@ -17,22 +17,25 @@
 				</div>
 			{/foreach}
 		{/if}
-		<table class="col-100 text-center mat-box-shadow" style="border-collapse: separate; table-layout: auto;">
-			<th class="theme-primary-light pad-sml" colspan="2">Positions</th>
-			<tr>
-				<td class="theme-primary pad-sml text-sml-heavy">Name</td>
-				<td class="theme-primary pad-sml text-sml-heavy">Description</td>
-			</tr>
-			{foreach from=$positions item=position name=position_loop}
-			<tr class="bg-white shade-on-hover row-link" data-href="{$HOME}profile/position/{$position->id}/">
-				<td class="pad-sml text-med-heavy text-left">{$position->name}</td>
-				<td class="pad-sml text-med-heavy text-left">{$position->description|default:"<i>No description</i>"|truncate:"300":"..."}</td>
-			</tr>
-			{foreachelse}
-			<tr>
-				<td class="pad-sml text-med-heavy bg-white" colspan="2">No Positions</td>
-			</tr>
-			{/foreach}
-		</table>
+		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		{foreach from=$positions item=position name=positions_loop}
+			<div class="card">
+				<div class="pad-sml">
+					<p class="thumbnail-med theme-secondary-light floatleft push-r-sml"><i class="fas fa-user-tie"></i></p>
+					<div class="floatleft header">
+						<a class="header tc-black" href="{$HOME}profile/position/{$position->id}/">{$position->name|truncate:"27"}</a>
+						<p class="sub-header">{$position->description|truncate:"40"}</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="divider"></div>
+				<div class="pad-xsml">
+					<a href="{$HOME}profile/position/{$position->id}/" class="button-text-only action tc-deep-purple">EDIT</a>
+				</div>
+			</div>
+			<div class="pad-sml"></div>
+		{/foreach}
+		</div>
+		<div class="clear"></div>
 	</div>
 {/block}
