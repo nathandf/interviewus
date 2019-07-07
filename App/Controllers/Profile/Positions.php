@@ -36,7 +36,7 @@ class Positions extends Controller
         $inputValidator = $this->load( "input-validator" );
         $positionRepo = $this->load( "position-repository" );
 
-        $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+        $positions = array_reverse( $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
 
         if (
             $input->exists() &&

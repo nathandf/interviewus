@@ -38,8 +38,7 @@ class InterviewTemplates extends Controller
         $questionRepo = $this->load( "question-repository" );
         $positionRepo = $this->load( "position-repository" );
 
-        $interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
-        $positions = $positionRepo->get( [ "*" ], [ "organization_id" ] );
+        $interviewTemplates = array_reverse( $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
 
         if (
             $input->exists() &&
@@ -87,7 +86,49 @@ class InterviewTemplates extends Controller
             $this->view->redirect( "profile/interview-template/" . $interviewTemplate->id . "/" );
         }
 
-        $this->view->assign( "positions", $positions );
+        if (
+            $input->exists() &&
+            $input->issetField( "duplicate_interview_template" ) &&
+            $inputValidator->validate(
+                $input,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "interview_template_id" => [
+                        "requried" => true,
+                        "in_array" => $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                    ]
+                ],
+                "duplicate_interview_template"
+            )
+        ) {
+            $interviewTemplate = $interviewTemplateRepo->get( [ "*" ], [ "id" => $input->get( "interview_template_id" ) ], "single" );
+            $interviewTemplate->questions = $questionRepo->get( [ "*" ], [ "interview_template_id" => $input->get( "interview_template_id" ) ] );
+
+            $newInterviewTemplate = $interviewTemplateRepo->insert([
+                "name" => $interviewTemplate->name . " - Copy",
+                "description" => $interviewTemplate->description,
+                "organization_id" => $interviewTemplate->organization_id,
+                "industry_id" => $interviewTemplate->industry_id
+            ]);
+
+            foreach ( $interviewTemplate->questions as $question ) {
+                $questionRepo->insert([
+                    "interview_template_id" => $newInterviewTemplate->id,
+                    "question_type_id" => $question->question_type_id,
+                    "placement" => $question->placement,
+                    "body" => $question->body
+                ]);
+            }
+
+            $this->session->addFlashMessage( "Duplicated: {$newInterviewTemplate->name}" );
+            $this->session->setFlashMessages();
+
+            $this->view->redirect( "profile/interview-template/{$newInterviewTemplate->id}/" );
+        }
+
         $this->view->assign( "interviewTemplates", $interviewTemplates );
 
         $this->view->setTemplate( "profile/interview-templates/index.tpl" );

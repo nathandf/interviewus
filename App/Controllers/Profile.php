@@ -37,7 +37,6 @@ class Profile extends Controller
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
         $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
-        $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $phoneRepo = $this->load( "phone-repository" );
