@@ -26,6 +26,7 @@
 					<div class="floatleft header">
 						<a class="header tc-black" href="{$HOME}profile/interviewee/{$interviewee->id}/">{$interviewee->getFullName()}</a>
 						<p class="sub-header">{$interviewee->email|truncate:"35"}</p>
+						<p class="sub-header">{$interviewee->phone->getNiceNumber()}</p>
 					</div>
 					<div class="clear"></div>
 				</div>

@@ -39,6 +39,10 @@ class Interviewees extends Controller
 
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
+        foreach ( $interviewees as $interviewee ) {
+            $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
+        }
+
         if (
             $input->exists() &&
             $input->issetField( "new_interviewee" ) &&
