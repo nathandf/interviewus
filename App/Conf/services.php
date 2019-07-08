@@ -246,6 +246,14 @@ $container->register( "deployment-type-repository", function() use ( $container 
 	return $repo;
 } );
 
+$container->register( "facebook-pixel-repository", function() use ( $container ) {
+	$repo = new \Model\Services\FacebookPixelRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "file-repository", function() use ( $container ) {
 	$repo = new \Model\Services\FileRepository(
 		$container->getService( "dao" ),
