@@ -1,6 +1,8 @@
 <?php
 
-namespace Core;
+namespace Helpers;
+
+use Core\Request;
 
 class RequestValidator
 {

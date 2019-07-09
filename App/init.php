@@ -18,9 +18,6 @@ error_reporting( E_ALL );
 // routing
 $Router = $container->getService( "router" );
 
-// routes
-require_once( "App/Conf/routes.php" );
-
 $request = $Router->dispatch( $_SERVER[ "QUERY_STRING" ] );
 
 $controller_name = $request[ "controller" ];
@@ -35,4 +32,4 @@ $controller = new $controller_name(
 	$params
 );
 
-$controller->$method( $container->getService( "request" ) );
+$controller->$method();

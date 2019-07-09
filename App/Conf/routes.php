@@ -1,14 +1,11 @@
 <?php
 
-// routes
-$Router->add( "", [ "controller" => "home", "action" => "index" ] );
-$Router->add( "{action}", [ "controller" => "home" ] );
-$Router->add( "{path:[a-zA-Z0-9-/]+}/{controller:[a-zA-Z0-9-]*}/{id:[0-9]+}/{action:[a-zA-Z0-9-]*}" );
-
-$Router->add( "{controller:i}/{token:[a-zA-Z0-9-]+}/{action:[a-zA-Z0-9-]*}" );
-
-// webhooks
-$Router->add( "{path:webhooks/twilio}/{sid:[a-zA-Z0-9-]+}/{controller}/{action:[a-zA-Z0-9-]*}" );
-
-$Router->add( "{controller}/{action:[a-zA-Z0-9-]*}" );
-$Router->add( "{path:[a-zA-Z0-9-/]+}/{controller}/{action:[a-zA-Z0-9-]*}" );
+$routes = [
+	[ "", [ "controller" => "home", "action" => "index" ] ],
+	[ "{action}", [ "controller" => "home" ] ],
+	[ "{path:[a-zA-Z0-9-/]+}/{controller:[a-zA-Z0-9-]*}/{id:[0-9]+}/{action:[a-zA-Z0-9-]*}", [] ],
+	[ "{controller:i}/{token:[a-zA-Z0-9-]+}/{action:[a-zA-Z0-9-]*}", [] ],
+	[ "{path:webhooks/twilio}/{sid:[a-zA-Z0-9-]+}/{controller}/{action:[a-zA-Z0-9-]*}", [] ],
+	[ "{controller}/{action:[a-zA-Z0-9-]*}", [] ],
+	[ "{path:[a-zA-Z0-9-/]+}/{controller}/{action:[a-zA-Z0-9-]*}", [] ]
+];

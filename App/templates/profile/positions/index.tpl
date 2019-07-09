@@ -30,7 +30,7 @@
 				</div>
 				<div class="divider"></div>
 				<div class="pad-xsml">
-					<a href="{$HOME}profile/position/{$position->id}/" class="button-text-only action tc-deep-purple">EDIT</a>
+					<a href="{$HOME}profile/position/{$position->id}/" class="button-text-only action tc-deep-purple">VIEW</a>
 				</div>
 			</div>
 			<div class="pad-sml"></div>

@@ -25,7 +25,7 @@ $container->register( "request", function() use ( $container ) {
 } );
 
 $container->register( "request-validator", function() {
-    $obj = new \Core\RequestValidator;
+    $obj = new \Helpers\RequestValidator;
     return $obj;
 } );
 

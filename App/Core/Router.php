@@ -13,6 +13,10 @@ class Router
     public function __construct( \Conf\Config $config )
     {
         $this->config = $config;
+        require_once( "App/Conf/routes.php" );
+        foreach ( $routes as $route ) {
+            $this->add( $route[ 0 ], $route[ 1 ] );
+        }
     }
 
   // Add a route to the routing table

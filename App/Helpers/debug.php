@@ -90,9 +90,9 @@
         public static function end()
         {
             self::$time_end = microtime( true );
-            die( "Search time took " . ( self::$time_end - self::$time_start ) . " seconds");
+            die( "Execution took " . ( self::$time_end - self::$time_start ) . " seconds");
         }
     }
 
-    $quickTime = new QuickTime;
+    $qt = new QuickTime;
 ?>
