@@ -32,4 +32,8 @@ $controller = new $controller_name(
 	$params
 );
 
-$controller->$method();
+$command = $controller->$method();
+
+$model = $modelFactory->build( $command );
+
+$view = $viewFactory->build( $command, $model );
