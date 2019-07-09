@@ -20,18 +20,18 @@ class Home extends Controller
     public function signInAction()
     {
         $userAuth = $this->load( "user-authenticator" );
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
 
         if ( !is_null( $userAuth->getAuthenticatedUser() ) ) {
             $this->view->redirect( "profile/" );
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "sign_in" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "sign_in" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -49,17 +49,17 @@ class Home extends Controller
             )
         ) {
             if ( $userAuth->authenticate(
-                    $input->get( "email" ),
-                    $input->get( "password" )
+                    $this->request->post( "email" ),
+                    $this->request->post( "password" )
                 )
             ) {
                 $this->view->redirect( "profile/" );
             }
 
-            $inputValidator->addError( "sign_in", "The credentials you have provided are invalid. Please try again." );
+            $requestValidator->addError( "sign_in", "The credentials you have provided are invalid. Please try again." );
         }
 
-        $this->view->assign( "error_messages", $inputValidator->getErrors() );
+        $this->view->assign( "error_messages", $requestValidator->getErrors() );
 
         $this->view->setTemplate( "sign-in.tpl" );
         $this->view->render( "App/Views/Home.php" );

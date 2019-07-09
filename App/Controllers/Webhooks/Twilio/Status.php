@@ -8,14 +8,14 @@ class Status extends Controller
 {
     public function index()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "SmsSid" => [
                         "required" => true
@@ -28,8 +28,8 @@ class Status extends Controller
             )
         ) {
             $interviewQuestionRepo->update(
-                [ "sms_status" => $input->get( "SmsStatus" ) ],
-                [ "sms_sid" => $input->get( "SmsSid" ) ]
+                [ "sms_status" => $this->request->post( "SmsStatus" ) ],
+                [ "sms_sid" => $this->request->post( "SmsSid" ) ]
             );
         }
     }

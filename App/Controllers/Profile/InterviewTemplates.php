@@ -32,8 +32,8 @@ class InterviewTemplates extends Controller
 
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $questionRepo = $this->load( "question-repository" );
         $positionRepo = $this->load( "position-repository" );
@@ -41,10 +41,10 @@ class InterviewTemplates extends Controller
         $interviewTemplates = array_reverse( $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
 
         if (
-            $input->exists() &&
-            $input->issetField( "new_interview_template" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_interview_template" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -63,12 +63,12 @@ class InterviewTemplates extends Controller
             )
         ) {
             $interviewTemplate = $interviewTemplateRepo->insert([
-                "name" => $input->get( "name" ),
-                "description" => $input->get( "description" ),
+                "name" => $this->request->post( "name" ),
+                "description" => $this->request->post( "description" ),
                 "organization_id" => $this->organization->id
             ]);
 
-            $questions = $input->get( "questions" );
+            $questions = $this->request->post( "questions" );
 
             $i = 1;
             foreach ( $questions as $question ) {
@@ -87,10 +87,10 @@ class InterviewTemplates extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "duplicate_interview_template" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "duplicate_interview_template" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -104,8 +104,8 @@ class InterviewTemplates extends Controller
                 "duplicate_interview_template"
             )
         ) {
-            $interviewTemplate = $interviewTemplateRepo->get( [ "*" ], [ "id" => $input->get( "interview_template_id" ) ], "single" );
-            $interviewTemplate->questions = $questionRepo->get( [ "*" ], [ "interview_template_id" => $input->get( "interview_template_id" ) ] );
+            $interviewTemplate = $interviewTemplateRepo->get( [ "*" ], [ "id" => $this->request->post( "interview_template_id" ) ], "single" );
+            $interviewTemplate->questions = $questionRepo->get( [ "*" ], [ "interview_template_id" => $this->request->post( "interview_template_id" ) ] );
 
             $newInterviewTemplate = $interviewTemplateRepo->insert([
                 "name" => $interviewTemplate->name . " - Copy",

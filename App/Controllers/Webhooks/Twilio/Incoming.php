@@ -24,17 +24,17 @@ class Incoming extends Controller
 
     public function smsAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $conversationRepo = $this->load( "conversation-repository" );
         $inboundSmsRepo = $this->load( "inbound-sms-repository" );
         $inboundSmsConcatenator = $this->load( "inbound-sms-concatenator" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "From" => [
                         "required" => true
@@ -51,7 +51,7 @@ class Incoming extends Controller
                 [ "*" ],
                 [
                     "twilio_phone_number_id" => $this->twilioPhoneNumber->id,
-                    "e164_phone_number" => $input->get( "From" )
+                    "e164_phone_number" => $this->request->post( "From" )
                 ],
                 "single"
             );
@@ -59,7 +59,7 @@ class Incoming extends Controller
             if ( !is_null( $conversation ) ) {
                 $inboundSms = $inboundSmsRepo->insert([
                     "conversation_id" => $conversation->id,
-                    "body" => $input->get( "Body" ),
+                    "body" => $this->request->post( "Body" ),
                     "recieved_at" => time()
                 ]);
 
@@ -68,7 +68,7 @@ class Incoming extends Controller
                 return;
             }
 
-            $this->logger->error( "Conversation does not exist between '{$this->twilioPhoneNumber->phone_number}' and '{$input->get( "from" )}'" );
+            $this->logger->error( "Conversation does not exist between '{$this->twilioPhoneNumber->phone_number}' and '{$this->request->post( "from" )}'" );
 
             return;
         }

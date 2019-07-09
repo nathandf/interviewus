@@ -13,15 +13,15 @@ class Cron extends Controller
 
 	public function dispatchScheduledInterviews()
 	{
-		$input = $this->load( "input" );
-		$inputValidator = $this->load( "input-validator" );
+		
+		$requestValidator = $this->load( "request-validator" );
 		$interviewRepo = $this->load( "interview-repository" );
 		$interviewDispatcher = $this->load( "interview-dispatcher" );
 
 		if (
-			$input->exists( "get" ) &&
-			$inputValidator->validate(
-				$input,
+			$this->request->is( "get" ) &&
+			$requestValidator->validate(
+				$this->request,
 				[
 					"cron-token" => [
 						"required" => true,
@@ -81,8 +81,8 @@ class Cron extends Controller
 
 	public function dispatchSmsInterviewQuestions()
 	{
-		$input = $this->load( "input" );
-		$inputValidator = $this->load( "input-validator" );
+		
+		$requestValidator = $this->load( "request-validator" );
 		$concatenatedSmsRepo = $this->load( "concatenated-sms-repository" );
 		$conversationRepo = $this->load( "conversation-repository" );
 		$interviewRepo = $this->load( "interview-repository" );
@@ -90,9 +90,9 @@ class Cron extends Controller
 		$logger = $this->load( "logger" );
 
 		if (
-			$input->exists( "get" ) &&
-			$inputValidator->validate(
-				$input,
+			$this->request->is( "get" ) &&
+			$requestValidator->validate(
+				$this->request,
 				[
 					"cron-token" => [
 						"required" => true,

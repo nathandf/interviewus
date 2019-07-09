@@ -8,16 +8,16 @@ class Feedback extends Controller
 {
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $mailer = $this->load( "mailer" );
         $emailBuilder = $this->load( "email-builder" );
         $domainObjectFactory = $this->load( "domain-object-factory" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -47,18 +47,18 @@ class Feedback extends Controller
         ) {
             $emailContext = $domainObjectFactory->build( "EmailContext" );
             $emailContext->addProps([
-                "user" => $input->get( "user" ),
-                "account" => $input->get( "account" ),
-                "opinion" => $input->get( "opinion" ),
-                "subject" => $input->get( "subject" ),
-                "message" => $input->get( "message" ),
-                "recommendation" => $input->get( "recommendation" )
+                "user" => $this->request->post( "user" ),
+                "account" => $this->request->post( "account" ),
+                "opinion" => $this->request->post( "opinion" ),
+                "subject" => $this->request->post( "subject" ),
+                "message" => $this->request->post( "message" ),
+                "recommendation" => $this->request->post( "recommendation" )
             ]);
 
             // Notify admin of user feedback
             $resp = $mailer->setTo( "interview.us.app@gmail.com", "InterviewUs" )
                 ->setFrom( "noreply@interviewus.net" )
-                ->setSubject( "User Feedback Notification | {$input->get( "subject" )}" )
+                ->setSubject( "User Feedback Notification | {$this->request->post( "subject" )}" )
                 ->setContent( $emailBuilder->build( "user-feedback.html", $emailContext ) )
                 ->mail();
         }

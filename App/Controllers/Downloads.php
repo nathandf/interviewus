@@ -8,13 +8,13 @@ class Downloads extends Controller
 {
     public function interviewCSV()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -50,9 +50,9 @@ class Downloads extends Controller
             $user = $userRepo->get(
                 [ "*" ],
                 [
-                    "id" => $input->get( "user_id" ),
-                    "current_account_id" => $input->get( "account_id" ),
-                    "current_organization_id" => $input->get( "organization_id" )
+                    "id" => $this->request->post( "user_id" ),
+                    "current_account_id" => $this->request->post( "account_id" ),
+                    "current_organization_id" => $this->request->post( "organization_id" )
                 ]
             );
 
@@ -69,8 +69,8 @@ class Downloads extends Controller
             $interview = $interviewRepo->get(
                 [ "*" ],
                 [
-                    "id" => $input->get( "interview_id" ),
-                    "organization_id" => $input->get( "organization_id" )
+                    "id" => $this->request->post( "interview_id" ),
+                    "organization_id" => $this->request->post( "organization_id" )
                 ],
                 "single"
             );

@@ -12,12 +12,6 @@ $container = new Core\DIContainer;
 // Load services using DIContainer
 require_once( "App/Conf/services.php" );
 
-// Initialize configs
-$config = $container->getService( "config" );
-
-// Session and token handling
-$session = $container->getService( "session" );
-
 // Error handling
 error_reporting( E_ALL );
 
@@ -28,8 +22,17 @@ $Router = $container->getService( "router" );
 require_once( "App/Conf/routes.php" );
 
 $request = $Router->dispatch( $_SERVER[ "QUERY_STRING" ] );
+
 $controller_name = $request[ "controller" ];
 $method = $request[ "method" ];
 $params = $request[ "params" ];
-$controller = new $controller_name( $container, $config, $session, $params );
-$controller->$method();
+
+$controller = new $controller_name(
+	$container,
+	$container->getService( "config" ),
+	$container->getService( "session" ),
+	$container->getService( "request" ),
+	$params
+);
+
+$controller->$method( $container->getService( "request" ) );

@@ -32,8 +32,8 @@ class Profile extends Controller
 
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
         $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
@@ -75,10 +75,10 @@ class Profile extends Controller
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         if (
-            $input->exists() &&
-            $input->issetField( "new_interviewee" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_interviewee" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -103,15 +103,15 @@ class Profile extends Controller
                 )
         ) {
             $phone = $phoneRepo->insert([
-                "country_code" => $input->get( "country_code" ),
-                "national_number" => $input->get( "national_number" ),
-                "e164_phone_number" => "+" . $input->get( "country_code" ) . $input->get( "national_number" )
+                "country_code" => $this->request->post( "country_code" ),
+                "national_number" => $this->request->post( "national_number" ),
+                "e164_phone_number" => "+" . $this->request->post( "country_code" ) . $this->request->post( "national_number" )
             ]);
 
             $interviewee = $intervieweeRepo->insert([
                 "organization_id" => $this->organization->id,
-                "first_name" => $input->get( "name" ),
-                "email" => $input->get( "email" ),
+                "first_name" => $this->request->post( "name" ),
+                "email" => $this->request->post( "email" ),
                 "phone_id" => $phone->id
             ]);
 
@@ -137,10 +137,10 @@ class Profile extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "new_interview_template" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_interview_template" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "name" => [],
                     "description" => [],
@@ -153,12 +153,12 @@ class Profile extends Controller
             )
         ) {
             $interviewTemplate = $interviewTemplateRepo->insert([
-                "name" => $input->get( "name" ),
-                "description" => $input->get( "description" ),
+                "name" => $this->request->post( "name" ),
+                "description" => $this->request->post( "description" ),
                 "organization_id" => $this->organization->id
             ]);
 
-            $questions = $input->get( "questions" );
+            $questions = $this->request->post( "questions" );
 
             $i = 1;
             foreach ( $questions as $question ) {
@@ -175,10 +175,10 @@ class Profile extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "deploy-interview" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "deploy-interview" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "equals-hidden" => $this->session->getSession( "csrf-token" ),
@@ -211,18 +211,18 @@ class Profile extends Controller
                 "deploy_interview"
             )
         ) {
-            $position = $positionRepo->get( [ "*" ], [ "id" => $input->get( "position_id" ) ], "single" );
+            $position = $positionRepo->get( [ "*" ], [ "id" => $this->request->post( "position_id" ) ], "single" );
             // Create a new position if the one submitted does not exist
-            if ( $input->get( "position" ) != "" ) {
+            if ( $this->request->post( "position" ) != "" ) {
                 $position = $positionRepo->insert([
                     "organization_id" => $this->organization->id,
-                    "name" => $input->get( "position" )
+                    "name" => $this->request->post( "position" )
                 ]);
             }
 
             // Ensure account has enough of the correct interview credits to create
             // this interview
-            $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $input->get( "deployment_type_id" ) ], "single" );
+            $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $this->request->post( "deployment_type_id" ) ], "single" );
 
             if ( $this->account->validateInterviewCredit( $deploymentType ) ) {
                 // Build and dispatch the interview. Will return null if insufficient
@@ -232,17 +232,17 @@ class Profile extends Controller
                 // Set scheduled time and status if deploying later. Default status
                 // is "active"
                 if (
-                    $input->get( "schedule_type" ) == 2 &&
-                    $input->get( "date" ) != ""
+                    $this->request->post( "schedule_type" ) == 2 &&
+                    $this->request->post( "date" ) != ""
                 ) {
                     $interviewBuilder->setStatus( "scheduled" )
                         ->setScheduledTime(
-                            $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" )
+                            $this->request->post( "date" ) . " " . $this->request->post( "Hour" ) . ":" . $this->request->post( "Minute" ) . $this->request->post( "Meridian" )
                         );
                 }
 
-                $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
-                    ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
+                $interview = $interviewBuilder->setIntervieweeID( $this->request->post( "interviewee_id" ) )
+                    ->setInterviewTemplateID( $this->request->post( "interview_template_id" ) )
                     ->setDeploymentTypeID( $deploymentType->id )
                     ->setAccount( $this->account )
                     ->setPositionID( $position->id )
@@ -332,7 +332,7 @@ class Profile extends Controller
                     }
                 }
             } else {
-                $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
+                $requestValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
             }
         }
 
@@ -340,7 +340,7 @@ class Profile extends Controller
         $this->view->assign( "interviewTemplates", $interviewTemplates );
         $this->view->assign( "interviewees", $interviewees );
         $this->view->assign( "positions", $positions );
-        $this->view->setErrorMessages( $inputValidator->getErrors() );
+        $this->view->setErrorMessages( $requestValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "profile/index.tpl" );
@@ -349,14 +349,14 @@ class Profile extends Controller
 
     public function archiveAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -367,7 +367,7 @@ class Profile extends Controller
                         "in_array" => $interviewRepo->get(
                             [ "id" ],
                             [
-                                "id" => $input->get( "interview_id" ),
+                                "id" => $this->request->post( "interview_id" ),
                                 "organization_id" => $this->organization->id
                             ],
                             "raw"
@@ -379,7 +379,7 @@ class Profile extends Controller
         ) {
             $interviewRepo->update(
                 [ "mode" => "archived" ],
-                [ "id" => $input->get( "interview_id" ) ]
+                [ "id" => $this->request->post( "interview_id" ) ]
             );
 
             echo( "success" );
@@ -387,21 +387,21 @@ class Profile extends Controller
             exit();
         }
 
-        echo( $inputValidator->getError()[ 0 ] );
+        echo( $requestValidator->getError()[ 0 ] );
         die();
         exit();
     }
 
     public function shareInterviewAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -412,7 +412,7 @@ class Profile extends Controller
                         "in_array" => $interviewRepo->get(
                             [ "id" ],
                             [
-                                "id" => $input->get( "interview_id" ),
+                                "id" => $this->request->post( "interview_id" ),
                                 "organization_id" => $this->organization->id
                             ],
                             "raw"
@@ -436,7 +436,7 @@ class Profile extends Controller
             $htmlInterviewResultsBuilder = $this->load( "html-interview-results-builder" );
 
             // Compile all interview questions and their answers into one large object
-            $interview = $interviewRepo->get( [ "*" ], [ "id" => $input->get( "interview_id" ) ], "single" );
+            $interview = $interviewRepo->get( [ "*" ], [ "id" => $this->request->post( "interview_id" ) ], "single" );
 
             $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
             $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
@@ -451,7 +451,7 @@ class Profile extends Controller
             $html_interview_results = $htmlInterviewResultsBuilder->build( $interview );
 
             // Parse interview recipients
-            $recipients = explode( ",", strtolower( str_replace( ", ", ",", $input->get( "recipients" ) ) ) );
+            $recipients = explode( ",", strtolower( str_replace( ", ", ",", $this->request->post( "recipients" ) ) ) );
 
             if ( is_array( $recipients ) ) {
                 $i = 0;
@@ -485,8 +485,8 @@ class Profile extends Controller
             exit();
         }
 
-        if ( isset( $inputValidator->getErrors()[ "share" ] ) == true ) {
-            echo( $inputValidator->getErrors()[ "share" ][ 0 ] );
+        if ( isset( $requestValidator->getErrors()[ "share" ] ) == true ) {
+            echo( $requestValidator->getErrors()[ "share" ][ 0 ] );
             die();
             exit();
         }

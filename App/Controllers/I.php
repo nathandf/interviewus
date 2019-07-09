@@ -18,8 +18,8 @@ class I extends Controller
         $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
         $organizationRepo = $this->load( "organization-repository" );
         $interviewDispatcher = $this->load( "interview-dispatcher" );
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
 
         $interview = $interviewRepo->get( [ "*" ], [ "token" => $this->params[ "token" ] ], "single" );
 
@@ -62,10 +62,10 @@ class I extends Controller
 
         // Dispatch the interview
         if (
-            $input->exists() &&
-            $input->issetField( "start_interview" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "start_interview" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -88,10 +88,10 @@ class I extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "web_interview" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "web_interview" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "equals-hidden" => $this->session->getSession( "csrf-token" ),
@@ -111,7 +111,7 @@ class I extends Controller
                 "raw"
             );
 
-            $answers = $input->get( "interviewee_answers" );
+            $answers = $this->request->post( "interviewee_answers" );
 
             foreach ( $answers as $interview_question_id => $interviewee_answer ) {
                 // Ensure the question the user is answering is owned by this organization
@@ -183,7 +183,7 @@ class I extends Controller
 
         $this->view->assign( "interview", $interview );
         $this->view->assign( "organization", $organization );
-        $this->view->assign( "error_messages", $inputValidator->getErrors() );
+        $this->view->assign( "error_messages", $requestValidator->getErrors() );
 
         $this->view->setTemplate( "i/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

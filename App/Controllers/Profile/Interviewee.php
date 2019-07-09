@@ -58,8 +58,8 @@ class Interviewee extends Controller
             $this->view->redirect( "profile/interview/new" );
         }
 
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+
+        $requestValidator = $this->load( "request-validator" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $questionRepo = $this->load( "question-repository" );
@@ -95,10 +95,10 @@ class Interviewee extends Controller
         $positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
         if (
-            $input->exists() &&
-            $input->issetField( "update_interviewee" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "update_interviewee" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -128,17 +128,17 @@ class Interviewee extends Controller
         ) {
             $intervieweeRepo->update(
                 [
-                    "first_name" => $input->get( "first_name" ),
-                    "last_name" => $input->get( "last_name" ),
-                    "email" => $input->get( "email" )
+                    "first_name" => $this->request->post( "first_name" ),
+                    "last_name" => $this->request->post( "last_name" ),
+                    "email" => $this->request->post( "email" )
                 ],
                 [ "id" => $this->params[ "id" ] ]
             );
 
             $phoneRepo->update(
                 [
-                    "country_code" => $input->get( "country_code" ),
-                    "national_number" => $input->get( "national_number" )
+                    "country_code" => $this->request->post( "country_code" ),
+                    "national_number" => $this->request->post( "national_number" )
                 ],
                 [ "id" => $interviewee->phone_id ]
             );
@@ -149,10 +149,10 @@ class Interviewee extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "deploy-interview" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "deploy-interview" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "equals-hidden" => $this->session->getSession( "csrf-token" ),
@@ -185,18 +185,18 @@ class Interviewee extends Controller
                 "deploy_interview"
             )
         ) {
-            $position = $positionRepo->get( [ "*" ], [ "id" => $input->get( "position_id" ) ], "single" );
+            $position = $positionRepo->get( [ "*" ], [ "id" => $this->request->post( "position_id" ) ], "single" );
             // Create a new position if the one submitted does not exist
-            if ( $input->get( "position" ) != "" ) {
+            if ( $this->request->post( "position" ) != "" ) {
                 $position = $positionRepo->insert([
                     "organization_id" => $this->organization->id,
-                    "name" => $input->get( "position" )
+                    "name" => $this->request->post( "position" )
                 ]);
             }
 
             // Ensure account has enough of the correct interview credits to create
             // this interview
-            $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $input->get( "deployment_type_id" ) ], "single" );
+            $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $this->request->post( "deployment_type_id" ) ], "single" );
 
             if ( $this->account->validateInterviewCredit( $deploymentType ) ) {
                 // Build and dispatch the interview. Will return null if insufficient
@@ -206,17 +206,17 @@ class Interviewee extends Controller
                 // Set scheduled time and status if deploying later. Default status
                 // is "active"
                 if (
-                    $input->get( "schedule_type" ) == 2 &&
-                    $input->get( "date" ) != ""
+                    $this->request->post( "schedule_type" ) == 2 &&
+                    $this->request->post( "date" ) != ""
                 ) {
                     $interviewBuilder->setStatus( "scheduled" )
                         ->setScheduledTime(
-                            $input->get( "date" ) . " " . $input->get( "Hour" ) . ":" . $input->get( "Minute" ) . $input->get( "Meridian" )
+                            $this->request->post( "date" ) . " " . $this->request->post( "Hour" ) . ":" . $this->request->post( "Minute" ) . $this->request->post( "Meridian" )
                         );
                 }
 
-                $interview = $interviewBuilder->setIntervieweeID( $input->get( "interviewee_id" ) )
-                    ->setInterviewTemplateID( $input->get( "interview_template_id" ) )
+                $interview = $interviewBuilder->setIntervieweeID( $this->request->post( "interviewee_id" ) )
+                    ->setInterviewTemplateID( $this->request->post( "interview_template_id" ) )
                     ->setDeploymentTypeID( $deploymentType->id )
                     ->setAccount( $this->account )
                     ->setPositionID( $position->id )
@@ -311,14 +311,14 @@ class Interviewee extends Controller
                     }
                 }
             } else {
-                $inputValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
+                $requestValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
             }
         }
 
         $this->view->assign( "interviewee", $interviewee );
         $this->view->assign( "interviewTemplates", $interviewTemplates );
         $this->view->assign( "positions", $positions );
-        $this->view->setErrorMessages( $inputValidator->getErrors() );
+        $this->view->setErrorMessages( $requestValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "profile/interviewee/index.tpl" );

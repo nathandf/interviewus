@@ -48,8 +48,8 @@ class Position extends Controller
             $this->view->redirect( "profile/" );
         }
 
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
         $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
@@ -82,10 +82,10 @@ class Position extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "update_position" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "update_position" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -104,8 +104,8 @@ class Position extends Controller
         ) {
             $positionRepo->update(
                 [
-                    "name" => trim( $input->get( "name" ) ),
-                    "description" => trim( $input->get( "description" ) )
+                    "name" => trim( $this->request->post( "name" ) ),
+                    "description" => trim( $this->request->post( "description" ) )
                 ],
                 [ "id" => $this->params[ "id" ] ]
             );

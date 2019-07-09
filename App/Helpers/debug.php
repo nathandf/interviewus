@@ -94,4 +94,5 @@
         }
     }
 
+    $quickTime = new QuickTime;
 ?>

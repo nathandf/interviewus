@@ -51,19 +51,21 @@ class Cart extends Controller
 
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        $requestValidator = $this->load( "request-validator" );
         $braintreeClientTokenGenerator = $this->load( "braintree-client-token-generator" );
 
         if (
-            $input->exists( "get" ) &&
-            $input->issetField( "purchase" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "get" ) &&
+            $this->request->get( "pruchase" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "purchase" => [
+                        "required" => true
                     ],
                     "payment_method_nonce" => [
                         "required" => true
@@ -83,7 +85,7 @@ class Cart extends Controller
                 $braintreePaymentMethodRepo = $this->load( "braintree-payment-method-repository" );
                 $paymentMethodResult = $braintreePaymentMethodRepo->create(
                     $this->account->braintree_customer_id,
-                    $input->get( "payment_method_nonce" )
+                    $this->request->get( "payment_method_nonce" )
                 );
 
                 $result = $braintreeSubscriptionRepo->updatePlan(
@@ -94,7 +96,7 @@ class Cart extends Controller
                 );
             } else {
                 $result = $braintreeSubscriptionRepo->create(
-                    $input->get( "payment_method_nonce" ),
+                    $this->request->get( "payment_method_nonce" ),
                     $this->cart->products[ 0 ]->plan->braintree_plan_id
                 );
             }
@@ -175,7 +177,7 @@ class Cart extends Controller
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );
-                $userAuth->authenticate( $user->email, $input->get( "password" ) );
+                $userAuth->authenticate( $user->email, $this->request->get( "password" ) );
 
                 // Destroy cart and related products
                 $cartDestroyer->destroy( $this->cart->id );
@@ -194,10 +196,10 @@ class Cart extends Controller
                 $additional_message = "Cancel your current subscription and try again.";
             }
 
-            $inputValidator->addError( "purchase", $result->message . " " . $additional_message );
+            $requestValidator->addError( "purchase", $result->message . " " . $additional_message );
         }
 
-        $this->view->assign( "error_messages", $inputValidator->getErrors() );
+        $this->view->assign( "error_messages", $requestValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
         $this->view->assign(
             "client_token",

@@ -4,7 +4,60 @@ namespace Core;
 
 class Request
 {
+	private $request_types = [ "get", "post", "put", "delete" ];
 	private $origin_whitelist = [];
+
+	public function is( $request_type )
+	{
+		if ( !in_array( $request_type, $this->request_types ) ) {
+			throw new \Exception( "Invalid request types" );
+		}
+
+		if ( strtolower( $this->method() ) == $request_type ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function get( $key = null )
+	{
+		if ( isset( $_GET ) ) {
+			if ( !is_null( $key ) ) {
+				if ( isset( $_GET[ $key ] ) ) {
+					return $_GET[ $key ];
+				}
+
+				return "";
+			}
+
+			return $_GET;
+		}
+
+		return null;
+	}
+
+	public function post( $key = null )
+	{
+		if ( isset( $_POST ) ) {
+			if ( !is_null( $key ) ) {
+				if ( isset( $_POST[ $key ] ) ) {
+					return $_POST[ $key ];
+				}
+
+				return "";
+			}
+
+			return $_POST;
+		}
+
+		return null;
+	}
+
+	public function method()
+	{
+		return filter_input( INPUT_SERVER, "REQUEST_METHOD" );
+	}
 
 	// TODO validate that origins are valid URLs
 	public function populateWhitelist( $origins )

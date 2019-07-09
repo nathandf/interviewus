@@ -34,8 +34,8 @@ class Interviewees extends Controller
     {
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $phoneRepo = $this->load( "phone-repository" );
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
 
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
@@ -44,10 +44,10 @@ class Interviewees extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "new_interviewee" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_interviewee" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -72,15 +72,15 @@ class Interviewees extends Controller
                 )
         ) {
             $phone = $phoneRepo->insert([
-                "country_code" => $input->get( "country_code" ),
-                "national_number" => $input->get( "national_number" ),
-                "e164_phone_number" => "+" . $input->get( "country_code" ) . $input->get( "national_number" )
+                "country_code" => $this->request->post( "country_code" ),
+                "national_number" => $this->request->post( "national_number" ),
+                "e164_phone_number" => "+" . $this->request->post( "country_code" ) . $this->request->post( "national_number" )
             ]);
 
             $interviewee = $intervieweeRepo->insert([
                 "organization_id" => $this->organization->id,
-                "first_name" => $input->get( "name" ),
-                "email" => $input->get( "email" ),
+                "first_name" => $this->request->post( "name" ),
+                "email" => $this->request->post( "email" ),
                 "phone_id" => $phone->id
             ]);
 
@@ -106,7 +106,7 @@ class Interviewees extends Controller
         }
 
         $this->view->assign( "interviewees", $interviewees );
-        $this->view->setErrorMessages( $inputValidator->getErrors() );
+        $this->view->setErrorMessages( $requestValidator->getErrors() );
 
         $this->view->setTemplate( "profile/interviewees/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

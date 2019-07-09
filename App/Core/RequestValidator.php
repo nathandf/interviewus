@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class InputValidator
+class RequestValidator
 {
 	private $required_fields = [];
 	public $errors = [];
@@ -12,12 +12,13 @@ class InputValidator
 		$this->required_fields = $fields;
 	}
 
-	public function validate( Input $input, array $fields, $error_index )
+	public function validate( Request $request, array $fields, $error_index )
 	{
+		$method = strtolower( $request->method() );
 		foreach ( $fields as $field => $rules ) {
 			// Grabbing data from the input for specified field if field is set
 			// Prepare data for validation. N-Depth
-			$value = $this->prepare( $input->get( $field ) );
+			$value = $this->prepare( $request->{$method}( $field ) );
 			// Rules must be an array. If not, throw an Exception
 			if ( is_array( $rules ) ) {
 				foreach ( $rules as $rule => $rule_value ) {
@@ -39,11 +40,6 @@ class InputValidator
 							case "max":
 								if ( !$this->isMax( $value, $rule_value ) ) {
 									$this->addError( $error_index, "{$field_name} must be less than {$rule_value} characters" );
-								}
-								break;
-							case "matches":
-								if ( $value != $input->data[ $rule_value ] ) {
-									$this->addError( $error_index, "{$field_name} must match {$rule_value}" );
 								}
 								break;
 							case "numeric":

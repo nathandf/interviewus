@@ -35,8 +35,8 @@ class Pricing extends Controller
 
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $planRepo = $this->load( "plan-repository" );
         $planDetailsRepo = $this->load( "plan-details-repository" );
 
@@ -47,10 +47,10 @@ class Pricing extends Controller
         }
 
         if (
-            $input->exists() &&
-            $input->issetField( "add_to_cart" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "add_to_cart" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -93,18 +93,18 @@ class Pricing extends Controller
                 // Add new product to the cart
                 $product = $productRepo->insert([
                     "cart_id" => $cart->id,
-                    "plan_id" => $input->get( "plan_id" ),
-                    "billing_frequency" => $input->get( "billing_frequency" )
+                    "plan_id" => $this->request->post( "plan_id" ),
+                    "billing_frequency" => $this->request->post( "billing_frequency" )
                 ]);
 
                 $this->view->redirect( "cart/" );
             }
 
-            $inputValidator->addError( "add_to_cart", "Invalid Action. You must be logged in." );
+            $requestValidator->addError( "add_to_cart", "Invalid Action. You must be logged in." );
         }
 
         $this->view->assign( "plans", $plans );
-        $this->view->assign( "error_messages", $inputValidator->getErrors() );
+        $this->view->assign( "error_messages", $requestValidator->getErrors() );
 
         $this->view->setTemplate( "pricing/index.tpl" );
         $this->view->render( "App/Views/Home.php" );
@@ -112,14 +112,14 @@ class Pricing extends Controller
 
     public function signIn()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
 
         if (
-            $input->exists() &&
-            $input->issetField( "sign_in" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "sign_in" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "email" => [
                         "required" => true,
@@ -134,27 +134,27 @@ class Pricing extends Controller
             )
         ) {
             $userAuth = $this->load( "user-authenticator" );
-            $userAuth->authenticate( $input->get( "email" ), $input->get( "password" ) );
+            $userAuth->authenticate( $this->request->post( "email" ), $this->request->post( "password" ) );
             $user = $userAuth->getAuthenticatedUser();
 
             !is_null( $user ) ? echod( json_encode( $user ) ) : echod( json_encode( [ "errors" => "Invalid Credentials" ]) );
             return;
         }
-        echo( json_encode( [ "errors" => $inputValidator->errors[ "ajax_sign_in" ] ] ) );
+        echo( json_encode( [ "errors" => $requestValidator->errors[ "ajax_sign_in" ] ] ) );
 
         return;
     }
 
     public function createAccount()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
 
         if (
-            $input->exists() &&
-            $input->issetField( "create_account" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "create_account" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "name" => [
                         "required" => true
@@ -178,18 +178,18 @@ class Pricing extends Controller
             $organizationUserRepo = $this->load( "organization-user-repository" );
 
             // Ensure email is unique and create the new account, and user.
-            if ( !in_array( $input->get( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
+            if ( !in_array( $this->request->post( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
 
                 //Create new User
                 $user = $userRepo->insert([
                     "role" => "owner",
-                    "first_name" => trim( $input->get( "name" ) ),
-                    "email" => strtolower( trim( $input->get( "email" ) ) ),
-                    "password" => password_hash( trim( $input->get( "password" ) ), PASSWORD_BCRYPT )
+                    "first_name" => trim( $this->request->post( "name" ) ),
+                    "email" => strtolower( trim( $this->request->post( "email" ) ) ),
+                    "password" => password_hash( trim( $this->request->post( "password" ) ), PASSWORD_BCRYPT )
                 ]);
 
                 // Update the first and last name
-                if ( count( explode( " ", $input->get( "name" ) ) ) > 1 ) {
+                if ( count( explode( " ", $this->request->post( "name" ) ) ) > 1 ) {
                     $user->setNames( $user->first_name );
                     $userRepo->update(
                         [
@@ -280,7 +280,7 @@ class Pricing extends Controller
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );
-                $userAuth->authenticate( $user->email, $input->get( "password" ) );
+                $userAuth->authenticate( $user->email, $this->request->post( "password" ) );
 
                 $user = $userAuth->getAuthenticatedUser();
 
@@ -294,7 +294,7 @@ class Pricing extends Controller
             return;
         }
 
-        echod( json_encode( [ "errors" => $inputValidator->errors[ "create_account" ] ] ) );
+        echod( json_encode( [ "errors" => $requestValidator->errors[ "create_account" ] ] ) );
         return;
     }
 }

@@ -13,19 +13,21 @@ class SignUp extends Controller
 
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+
+        $requestValidator = $this->load( "request-validator" );
 
         // Form validation
         if (
-            $input->exists() &&
-            $input->issetField( "create_account" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
                         "equals-hidden" => $this->session->getSession( "csrf-token" )
+                    ],
+                    "create_account" => [
+                        "required" => true
                     ],
                     "name" => [
                         "required" => true
@@ -49,18 +51,18 @@ class SignUp extends Controller
             $organizationUserRepo = $this->load( "organization-user-repository" );
 
             // Ensure email is unique and create the new account, and user.
-            if ( !in_array( $input->get( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
+            if ( !in_array( $this->request->post( "email" ), $userRepo->get( [ "email" ], [], "raw" ) ) ) {
 
                 //Create new User
                 $user = $userRepo->insert([
                     "role" => "owner",
-                    "first_name" => trim( $input->get( "name" ) ),
-                    "email" => strtolower( trim( $input->get( "email" ) ) ),
-                    "password" => password_hash( trim( $input->get( "password" ) ), PASSWORD_BCRYPT )
+                    "first_name" => trim( $this->request->post( "name" ) ),
+                    "email" => strtolower( trim( $this->request->post( "email" ) ) ),
+                    "password" => password_hash( trim( $this->request->post( "password" ) ), PASSWORD_BCRYPT )
                 ]);
 
                 // Update the first and last name
-                if ( count( explode( " ", $input->get( "name" ) ) ) > 1 ) {
+                if ( count( explode( " ", $this->request->post( "name" ) ) ) > 1 ) {
                     $user->setNames( $user->first_name );
                     $userRepo->update(
                         [
@@ -152,26 +154,26 @@ class SignUp extends Controller
 
                 // Authenticate and log in User
                 $userAuth = $this->load( "user-authenticator" );
-                $userAuth->authenticate( $user->email, $input->get( "password" ) );
+                $userAuth->authenticate( $user->email, $this->request->post( "password" ) );
 
                 // Redirect to profile
                 $this->view->redirect( "profile/" );
             }
 
-            $inputValidator->addError( "create_account", "This email seems to be unavailable. Please try another!" );
+            $requestValidator->addError( "create_account", "This email seems to be unavailable. Please try another!" );
         }
 
         // Form field data that was submitted
         $fields = [];
 
-        if ( $input->issetField( "create_account" ) ) {
-            $fields[ "create_account" ][ "name" ] = $input->get( "name" );
-            $fields[ "create_account" ][ "email" ] = $input->get( "email" );
-            $fields[ "create_account" ][ "password" ] = $input->get( "password" );
+        if ( $this->request->post( "create_account" ) != "" ) {
+            $fields[ "create_account" ][ "name" ] = $this->request->post( "name" );
+            $fields[ "create_account" ][ "email" ] = $this->request->post( "email" );
+            $fields[ "create_account" ][ "password" ] = $this->request->post( "password" );
         }
 
         $this->view->assign( "fields", $fields );
-        $this->view->setErrorMessages( $inputValidator->getErrors() );
+        $this->view->setErrorMessages( $requestValidator->getErrors() );
 
         $this->view->setTemplate( "sign-up/index.tpl" );
         $this->view->render( "App/Views/Home.php" );

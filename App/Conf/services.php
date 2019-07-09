@@ -24,13 +24,8 @@ $container->register( "request", function() use ( $container ) {
 	return $request;
 } );
 
-$container->register( "input", function() {
-    $obj = new \Core\Input;
-    return $obj;
-} );
-
-$container->register( "input-validator", function() {
-    $obj = new \Core\InputValidator;
+$container->register( "request-validator", function() {
+    $obj = new \Core\RequestValidator;
     return $obj;
 } );
 

@@ -48,8 +48,8 @@ class InterviewTemplate extends Controller
             $this->view->redirect( "profile/" );
         }
 
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+
+        $requestValidator = $this->load( "request-validator" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $questionRepo = $this->load( "question-repository" );
 
@@ -59,10 +59,10 @@ class InterviewTemplate extends Controller
         // If a form has been submitted, save the new order and value of the questions
         // and name and description of the template
         if (
-            $input->exists() &&
-            $input->issetField( "update_template" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "update_template" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -82,15 +82,15 @@ class InterviewTemplate extends Controller
         ) {
             $interviewTemplateRepo->update(
                 [
-                    "name" => $input->get( "name" ),
-                    "description" => $input->get( "description" )
+                    "name" => $this->request->post( "name" ),
+                    "description" => $this->request->post( "description" )
                 ],
                 [ "id" => $this->params[ "id" ] ]
             );
 
             // Process new question order and values
-            if ( $input->issetField( "update_existing_questions" ) ) {
-                $existing_questions = $input->get( "existing_question" );
+            if ( $this->request->post( "update_existing_questions" ) != "" ) {
+                $existing_questions = $this->request->post( "existing_question" );
                 if ( is_array( $existing_questions ) ) {
                     $iteration = 1;
                     foreach ( $existing_questions as $id => $body ) {
@@ -113,10 +113,10 @@ class InterviewTemplate extends Controller
 
         // Add new questions to the interivew template
         if (
-            $input->exists() &&
-            $input->issetField( "new_question" ) &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_question" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "token" => [
                         "required" => true,
@@ -133,7 +133,7 @@ class InterviewTemplate extends Controller
                 "interview_template_id" => $this->params[ "id" ],
                 "question_type_id" => 1,
                 "placement" => count( $interviewTemplate->questions ) + 1,
-                "body" => $input->get( "body" )
+                "body" => $this->request->post( "body" )
             ]);
 
             $this->session->addFlashMessage( "Question added" );
@@ -142,7 +142,7 @@ class InterviewTemplate extends Controller
         }
 
         $this->view->assign( "interviewTemplate", $interviewTemplate );
-        $this->view->assign( "error_messages", $inputValidator->getErrors() );
+        $this->view->assign( "error_messages", $requestValidator->getErrors() );
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "profile/interview-template/index.tpl" );

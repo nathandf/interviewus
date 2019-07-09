@@ -8,8 +8,8 @@ class Disputes extends Controller
 {
     public function indexAction()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
+        
+        $requestValidator = $this->load( "request-validator" );
         $braintreeGatewayInitializer = $this->load( "braintree-gateway-initializer" );
         $accountRepo = $this->load( "account-repository" );
         $accountProvisioner = $this->load( "account-provisioner" );
@@ -19,9 +19,9 @@ class Disputes extends Controller
         $userRepo = $this->load( "user-repository" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
                 [
                     "bt_signature" => [
                         "required" => true
@@ -39,8 +39,8 @@ class Disputes extends Controller
 
                 // Parse the signature and payload
                 $webhookNotification = $gateway->webhookNotification()->parse(
-                    $input->get( "bt_signature" ),
-                    $input->get( "bt_payload" )
+                    $this->request->post( "bt_signature" ),
+                    $this->request->post( "bt_payload" )
                 );
 
                 // Get the account associated with this notification
