@@ -17,6 +17,9 @@ class RequestValidator
 	public function validate( Request $request, array $fields, $error_index )
 	{
 		$method = strtolower( $request->method() );
+		if ( !in_array( $method, [ "post", "get" ] ) ) {
+			throw new \Exception( "Method provided is not 'post' or 'get'" );
+		}
 		foreach ( $fields as $field => $rules ) {
 			// Grabbing data from the input for specified field if field is set
 			// Prepare data for validation. N-Depth
