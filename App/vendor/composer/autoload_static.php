@@ -35,6 +35,7 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
         ),
         'M' => 
         array (
+            'Models\\' => 7,
             'Model\\' => 6,
             'Mappers\\' => 8,
         ),
@@ -83,6 +84,10 @@ class ComposerStaticInit78dc808f4f283431745450a0bb20ab63
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Model/Models',
         ),
         'Model\\' => 
         array (

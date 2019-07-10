@@ -32,11 +32,11 @@ $controller = $controllerFactory->build(
 
 $command = $controller->{$route[ "method" ]}();
 
-// TEMP conditional statement to asses if command null will be removed when all
-// controllers have been refactored.
-if ( !is_null( $command ) ) {
+
+if ( !is_null( $command ) ) { // TEMP
 	$modelFactory = $container->getService( "model-factory" );
 	$model = $modelFactory->build( $command[ 0 ], $request, $container );
 	$model->{$command[ 1 ]}( $command[ 2 ] );
-	// $view = $viewFactory->build( $command, $model );
+	$view = $viewFactory->build( $command[ 0 ], $model, $container );
+	$view->render();
 }
