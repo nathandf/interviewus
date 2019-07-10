@@ -15,7 +15,7 @@ abstract class CoreObject implements CoreObjectInterface
 
     // load allows all children of CoreObject to load in service objects
     // without explicitly referencing the method of retrival. In this case, it's a
-    // simple Dependency Injection / IoC Container
+    // simple Dependency Invesion / IoC Container
     public function load( $service )
     {
         return $this->container->getService( $service );

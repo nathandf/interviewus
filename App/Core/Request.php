@@ -59,6 +59,32 @@ class Request
 		return filter_input( INPUT_SERVER, "REQUEST_METHOD" );
 	}
 
+	public function queryString()
+	{
+		return filter_input( INPUT_SERVER, "QUERY_STRING" );
+	}
+
+	public function setParams( $params )
+	{
+		$this->params = $params;
+		return $this;
+	}
+
+	public function params( $key = null )
+	{
+		if ( isset( $this->params ) ) {
+			if ( !is_null( $key ) ) {
+				if ( isset( $this->params[ $key ] ) ) {
+					return $this->params[ $key ];
+				}
+
+				throw new \Exception( "Param {$key} not set" );
+			}
+
+			return $this->params;
+		}
+	}
+
 	// TODO validate that origins are valid URLs
 	public function populateWhitelist( $origins )
 	{
@@ -98,5 +124,4 @@ class Request
 
 		return $origin;
 	}
-
 }

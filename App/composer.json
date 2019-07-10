@@ -15,6 +15,7 @@
         "Controllers\\": "Controllers/",
         "Views\\": "Views/",
         "Model\\": "Model/",
+        "Models\\": "Model/Models/",
 		"Entities\\": "Model/Entities/",
         "Mappers\\": "Model/Mappers/",
         "Services\\": "Model/Services/"

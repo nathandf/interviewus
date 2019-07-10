@@ -13,14 +13,15 @@ class Home extends Controller
 
     public function indexAction()
     {
-        $this->view->setTemplate( "index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        // $this->view->setTemplate( "index.tpl" );
+        // $this->view->render( "App/Views/Home.php" );
+        return [ "Home", "index", [] ];
     }
 
     public function signInAction()
     {
         $userAuth = $this->load( "user-authenticator" );
-        
+
         $requestValidator = $this->load( "request-validator" );
 
         if ( !is_null( $userAuth->getAuthenticatedUser() ) ) {

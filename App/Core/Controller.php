@@ -14,13 +14,13 @@ abstract class Controller extends CoreObject
     protected $view;
     protected $action_filter_data = [];
 
-    public function __construct( DIContainer $container, \Conf\Config $config, Session $session, Request $request, $params )
+    public function __construct( Request $request, DIContainer $container )
     {
         $this->setContainer( $container );
-        $this->config = $config;
-        $this->session = $session;
+        $this->config = $this->container->getService( "config" );
+        $this->session = $this->container->getService( "session" );
         $this->request = $request;
-        $this->params = $params;
+        $this->params = $request->params();
         $this->view = $this->load( "view" );
     }
 
@@ -29,8 +29,9 @@ abstract class Controller extends CoreObject
         $method = $name . "Action";
         if ( method_exists( $this, $method ) ) {
             if ( $this->before() !== false ) {
-                call_user_func_array( [ $this, $method ], $args );
+                $return_value = call_user_func_array( [ $this, $method ], $args );
                 $this->after();
+                return $return_value;
             }
         } else {
             throw new \Exception( "Method \"$method\" is not a method of class " . get_class( $this ), 404 );

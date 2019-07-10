@@ -9,6 +9,21 @@ $container->register( "config", function() {
 	return $config;
 } );
 
+$container->register( "controller-factory", function() {
+	$config = new Core\ControllerFactory;
+	return $config;
+} );
+
+$container->register( "model-factory", function() {
+	$config = new Core\ModelFactory;
+	return $config;
+} );
+
+$container->register( "view-factory", function() {
+	$config = new Core\ViewFactory;
+	return $config;
+} );
+
 $container->register( "error", function() use ( $container ) {
 	$error = new Core\Error( $container );
 	return $error;
