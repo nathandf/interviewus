@@ -15,7 +15,7 @@ class Home extends Controller
     {
         // $this->view->setTemplate( "index.tpl" );
         // $this->view->render( "App/Views/Home.php" );
-        return [ "Home", "index", [] ];
+        return [ "Index", "index", [] ];
     }
 
     public function signInAction()

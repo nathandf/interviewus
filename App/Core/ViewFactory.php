@@ -6,6 +6,8 @@ class ViewFactory
 {
     public function build( $view_name, Model $model, DIContainer $container )
     {
-        return "New View";
+        $view = "\\Views\\{$view_name}";
+        
+        return new $view( $model, $container );
     }
 }

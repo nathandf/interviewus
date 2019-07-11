@@ -20,5 +20,4 @@ abstract class CoreObject implements CoreObjectInterface
     {
         return $this->container->getService( $service );
     }
-
 }
