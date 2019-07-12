@@ -71,6 +71,6 @@ class Positions extends Controller
         $this->view->assign( "error_messages", $requestValidator->getErrors() );
 
         $this->view->setTemplate( "profile/positions/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 }

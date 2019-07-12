@@ -30,7 +30,7 @@ $controller = $controllerFactory->build(
 
 $command = $controller->{$route[ "method" ]}();
 
-if ( !is_null( $command ) ) { // TEMP
+if ( !is_null( $command ) ) {
 	// Dispatch Model
 	$modelFactory = $container->getService( "model-factory" );
 	$model = $modelFactory->build( $command[ 0 ], $request, $container );
@@ -39,6 +39,6 @@ if ( !is_null( $command ) ) { // TEMP
 	// Dispatch View
 	$viewFactory = $container->getService( "view-factory" );
 	$view = $viewFactory->build( $command[ 0 ], $model, $container );
-	$view->{$command[ 1 ]}();
+	$view->{$command[ 1 ]}( $command[ 2 ] );
 	$view->render();
 }

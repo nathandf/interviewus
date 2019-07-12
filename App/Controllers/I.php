@@ -26,7 +26,7 @@ class I extends Controller
         // Redirect to error page if interview is invalid
         if ( is_null( $interview ) ) {
             $this->view->setTemplate( "i/invalid-interview.tpl" );
-            $this->view->render( "App/Views/Home.php" );
+            $this->view->render( "App/Views/Index.php" );
 
             return;
         }
@@ -186,7 +186,7 @@ class I extends Controller
         $this->view->assign( "error_messages", $requestValidator->getErrors() );
 
         $this->view->setTemplate( "i/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
 
         return;
     }
@@ -194,12 +194,12 @@ class I extends Controller
     public function deploymentSuccessfulAction()
     {
         $this->view->setTemplate( "i/sms-interview-deployment-success.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 
     public function interviewCompleteAction()
     {
         $this->view->setTemplate( "i/interview-complete.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 }

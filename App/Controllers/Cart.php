@@ -209,6 +209,6 @@ class Cart extends Controller
         );
 
         $this->view->setTemplate( "cart/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 }

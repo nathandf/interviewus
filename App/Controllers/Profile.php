@@ -32,7 +32,7 @@ class Profile extends Controller
 
     public function indexAction()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
@@ -344,12 +344,12 @@ class Profile extends Controller
         $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
 
         $this->view->setTemplate( "profile/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 
     public function archiveAction()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
 
@@ -394,7 +394,7 @@ class Profile extends Controller
 
     public function shareInterviewAction()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
 
@@ -498,8 +498,6 @@ class Profile extends Controller
 
     public function logout()
     {
-        $userAuth = $this->load( "user-authenticator" );
-        $userAuth->logout();
-        $this->view->redirect( "" );
+        return [ "Profile", "logout", [] ];
     }
 }

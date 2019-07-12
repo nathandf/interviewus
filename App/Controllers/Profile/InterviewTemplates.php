@@ -132,12 +132,12 @@ class InterviewTemplates extends Controller
         $this->view->assign( "interviewTemplates", $interviewTemplates );
 
         $this->view->setTemplate( "profile/interview-templates/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 
     public function browseAction()
     {
         $this->view->setTemplate( "profile/interview-templates/browse.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 }

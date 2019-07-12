@@ -6,26 +6,18 @@ use \Core\Controller;
 
 class Home extends Controller
 {
-    public function before()
-    {
-
-    }
-
     public function indexAction()
     {
-        // $this->view->setTemplate( "index.tpl" );
-        // $this->view->render( "App/Views/Home.php" );
-        return [ "Index", "index", [] ];
+        return [ "Home", "index", [] ];
     }
 
     public function signInAction()
     {
         $userAuth = $this->load( "user-authenticator" );
-
         $requestValidator = $this->load( "request-validator" );
 
         if ( !is_null( $userAuth->getAuthenticatedUser() ) ) {
-            $this->view->redirect( "profile/" );
+            return [ "Home", "loginRedirect", [] ];
         }
 
         if (
@@ -49,21 +41,10 @@ class Home extends Controller
                 "sign_in"
             )
         ) {
-            if ( $userAuth->authenticate(
-                    $this->request->post( "email" ),
-                    $this->request->post( "password" )
-                )
-            ) {
-                $this->view->redirect( "profile/" );
-            }
-
-            $requestValidator->addError( "sign_in", "The credentials you have provided are invalid. Please try again." );
+            return [ "Home", "authenticateUser", [] ];
         }
 
-        $this->view->assign( "error_messages", $requestValidator->getErrors() );
-
-        $this->view->setTemplate( "sign-in.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        return [ "Home", "signIn", [ "error_messages" => $requestValidator->getErrors() ] ];
     }
 
     public function privacyPolicyAction()

@@ -109,6 +109,6 @@ class Interviewees extends Controller
         $this->view->setErrorMessages( $requestValidator->getErrors() );
 
         $this->view->setTemplate( "profile/interviewees/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 }

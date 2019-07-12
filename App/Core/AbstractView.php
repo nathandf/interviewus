@@ -83,6 +83,11 @@ class AbstractView extends CoreObject
         $this->assign( "error_messages", $error_messages );
     }
 
+    public function addErrorMessage( $index, $message )
+    {
+        $this->data[ "error_messages" ][ $index ] = $message;
+    }
+
     public function setFlashMessages( array $flash_messages )
     {
         $this->assign( "flash_messages", $flash_messages );

@@ -176,6 +176,6 @@ class SignUp extends Controller
         $this->view->setErrorMessages( $requestValidator->getErrors() );
 
         $this->view->setTemplate( "sign-up/index.tpl" );
-        $this->view->render( "App/Views/Home.php" );
+        $this->view->render( "App/Views/Index.php" );
     }
 }

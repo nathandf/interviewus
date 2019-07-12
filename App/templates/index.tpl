@@ -7,7 +7,7 @@
 
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
-	<div class="theme-primary-light pad-med" style="overflow: hidden;">
+	<div class="theme-tertiary-light pad-med" style="overflow: hidden;">
 		<div id="welcome" class="con-cnt-lrg pad-med push-t-med push-b-med bg-white mat-box-shadow">
 			<div class="con-cnt-med-plus-plus">
 				<p class="title" style="margin: 0;">Automated Text Message Interviews</p>
