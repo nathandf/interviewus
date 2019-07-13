@@ -35,7 +35,6 @@ class Pricing extends Controller
 
     public function indexAction()
     {
-        
         $requestValidator = $this->load( "request-validator" );
         $planRepo = $this->load( "plan-repository" );
         $planDetailsRepo = $this->load( "plan-details-repository" );
@@ -112,7 +111,7 @@ class Pricing extends Controller
 
     public function signIn()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
 
         if (
@@ -147,7 +146,6 @@ class Pricing extends Controller
 
     public function createAccount()
     {
-        
         $requestValidator = $this->load( "request-validator" );
 
         if (
@@ -295,6 +293,7 @@ class Pricing extends Controller
         }
 
         echod( json_encode( [ "errors" => $requestValidator->errors[ "create_account" ] ] ) );
+
         return;
     }
 }

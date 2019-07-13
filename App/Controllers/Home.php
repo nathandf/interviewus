@@ -49,11 +49,11 @@ class Home extends Controller
 
     public function privacyPolicyAction()
     {
-
+        return [ null, "Home:privacyPolicy", null, null ];
     }
 
     public function termsAndConditionsAction()
     {
-
+        return [ null, "Home:termsAndConditions", null, null ];
     }
 }

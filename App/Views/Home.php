@@ -26,4 +26,14 @@ class Home extends AbstractView
 		$this->addErrorMessage( "sign_in", "User authentication failed" );
 		$this->setTemplate( "sign-in.tpl" );
 	}
+
+	public function termsAndConditions()
+	{
+		echo( "terms and conditions" );
+	}
+
+	public function privacyPolicy()
+	{
+		echo( "privacy policy" );
+	}
 }

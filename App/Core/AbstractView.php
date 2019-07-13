@@ -35,9 +35,6 @@ class AbstractView extends CoreObject
         exit();
     }
 
-    /**
-     *
-     */
     protected function setTemplatingEngine()
     {
         $this->templatingEngine = $this->load( "templating-engine" );
@@ -74,10 +71,6 @@ class AbstractView extends CoreObject
         $this->assign( "application_errors", $this->application_error_messages );
     }
 
-    /**
-     * NOTE: This should only be set after all inputs have been analyzed and validated
-     * @param array $error_messages
-     */
     public function setErrorMessages( array $error_messages )
     {
         $this->assign( "error_messages", $error_messages );
@@ -93,10 +86,6 @@ class AbstractView extends CoreObject
         $this->assign( "flash_messages", $flash_messages );
     }
 
-    /**
-     * @param string $file_name
-     * @param null $data
-     */
     public function render( $data = null )
     {
         // assigning data from the views to the templating engine
@@ -104,10 +93,12 @@ class AbstractView extends CoreObject
             $this->templatingEngine->assign( $key, $value );
         }
 
-        // render view
-        ob_start();
-        $this->templatingEngine->display( "App/templates/". $this->template );
-        ob_end_flush();
+        if ( isset( $this->template ) ) {
+            // render view
+            ob_start();
+            $this->templatingEngine->display( "App/templates/". $this->template );
+            ob_end_flush();
+        }
     }
 
     /**
@@ -130,14 +121,12 @@ class AbstractView extends CoreObject
 
     public function render404()
     {
-        $this->render( "App/templates/404.shtml" );
-        exit();
+        $this->setTemplate( "404.shtml" );
     }
 
     public function render403()
     {
-        $this->render( "App/templates/403.shtml" );
-        exit();
+        $this->render( "403.shtml" );
     }
 
 }
