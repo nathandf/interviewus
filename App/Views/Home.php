@@ -27,7 +27,7 @@ class Home extends AbstractView
 		if ( $this->model->user_authenticated ) {
 			$this->redirect( "profile/" );
 		}
-		
+
 		$this->addErrorMessage( "sign_in", "User authentication failed" );
 		$this->setTemplate( "sign-in.tpl" );
 	}

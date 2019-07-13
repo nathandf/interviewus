@@ -11,17 +11,7 @@ class Home extends Model
 
 	public function index()
 	{
-
-	}
-
-	public function signIn()
-	{
-
-	}
-
-	public function loginRedirect()
-	{
-
+		
 	}
 
 	public function authenticateUser()

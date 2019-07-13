@@ -32,13 +32,11 @@ $command = $controller->{$route[ "method" ]}();
 
 if ( !is_null( $command ) ) {
 	// Dispatch Model
-	$modelFactory = $container->getService( "model-factory" );
-	$model = $modelFactory->build( $command[ 0 ], $request, $container );
-	$model->{$command[ 1 ]}( $command[ 2 ] );
+	$modelDispatcher = $container->getService( "model-dispatcher" );
+	$model = $modelDispatcher->dispatch( $command, $request, $container );
 
 	// Dispatch View
-	$viewFactory = $container->getService( "view-factory" );
-	$view = $viewFactory->build( $command[ 0 ], $model, $container );
-	$view->{$command[ 1 ]}( $command[ 2 ] );
+	$viewDispatcher = $container->getService( "view-dispatcher" );
+	$view = $viewDispatcher->dispatch( $command, $model, $container );
 	$view->render();
 }

@@ -32,7 +32,6 @@ class Profile extends Controller
 
     public function indexAction()
     {
-
         $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );

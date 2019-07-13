@@ -10,18 +10,32 @@ $container->register( "config", function() {
 } );
 
 $container->register( "controller-factory", function() {
-	$config = new Core\ControllerFactory;
-	return $config;
+	$obj = new Core\ControllerFactory;
+	return $obj;
 } );
 
 $container->register( "model-factory", function() {
-	$config = new Core\ModelFactory;
-	return $config;
+	$obj = new Core\ModelFactory;
+	return $obj;
+} );
+
+$container->register( "model-dispatcher", function() use ( $container ) {
+	$obj = new Core\ModelDispatcher(
+		$container->getService( "model-factory" )
+	);
+	return $obj;
 } );
 
 $container->register( "view-factory", function() {
-	$config = new Core\ViewFactory;
-	return $config;
+	$obj = new Core\ViewFactory;
+	return $obj;
+} );
+
+$container->register( "view-dispatcher", function() use ( $container ) {
+	$obj = new Core\ViewDispatcher(
+		$container->getService( "view-factory" )
+	);
+	return $obj;
 } );
 
 $container->register( "error", function() use ( $container ) {
