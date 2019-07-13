@@ -7,6 +7,7 @@ use Core\Model;
 class SignUp extends Model
 {
 	public $errors = [];
+	public $user;
 
 	public function createAccount()
 	{
@@ -121,6 +122,8 @@ class SignUp extends Model
 			// Authenticate and log in User
 			$userAuth = $this->load( "user-authenticator" );
 			$userAuth->authenticate( $user->email, $this->request->post( "password" ) );
+
+			$this->user = $userAuth->getAuthenticatedUser();
 
 			return;
 		}

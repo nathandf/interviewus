@@ -49,4 +49,18 @@ class SignUp extends AbstractView
 
 		$this->setTemplate( "sign-up/index.tpl" );
 	}
+
+	public function createAccountAjax()
+	{
+		if ( empty( $this->model->errors ) ) {
+			echod( json_encode( $this->model->user ) );
+		}
+
+		echod( json_encode( $this->model->errors ) );
+	}
+
+	public function createAccountAjaxError( $errors )
+	{
+		echod( json_encode( $errors ) );
+	}
 }

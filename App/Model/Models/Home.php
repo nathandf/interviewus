@@ -11,7 +11,7 @@ class Home extends Model
 
 	public function index()
 	{
-		
+
 	}
 
 	public function authenticateUser()
@@ -22,5 +22,7 @@ class Home extends Model
 			$this->request->post( "email" ),
 			$this->request->post( "password" )
 		);
+
+		$this->user =  $userAuth->getAuthenticatedUser();
 	}
 }

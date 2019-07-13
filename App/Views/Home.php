@@ -17,6 +17,22 @@ class Home extends AbstractView
 		$this->setTemplate( "sign-in.tpl" );
 	}
 
+	public function signInAjax( $args = null )
+	{
+		if ( !is_null( $args ) ) {
+			echod( json_encode( $args ) );
+		}
+	}
+
+	public function authenticateUserAjax()
+	{
+		if ( !is_null( $this->model->user ) ) {
+			echod( json_encode( $this->model->user ) );
+		}
+
+		echod( json_encode( [ "errors" => "Invalid Credentials" ]) );
+	}
+
 	public function authenticateUser()
 	{
 		if ( $this->model->user_authenticated ) {
