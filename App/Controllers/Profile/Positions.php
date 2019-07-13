@@ -32,7 +32,7 @@ class Positions extends Controller
 
     public function indexAction()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
         $positionRepo = $this->load( "position-repository" );
 
@@ -46,7 +46,7 @@ class Positions extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "name" => [
                         "required" => true,

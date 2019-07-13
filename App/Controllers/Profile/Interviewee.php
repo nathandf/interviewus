@@ -102,7 +102,7 @@ class Interviewee extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "first_name" => [
                         "required" => true,
@@ -143,8 +143,8 @@ class Interviewee extends Controller
                 [ "id" => $interviewee->phone_id ]
             );
 
-            $this->session->addFlashMessage( "Interviewee Updated" );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Interviewee Updated" );
+            $this->request->setFlashMessages();
             $this->view->redirect( "profile/interviewee/{$this->params[ "id" ]}/" );
         }
 
@@ -155,7 +155,7 @@ class Interviewee extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" ),
+                        "equals-hidden" => $this->request->session( "csrf-token" ),
                         "required" => true
                     ],
                     "deployment_type_id" => [
@@ -304,8 +304,8 @@ class Interviewee extends Controller
                             ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
                             ->mail();
 
-                            $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                            $this->session->setFlashMessages();
+                            $this->request->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                            $this->request->setFlashMessages();
 
                             $this->view->redirect( "profile/" );
                     }
@@ -319,7 +319,7 @@ class Interviewee extends Controller
         $this->view->assign( "interviewTemplates", $interviewTemplates );
         $this->view->assign( "positions", $positions );
         $this->view->setErrorMessages( $requestValidator->getErrors() );
-        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign( "flash_messages", $this->request->getFlashMessages() );
 
         $this->view->setTemplate( "profile/interviewee/index.tpl" );
         $this->view->render( "App/Views/Index.php" );

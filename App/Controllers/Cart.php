@@ -62,7 +62,7 @@ class Cart extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "purchase" => [
                         "required" => true
@@ -200,7 +200,7 @@ class Cart extends Controller
         }
 
         $this->view->assign( "error_messages", $requestValidator->getErrors() );
-        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign( "flash_messages", $this->request->getFlashMessages() );
         $this->view->assign(
             "client_token",
             $braintreeClientTokenGenerator->generate(

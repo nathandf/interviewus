@@ -34,7 +34,7 @@ class Interviewees extends Controller
     {
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $phoneRepo = $this->load( "phone-repository" );
-        
+
         $requestValidator = $this->load( "request-validator" );
 
         $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
@@ -51,7 +51,7 @@ class Interviewees extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "name" => [
                         "required" => true

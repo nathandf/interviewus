@@ -66,7 +66,7 @@ class InterviewTemplate extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "name" => [
                         "required" => true,
@@ -103,11 +103,11 @@ class InterviewTemplate extends Controller
                         }
                         $iteration++;
                     }
-                    $this->session->addFlashMessage( "Questions updated" );
+                    $this->request->addFlashMessage( "Questions updated" );
                 }
             }
 
-            $this->session->setFlashMessages();
+            $this->request->setFlashMessages();
             $this->view->redirect( "profile/interview-template/" . $this->params[ "id" ] . "/" );
         }
 
@@ -120,7 +120,7 @@ class InterviewTemplate extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "body" => [
                         "required" => true
@@ -136,14 +136,14 @@ class InterviewTemplate extends Controller
                 "body" => $this->request->post( "body" )
             ]);
 
-            $this->session->addFlashMessage( "Question added" );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Question added" );
+            $this->request->setFlashMessages();
             $this->view->redirect( "profile/interview-template/" . $this->params[ "id" ] . "/" );
         }
 
         $this->view->assign( "interviewTemplate", $interviewTemplate );
         $this->view->assign( "error_messages", $requestValidator->getErrors() );
-        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign( "flash_messages", $this->request->getFlashMessages() );
 
         $this->view->setTemplate( "profile/interview-template/index.tpl" );
         $this->view->render( "App/Views/Index.php" );

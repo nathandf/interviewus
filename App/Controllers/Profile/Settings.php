@@ -63,7 +63,7 @@ class Settings extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "payment_method_nonce" => [
                         "required" => true
@@ -117,8 +117,8 @@ class Settings extends Controller
                         );
                     }
 
-                    $this->session->addFlashMessage( "Payment Method Added" );
-                    $this->session->setFlashMessages();
+                    $this->request->addFlashMessage( "Payment Method Added" );
+                    $this->request->setFlashMessages();
                 }
 
                 $this->view->redirect( "profile/settings/" );
@@ -134,7 +134,7 @@ class Settings extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" ),
+                        "equals-hidden" => $this->request->session( "csrf-token" ),
                         "required" => true
                     ],
                     "organization" => [
@@ -156,8 +156,8 @@ class Settings extends Controller
                 [ "id" => $this->organization->id ]
             );
 
-            $this->session->addFlashMessage( "Organization updated" );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Organization updated" );
+            $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/settings/" );
         }
@@ -169,7 +169,7 @@ class Settings extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "braintree_payment_method_token" => [
                         "required" => true,
@@ -210,8 +210,8 @@ class Settings extends Controller
                     );
                 }
 
-                $this->session->addFlashMessage( "Default payment method updated" );
-                $this->session->setFlashMessages();
+                $this->request->addFlashMessage( "Default payment method updated" );
+                $this->request->setFlashMessages();
 
                 $this->view->redirect( "profile/settings/" );
             }
@@ -227,7 +227,7 @@ class Settings extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "braintree_payment_method_token" => [
                         "required" => true,
@@ -256,8 +256,8 @@ class Settings extends Controller
                 );
             }
 
-            $this->session->addFlashMessage( "Payment Method Deleted" );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Payment Method Deleted" );
+            $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/settings/" );
         }
@@ -269,7 +269,7 @@ class Settings extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ]
                 ],
                 "cancel_subscription"
@@ -287,8 +287,8 @@ class Settings extends Controller
                 [ "id" => $this->account->id ]
             );
 
-            $this->session->addFlashMessage( "Subscription successfully canceled." );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Subscription successfully canceled." );
+            $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/settings/" );
         }
@@ -310,7 +310,7 @@ class Settings extends Controller
         $this->view->assign( "plan", $plan );
         $this->view->assign( "paymentMethods", $paymentMethods );
         $this->view->assign( "error_messages", $requestValidator->getErrors() );
-        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign( "flash_messages", $this->request->getFlashMessages() );
 
         $this->view->setTemplate( "profile/settings/index.tpl" );
         $this->view->render( "App/Views/Index.php" );

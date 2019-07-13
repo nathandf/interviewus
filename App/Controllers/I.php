@@ -18,7 +18,7 @@ class I extends Controller
         $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
         $organizationRepo = $this->load( "organization-repository" );
         $interviewDispatcher = $this->load( "interview-dispatcher" );
-        
+
         $requestValidator = $this->load( "request-validator" );
 
         $interview = $interviewRepo->get( [ "*" ], [ "token" => $this->params[ "token" ] ], "single" );
@@ -69,7 +69,7 @@ class I extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ]
                 ],
                 "start_interview"
@@ -94,7 +94,7 @@ class I extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" ),
+                        "equals-hidden" => $this->request->session( "csrf-token" ),
                         "required" => true
                     ],
                     "interviewee_answers" => [

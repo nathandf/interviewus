@@ -6,7 +6,6 @@ namespace Core;
 
 abstract class Controller extends CoreObject
 {
-    protected $session;
     protected $container;
     protected $config;
     protected $request;
@@ -18,7 +17,6 @@ abstract class Controller extends CoreObject
     {
         $this->setContainer( $container );
         $this->config = $this->container->getService( "config" );
-        $this->session = $this->container->getService( "session" );
         $this->request = $request;
         $this->params = $request->params();
         $this->view = $this->load( "view" );

@@ -11,7 +11,7 @@ class AbstractView extends CoreObject
     protected $model;
     protected $container;
     private $configs;
-    public $session;
+    public $request;
     public $template;
     private $data = [];
 
@@ -20,7 +20,7 @@ class AbstractView extends CoreObject
         $this->model = $model;
         $this->setContainer( $container );
         $this->configs = $container->getService( "config" )->configs;
-        $this->session = $this->container->getService( "session" );
+        $this->request = $model->request;
         $this->setTemplatingEngine();
     }
 
@@ -44,7 +44,7 @@ class AbstractView extends CoreObject
         $this->templatingEngine->compile_dir = "App/templates/tmp";
 
         // Set csrf token
-        $this->templatingEngine->assign( "csrf_token", $this->session->generateCSRFToken() );
+        $this->templatingEngine->assign( "csrf_token", $this->request->generateCSRFToken() );
 
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );

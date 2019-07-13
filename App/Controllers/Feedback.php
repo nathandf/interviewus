@@ -8,7 +8,7 @@ class Feedback extends Controller
 {
     public function indexAction()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
         $mailer = $this->load( "mailer" );
         $emailBuilder = $this->load( "email-builder" );
@@ -21,7 +21,7 @@ class Feedback extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "user" => [
                         "required" => true

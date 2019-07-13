@@ -32,7 +32,7 @@ class InterviewTemplates extends Controller
 
     public function indexAction()
     {
-        
+
         $requestValidator = $this->load( "request-validator" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $questionRepo = $this->load( "question-repository" );
@@ -48,7 +48,7 @@ class InterviewTemplates extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "name" => [
                         "required" => true
@@ -94,7 +94,7 @@ class InterviewTemplates extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "interview_template_id" => [
                         "requried" => true,
@@ -123,8 +123,8 @@ class InterviewTemplates extends Controller
                 ]);
             }
 
-            $this->session->addFlashMessage( "Duplicated: {$newInterviewTemplate->name}" );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Duplicated: {$newInterviewTemplate->name}" );
+            $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/interview-template/{$newInterviewTemplate->id}/" );
         }

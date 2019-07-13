@@ -48,7 +48,7 @@ class Position extends Controller
             $this->view->redirect( "profile/" );
         }
 
-        
+
         $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
         $interviewQuestionRepo = $this->load( "interview-question-repository" );
@@ -89,7 +89,7 @@ class Position extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "name" => [
                         "required" => true,
@@ -110,15 +110,15 @@ class Position extends Controller
                 [ "id" => $this->params[ "id" ] ]
             );
 
-            $this->session->addFlashMessage( "Position details updated" );
-            $this->session->setFlashMessages();
+            $this->request->addFlashMessage( "Position details updated" );
+            $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/position/{$this->params[ "id" ]}/" );
         }
 
         $this->view->assign( "interviews", $interviews );
         $this->view->assign( "position", $position );
-        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign( "flash_messages", $this->request->getFlashMessages() );
 
         $this->view->setTemplate( "profile/position/index.tpl" );
         $this->view->render( "App/Views/Index.php" );

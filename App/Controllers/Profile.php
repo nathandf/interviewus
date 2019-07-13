@@ -81,7 +81,7 @@ class Profile extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "name" => [
                         "required" => true
@@ -180,7 +180,7 @@ class Profile extends Controller
                 $this->request,
                 [
                     "token" => [
-                        "equals-hidden" => $this->session->getSession( "csrf-token" ),
+                        "equals-hidden" => $this->request->session( "csrf-token" ),
                         "required" => true
                     ],
                     "deployment_type_id" => [
@@ -324,8 +324,8 @@ class Profile extends Controller
                             ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
                             ->mail();
 
-                            $this->session->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                            $this->session->setFlashMessages();
+                            $this->request->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                            $this->request->setFlashMessages();
 
                             $this->view->redirect( "profile/" );
                     }
@@ -340,7 +340,7 @@ class Profile extends Controller
         $this->view->assign( "interviewees", $interviewees );
         $this->view->assign( "positions", $positions );
         $this->view->setErrorMessages( $requestValidator->getErrors() );
-        $this->view->assign( "flash_messages", $this->session->getFlashMessages() );
+        $this->view->assign( "flash_messages", $this->request->getFlashMessages() );
 
         $this->view->setTemplate( "profile/index.tpl" );
         $this->view->render( "App/Views/Index.php" );
@@ -359,7 +359,7 @@ class Profile extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "interview_id" => [
                         "required" => true,
@@ -404,7 +404,7 @@ class Profile extends Controller
                 [
                     "token" => [
                         "required" => true,
-                        "equals-hidden" => $this->session->getSession( "csrf-token" )
+                        "equals-hidden" => $this->request->session( "csrf-token" )
                     ],
                     "interview_id" => [
                         "required" => true,
