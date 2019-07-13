@@ -497,6 +497,6 @@ class Profile extends Controller
 
     public function logout()
     {
-        return [ "Profile", "logout", [] ];
+        return [ "Profile:logout", "Home:redirect", null, "" ];
     }
 }

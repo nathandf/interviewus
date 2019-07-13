@@ -23,7 +23,7 @@ class ViewDispatcher
 
         $view = $this->viewFactory->build( $this->getClassName(), $model, $container );
 
-        $view->{$this->getMethod()}( $command[ 2 ] );
+        $view->{$this->getMethod()}( $command[ 3 ] );
 
         return $view;
     }

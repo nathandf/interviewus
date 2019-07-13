@@ -17,11 +17,6 @@ class Home extends AbstractView
 		$this->setTemplate( "sign-in.tpl" );
 	}
 
-	public function loginRedirect()
-	{
-		$this->redirect( "profile/" );
-	}
-
 	public function authenticateUser()
 	{
 		if ( $this->model->user_authenticated ) {

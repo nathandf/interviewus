@@ -8,7 +8,7 @@ class Home extends Controller
 {
     public function indexAction()
     {
-        return [ null, "Home:index", [] ];
+        return [ null, "Home:index", null, null ];
     }
 
     public function signInAction()
@@ -17,7 +17,7 @@ class Home extends Controller
         $requestValidator = $this->load( "request-validator" );
 
         if ( !is_null( $userAuth->getAuthenticatedUser() ) ) {
-            return [ null, "Home:loginRedirect", [] ];
+            return [ null, "Home:redirect", null, "profile/" ];
         }
 
         if (
@@ -41,10 +41,10 @@ class Home extends Controller
                 "sign_in"
             )
         ) {
-            return [ "Home:authenticateUser", "Home:authenticateUser", [] ];
+            return [ "Home:authenticateUser", "Home:authenticateUser", null, null ];
         }
 
-        return [ null, "Home:signIn", [ "error_messages" => $requestValidator->getErrors() ] ];
+        return [ null, "Home:signIn", null, [ "error_messages" => $requestValidator->getErrors() ] ];
     }
 
     public function privacyPolicyAction()
