@@ -570,7 +570,7 @@ $container->register( "unsubscribe-repository", function() use ( $container ) {
 $container->register( "user-authenticator", function() use ( $container ) {
 	$repo = new \Model\Services\UserAuthenticator(
 		$container->getService( "user-repository" ),
-		$container->getService( "session" )
+		$container->getService( "request" )
 	);
 	return $repo;
 } );

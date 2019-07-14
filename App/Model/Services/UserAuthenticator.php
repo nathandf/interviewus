@@ -5,13 +5,13 @@ namespace Model\Services;
 class UserAuthenticator
 {
     public $userRepo;
-    public $session;
+    public $request;
     public $authenticatedUser;
 
-    public function __construct( UserRepository $userRepo, \Core\Session $session )
+    public function __construct( UserRepository $userRepo, \Core\Request $request )
     {
         $this->userRepo = $userRepo;
-        $this->session = $session;
+        $this->request = $request;
 
         // Check for a logged in user
         $this->isLoggedIn();
@@ -42,14 +42,14 @@ class UserAuthenticator
             session_destroy();
         }
 
-        $this->session->deleteCookie( "user-token" );
+        $this->request->deleteCookie( "user-token" );
     }
 
     public function logIn( \Model\Entities\User $user )
     {
-        $token = $this->session->generateToken();
-        $this->session->setSession( "user-id", $user->id );
-        $this->session->setCookie( "user-token", $token );
+        $token = $this->request->generateToken();
+        $this->request->setSession( "user-id", $user->id );
+        $this->request->setCookie( "user-token", $token );
         $this->userRepo->update(
             [ "token" => $token ],
             [ "id" => $user->id ]
@@ -58,8 +58,8 @@ class UserAuthenticator
 
     public function isLoggedIn()
     {
-        if ( $this->session->getSession( "user-id" ) ) {
-            $user = $this->userRepo->get( [ "*" ], [ "id" => $this->session->getSession( "user-id" ) ], "single" );
+        if ( $this->request->session( "user-id" ) ) {
+            $user = $this->userRepo->get( [ "*" ], [ "id" => $this->request->session( "user-id" ) ], "single" );
             if ( is_null( $user ) ) {
                 return false;
             }
@@ -67,8 +67,8 @@ class UserAuthenticator
 
             return true;
 
-        } elseif ( $this->session->getCookie( "user-token" ) ) {
-            $user = $this->userRepo->get( [ "*" ], [ "token" => $this->session->getCookie( "user-token" ) ], "single" );
+        } elseif ( $this->request->getCookie( "user-token" ) ) {
+            $user = $this->userRepo->get( [ "*" ], [ "token" => $this->request->getCookie( "user-token" ) ], "single" );
             if ( is_null( $user ) ) {
                 return false;
             }
