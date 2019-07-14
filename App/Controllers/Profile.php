@@ -101,38 +101,8 @@ class Profile extends Controller
                 "new_interviewee"
                 )
         ) {
-            $phone = $phoneRepo->insert([
-                "country_code" => $this->request->post( "country_code" ),
-                "national_number" => $this->request->post( "national_number" ),
-                "e164_phone_number" => "+" . $this->request->post( "country_code" ) . $this->request->post( "national_number" )
-            ]);
 
-            $interviewee = $intervieweeRepo->insert([
-                "organization_id" => $this->organization->id,
-                "first_name" => $this->request->post( "name" ),
-                "email" => $this->request->post( "email" ),
-                "phone_id" => $phone->id
-            ]);
-
-            // Update the first and last name
-            $interviewee->setNames( $interviewee->first_name );
-
-            if (
-                !is_null( $interviewee->getFirstName() ) &&
-                !is_null( $interviewee->getLastName() )
-            ) {
-                $intervieweeRepo->update(
-                    [
-                        "first_name" => $interviewee->getFirstName(),
-                        "last_name" => $interviewee->getLastName()
-                    ],
-                    [
-                        "id" => $interviewee->id
-                    ]
-                );
-            }
-
-            $this->view->redirect( "profile/interviewee/" . $interviewee->id . "/" );
+            return [ "Interviewee:create", "Interviewee:create", null, null ];
         }
 
         if (
@@ -151,26 +121,7 @@ class Profile extends Controller
                 "new_interview_template"
             )
         ) {
-            $interviewTemplate = $interviewTemplateRepo->insert([
-                "name" => $this->request->post( "name" ),
-                "description" => $this->request->post( "description" ),
-                "organization_id" => $this->organization->id
-            ]);
-
-            $questions = $this->request->post( "questions" );
-
-            $i = 1;
-            foreach ( $questions as $question ) {
-                $questionRepo->insert([
-                    "interview_template_id" => $interviewTemplate->id,
-                    "question_type_id" => 1,
-                    "placement" => $i,
-                    "body" => $question
-                ]);
-                $i++;
-            }
-
-            $this->view->redirect( "profile/interview-template/" . $interviewTemplate->id . "/" );
+            return [ "InterviewTemplate:create", "InterviewTemplate:create", null, null ];
         }
 
         if (
@@ -393,7 +344,6 @@ class Profile extends Controller
 
     public function shareInterviewAction()
     {
-
         $requestValidator = $this->load( "request-validator" );
         $interviewRepo = $this->load( "interview-repository" );
 

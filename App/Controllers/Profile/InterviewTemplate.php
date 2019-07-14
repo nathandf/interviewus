@@ -47,8 +47,7 @@ class InterviewTemplate extends Controller
         if ( !isset( $this->params[ "id" ] ) ) {
             $this->view->redirect( "profile/" );
         }
-
-
+        
         $requestValidator = $this->load( "request-validator" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
         $questionRepo = $this->load( "question-repository" );

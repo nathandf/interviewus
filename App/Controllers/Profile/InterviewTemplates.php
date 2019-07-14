@@ -62,28 +62,7 @@ class InterviewTemplates extends Controller
                 "new_interview_template"
             )
         ) {
-            $interviewTemplate = $interviewTemplateRepo->insert([
-                "name" => $this->request->post( "name" ),
-                "description" => $this->request->post( "description" ),
-                "organization_id" => $this->organization->id
-            ]);
-
-            $questions = $this->request->post( "questions" );
-
-            $i = 1;
-            foreach ( $questions as $question ) {
-                if ( !is_null( $question ) && $question != "" ) {
-                    $questionRepo->insert([
-                        "interview_template_id" => $interviewTemplate->id,
-                        "question_type_id" => 1,
-                        "placement" => $i,
-                        "body" => $question
-                    ]);
-                }
-                $i++;
-            }
-
-            $this->view->redirect( "profile/interview-template/" . $interviewTemplate->id . "/" );
+            return [ "InterviewTemplate:create", "InterviewTemplate:create", null, null ];
         }
 
         if (

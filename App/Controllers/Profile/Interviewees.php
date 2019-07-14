@@ -37,7 +37,7 @@ class Interviewees extends Controller
 
         $requestValidator = $this->load( "request-validator" );
 
-        $interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
+        $interviewees = array_reverse( $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
 
         foreach ( $interviewees as $interviewee ) {
             $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
@@ -71,38 +71,7 @@ class Interviewees extends Controller
                 "new_interviewee"
                 )
         ) {
-            $phone = $phoneRepo->insert([
-                "country_code" => $this->request->post( "country_code" ),
-                "national_number" => $this->request->post( "national_number" ),
-                "e164_phone_number" => "+" . $this->request->post( "country_code" ) . $this->request->post( "national_number" )
-            ]);
-
-            $interviewee = $intervieweeRepo->insert([
-                "organization_id" => $this->organization->id,
-                "first_name" => $this->request->post( "name" ),
-                "email" => $this->request->post( "email" ),
-                "phone_id" => $phone->id
-            ]);
-
-            // Update the first and last name
-            $interviewee->setNames( $interviewee->first_name );
-
-            if (
-                !is_null( $interviewee->getFirstName() ) &&
-                !is_null( $interviewee->getLastName() )
-            ) {
-                $intervieweeRepo->update(
-                    [
-                        "first_name" => $interviewee->getFirstName(),
-                        "last_name" => $interviewee->getLastName()
-                    ],
-                    [
-                        "id" => $interviewee->id
-                    ]
-                );
-            }
-
-            $this->view->redirect( "profile/interviewee/" . $interviewee->id . "/" );
+            return [ "Interviewee:create", "Interviewee:create", null, null ];
         }
 
         $this->view->assign( "interviewees", $interviewees );

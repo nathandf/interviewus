@@ -55,7 +55,7 @@ class Interviewee extends Controller
     public function indexAction()
     {
         if ( !isset( $this->params[ "id" ] ) ) {
-            $this->view->redirect( "profile/interview/new" );
+            $this->view->redirect( "profile/interviewees/" );
         }
 
 
