@@ -23,6 +23,7 @@ class SignUp extends AbstractView
         $this->assign( "fields", $fields );
 
 		$this->setTemplate( "sign-up/index.tpl" );
+		$this->render();
 	}
 
 	public function createAccount()
@@ -48,6 +49,7 @@ class SignUp extends AbstractView
         $this->assign( "fields", $fields );
 
 		$this->setTemplate( "sign-up/index.tpl" );
+		$this->render();
 	}
 
 	public function createAccountAjax()

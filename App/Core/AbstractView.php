@@ -86,6 +86,14 @@ class AbstractView extends CoreObject
         $this->assign( "flash_messages", $flash_messages );
     }
 
+    /**
+     * @param string $template
+     */
+    public function setTemplate( $template )
+    {
+        $this->template = $template;
+    }
+
     public function render( $data = null )
     {
         // assigning data from the views to the templating engine
@@ -99,14 +107,6 @@ class AbstractView extends CoreObject
             $this->templatingEngine->display( "App/templates/". $this->template );
             ob_end_flush();
         }
-    }
-
-    /**
-     * @param string $template
-     */
-    public function setTemplate( $template )
-    {
-        $this->template = $template;
     }
 
     /**
@@ -129,4 +129,8 @@ class AbstractView extends CoreObject
         $this->render( "403.shtml" );
     }
 
+    public function respondWithJson( $data )
+    {
+        echod( json_encode( $data ) );
+    }
 }

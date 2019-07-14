@@ -38,5 +38,4 @@ if ( !is_null( $command ) ) {
 	// Dispatch View
 	$viewDispatcher = $container->getService( "view-dispatcher" );
 	$view = $viewDispatcher->dispatch( $command, $model, $container );
-	$view->render();
 }

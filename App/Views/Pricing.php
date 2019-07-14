@@ -19,5 +19,6 @@ class Pricing extends AbstractView
         $this->assign( "user", $this->model->user );
 
 		$this->setTemplate( "pricing/index.tpl" );
+		$this->render();
 	}
 }

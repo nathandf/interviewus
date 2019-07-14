@@ -9,6 +9,7 @@ class Home extends AbstractView
 	public function index()
 	{
 		$this->setTemplate( "index.tpl" );
+		$this->render();
 	}
 
 	public function signIn( array $args )
@@ -20,17 +21,17 @@ class Home extends AbstractView
 	public function signInAjax( $args = null )
 	{
 		if ( !is_null( $args ) ) {
-			echod( json_encode( $args ) );
+			$this->respondWithJson( $args );
 		}
 	}
 
 	public function authenticateUserAjax()
 	{
 		if ( !is_null( $this->model->user ) ) {
-			echod( json_encode( $this->model->user ) );
+			$this->respondWithJson( $this->model->user );
 		}
 
-		echod( json_encode( [ "errors" => "Invalid Credentials" ]) );
+		$this->respondWithJson( [ "errors" => "Invalid Credentials" ] );
 	}
 
 	public function authenticateUser()
@@ -41,6 +42,7 @@ class Home extends AbstractView
 
 		$this->addErrorMessage( "sign_in", "User authentication failed" );
 		$this->setTemplate( "sign-in.tpl" );
+		$this->render();
 	}
 
 	public function termsAndConditions()

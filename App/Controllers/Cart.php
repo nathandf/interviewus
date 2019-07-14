@@ -170,7 +170,7 @@ class Cart extends Controller
                 ]);
 
                 $resp = $mailer->setTo( $this->user->email, $this->user->getFullName() )
-                    ->setFrom( "getstarted@interviewus.net", "InterviewUs" )
+                    ->setFrom( "noreply@interviewus.net", "InterviewUs" )
                     ->setSubject( "InterviewUs - Payment Confirmation" )
                     ->setContent( $emailBuilder->build( "payment-confirmation.html", $emailContext ) )
                     ->mail();
