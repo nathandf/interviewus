@@ -8,7 +8,9 @@ class I extends Controller
 {
     public function before()
     {
-        $this->requireParam( "token" );
+        if ( $this->issetParam( "token" ) === false ) {
+            return [ null, "Error:e404", null, null ];
+        }
     }
 
     public function indexAction()
@@ -193,13 +195,11 @@ class I extends Controller
 
     public function deploymentSuccessfulAction()
     {
-        $this->view->setTemplate( "i/sms-interview-deployment-success.tpl" );
-        $this->view->render( "App/Views/Index.php" );
+        return [ null, "I:deploymentSuccessful", null, null ];
     }
 
     public function interviewCompleteAction()
     {
-        $this->view->setTemplate( "i/interview-complete.tpl" );
-        $this->view->render( "App/Views/Index.php" );
+        return [ null, "I:interviewComplete", null, null ];
     }
 }

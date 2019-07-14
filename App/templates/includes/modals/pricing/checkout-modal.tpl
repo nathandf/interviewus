@@ -42,11 +42,11 @@
 				<form id="create-account-form" action="" method="post">
 					<input type="hidden" name="create_account" value="{$csrf_token}">
 					<p class="label">Name</p>
-					<input type="text" name="name" class="inp inp-full" >
+					<input type="text" name="name" class="inp inp-full" required="required">
 					<p class="label">Email</p>
-					<input type="email" name="email" class="inp inp-full" >
+					<input type="email" name="email" class="inp inp-full" required="required">
 					<p class="label">Password</p>
-					<input type="password" name="password" class="inp inp-full" >
+					<input type="password" name="password" class="inp inp-full" required="required">
 					<button id="create-account-submit" type="submit" class="button push-t-med theme-secondary-dark"><span class="text-lrg-heavy">Continue</span></button>
 				</form>
 				<div class="clear push-t-med"></div>
@@ -57,9 +57,9 @@
 				<form id="sign-in-form" action="" method="post">
 					<input type="hidden" name="sign_in" value="{$csrf_token}">
 					<p class="label">Email</p>
-					<input type="email" name="email"  autocomplete="username" class="inp inp-full" >
+					<input type="email" name="email"  autocomplete="username" class="inp inp-full" required="required">
 					<p class="label">Password</p>
-					<input type="password" name="password" autocomplete="current-password" class="inp inp-full" >
+					<input type="password" name="password" autocomplete="current-password" class="inp inp-full" required="required">
 					<button id="sign-in-submit" type="submit" class="button theme-primary push-t-med">Sign in</button>
 				</form>
 				<div class="clear push-t-med"></div>
@@ -69,7 +69,7 @@
 			<form id="checkout-form" action="" method="post">
 				<input type="hidden"  name="token" value="{$csrf_token}">
 				<input type="hidden" name="add_to_cart" value="{$csrf_token}">
-				<input type="hidden" name="plan_id" value="" >
+				<input type="hidden" name="plan_id" value="" required="required">
 				<input id="billing-frequency" type="hidden" name="billing_frequency" value="annually">
 				<div id="checkout-button-container" {if is_null( $organization ) || is_null( $user )}style="display: none;"{/if}>
 					<button id="checkout-button" type="submit" class="button theme-secondary-dark"><i class="fas fa-shopping-cart push-r-sml"></i>Checkout</button>

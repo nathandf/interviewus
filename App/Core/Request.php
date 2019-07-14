@@ -14,6 +14,11 @@ class Request
         // session
         if ( session_status() == PHP_SESSION_NONE ) {
             session_start();
+			if ( is_null( $this->session( "csrf-token" ) ) ) {
+				$this->setSession( "csrf-token", $this->generateCSRFToken() );
+			}
+
+			$this->csrf_token = $this->session( "csrf-token" );
         }
     }
 

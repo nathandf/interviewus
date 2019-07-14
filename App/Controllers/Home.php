@@ -43,7 +43,7 @@ class Home extends Controller
         ) {
             return [ "Home:authenticateUser", "Home:authenticateUser", null, null ];
         }
-
+        
         return [ null, "Home:signIn", null, [ "error_messages" => $requestValidator->getErrors() ] ];
     }
 

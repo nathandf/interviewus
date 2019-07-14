@@ -44,7 +44,7 @@ class AbstractView extends CoreObject
         $this->templatingEngine->compile_dir = "App/templates/tmp";
 
         // Set csrf token
-        $this->templatingEngine->assign( "csrf_token", $this->request->generateCSRFToken() );
+        $this->templatingEngine->assign( "csrf_token", $this->request->csrf_token );
 
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );
