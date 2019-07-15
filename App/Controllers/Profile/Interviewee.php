@@ -304,10 +304,10 @@ class Interviewee extends Controller
                             ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
                             ->mail();
 
-                            $this->request->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                            $this->request->setFlashMessages();
+                        $this->request->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                        $this->request->setFlashMessages();
 
-                            $this->view->redirect( "profile/" );
+                        $this->view->redirect( "profile/" );
                     }
                 }
             } else {

@@ -147,19 +147,8 @@ class Settings extends Controller
                 "udpate_organization"
             )
         ) {
-            $organizationRepo = $this->load( "organization-repository" );
-            $organizationRepo->update(
-                [
-                    "industry_id" => $this->request->post( "industry_id" ),
-                    "name" => $this->request->post( "organization" )
-                ],
-                [ "id" => $this->organization->id ]
-            );
 
-            $this->request->addFlashMessage( "Organization updated" );
-            $this->request->setFlashMessages();
-
-            $this->view->redirect( "profile/settings/" );
+            return [ "Organization:update", "Home:redirect", null, "profile/settings/" ];
         }
 
         if (

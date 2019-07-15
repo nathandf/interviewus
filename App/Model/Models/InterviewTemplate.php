@@ -2,8 +2,6 @@
 
 namespace Model\Models;
 
-use Core\Model;
-
 class InterviewTemplate extends ProfileModel
 {
 	public function create()

@@ -58,13 +58,8 @@ class Positions extends Controller
                 "new_position"
             )
         ) {
-            $position = $positionRepo->insert([
-                "organization_id" => $this->organization->id,
-                "name" => $this->request->post( "name" ),
-                "description" => $this->request->post( "description" )
-            ]);
 
-            $this->view->redirect( "profile/position/" . $position->id . "/" );
+            return [ "Position:create", "Position:create", null, null ];
         }
 
         $this->view->assign( "positions", $positions );
