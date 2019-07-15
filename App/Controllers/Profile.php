@@ -12,7 +12,6 @@ class Profile extends Controller
         $this->accountRepo = $this->load( "account-repository" );
         $accountUserRepo = $this->load( "account-user-repository" );
         $organizationRepo = $this->load( "organization-repository" );
-        $this->logger = $this->load( "logger" );
 
         $this->user = $userAuth->getAuthenticatedUser();
 
@@ -155,19 +154,10 @@ class Profile extends Controller
                 "archive"
             )
         ) {
-            $interviewRepo->update(
-                [ "mode" => "archived" ],
-                [ "id" => $this->request->post( "interview_id" ) ]
-            );
-
-            echo( "success" );
-            die();
-            exit();
+            return [ "Interview:archive", "Profile:respondWithJson", null, "success" ];
         }
 
-        echo( $requestValidator->getError()[ 0 ] );
-        die();
-        exit();
+        return [ null, "Profile:respondWithJson", null, $requestValidator->getErrors()[ "archive" ][ 0 ] ];
     }
 
     public function shareInterviewAction()
@@ -202,75 +192,16 @@ class Profile extends Controller
                 "share"
             )
         ) {
-            $interviewRepo = $this->load( "interview-repository" );
-            $interviewQuestionRepo = $this->load( "interview-question-repository" );
-            $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
-            $intervieweeRepo = $this->load( "interviewee-repository" );
-            $positionRepo = $this->load( "position-repository" );
-            $domainObjectFactory = $this->load( "domain-object-factory" );
-            $emailBuilder = $this->load( "email-builder" );
-            $mailer = $this->load( "mailer" );
-            $htmlInterviewResultsBuilder = $this->load( "html-interview-results-builder" );
 
-            // Compile all interview questions and their answers into one large object
-            $interview = $interviewRepo->get( [ "*" ], [ "id" => $this->request->post( "interview_id" ) ], "single" );
-
-            $interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
-            $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
-            $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
-
-            foreach ( $interview->questions as $question ) {
-                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
-            }
-
-            // Build the inteview results into a nice html form to be used in the
-            // email template
-            $html_interview_results = $htmlInterviewResultsBuilder->build( $interview );
-
-            // Parse interview recipients
-            $recipients = explode( ",", strtolower( str_replace( ", ", ",", $this->request->post( "recipients" ) ) ) );
-
-            if ( is_array( $recipients ) ) {
-                $i = 0;
-                foreach ( $recipients as $email ) {
-                    // Only send an email to the first 5 recipients...
-                    if ( $i < 5 ) {
-                        // ... and the email provided is a valid email address
-                        if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-                            // Build the email context to be used by the email template
-                            $emailContext = $domainObjectFactory->build( "EmailContext" );
-                            $emailContext->addProps([
-                                "user" =>  $this->user->getFullName(),
-                                "interviewee" => $interview->interviewee->getFullName(),
-                                "interview_results" => $html_interview_results
-                            ]);
-
-                            // Notify admin of user feedback
-                            $resp = $mailer->setTo( $email, "Contact" )
-                                ->setFrom( $this->user->email, $this->user->getFullName() )
-                                ->setSubject( "Interview Results | {$interview->interviewee->getFullName()} | {$interview->position->name}" )
-                                ->setContent( $emailBuilder->build( "interview-results.html", $emailContext ) )
-                                ->mail();
-                        }
-                    }
-                    $i++;
-                }
-            }
-
-            echo( "success" );
-            die();
-            exit();
+            return [ "Profile:shareInterview", "Profile:respondWithJson", null, "success"  ];
         }
 
         if ( isset( $requestValidator->getErrors()[ "share" ] ) == true ) {
-            echo( $requestValidator->getErrors()[ "share" ][ 0 ] );
-            die();
-            exit();
+
+            return [ null, "Profile:respondWithJson", null, $requestValidator->getErrors()[ "share" ][ 0 ]  ];
         }
 
-        echo( "failure" );
-        die();
-        exit();
+        return [ null, "Profile:respondWithJson", null, "An unknown error has occured"  ];
     }
 
     public function logout()

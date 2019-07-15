@@ -6,6 +6,18 @@ class Interview extends ProfileModel
 {
 	public $errors = [];
 
+	public function archive()
+	{
+		if ( $this->validateAccount() ) {
+			$interviewRepo = $this->load( "interview-repository" );
+
+			$interviewRepo->update(
+				[ "mode" => "archived" ],
+				[ "id" => $this->request->post( "interview_id" ) ]
+			);
+		}
+	}
+
 	public function deploy()
 	{
 		if ( $this->validateAccount() ) {
