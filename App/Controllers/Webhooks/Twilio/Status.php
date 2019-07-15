@@ -8,9 +8,7 @@ class Status extends Controller
 {
     public function index()
     {
-        
         $requestValidator = $this->load( "request-validator" );
-        $interviewQuestionRepo = $this->load( "interview-question-repository" );
 
         if (
             $this->request->is( "post" ) &&
@@ -27,10 +25,7 @@ class Status extends Controller
                 "status"
             )
         ) {
-            $interviewQuestionRepo->update(
-                [ "sms_status" => $this->request->post( "SmsStatus" ) ],
-                [ "sms_sid" => $this->request->post( "SmsSid" ) ]
-            );
+            return [ "InterviewQuestion:updateSmsStatus", "Default:index", null, null ];
         }
     }
 }

@@ -28,7 +28,7 @@ class SignUp extends AbstractView
 
 	public function createAccount()
 	{
-		// If creating the account didn't cause any errors,
+		// If creating the account didn't cause any errors
 		if ( empty( $this->model->errors ) ) {
 			$this->redirect( "profile/" );
 		} else {
