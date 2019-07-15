@@ -6,7 +6,7 @@ class Incoming extends TwilioIncomingModel
 {
 	public function sms()
 	{
-		if ( parent::validateTwilioNumber() ) {
+		if ( $this->validateTwilioNumber() ) {
 			$interviewRepo = $this->load( "interview-repository" );
 	        $conversationRepo = $this->load( "conversation-repository" );
 	        $inboundSmsRepo = $this->load( "inbound-sms-repository" );

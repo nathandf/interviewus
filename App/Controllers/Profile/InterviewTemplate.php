@@ -102,7 +102,7 @@ class InterviewTemplate extends Controller
                         }
                         $iteration++;
                     }
-                    $this->request->addFlashMessage( "Questions updated" );
+                    $this->request->addFlashMessage( "success", "Questions updated" );
                 }
             }
 
@@ -135,7 +135,7 @@ class InterviewTemplate extends Controller
                 "body" => $this->request->post( "body" )
             ]);
 
-            $this->request->addFlashMessage( "Question added" );
+            $this->request->addFlashMessage( "success", "Question added" );
             $this->request->setFlashMessages();
             $this->view->redirect( "profile/interview-template/" . $this->params[ "id" ] . "/" );
         }

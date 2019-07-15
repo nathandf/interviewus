@@ -28,7 +28,7 @@ class Organization extends ProfileModel
 				[ "id" => $this->organization->id ]
 			);
 
-			$this->request->addFlashMessage( "Organization updated" );
+			$this->request->addFlashMessage( "success", "Organization updated" );
 			$this->request->setFlashMessages();
 		}
 	}

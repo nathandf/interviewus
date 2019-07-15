@@ -275,7 +275,7 @@ class Profile extends Controller
                             ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
                             ->mail();
 
-                            $this->request->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
+                            $this->request->addFlashMessage( "success", ucfirst( $deploymentType->name ) . " interview successfully deployed" );
                             $this->request->setFlashMessages();
 
                             $this->view->redirect( "profile/" );

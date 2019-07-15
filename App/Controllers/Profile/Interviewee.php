@@ -58,7 +58,6 @@ class Interviewee extends Controller
             $this->view->redirect( "profile/interviewees/" );
         }
 
-
         $requestValidator = $this->load( "request-validator" );
         $intervieweeRepo = $this->load( "interviewee-repository" );
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
@@ -76,7 +75,7 @@ class Interviewee extends Controller
         $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
 
         // Retrieve all interviews for this interviewee
-        $interviewee->interviews = $interviewRepo->get( [ "*" ], [ "interviewee_id" => $interviewee->id ] );
+        $interviewee->interviews = array_reverse( $interviewRepo->get( [ "*" ], [ "interviewee_id" => $interviewee->id ] ) );
 
         // Get all questons for each interview
         foreach ( $interviewee->interviews as $interview ) {
@@ -143,7 +142,7 @@ class Interviewee extends Controller
                 [ "id" => $interviewee->phone_id ]
             );
 
-            $this->request->addFlashMessage( "Interviewee Updated" );
+            $this->request->addFlashMessage( "success", "Interviewee Updated" );
             $this->request->setFlashMessages();
             $this->view->redirect( "profile/interviewee/{$this->params[ "id" ]}/" );
         }
@@ -185,134 +184,7 @@ class Interviewee extends Controller
                 "deploy_interview"
             )
         ) {
-            $position = $positionRepo->get( [ "*" ], [ "id" => $this->request->post( "position_id" ) ], "single" );
-            // Create a new position if the one submitted does not exist
-            if ( $this->request->post( "position" ) != "" ) {
-                $position = $positionRepo->insert([
-                    "organization_id" => $this->organization->id,
-                    "name" => $this->request->post( "position" )
-                ]);
-            }
-
-            // Ensure account has enough of the correct interview credits to create
-            // this interview
-            $deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $this->request->post( "deployment_type_id" ) ], "single" );
-
-            if ( $this->account->validateInterviewCredit( $deploymentType ) ) {
-                // Build and dispatch the interview. Will return null if insufficient
-                // interview credits in the account
-                $interviewBuilder = $this->load( "interview-builder" );
-
-                // Set scheduled time and status if deploying later. Default status
-                // is "active"
-                if (
-                    $this->request->post( "schedule_type" ) == 2 &&
-                    $this->request->post( "date" ) != ""
-                ) {
-                    $interviewBuilder->setStatus( "scheduled" )
-                        ->setScheduledTime(
-                            $this->request->post( "date" ) . " " . $this->request->post( "Hour" ) . ":" . $this->request->post( "Minute" ) . $this->request->post( "Meridian" )
-                        );
-                }
-
-                $interview = $interviewBuilder->setIntervieweeID( $this->request->post( "interviewee_id" ) )
-                    ->setInterviewTemplateID( $this->request->post( "interview_template_id" ) )
-                    ->setDeploymentTypeID( $deploymentType->id )
-                    ->setAccount( $this->account )
-                    ->setPositionID( $position->id )
-                    ->setUserID( $this->user->id )
-                    ->setOrganizationID( $this->organization->id )
-                    ->build();
-
-                if ( !is_null( $interview ) ) {
-                    // Interview deployment flag. Default true.
-                    $interview_deployment_successful = true;
-
-                    // Debit the account of the interview credits for the deployment
-                    // type provided
-                    $this->account = $this->accountRepo->debitInterviewCredits(
-                        $this->account,
-                        $deploymentType
-                    );
-
-                    // Provision a new converation for this interview if sms deployment
-                    if ( $interview->deployment_type_id == 1 ) {
-
-                        // Get the interviewee from the inteview
-                        $interviewee = $interviewBuilder->getInterviewee();
-
-                        // Get the interviewee's phone
-                        $interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );
-
-                        // Try to create a conversation for an sms interview deployement
-                        try {
-                            // Create a new conversation between a twilio number and
-                            // the interviewee's phone number
-                            $conversation = $conversationProvisioner->provision(
-                                $interviewee->phone->e164_phone_number
-                            );
-
-                            // Update the interview with a conversation id so it can
-                            // be dispatched to the right phone number
-                            $interviewRepo->update(
-                                [ "conversation_id" => $conversation->id ],
-                                [ "id" => $interview->id ]
-                            );
-                        // An exception will be thrown if conversation limit between
-                        // the inteviewee's phone number and the twilio phone number
-                        // has been reached or if the this interviewee's phone number
-                        // currently has a conversation with every twilio phone number.
-                        // The later is unlikely but still possible.
-                        } catch ( \Exception $e ) {
-                            // Log the error and pass the error message to the view
-                            $this->logger->error( $e );
-                            $this->view->addApplicationError( $e->getMessage() );
-
-                            // Refund the account for the interview
-                            $accountProvisioner = $this->load( "account-provisioner" );
-                            $accountProvisioner->refundInterview( $this->account, $interview );
-
-                            // Remove the interview from the records
-                            $interviewRepo->delete(
-                                [ "id" ],
-                                [ $interview->id ]
-                            );
-
-                            $interview_deployment_successful = false;
-                        }
-                    }
-
-                    if ( $interview_deployment_successful && $interview->status != "scheduled" ) {
-                        // Send interviewee email prompting to start interview
-                        $mailer = $this->load( "mailer" );
-                        $emailBuilder = $this->load( "email-builder" );
-                        $domainObjectFactory = $this->load( "domain-object-factory" );
-
-                        $interviewee = $interviewBuilder->getInterviewee();
-
-                        $emailContext = $domainObjectFactory->build( "EmailContext" );
-                        $emailContext->addProps([
-                            "full_name" => $interviewee->getFullName(),
-                            "first_name" => $interviewee->getFirstName(),
-                            "interview_token" => $interview->token,
-                            "sent_by" => $this->user->getFullName()
-                        ]);
-
-                        $resp = $mailer->setTo( $interviewee->email, $interviewee->getFullName() )
-                            ->setFrom( "noreply@interviewus.net", "InterviewUs" )
-                            ->setSubject( "You have a pending interivew: {$interviewee->getFullName()}" )
-                            ->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
-                            ->mail();
-
-                        $this->request->addFlashMessage( ucfirst( $deploymentType->name ) . " interview successfully deployed" );
-                        $this->request->setFlashMessages();
-
-                        $this->view->redirect( "profile/" );
-                    }
-                }
-            } else {
-                $requestValidator->addError( "deploy_interview", "You have reached your {$deploymentType->name} interview deployment limit. Upgrade your account for more interviews." );
-            }
+            return [ "Interview:deploy", "Interviewee:deployInterview", null, null ];
         }
 
         $this->view->assign( "interviewee", $interviewee );

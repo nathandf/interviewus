@@ -6,7 +6,7 @@ class Interviewee extends ProfileModel
 {
 	public function create()
 	{
-		if ( parent::validateAccount() ) {
+		if ( $this->validateAccount() ) {
 			$phoneRepo = $this->load( "phone-repository" );
 			$intervieweeRepo = $this->load( "interviewee-repository" );
 

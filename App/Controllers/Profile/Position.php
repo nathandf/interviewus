@@ -110,7 +110,7 @@ class Position extends Controller
                 [ "id" => $this->params[ "id" ] ]
             );
 
-            $this->request->addFlashMessage( "Position details updated" );
+            $this->request->addFlashMessage( "success", "Position details updated" );
             $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/position/{$this->params[ "id" ]}/" );

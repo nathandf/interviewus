@@ -6,7 +6,7 @@ class Interviewees extends ProfileView
 {
 	public function showAll( $errors = null )
 	{
-		parent::validateAccount();
+		$this->validateAccount();
 
 		$this->assign( "countries", $this->model->countries );
 		$this->assign( "account", $this->model->account );
@@ -15,7 +15,7 @@ class Interviewees extends ProfileView
 		$this->assign( "interviewees", $this->model->interviewees );
 
 		if ( !is_null( $errors ) ) {
-			$this->assign( "error_message", $errors );
+			$this->assign( "error_messages", $errors );
 		}
 
 		$this->setTemplate( "profile/interviewees/index.tpl" );

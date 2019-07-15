@@ -10,6 +10,7 @@ abstract class Model extends CoreObject
 {
 	public $request;
 	public $container;
+	public $errors = [];
 
 	public function __construct( Request $request, DIContainer $container )
 	{

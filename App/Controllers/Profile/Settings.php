@@ -117,7 +117,7 @@ class Settings extends Controller
                         );
                     }
 
-                    $this->request->addFlashMessage( "Payment Method Added" );
+                    $this->request->addFlashMessage( "success", "Payment Method Added" );
                     $this->request->setFlashMessages();
                 }
 
@@ -199,7 +199,7 @@ class Settings extends Controller
                     );
                 }
 
-                $this->request->addFlashMessage( "Default payment method updated" );
+                $this->request->addFlashMessage( "success", "Default payment method updated" );
                 $this->request->setFlashMessages();
 
                 $this->view->redirect( "profile/settings/" );
@@ -245,7 +245,7 @@ class Settings extends Controller
                 );
             }
 
-            $this->request->addFlashMessage( "Payment Method Deleted" );
+            $this->request->addFlashMessage( "success", "Payment Method Deleted" );
             $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/settings/" );
@@ -276,7 +276,7 @@ class Settings extends Controller
                 [ "id" => $this->account->id ]
             );
 
-            $this->request->addFlashMessage( "Subscription successfully canceled." );
+            $this->request->addFlashMessage( "success", "Subscription successfully canceled." );
             $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/settings/" );

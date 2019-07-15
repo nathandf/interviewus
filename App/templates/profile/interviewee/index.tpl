@@ -12,6 +12,7 @@
 			<a href="{$HOME}profile/interviewees/" class="btn btn-inline theme-primary "><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Interviewees</a>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
+		{include file="includes/snippets/flash-messages.tpl"}
 		{if !empty($error_messages.deploy_interview)}
 			{foreach from=$error_messages.deploy_interview item=message}
 				<div class="con-message-failure mat-hov cursor-pt --c-hide">

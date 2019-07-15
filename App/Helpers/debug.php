@@ -1,6 +1,6 @@
 <?php
 
-    function vdump( $input ) {
+    function vdp( $input ) {
         echo "<pre>";
         var_dump( $input );
         echo "</pre><br>";

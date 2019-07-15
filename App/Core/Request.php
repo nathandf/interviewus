@@ -172,14 +172,20 @@ class Request
         return null;
     }
 
-    public function addFlashMessage( $message )
+    public function addFlashMessage( $type, $message )
     {
-        $this->flash_messages[] = $message;
+		$flash_message_types = [ "error", "alert", "notification", "success" ];
+
+		if ( !in_array( $type, $flash_message_types ) ) {
+			throw new \Exception( "Provided 'flash message type' is invalid. Provided type: '{$type}' | Valid types: " . implode( ", ", $flash_message_types ) );
+		}
+
+		$this->flash_messages[ $type ][] = $message;
     }
 
     public function setFlashMessages()
     {
-        $this->setSession( "flash_messages", $this->flash_messages );
+        $this->setSession( "flash_messages", json_encode( $this->flash_messages ) );
     }
 
     public function getFlashMessages()
@@ -188,7 +194,8 @@ class Request
             $flash_messages = $_SESSION[ "flash_messages"];
             unset( $_SESSION[ "flash_messages" ] );
 
-            return $flash_messages;
+			// Decode json flash messages into an associative array
+            return json_decode( $flash_messages, true );
         }
 
         return [];

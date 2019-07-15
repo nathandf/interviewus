@@ -102,7 +102,7 @@ class InterviewTemplates extends Controller
                 ]);
             }
 
-            $this->request->addFlashMessage( "Duplicated: {$newInterviewTemplate->name}" );
+            $this->request->addFlashMessage( "success", "Duplicated: {$newInterviewTemplate->name}" );
             $this->request->setFlashMessages();
 
             $this->view->redirect( "profile/interview-template/{$newInterviewTemplate->id}/" );
