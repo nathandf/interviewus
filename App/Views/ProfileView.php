@@ -15,5 +15,12 @@ class ProfileView extends AbstractView
 		if ( !$this->model->account_validated ) {
 			$this->redirect( "sign-in" );
 		}
+
+		// Assign the data related to account validation from the model
+		$this->assign( "countries", $this->model->countries );
+		$this->assign( "account", $this->model->account );
+		$this->assign( "organization", $this->model->organization );
+		$this->assign( "user", $this->model->user );
+		$this->assign( "interviewees", $this->model->interviewees );
 	}
 }

@@ -12,7 +12,7 @@
 	<div class="con-cnt-med-plus-plus push-b-lrg pad-med border-std bg-white">
 		{if !empty($error_messages.purchase)}
 			{foreach from=$error_messages.purchase item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}

@@ -6,7 +6,7 @@ class InterviewTemplate extends ProfileModel
 {
 	public function create()
 	{
-		if ( parent::validateAccount() ) {
+		if ( $this->validateAccount() ) {
 			$interviewTemplateRepo = $this->load( "interview-template-repository" );
 			$questionRepo = $this->load( "question-repository" );
 

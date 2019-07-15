@@ -15,14 +15,14 @@
 		{include file="includes/snippets/flash-messages.tpl"}
 		{if !empty($error_messages.deploy_interview)}
 			{foreach from=$error_messages.deploy_interview item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
 		{/if}
 		{if !empty($error_messages.update_interviewee)}
 			{foreach from=$error_messages.update_interviewee item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}

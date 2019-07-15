@@ -8,7 +8,7 @@ class Position extends ProfileModel
 {
 	public function create()
 	{
-		if ( parent::validateAccount() ) {
+		if ( $this->validate Account() ) {
 			$positionRepo = $this->load( "position-repository" );
 
 			$this->position = $positionRepo->insert([

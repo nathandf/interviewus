@@ -7,7 +7,7 @@
     }
 
     function vdumpd( $input ) {
-        vdump( $input );
+        vdp( $input );
         die();
         exit();
     }

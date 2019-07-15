@@ -12,7 +12,7 @@
 		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.new_position)}
 			{foreach from=$error_messages.new_position item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}

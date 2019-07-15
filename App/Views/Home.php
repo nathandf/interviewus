@@ -16,6 +16,7 @@ class Home extends AbstractView
 	{
 		$this->setErrorMessages( $args[ "error_messages" ] );
 		$this->setTemplate( "sign-in.tpl" );
+		$this->render();
 	}
 
 	public function signInAjax( $args = null )
