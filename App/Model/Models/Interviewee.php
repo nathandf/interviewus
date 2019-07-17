@@ -4,41 +4,41 @@ namespace Model\Models;
 
 class Interviewee extends ProfileModel
 {
-	public function index( array $data )
+	public function index()
 	{
 		if ( $this->validateAccount() ) {
-			$interviewee_id = $data[ 0 ];
-			$organization_id = $data[ 1 ];
-
 			$intervieweeRepo = $this->load( "interviewee-repository" );
-	        $interviewTemplateRepo = $this->load( "interview-template-repository" );
-	        $interviewQuestionRepo = $this->load( "interview-question-repository" );
-	        $positionRepo = $this->load( "position-repository" );
-	        $interviewRepo = $this->load( "interview-repository" );
-	        $intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
-	        $deploymentTypeRepo = $this->load( "deployment-type-repository" );
-	        $phoneRepo = $this->load( "phone-repository" );
-	        $this->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interviewee_id ], "single" );
+	        $this->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->request->params( "id" ) ], "single" );
+
+			$phoneRepo = $this->load( "phone-repository" );
 	        $this->interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $this->interviewee->phone_id ], "single" );
 
 	        // Retrieve all interviews for this interviewee
+			$interviewRepo = $this->load( "interview-repository" );
 	        $this->interviewee->interviews = $interviewRepo->get( [ "*" ], [ "interviewee_id" => $this->interviewee->id ] );
 
 	        // Get all questons for each interview
+			$deploymentTypeRepo = $this->load( "deployment-type-repository" );
+			$positionRepo = $this->load( "position-repository" );
+	        $interviewQuestionRepo = $this->load( "interview-question-repository" );
+
 	        foreach ( $this->interviewee->interviews as $interview ) {
 	            $interview->deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $interview->deployment_type_id ], "single" );
 	            $interview->position = $positionRepo->get( [ "*" ], [ "id" => $interview->position_id ], "single" );
 	            $interview->questions = $interviewQuestionRepo->get( [ "*" ], [ "interview_id" => $interview->id ] );
-	            // Get all interview questions
+
+				// Get all interview questions
+				$intervieweeAnswerRepo = $this->load( "interviewee-answer-repository" );
 	            foreach ( $interview->questions as $question ) {
 	                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
 	            }
 	        }
 
 	        // Get all interview templates
-	        $this->interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $organization_id ] );
+			$interviewTemplateRepo = $this->load( "interview-template-repository" );
+			$this->interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
-	        $this->positions = $positionRepo->get( [ "*" ], [ "organization_id" => $organization_id ] );
+	        $this->positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 		}
 	}
 
@@ -81,12 +81,12 @@ class Interviewee extends ProfileModel
 		}
 	}
 
-	public function update( $interviewee_id )
+	public function update()
 	{
 		if ( $this->validateAccount() ) {
 			$intervieweeRepo = $this->load( "interviewee-repository" );
 
-			$interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interviewee_id ], "single" );
+			$interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->request->params( "id" ) ], "single" );
 			$intervieweeRepo->update(
 				[
 					"first_name" => $this->request->post( "first_name" ),

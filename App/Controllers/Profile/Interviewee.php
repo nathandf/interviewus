@@ -10,7 +10,6 @@ class Interviewee extends Controller
     {
         $userAuth = $this->load( "user-authenticator" );
         $organizationRepo = $this->load( "organization-repository" );
-        $intervieweeRepo = $this->load( "interviewee-repository" );
 
         $this->user = $userAuth->getAuthenticatedUser();
 
@@ -21,14 +20,10 @@ class Interviewee extends Controller
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
 
         // Ensure the current interviewee is owned by this organization
-        if (
-            isset( $this->params[ "id" ] ) &&
-            !in_array(
-                $this->params[ "id" ],
-                $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-            )
-        ) {
-            return [ null, "DefaultView:redirect", null, "profile/" ];
+        $intervieweeRepo = $this->load( "interviewee-repository" );
+        $interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $this->params[ "id" ], "organization_id" => $this->organization->id ], "single" );
+        if ( is_null( $interviewee ) ) {
+            return [ null, "Error:e404", null, null ];
         }
     }
 
@@ -75,7 +70,7 @@ class Interviewee extends Controller
                 "update_interviewee"
             )
         ) {
-            return [ "Interviewee:update", "Interviewee:redirect", $this->params[ "id" ], "profile/interviewee/{$this->params[ "id" ]}/" ];
+            return [ "Interviewee:update", "Interviewee:redirect", null, "profile/interviewee/{$this->params[ "id" ]}/" ];
         }
 
         if (
@@ -118,6 +113,6 @@ class Interviewee extends Controller
             return [ "Interview:deploy", "Interviewee:deployInterview", null, null ];
         }
 
-        return [ "Interviewee:index", "Interviewee:index", [ $this->params[ "id" ], $this->organization->id ], $requestValidator->getErrors() ];
+        return [ "Interviewee:index", "Interviewee:index", null, $requestValidator->getErrors() ];
     }
 }

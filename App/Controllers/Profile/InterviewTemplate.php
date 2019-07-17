@@ -9,7 +9,7 @@ class InterviewTemplate extends Controller
     public function before()
     {
         if ( !isset( $this->params[ "id" ] ) ) {
-            return [ null, "DefaultView:redirect", null, "profile/" ];
+            return [ null, "Error:e404", null, null ];
         }
 
         $userAuth = $this->load( "user-authenticator" );
