@@ -9,31 +9,28 @@ class InterviewTemplate extends Controller
     public function before()
     {
         if ( !isset( $this->params[ "id" ] ) ) {
-            return [ null, "Profile:redirect", null, "sign-in" ];
+            return [ null, "DefaultView:redirect", null, "profile/" ];
         }
 
         $userAuth = $this->load( "user-authenticator" );
-
         $this->user = $userAuth->getAuthenticatedUser();
 
         if ( is_null( $this->user ) ) {
-            return [ null, "Profile:redirect", null, "sign-in" ];
+            return [ null, "DefaultView:redirect", null, "sign-in" ];
         }
 
         $accountRepo = $this->load( "account-repository" );
-        $organizationRepo = $this->load( "organization-repository" );
-
         $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
 
+        $organizationRepo = $this->load( "organization-repository" );
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
 
         // Ensure the current interview template is owned by this organization
         $interviewTemplateRepo = $this->load( "interview-template-repository" );
-
         $interviewTemplate = $interviewTemplateRepo->get( [ "*" ], [ "id" => $this->params[ "id" ], "organization_id" => $this->organization->id ], "single" );
 
         if ( is_null( $interviewTemplate ) ) {
-            return [ null, "Profile:redirect", null, "profile/" ];
+            return [ null, "DefaultView:redirect", null, "profile/" ];
         }
     }
 
@@ -65,7 +62,7 @@ class InterviewTemplate extends Controller
                 "update_template"
             )
         ) {
-            return [ "InterviewTemplate:update", "Profile:redirect", null, "profile/interview-template/{$this->params[ "id" ]}/" ];
+            return [ "InterviewTemplate:update", "DefaultView:redirect", null, "profile/interview-template/{$this->params[ "id" ]}/" ];
         }
 
         // Add new questions to the interivew template
@@ -87,7 +84,7 @@ class InterviewTemplate extends Controller
             )
         ) {
 
-            return [ "InterviewTemplate:addQuestion", "Profile:redirect", [ $this->params[ "id" ] ], "profile/interview-template/{$this->params[ "id" ]}/" ];
+            return [ "InterviewTemplate:addQuestion", "DefaultView:redirect", null, "profile/interview-template/{$this->params[ "id" ]}/" ];
         }
 
         return [ "InterviewTemplate:index", "InterviewTemplate:index", null, $requestValidator->getErrors() ];

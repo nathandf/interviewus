@@ -15,7 +15,7 @@ class Interviewee extends Controller
         $this->user = $userAuth->getAuthenticatedUser();
 
         if ( is_null( $this->user ) ) {
-            return [ null, "Profile:redirect", null, "sign-in" ];
+            return [ null, "DefaultView:redirect", null, "sign-in" ];
         }
 
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
@@ -28,14 +28,14 @@ class Interviewee extends Controller
                 $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
             )
         ) {
-            return [ null, "Profile:redirect", null, "profile" ];
+            return [ null, "DefaultView:redirect", null, "profile/" ];
         }
     }
 
     public function indexAction()
     {
         if ( !isset( $this->params[ "id" ] ) ) {
-            return [ null, "Profile:redirect", null, "profile/" ];
+            return [ null, "DefaultView:redirect", null, "profile/" ];
         }
 
         $requestValidator = $this->load( "request-validator" );

@@ -3,9 +3,24 @@
 namespace Views;
 
 use Core\AbstractView;
+use Core\Model;
+use Core\DIContainer;
 
 class ProfileView extends AbstractView
 {
+	public function __construct( Model $model, DIContainer $container )
+	{
+		parent::__construct( $model, $container );
+
+		// Require that all Models passed as arguments extend class ProfileModel
+		if (
+            !is_null( $this->model ) &&
+            !is_a( $model, "Model\Models\ProfileModel" )
+        ) {
+            throw new \Exception( "ProfileView expects model of class ProfileModel as an argument." );
+        }
+	}
+
 	protected function validateAccount()
 	{
 		if ( isset( $this->model->account_validated ) === false ) {
