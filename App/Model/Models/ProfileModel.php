@@ -18,7 +18,7 @@ class ProfileModel extends Model
         $this->logger = $this->load( "logger" );
 
         $this->user = $userAuth->getAuthenticatedUser();
-
+		
         if ( is_null( $this->user ) ) {
             return $this->account_validated;
         }

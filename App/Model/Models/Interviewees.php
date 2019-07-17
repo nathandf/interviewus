@@ -10,7 +10,7 @@ class Interviewees extends ProfileModel
 			$intervieweeRepo = $this->load( "interviewee-repository" );
 			$phoneRepo = $this->load( "phone-repository" );
 
-			$this->interviewees = array_reverse( $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] ) );
+			$this->interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
 			foreach ( $this->interviewees as $interviewee ) {
 				$interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $interviewee->phone_id ], "single" );

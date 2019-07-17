@@ -21,6 +21,5 @@ class ProfileView extends AbstractView
 		$this->assign( "account", $this->model->account );
 		$this->assign( "organization", $this->model->organization );
 		$this->assign( "user", $this->model->user );
-		$this->assign( "interviewees", $this->model->interviewees );
 	}
 }
