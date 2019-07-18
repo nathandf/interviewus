@@ -7,7 +7,7 @@
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
 	<div class="con-cnt-lrg pad-med push-t-med push-b-lrg">
-		<p class="title title-h2">Sorry. *waves hand* This is not the interview you were looking for.</p>
+		<p class="title title-h2">*waves hand* This is not the interview you were looking for.</p>
 	</div>
 {/block}
 
