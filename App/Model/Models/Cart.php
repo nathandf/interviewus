@@ -63,7 +63,7 @@ class Cart extends Model
             $product->plan = $planRepo->get( [ "*" ], [ "id" => $product->plan_id ], "single" );
         }
 
-        // If a subscription exists, update it. If not, create a subscription
+		// If a subscription exists, update it. If not, create a subscription
         // using payment method nonce
         $braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
 
