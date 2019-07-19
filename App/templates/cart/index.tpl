@@ -17,6 +17,7 @@
 				</div>
 			{/foreach}
 		{/if}
+		{include file="includes/snippets/flash-messages.tpl"}
 		{foreach from=$cart->products item=product name=product_loop}
 		<h2><i class="fas fa-shopping-cart push-r-sml"></i>Cart</h2>
 		<p class="label">Plan: {ucfirst( $product->plan->name )} - {$product->plan->braintree_plan_id}</p>
