@@ -13,28 +13,10 @@ class SignUp extends Controller
         // Form validation
         if (
             $this->request->is( "post" ) &&
+            $this->request->post( "create_account" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "create_account" => [
-                        "required" => true
-                    ],
-                    "name" => [
-                        "required" => true
-                    ],
-                    "email" => [
-                        "required" => true,
-                        "email" => true
-                    ],
-                    "password" => [
-                        "required" => true,
-                        "min" => 6
-                    ]
-                ],
+                new \Model\Validations\Account( $this->request->session( "csrf-token" ) ),
                 "create_account"
             )
         ) {

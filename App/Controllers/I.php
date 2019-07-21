@@ -49,12 +49,7 @@ class I extends Controller
             $this->request->post( "start_interview" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ]
-                ],
+                new \Model\Validations\CSRFOnly( $this->request->session( "csrf-token" ) ),
                 "start_interview"
             )
         ) {
@@ -66,16 +61,7 @@ class I extends Controller
             $this->request->post( "web_interview" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" ),
-                        "required" => true
-                    ],
-                    "interviewee_answers" => [
-                        "required" => true,
-                        "is_array" => true
-                    ]
-                ],
+                new \Model\Validations\IntervieweeWebInterview( $this->request->session( "csrf-token" ) ),
                 "web_interview"
             )
         ) {
