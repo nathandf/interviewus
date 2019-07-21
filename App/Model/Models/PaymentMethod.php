@@ -14,7 +14,7 @@ class PaymentMethod extends ProfileModel
 			$braintreePaymentMethodRepo = $this->load( "braintree-payment-method-repository" );
 			$result = $braintreePaymentMethodRepo->create(
                 $this->account->braintree_customer_id,
-                $this->request->post( "payment_method_nonce" )
+                $this->request->get( "payment_method_nonce" )
             );
 
             if ( $result->success ) {
@@ -51,7 +51,7 @@ class PaymentMethod extends ProfileModel
                     );
 
                     // If a subscription exists, make this payment method the default
-					$braintreeSubscriptionRepo = $this->load( "braintree-payment-method-repository" );
+					$braintreeSubscriptionRepo = $this->load( "braintree-subscription-repository" );
                     if ( !is_null( $this->account->braintree_subscription_id ) ) {
                         $braintreeSubscriptionRepo->updatePaymentMethod(
                             $this->account->braintree_subscription_id,

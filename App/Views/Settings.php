@@ -26,7 +26,7 @@ class Settings extends ProfileView
 		$this->validateAccount();
 
 		if ( empty( $this->model->errors ) ) {
-			$this->redirect( "profile/settings" );
+			$this->redirect( "profile/settings/" );
 		}
 
         $this->assign( "flash_messages", $this->model->request->getFlashMessages() );
