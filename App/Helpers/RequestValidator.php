@@ -14,8 +14,15 @@ class RequestValidator
 		$this->required_fields = $fields;
 	}
 
-	public function validate( Request $request, array $fields, $error_index )
+	public function validate( Request $request, $rules, $error_index )
 	{
+		if ( !is_array( $rules ) ) {
+			if ( !( $rules instanceof \Contracts\RulesetInterface ) ) {
+				throw new \Exception( "RuleSet provided must be an instance of 'RuleSetInterface'" );
+			}
+			$rules = $rules->getRules();
+		}
+
 		$method = strtolower( $request->method() );
 		if ( !in_array( $method, [ "post", "get" ] ) ) {
 			throw new \Exception( "Method provided is not 'post' or 'get'" );

@@ -35,26 +35,7 @@ class Profile extends Controller
             $this->request->post( "new_interviewee" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "name" => [
-                        "required" => true
-                    ],
-                    "email" => [
-                        "required" => true,
-                        "email" => true
-                    ],
-                    "country_code" => [
-                        "required" => true
-                    ],
-                    "national_number" => [
-                        "required" => true,
-                        "phone" => true
-                    ]
-                ],
+                new \Model\Validations\Interviewee( $this->request->session( "csrf-token" ) ),
                 "new_interviewee"
                 )
         ) {
