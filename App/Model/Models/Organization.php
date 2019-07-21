@@ -6,7 +6,7 @@ class Organization extends ProfileModel
 {
 	public function create()
 	{
-		if ( $this->validate Account() ) {
+		if ( $this->validateAccount() ) {
 			$organizationRepo = $this->load( "organization-repository" );
 
 			$this->newOrganization = $organizationRepo->insert([
@@ -18,7 +18,7 @@ class Organization extends ProfileModel
 
 	public function update()
 	{
-		if ( $this->validate Account() ) {
+		if ( $this->validateAccount() ) {
 			$organizationRepo = $this->load( "organization-repository" );
 			$organizationRepo->update(
 				[
