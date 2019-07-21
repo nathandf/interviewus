@@ -19,12 +19,7 @@ class Cron extends Controller
 			$this->request->is( "get" ) &&
 			$requestValidator->validate(
 				$this->request,
-				[
-					"cron-token" => [
-						"required" => true,
-						"equals" => "1234"
-					]
-				],
+				new Model\Validations\Cron,
 				"dispatch_pending_interviews"
 			)
 		) {
@@ -41,12 +36,7 @@ class Cron extends Controller
 			$this->request->is( "get" ) &&
 			$requestValidator->validate(
 				$this->request,
-				[
-					"cron-token" => [
-						"required" => true,
-						"equals" => "1234"
-					]
-				],
+				new Model\Validations\Cron,
 				"dispatch_sms_interview_questions"
 			)
 		) {

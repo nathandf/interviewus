@@ -25,19 +25,7 @@ class Home extends Controller
             $this->request->post( "sign_in" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "email" => [
-                        "required" => true,
-                        "email" => true
-                    ],
-                    "password" => [
-                        "required" => true
-                    ],
-                ],
+                new \Model\Validations\SignIn( $this->request->session( "csrf-token" ) ),
                 "sign_in"
             )
         ) {

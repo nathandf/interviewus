@@ -78,35 +78,12 @@ class Interviewee extends Controller
             $this->request->post( "deploy-interview" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" ),
-                        "required" => true
-                    ],
-                    "deployment_type_id" => [
-                        "required" => true,
-                        "in_array" => [ 1, 2 ]
-                    ],
-                    "interviewee_id" => [
-                        "required" => true,
-                        "in_array" => $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ],
-                    "position_id" => [
-                        "in_array" => $positionRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ],
-                    "interview_template_id" => [
-                        "required" => true,
-                        "in_array" => $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ],
-                    "schedule_type" => [
-                        "required" => true,
-                        "in_array" => [ 1, 2 ]
-                    ],
-                    "date" => [],
-                    "Hour" => [],
-                    "Minute" => [],
-                    "Meridian" => []
-                ],
+                new \Model\Validations\InterviewDeployment(
+                    $this->request->session( "csrf-token" ),
+                    $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" ),
+                    $positionRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" ),
+                    $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                ),
                 "deploy_interview"
             )
         ) {

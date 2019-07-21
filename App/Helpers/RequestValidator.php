@@ -20,14 +20,14 @@ class RequestValidator
 			if ( !( $rules instanceof \Contracts\RulesetInterface ) ) {
 				throw new \Exception( "RuleSet provided must be an instance of 'RuleSetInterface'" );
 			}
-			$rules = $rules->getRules();
+			$rule_set = $rules->getRuleSet();
 		}
 
 		$method = strtolower( $request->method() );
 		if ( !in_array( $method, [ "post", "get" ] ) ) {
 			throw new \Exception( "Method provided is not 'post' or 'get'" );
 		}
-		foreach ( $fields as $field => $rules ) {
+		foreach ( $rule_set as $field => $rules ) {
 			// Grabbing data from the input for specified field if field is set
 			// Prepare data for validation. N-Depth
 			$value = $this->prepare( $request->{$method}( $field ) );

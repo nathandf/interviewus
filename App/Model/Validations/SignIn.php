@@ -2,29 +2,21 @@
 
 namespace Model\Validations;
 
-class Interviewee extends RuleSet
+class SignIn extends RuleSet
 {
-	public function __construct( $csrf_token )
-	{
+	public function __construct( $csrf_token ) {
 		$this->setRuleSet([
 			"token" => [
 				"required" => true,
 				"equals-hidden" => $csrf_token
 			],
-			"name" => [
-				"required" => true
-			],
 			"email" => [
 				"required" => true,
 				"email" => true
 			],
-			"country_code" => [
+			"password" => [
 				"required" => true
 			],
-			"national_number" => [
-				"required" => true,
-				"phone" => true
-			]
 		]);
 	}
 }

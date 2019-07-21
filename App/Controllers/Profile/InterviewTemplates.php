@@ -33,20 +33,7 @@ class InterviewTemplates extends Controller
             $this->request->post( "new_interview_template" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "name" => [
-                        "required" => true
-                    ],
-                    "description" => [],
-                    "questions" => [
-                        "required" => true,
-                        "is_array" => true
-                    ]
-                ],
+                new \Model\Validations\InterviewTemplate( $this->request->session( "csrf-token" ) ),
                 "new_interview_template"
             )
         ) {
@@ -58,16 +45,10 @@ class InterviewTemplates extends Controller
             $this->request->post( "duplicate_interview_template" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "interview_template_id" => [
-                        "requried" => true,
-                        "in_array" => $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ]
-                ],
+                new \Model\Validations\InterviewTemplateDuplication(
+                    $this->request->session( "csrf-token" ),
+                    $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                ),
                 "duplicate_interview_template"
             )
         ) {

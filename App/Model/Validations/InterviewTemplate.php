@@ -14,16 +14,10 @@ class Interviewee extends RuleSet
 			"name" => [
 				"required" => true
 			],
-			"email" => [
+			"description" => [],
+			"questions" => [
 				"required" => true,
-				"email" => true
-			],
-			"country_code" => [
-				"required" => true
-			],
-			"national_number" => [
-				"required" => true,
-				"phone" => true
+				"is_array" => true
 			]
 		]);
 	}

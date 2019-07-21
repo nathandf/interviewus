@@ -4,6 +4,6 @@ namespace Contracts;
 
 interface RuleSetInterface
 {
-	public function setRules( array $rules );
-	public function getRules();
+	public function setRuleSet( array $rule_set );
+	public function getRuleSet();
 }

@@ -48,14 +48,7 @@ class Profile extends Controller
             $this->request->post( "new_interview_template" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "name" => [],
-                    "description" => [],
-                    "questions" => [
-                        "required" => true,
-                        "is_array" => true
-                    ]
-                ],
+                new \Model\Validations\InterviewTemplate( $this->request->session( "csrf-token" ) ),
                 "new_interview_template"
             )
         ) {
@@ -68,35 +61,12 @@ class Profile extends Controller
             $this->request->post( "deploy-interview" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" ),
-                        "required" => true
-                    ],
-                    "deployment_type_id" => [
-                        "required" => true,
-                        "in_array" => [ 1, 2 ]
-                    ],
-                    "interviewee_id" => [
-                        "required" => true,
-                        "in_array" => $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ],
-                    "position_id" => [
-                        "in_array" => $positionRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ],
-                    "interview_template_id" => [
-                        "required" => true,
-                        "in_array" => $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
-                    ],
-                    "schedule_type" => [
-                        "required" => true,
-                        "in_array" => [ 1, 2 ]
-                    ],
-                    "date" => [],
-                    "Hour" => [],
-                    "Minute" => [],
-                    "Meridian" => []
-                ],
+                new \Model\Validations\InterviewDeployment(
+                    $this->request->session( "csrf-token" ),
+                    $intervieweeRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" ),
+                    $positionRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" ),
+                    $interviewTemplateRepo->get( [ "id" ], [ "organization_id" => $this->organization->id ], "raw" )
+                ),
                 "deploy_interview"
             )
         ) {
@@ -115,23 +85,17 @@ class Profile extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "interview_id" => [
-                        "required" => true,
-                        "in_array" => $interviewRepo->get(
-                            [ "id" ],
-                            [
-                                "id" => $this->request->post( "interview_id" ),
-                                "organization_id" => $this->organization->id
-                            ],
-                            "raw"
-                        )
-                    ],
-                ],
+                new \Model\Validations\ArchiveInterview(
+                    $this->request->session( "csrf-token" ),
+                    $interviewRepo->get(
+                        [ "id" ],
+                        [
+                            "id" => $this->request->post( "interview_id" ),
+                            "organization_id" => $this->organization->id
+                        ],
+                        "raw"
+                    )
+                ),
                 "archive"
             )
         ) {
@@ -150,26 +114,17 @@ class Profile extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "interview_id" => [
-                        "required" => true,
-                        "in_array" => $interviewRepo->get(
-                            [ "id" ],
-                            [
-                                "id" => $this->request->post( "interview_id" ),
-                                "organization_id" => $this->organization->id
-                            ],
-                            "raw"
-                        )
-                    ],
-                    "recipients" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\ShareInterview(
+                    $this->request->session( "csrf-token" ),
+                    $interviewRepo->get(
+                        [ "id" ],
+                        [
+                            "id" => $this->request->post( "interview_id" ),
+                            "organization_id" => $this->organization->id
+                        ],
+                        "raw"
+                    )
+                ),
                 "share"
             )
         ) {

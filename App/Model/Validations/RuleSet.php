@@ -6,16 +6,16 @@ use Contracts\RuleSetInterface;
 
 abstract class RuleSet implements RuleSetInterface
 {
-	private $rules = [];
+	private $rule_set = [];
 
-	public function setRules( array $rules )
+	public function setRuleSet( array $rule_set )
 	{
-		$this->rules = $rules;
+		$this->rule_set = $rule_set;
 		return $this;
 	}
 
-	public function getRules()
+	public function getRuleSet()
 	{
-		return $this->rules;
+		return $this->rule_set;
 	}
 }
