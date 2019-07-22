@@ -45,7 +45,7 @@
 			<div class="pad-sml-mob-neg"></div>
 			<div class="account-details-inner-container">
 				<div class="account-details-tag adt-first">
-					<div class="account-details-icon tc-teal">
+					<div class="account-details-icon sms">
 						<i class="fas fa-2x fa-sms"></i>
 					</div>
 					<div class="account-details">
@@ -81,7 +81,7 @@
 							<i class="far fa-comment"></i>
 						</div>
 						{else}
-						<div class="thumbnail-med theme-primary">
+						<div class="thumbnail-med tc-white bg-teal">
 							<i class="fa fa-globe"></i>
 						</div>
 						{/if}
