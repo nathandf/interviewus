@@ -39,6 +39,12 @@ class I extends Model
 		if ( $this->interview->status == "pending" ) {
 			$interviewDispatcher = $this->load( "interview-dispatcher" );
 			$interviewDispatcher->dispatch( $this->interview );
+
+			// Update the start time
+			$interviewRepo->update(
+				[ "start_time" => date( "M j, Y \@ g:i:s a" ) ],
+				[ "id" => $this->interview->id ]
+			);
 		}
 	}
 
