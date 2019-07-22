@@ -19,20 +19,10 @@ class Pricing extends Controller
             $this->request->post( "add_to_cart" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "plan_id" => [
-                        "required" => true,
-                        "in_array" => $planRepo->get( [ "id" ], [], "raw" )
-                    ],
-                    "billing_frequency" => [
-                        "required" => true,
-                        "in_array" => [ "annually", "monthly" ]
-                    ]
-                ],
+                new \Model\Validations\AddToCart(
+                    $this->request->session( "csrf-token" ),
+                    $planRepo->get( [ "id" ], [], "raw" )
+                ),
                 "add_to_cart"
             )
         ) {
@@ -56,16 +46,7 @@ class Pricing extends Controller
             $this->request->post( "sign_in" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "email" => [
-                        "required" => true,
-                        "email" => true
-                    ],
-                    "password" => [
-                        "required" => true,
-                        "min" => 3
-                    ]
-                ],
+                new \Model\Validations\SignIn( $this->request->session( "csrf-token" ) ),
                 "ajax_sign_in"
             )
         ) {
@@ -85,19 +66,7 @@ class Pricing extends Controller
             $this->request->post( "create_account" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "name" => [
-                        "required" => true
-                    ],
-                    "email" => [
-                        "required" => true,
-                        "email" => true
-                    ],
-                    "password" => [
-                        "required" => true,
-                        "min" => 6
-                    ]
-                ],
+                new \Model\Validations\Account( $this->request->session( "csrf-token" ) ),
                 "create_account"
             )
         ) {

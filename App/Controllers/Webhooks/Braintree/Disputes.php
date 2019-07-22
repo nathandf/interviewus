@@ -14,14 +14,7 @@ class Disputes extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "bt_signature" => [
-                        "required" => true
-                    ],
-                    "bt_payload" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\BraintreeWebhookNotification,
                 "braintree_dispute"
             )
         ) {

@@ -19,14 +19,7 @@ class Incoming extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "From" => [
-                        "required" => true
-                    ],
-                    "Body" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\IncomingSms,
                 "recieve_sms"
             )
         ) {

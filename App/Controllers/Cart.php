@@ -31,21 +31,10 @@ class Cart extends Controller
 
         if (
             $this->request->is( "get" ) &&
-            $this->request->get( "purchase" ) &&
+            $this->request->get( "purchase" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "purchase" => [
-                        "required" => true
-                    ],
-                    "payment_method_nonce" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\PaymentMethodNonce( $this->request->session( "csrf-token" ) ),
                 "purchase"
             )
         ) {

@@ -43,11 +43,6 @@ $container->register( "error", function() use ( $container ) {
 	return $error;
 } );
 
-$container->register( "session", function() {
-    $session = new Core\Session;
-    return $session;
-} );
-
 $container->register( "request", function() use ( $container ) {
 	$request = new Core\Request;
 	return $request;

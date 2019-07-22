@@ -14,24 +14,7 @@ class Downloads extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "user_id" => [
-                        "required" => true
-                    ],
-                    "account_id" => [
-                        "required" => true
-                    ],
-                    "organization_id" => [
-                        "required" => true
-                    ],
-                    "interview_id" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\InterviewDownload( $this->request->session( "csrf-token" ) ),
                 "interview_csv"
             )
         ) {

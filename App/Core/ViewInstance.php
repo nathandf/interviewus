@@ -24,7 +24,7 @@ class ViewInstance extends CoreObject
     {
         $this->setContainer( $container );
         $this->configs = $container->getService( "config" )->configs;
-        $this->session = $this->container->getService( "session" );
+        $this->request = $this->container->getService( "request" );
     }
 
     /**
@@ -55,7 +55,7 @@ class ViewInstance extends CoreObject
         $this->templatingEngine->compile_dir = "App/templates/tmp";
 
         // Set csrf token
-        $this->templatingEngine->assign( "csrf_token", $this->session->generateCSRFToken() );
+        $this->templatingEngine->assign( "csrf_token", $this->request->generateCSRFToken() );
 
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );

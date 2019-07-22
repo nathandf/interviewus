@@ -14,14 +14,7 @@ class Status extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "SmsSid" => [
-                        "required" => true
-                    ],
-                    "SmsStatus" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\SMSStatusUpdate,
                 "status"
             )
         ) {
