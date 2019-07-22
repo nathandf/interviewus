@@ -16,7 +16,7 @@
 				<p class="label">Last Name:</p>
 				<input type="text" class="inp inp-full" name="last_name" value="{$interviewee->last_name}">
 				<p class="label">Email:</p>
-				<input type="text" class="inp inp-full" name="email" value="{$interviewee->email}" required="required">
+				<input type="email" class="inp inp-full" name="email" value="{$interviewee->email}" required="required">
 				<div class="container-full-phone push-t-sml">
 					<div class="container-country-code">
 						<p class="label">Code</p>

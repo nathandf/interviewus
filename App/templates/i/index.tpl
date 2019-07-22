@@ -8,9 +8,16 @@
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
 	<div class="con-cnt-lrg push-t-lrg pad-sml-mob-neg">
+		{if !empty($error_messages.start_interview)}
+			{foreach from=$error_messages.start_interview item=message}
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
 		{if !empty($error_messages.web_interview)}
 			{foreach from=$error_messages.web_interview item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}

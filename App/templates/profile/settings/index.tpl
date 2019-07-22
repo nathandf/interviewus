@@ -10,7 +10,7 @@
 	<div class="con-cnt-xlrg pad-med push-t-med">
 		{if !empty($error_messages.update_organization)}
 			{foreach from=$error_messages.update_organization item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
@@ -45,14 +45,14 @@
 		<div class="hr-full"></div>
 		{if !empty($error_messages.update_default_payment_method)}
 			{foreach from=$error_messages.update_default_payment_method item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
 		{/if}
 		{if !empty($error_messages.remove_payment_method)}
 			{foreach from=$error_messages.remove_payment_method item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
@@ -127,7 +127,7 @@
 		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}
 			{foreach from=$error_messages.cancel_subscription item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}

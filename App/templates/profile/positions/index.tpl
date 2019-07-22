@@ -12,7 +12,7 @@
 		<div class="pad-sml-mob-neg"></div>
 		{if !empty($error_messages.new_position)}
 			{foreach from=$error_messages.new_position item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
@@ -30,7 +30,7 @@
 				</div>
 				<div class="divider"></div>
 				<div class="pad-xsml">
-					<a href="{$HOME}profile/position/{$position->id}/" class="button-text-only action tc-deep-purple">EDIT</a>
+					<a href="{$HOME}profile/position/{$position->id}/" class="button-text-only action tc-deep-purple">VIEW</a>
 				</div>
 			</div>
 			<div class="pad-sml"></div>

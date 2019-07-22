@@ -8,29 +8,17 @@ class Status extends Controller
 {
     public function index()
     {
-        $input = $this->load( "input" );
-        $inputValidator = $this->load( "input-validator" );
-        $interviewQuestionRepo = $this->load( "interview-question-repository" );
+        $requestValidator = $this->load( "request-validator" );
 
         if (
-            $input->exists() &&
-            $inputValidator->validate(
-                $input,
-                [
-                    "SmsSid" => [
-                        "required" => true
-                    ],
-                    "SmsStatus" => [
-                        "required" => true
-                    ]
-                ],
+            $this->request->is( "post" ) &&
+            $requestValidator->validate(
+                $this->request,
+                new \Model\Validations\SMSStatusUpdate,
                 "status"
             )
         ) {
-            $interviewQuestionRepo->update(
-                [ "sms_status" => $input->get( "SmsStatus" ) ],
-                [ "sms_sid" => $input->get( "SmsSid" ) ]
-            );
+            return [ "InterviewQuestion:updateSmsStatus", "Default:index", null, null ];
         }
     }
 }

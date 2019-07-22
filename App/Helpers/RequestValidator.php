@@ -1,8 +1,10 @@
 <?php
 
-namespace Core;
+namespace Helpers;
 
-class InputValidator
+use Core\Request;
+
+class RequestValidator
 {
 	private $required_fields = [];
 	public $errors = [];
@@ -12,12 +14,23 @@ class InputValidator
 		$this->required_fields = $fields;
 	}
 
-	public function validate( Input $input, array $fields, $error_index )
+	public function validate( Request $request, $rules, $error_index )
 	{
-		foreach ( $fields as $field => $rules ) {
+		if ( !is_array( $rules ) ) {
+			if ( !( $rules instanceof \Contracts\RulesetInterface ) ) {
+				throw new \Exception( "RuleSet provided must be an instance of 'RuleSetInterface'" );
+			}
+			$rule_set = $rules->getRuleSet();
+		}
+
+		$method = strtolower( $request->method() );
+		if ( !in_array( $method, [ "post", "get" ] ) ) {
+			throw new \Exception( "Method provided is not 'post' or 'get'" );
+		}
+		foreach ( $rule_set as $field => $rules ) {
 			// Grabbing data from the input for specified field if field is set
 			// Prepare data for validation. N-Depth
-			$value = $this->prepare( $input->get( $field ) );
+			$value = $this->prepare( $request->{$method}( $field ) );
 			// Rules must be an array. If not, throw an Exception
 			if ( is_array( $rules ) ) {
 				foreach ( $rules as $rule => $rule_value ) {
@@ -39,11 +52,6 @@ class InputValidator
 							case "max":
 								if ( !$this->isMax( $value, $rule_value ) ) {
 									$this->addError( $error_index, "{$field_name} must be less than {$rule_value} characters" );
-								}
-								break;
-							case "matches":
-								if ( $value != $input->data[ $rule_value ] ) {
-									$this->addError( $error_index, "{$field_name} must match {$rule_value}" );
 								}
 								break;
 							case "numeric":

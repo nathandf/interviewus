@@ -9,7 +9,7 @@
 	<h3>Model Builder</h3>
 	{if !empty($error_messages.quick_boi)}
 		{foreach from=$error_messages.quick_boi item=message}
-			<div class="con-message-failure mat-hov cursor-pt --c-hide">
+			<div class="con-message-error mat-hov cursor-pt --c-hide">
 				<p class="user-message-body">{$message}</p>
 			</div>
 		{/foreach}

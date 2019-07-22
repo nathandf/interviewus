@@ -12,8 +12,8 @@
 				<p id="user-name" class="text-med-heavy"></p>
 				<div class="hr-full"></div>
 			</div>
-			{if !is_null( $organization ) && !is_null( $user )}
-			<p class="text-sml"><span class="text-sml-heavy">{$organization->name}</span> - {$user->getFullName()}</p>
+			{if !is_null( $user )}
+			<p class="text-sml-heavy">{$user->getFullName()}</p>
 			<div class="hr-full"></div>
 			{/if}
 			<div class="col-50 pad-xsml floatleft">

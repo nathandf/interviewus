@@ -12,11 +12,12 @@
 	<div class="con-cnt-med-plus-plus push-b-lrg pad-med border-std bg-white">
 		{if !empty($error_messages.purchase)}
 			{foreach from=$error_messages.purchase item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
 		{/if}
+		{include file="includes/snippets/flash-messages.tpl"}
 		{foreach from=$cart->products item=product name=product_loop}
 		<h2><i class="fas fa-shopping-cart push-r-sml"></i>Cart</h2>
 		<p class="label">Plan: {ucfirst( $product->plan->name )} - {$product->plan->braintree_plan_id}</p>

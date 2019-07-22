@@ -9,14 +9,38 @@ $container->register( "config", function() {
 	return $config;
 } );
 
+$container->register( "controller-factory", function() {
+	$obj = new Core\ControllerFactory;
+	return $obj;
+} );
+
+$container->register( "model-factory", function() {
+	$obj = new Core\ModelFactory;
+	return $obj;
+} );
+
+$container->register( "model-dispatcher", function() use ( $container ) {
+	$obj = new Core\ModelDispatcher(
+		$container->getService( "model-factory" )
+	);
+	return $obj;
+} );
+
+$container->register( "view-factory", function() {
+	$obj = new Core\ViewFactory;
+	return $obj;
+} );
+
+$container->register( "view-dispatcher", function() use ( $container ) {
+	$obj = new Core\ViewDispatcher(
+		$container->getService( "view-factory" )
+	);
+	return $obj;
+} );
+
 $container->register( "error", function() use ( $container ) {
 	$error = new Core\Error( $container );
 	return $error;
-} );
-
-$container->register( "session", function() {
-    $session = new Core\Session;
-    return $session;
 } );
 
 $container->register( "request", function() use ( $container ) {
@@ -24,13 +48,8 @@ $container->register( "request", function() use ( $container ) {
 	return $request;
 } );
 
-$container->register( "input", function() {
-    $obj = new \Core\Input;
-    return $obj;
-} );
-
-$container->register( "input-validator", function() {
-    $obj = new \Core\InputValidator;
+$container->register( "request-validator", function() {
+    $obj = new \Helpers\RequestValidator;
     return $obj;
 } );
 
@@ -39,8 +58,8 @@ $container->register( "router", function() use ( $container ) {
 	return $router;
 } );
 
-$container->register( "view", function() use( $container ) {
-	$view = new Core\View( $container );
+$container->register( "view-instance", function() use( $container ) {
+	$view = new Core\ViewInstance( $container );
 	return $view;
 } );
 
@@ -546,7 +565,7 @@ $container->register( "unsubscribe-repository", function() use ( $container ) {
 $container->register( "user-authenticator", function() use ( $container ) {
 	$repo = new \Model\Services\UserAuthenticator(
 		$container->getService( "user-repository" ),
-		$container->getService( "session" )
+		$container->getService( "request" )
 	);
 	return $repo;
 } );

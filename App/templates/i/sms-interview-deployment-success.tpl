@@ -7,7 +7,7 @@
 {block name="body"}
 	{include file="includes/navigation/main-menu.tpl"}
 	<div class="con-cnt-lrg pad-med push-t-lrg push-b-lrg bg-white border-std">
-		<p class="title title-h2">SMS interview deployment successful!</p>
+		<p class="title title-h2">Your SMS Interview has started!</p>
 		<p class="title"><i class="fas fa-check-square tc-green"></i></p>
 		<p class="text-center text-xlrg-heavy">You should recieve you first text message shortly</p>
 		<div class="pad-med"></div>

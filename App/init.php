@@ -1,35 +1,41 @@
 <?php
-/*
-* Front Controller
-*/
+
 // autoloading native classes and third party libraries. Check composer.json for details
 require_once( "App/vendor/autoload.php" );
 require_once( "App/Helpers/debug.php" );
 
-// Dependency injection container
-$container = new Core\DIContainer;
-
-// Load services using DIContainer
-require_once( "App/Conf/services.php" );
-
-// Initialize configs
-$config = $container->getService( "config" );
-
-// Session and token handling
-$session = $container->getService( "session" );
-
 // Error handling
 error_reporting( E_ALL );
 
-// routing
+// Dependency injection container
+$container = new Core\DIContainer;
+
+// Load client requst
+$request = $container->getService( "request" );
+
+// Load the router
 $Router = $container->getService( "router" );
 
-// routes
-require_once( "App/Conf/routes.php" );
+// Get the route
+$route = $Router->dispatch( $request );
 
-$request = $Router->dispatch( $_SERVER[ "QUERY_STRING" ] );
-$controller_name = $request[ "controller" ];
-$method = $request[ "method" ];
-$params = $request[ "params" ];
-$controller = new $controller_name( $container, $config, $session, $params );
-$controller->$method();
+// Use the route to build the controller
+$controllerFactory = $container->getService( "controller-factory" );
+
+$controller = $controllerFactory->build(
+	$route[ "controller" ],
+	$request->setParams( $route[ "params" ] ), // returns $this (\Core\Request)
+	$container
+);
+
+$command = $controller->{$route[ "method" ]}();
+
+if ( !is_null( $command ) ) {
+	// Dispatch Model
+	$modelDispatcher = $container->getService( "model-dispatcher" );
+	$model = $modelDispatcher->dispatch( $command, $request, $container );
+
+	// Dispatch View
+	$viewDispatcher = $container->getService( "view-dispatcher" );
+	$view = $viewDispatcher->dispatch( $command, $model, $container );
+}

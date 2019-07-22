@@ -10,7 +10,7 @@
 	<div class="con-cnt-med-plus-plus pad-med border-std bg-white push-t-med push-b-lrg">
 		{if !empty($error_messages.create_account)}
 			{foreach from=$error_messages.create_account item=message}
-				<div class="con-message-failure mat-hov cursor-pt --c-hide">
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
 					<p class="user-message-body">{$message}</p>
 				</div>
 			{/foreach}
