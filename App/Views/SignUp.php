@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class SignUp extends AbstractView
+class SignUp extends View
 {
 	public function index( $args )
 	{

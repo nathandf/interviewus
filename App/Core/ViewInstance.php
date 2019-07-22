@@ -6,24 +6,32 @@ namespace Core;
  * Class View
  * @package Core
  */
-class AbstractView extends CoreObject
+class ViewInstance extends CoreObject
 {
-    protected $model;
-    protected $container;
-    private $configs;
-    public $request;
+    private $templatingEngine;
+    public $container;
+    public $session;
     public $template;
-    private $data = [];
+    public $application_error_messages = [];
+    public $data = [];
+    public $configs;
 
-    public function __construct( Model $model, DIContainer $container )
+    /**
+     * View constructor.
+     * @param DIContainer $container
+     */
+    public function __construct( DIContainer $container )
     {
-        $this->model = $model;
         $this->setContainer( $container );
         $this->configs = $container->getService( "config" )->configs;
-        $this->request = $model->request;
-        $this->setTemplatingEngine();
+        $this->session = $this->container->getService( "session" );
     }
 
+    /**
+     * @param string $redirect_url
+     * @param int $http_response_code
+     * @param bool $external_redirect
+     */
     public function redirect( $redirect_url, $http_response_code = 200, $external_redirect = false )
     {
         if ( $external_redirect ) {
@@ -35,6 +43,9 @@ class AbstractView extends CoreObject
         exit();
     }
 
+    /**
+     *
+     */
     protected function setTemplatingEngine()
     {
         $this->templatingEngine = $this->load( "templating-engine" );
@@ -44,7 +55,7 @@ class AbstractView extends CoreObject
         $this->templatingEngine->compile_dir = "App/templates/tmp";
 
         // Set csrf token
-        $this->templatingEngine->assign( "csrf_token", $this->request->csrf_token );
+        $this->templatingEngine->assign( "csrf_token", $this->session->generateCSRFToken() );
 
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );
@@ -71,14 +82,13 @@ class AbstractView extends CoreObject
         $this->assign( "application_errors", $this->application_error_messages );
     }
 
+    /**
+     * NOTE: This should only be set after all inputs have been analyzed and validated
+     * @param array $error_messages
+     */
     public function setErrorMessages( array $error_messages )
     {
         $this->assign( "error_messages", $error_messages );
-    }
-
-    public function addErrorMessage( $index, $message )
-    {
-        $this->data[ "error_messages" ][ $index ] = $message;
     }
 
     public function setFlashMessages( array $flash_messages )
@@ -87,26 +97,31 @@ class AbstractView extends CoreObject
     }
 
     /**
-     * @param string $template
+     * @param string $file_name
+     * @param null $data
      */
-    public function setTemplate( $template )
+    public function render()
     {
-        $this->template = $template;
-    }
+        $this->setTemplatingEngine();
 
-    public function render( $data = null )
-    {
         // assigning data from the views to the templating engine
         foreach ( $this->data as $key => $value ) {
             $this->templatingEngine->assign( $key, $value );
         }
 
-        if ( isset( $this->template ) ) {
-            // render view
-            ob_start();
-            $this->templatingEngine->display( "App/templates/". $this->template );
-            ob_end_flush();
-        }
+        // render view
+        ob_start();
+        $this->templatingEngine->display( $this->template );
+        ob_end_flush();
+
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate( $template )
+    {
+        $this->template = $template;
     }
 
     /**
@@ -121,16 +136,14 @@ class AbstractView extends CoreObject
 
     public function render404()
     {
-        $this->setTemplate( "404.shtml" );
+        $this->render( "App/templates/404.shtml" );
+        exit();
     }
 
     public function render403()
     {
-        $this->render( "403.shtml" );
+        $this->render( "App/templates/403.shtml" );
+        exit();
     }
 
-    public function respondWithJson( $data )
-    {
-        echod( json_encode( $data ) );
-    }
 }

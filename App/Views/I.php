@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class I extends AbstractView
+class I extends View
 {
 	public function index( $errors = [] )
 	{

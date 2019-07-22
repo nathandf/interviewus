@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class Cart extends AbstractView
+class Cart extends View
 {
 	public function index( $errors = [] )
 	{

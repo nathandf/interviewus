@@ -4,20 +4,14 @@
  */
 namespace Core;
 
-abstract class Controller extends CoreObject
+abstract class GodController extends CoreObject
 {
-    protected $container;
-    protected $config;
-    protected $request;
-    protected $params;
-    protected $action_filter_data = [];
+    protected $view;
 
     public function __construct( Request $request, DIContainer $container )
     {
-        $this->setContainer( $container );
-        $this->config = $this->container->getService( "config" );
-        $this->request = $request;
-        $this->params = $request->params();
+        parent::__construct( $request, $container );
+        $this->view = $this->load( "view-instance" );
     }
 
     // Every time a method is called on Controller class, check if before and after

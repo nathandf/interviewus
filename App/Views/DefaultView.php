@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class DefaultView extends AbstractView
+class DefaultView extends View
 {
 	public function index()
 	{

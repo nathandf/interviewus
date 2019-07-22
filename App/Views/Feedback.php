@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class Feedback extends AbstractView
+class Feedback extends View
 {
 	public function send()
 	{

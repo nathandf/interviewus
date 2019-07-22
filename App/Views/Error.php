@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class Error extends AbstractView
+class Error extends View
 {
 	public function e302()
 	{

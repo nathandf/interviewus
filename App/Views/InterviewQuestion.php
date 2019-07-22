@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class InterviewQuestion extends AbstractView
+class InterviewQuestion extends View
 {
 	public function index()
 	{

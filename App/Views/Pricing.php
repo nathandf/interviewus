@@ -2,9 +2,9 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 
-class Pricing extends AbstractView
+class Pricing extends View
 {
 	public function index( $args )
 	{

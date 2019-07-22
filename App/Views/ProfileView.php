@@ -2,11 +2,11 @@
 
 namespace Views;
 
-use Core\AbstractView;
+use Core\View;
 use Core\Model;
 use Core\DIContainer;
 
-class ProfileView extends AbstractView
+class ProfileView extends View
 {
 	public function __construct( Model $model, DIContainer $container )
 	{

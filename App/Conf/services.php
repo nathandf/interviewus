@@ -63,8 +63,8 @@ $container->register( "router", function() use ( $container ) {
 	return $router;
 } );
 
-$container->register( "view", function() use( $container ) {
-	$view = new Core\View( $container );
+$container->register( "view-instance", function() use( $container ) {
+	$view = new Core\ViewInstance( $container );
 	return $view;
 } );
 
