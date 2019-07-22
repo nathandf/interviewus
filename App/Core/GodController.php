@@ -4,7 +4,7 @@
  */
 namespace Core;
 
-abstract class GodController extends CoreObject
+abstract class GodController extends Controller
 {
     protected $view;
 
