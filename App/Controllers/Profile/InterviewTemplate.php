@@ -19,9 +19,6 @@ class InterviewTemplate extends Controller
             return [ null, "DefaultView:redirect", null, "sign-in" ];
         }
 
-        $accountRepo = $this->load( "account-repository" );
-        $this->account = $accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
-
         $organizationRepo = $this->load( "organization-repository" );
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
 
@@ -45,20 +42,9 @@ class InterviewTemplate extends Controller
             $this->request->post( "update_template" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "name" => [
-                        "required" => true,
-                        "max" => 128
-                    ],
-                    "description" => [
-                        "min" => 1,
-                        "max" => 256
-                    ]
-                ],
+                new \Model\Validations\InterviewTemplateDetails(
+                    $this->request->session( "csrf-token" )
+                ),
                 "update_template"
             )
         ) {
@@ -71,19 +57,10 @@ class InterviewTemplate extends Controller
             $this->request->post( "new_question" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "body" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\Question( $this->request->session( "csrf-token" ) ),
                 "new_question"
             )
         ) {
-
             return [ "InterviewTemplate:addQuestion", "DefaultView:redirect", null, "profile/interview-template/{$this->params[ "id" ]}/" ];
         }
 

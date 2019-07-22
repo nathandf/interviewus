@@ -2,7 +2,7 @@
 
 namespace Model\Validations;
 
-class InterviewTemplate extends RuleSet
+class InterviewTemplateDetails extends RuleSet
 {
 	public function __construct( $csrf_token )
 	{
@@ -14,11 +14,7 @@ class InterviewTemplate extends RuleSet
 			"name" => [
 				"required" => true
 			],
-			"description" => [],
-			"questions" => [
-				"required" => true,
-				"is_array" => true
-			]
+			"description" => []
 		]);
 	}
 }

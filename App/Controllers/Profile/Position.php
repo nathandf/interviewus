@@ -11,7 +11,7 @@ class Position extends Controller
         if ( !isset( $this->params[ "id" ] ) ) {
             return [ null, "Error:e404", null, null ];
         }
-        
+
         $positionRepo = $this->load( "position-repository" );
 
         $userAuth = $this->load( "user-authenticator" );
@@ -49,19 +49,7 @@ class Position extends Controller
             $this->request->post( "update_position" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "name" => [
-                        "required" => true,
-                        "max" => 128
-                    ],
-                    "description" => [
-                        "max" => 512
-                    ]
-                ],
+                new \Model\Validations\NameDescription( $this->request->session( "csrf-token" ) ),
                 "update_position"
             )
         ) {

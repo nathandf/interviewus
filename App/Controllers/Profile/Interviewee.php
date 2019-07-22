@@ -43,30 +43,7 @@ class Interviewee extends Controller
             $this->request->post( "update_interviewee" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "required" => true,
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "first_name" => [
-                        "required" => true,
-                        "max" => 128
-                    ],
-                    "last_name" => [
-                        "max" => 128
-                    ],
-                    "email" => [
-                        "required" => true,
-                        "email" => true
-                    ],
-                    "country_code" => [
-                        "required" => true,
-                        "number" => true
-                    ],
-                    "national_number" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\PersonPhoneEmail( $this->request->session( "csrf-token" ) ),
                 "update_interviewee"
             )
         ) {

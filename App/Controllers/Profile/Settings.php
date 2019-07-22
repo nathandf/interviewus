@@ -30,14 +30,7 @@ class Settings extends Controller
             $this->request->get( "add_payment_method" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "payment_method_nonce" => [
-                        "required" => true
-                    ]
-                ],
+                new \Model\Validations\PaymentMethodNonce( $this->request->session( "csrf-token" ) ),
                 "add_payment_method"
             )
         ) {
@@ -49,18 +42,10 @@ class Settings extends Controller
             $this->request->post( "update_organization" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" ),
-                        "required" => true
-                    ],
-                    "organization" => [
-                        "min" => 1
-                    ],
-                    "industry_id" => [
-                        "in_array" => $industryRepo->get( [ "id" ], [], "raw" )
-                    ]
-                ],
+                new \Model\Validations\Organization(
+                    $this->request->session( "csrf-token" ),
+                    $industryRepo->get( [ "id" ], [], "raw" )
+                ),
                 "udpate_organization"
             )
         ) {
@@ -72,19 +57,14 @@ class Settings extends Controller
             $this->request->post( "update_default_payment_method" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "braintree_payment_method_token" => [
-                        "required" => true,
-                        "in_array" => $paymentMethodRepo->get(
-                            [ "braintree_payment_method_token" ],
-                            [ "account_id" => $this->account->id ],
-                            "raw"
-                        )
-                    ]
-                ],
+                new \Model\Validations\BraintreePaymentMethodToken(
+                    $this->request->session( "csrf-token" ),
+                    $paymentMethodRepo->get(
+    					[ "braintree_payment_method_token" ],
+    					[ "account_id" => $this->account->id ],
+    					"raw"
+    				)
+                ),
                 "update_default_payment_method"
             )
         ) {
@@ -96,22 +76,17 @@ class Settings extends Controller
             $this->request->post( "remove_payment_method" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ],
-                    "braintree_payment_method_token" => [
-                        "required" => true,
-                        "in_array" => $paymentMethodRepo->get(
-                            [ "braintree_payment_method_token" ],
-                            [
-                                "account_id" => $this->account->id,
-                                "is_default" => 0
-                            ],
-                            "raw"
-                        )
-                    ]
-                ],
+                new \Model\Validations\BraintreePaymentMethodToken(
+                    $this->request->session( "csrf-token" ),
+                    $paymentMethodRepo->get(
+    					[ "braintree_payment_method_token" ],
+                        [
+                            "account_id" => $this->account->id,
+                            "is_default" => 0
+                        ],
+    					"raw"
+    				)
+                ),
                 "remove_payment_method"
             )
         ) {
@@ -123,11 +98,7 @@ class Settings extends Controller
             $this->request->post( "cancel_subscription" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                [
-                    "token" => [
-                        "equals-hidden" => $this->request->session( "csrf-token" )
-                    ]
-                ],
+                new \Model\Validations\CSRFOnly( $this->request->session( "csrf-token" ) ),
                 "cancel_subscription"
             )
         ) {
