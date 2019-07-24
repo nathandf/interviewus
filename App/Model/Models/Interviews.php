@@ -102,6 +102,12 @@ class Interviews extends ProfileModel
 						// If the interview is complete, send the dispatching user a
 						// a completion email
 						if ( $interview->status == "complete" ) {
+							// Update the end time
+							$interviewRepo->update(
+								[ "end_time" => date( "M j, Y \@ g:i:s a" ) ],
+								[ "id" => $interview->id ]
+							);
+
 							$mailer = $this->load( "mailer" );
 							$emailBuilder = $this->load( "email-builder" );
 							$domainObjectFactory = $this->load( "domain-object-factory" );
