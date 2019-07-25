@@ -191,6 +191,11 @@ $( function () {
         }
     } );
 
+	$( "#change-timezone" ).on( "click", function () {
+		$( "#timezone-container" ).show();
+		$( "#change-timezone-container" ).hide();
+	} );
+
 	$( "#timezone-indicator" ).text( $( "#timezone-select option:selected" ).val() );
 
 	$( "#timezone-select" ).on( "change", function () {
