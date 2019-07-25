@@ -2,6 +2,7 @@
 
 {block name="head"}
 	<title>InterviewUs</title>
+	<script src="{$HOME}{$JS_SCRIPTS}sign-up/sign-up.js"></script>
 {/block}
 
 {block name="body"}

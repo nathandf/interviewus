@@ -4,8 +4,9 @@
 require_once( "App/vendor/autoload.php" );
 require_once( "App/Helpers/debug.php" );
 
-// Error handling
+date_default_timezone_set( "UTC" );
 error_reporting( E_ALL );
+
 
 // Dependency injection container
 $container = new Core\DIContainer;

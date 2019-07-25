@@ -111,9 +111,20 @@
 				<div class="clear"></div>
 				<div id="date-time-picker-container" class="pad-sml" style="display: none;">
 					<p class="label push-r-sml">Date: <span class="text-sml tc-gun-metal">MM/DD/YYYY</span></p>
-					<input type="text" name="date" id="datepicker" class="inp inp-full scheduled-time-input --c-deployment-requirement" autocomplete="off">
+					<input type="text" name="date" id="datepicker" class="inp inp-full push-b-sml scheduled-time-input --c-deployment-requirement" autocomplete="off">
 					<p class="label">Time:</p>
-					{html_select_time class="inp inp-ful time-picker-input cursor-pt push-b-sml" minute_interval=15 display_seconds=false use_24_hours=false prefix=false}
+					{html_select_time class="inp time-picker-input cursor-pt push-b-sml" minute_interval=15 display_seconds=false use_24_hours=false prefix=false}
+					<p class="label">Timezone: <span id="timezone-indicator" class="text-sml tc-gun-metal"></span></p>
+					<select name="timezone" class="inp cursor-pt" id="timezone-select">
+						{if isset( $timezones )}
+							<option value="America/Chicago" selected="selected">America/Chicago</option>
+							{foreach from=$timezones item=timezone}
+							<option value="{$timezone->timezone}">{$timezone->timezone}</option>
+							{/foreach}
+						{else}
+						<option value="America/Chicago" selected="selected">America/Chicago</option>
+						{/if}
+					</select>
 				</div>
 				<div class="clear"></div>
 			</div>

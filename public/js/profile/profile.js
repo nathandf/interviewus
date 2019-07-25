@@ -190,4 +190,10 @@ $( function () {
             event.preventDefault();
         }
     } );
+
+	$( "#timezone-indicator" ).text( $( "#timezone-select option:selected" ).val() );
+
+	$( "#timezone-select" ).on( "change", function () {
+		$( "#timezone-indicator" ).text( $( "#timezone-select option:selected" ).val() );
+	} );
 } );

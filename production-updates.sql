@@ -320,3 +320,8 @@ ALTER TABLE `interview` ADD `mode` VARCHAR(16) NOT NULL DEFAULT 'visible' AFTER 
 INSERT INTO `question_type` (`id`, `name`) VALUES (NULL, 'open'), (NULL, 'single'), (NULL, 'multiple');
 
 CREATE TABLE `facebook_pixel` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `pixel_id` VARCHAR(256) NOT NULL , `name` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;
+
+CREATE TABLE `timezone` ( `country_code` VARCHAR(5) NULL , `timezone` VARCHAR(125) NULL , `gmt_offset` BIGINT NULL , `dst_offset` BIGINT NULL , `raw_offset` BIGINT NULL ) engine = InnoDB;
+ALTER TABLE `timezone` CHANGE `gmt_offset` `gmt_offset` FLOAT(10,2) NULL DEFAULT NULL, CHANGE `dst_offset` `dst_offset` FLOAT(10,2) NULL DEFAULT NULL, CHANGE `raw_offset` `raw_offset` FLOAT(10,2) NULL DEFAULT NULL;
+ALTER TABLE `timezone` CHANGE `timezone` `timezone` VARCHAR(125) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '';
+ALTER TABLE `timezone` ADD `id` BIGINT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);

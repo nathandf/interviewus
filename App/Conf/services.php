@@ -313,6 +313,14 @@ $container->register( "interview-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "timezone-repository", function() use ( $container ) {
+	$repo = new \Model\Services\TimezoneRepository(
+		$container->getService( "dao" ),
+		$container->getService( "entity-factory" )
+	);
+	return $repo;
+} );
+
 $container->register( "interview-builder", function() use ( $container ) {
 	$repo = new \Model\Services\InterviewBuilder(
 		$container->getService( "account-repository" ),
