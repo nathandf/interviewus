@@ -125,6 +125,13 @@ $container->register( "industry-repository", function() use ( $container ) {
 	return $repo;
 } );
 
+$container->register( "ipdata-gateway", function () use ( $container ) {
+	$service =  new \Model\Services\IPDataAPI\IPDataGateway(
+		$container->getService( "config" )
+	);
+	return $service;
+} );
+
 $container->register( "braintree-client-token-generator", function () use ( $container ) {
 	$service =  new \Model\Services\BraintreeAPI\ClientTokenGenerator(
 		$container->getService( "braintree-gateway-initializer" )

@@ -104,6 +104,11 @@ class Config
             ]
         ];
 
+        // IPData API
+        $this->configs[ "ipdata" ] = [
+            "api-key" => "939c6e36861de58f2e9c59354074e7c9866ccd9335dabfbd29a20385"
+        ];
+
         // SendGrid API
         $this->configs[ "sendgrid" ] = [
             "api-key" => "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"

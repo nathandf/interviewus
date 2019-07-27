@@ -42,12 +42,36 @@ class SignUp extends Model
 				);
 			}
 
+			// Get the timezone from ip data and save in cookieif it hasn't been
+			// set
+			$timezone = $this->request->cookie( "timezone" );
+			if ( is_null( $timezone ) ) {
+				// Load the ip data gateway
+				$ipdata = $this->load( "ipdata-gateway" );
+
+				// Request geo data from ipdata api
+				try {
+					$response = $ipdata->query();
+					$timezone = $response->time_zone->name;
+				} catch ( \Exception $e ) {
+					// Log the error and set the default timezone as America/Chicago
+					$logger = $this->load( "logger" );
+					$logger->error( $e->getMessage() );
+					$timezone = "America/Chicago";
+				}
+
+				// Save timezone in cookie so the no additional api calls need to
+				// be made
+				$this->request->setCookie( "timezone", $timezone );
+			}
+
 			// Create new Account with an upgraded plan to give user access
 			// to free interviews
 			$account = $accountRepo->insert([
 				"account_type_id" => 1,
 				"user_id" => $user->id,
-				"plan_id" => 1
+				"plan_id" => 1,
+				"timezone" => $timezone
 			]);
 
 			// Provision Account
@@ -115,7 +139,7 @@ class SignUp extends Model
 
 			$resp = $mailer->setTo( $user->email, $user->getFullName() )
 				->setFrom( "getstarted@interviewus.net", "InterviewUs" )
-				->setSubject( "Here's 9 Free interviews on Us. Welcome to InterviewUs!" )
+				->setSubject( "Here's 9 Free interviews on Us 🤖 Welcome to InterviewUs!" )
 				->setContent( $emailBuilder->build( "welcome-email.html", $emailContext ) )
 				->mail();
 
