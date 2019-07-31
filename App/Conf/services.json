@@ -289,7 +289,7 @@
         },
         "ipdata": {
             "\\Model\\Services\\IPDataAPI\\": {
-                "ipdata-gateway": [
+                "gateway": [
                     "config"
                 ]
             }

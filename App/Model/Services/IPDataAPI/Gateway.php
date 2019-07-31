@@ -4,7 +4,7 @@ namespace Model\Services\IPDataAPI;
 
 use Conf\Config;
 
-class IPDataGateway
+class Gateway
 {
 	private $api_key;
 	public $endpoint = "https://api.ipdata.co";
