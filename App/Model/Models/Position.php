@@ -31,6 +31,7 @@ class Position extends ProfileModel
 	        );
 
 	        foreach ( $this->interviews as $interview ) {
+
 				// Get the deployment type
 				$deploymentTypeRepo = $this->load( "deployment-type-repository" );
 	            $interview->deploymentType = $deploymentTypeRepo->get( [ "*" ], [ "id" => $interview->deployment_type_id ], "single" );
@@ -39,7 +40,7 @@ class Position extends ProfileModel
 				$intervieweeRepo = $this->load( "interviewee-repository" );
 				$interview->interviewee = $intervieweeRepo->get( [ "*" ], [ "id" => $interview->interviewee_id ], "single" );
 
-				$interview->position = $position;
+				$interview->position = $this->position;
 
 				// Get the interviews questions
 				$interviewQuestionRepo = $this->load( "interview-question-repository" );

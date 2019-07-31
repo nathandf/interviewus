@@ -9,7 +9,7 @@ error_reporting( E_ALL );
 
 
 // Dependency injection container
-$container = new Core\DIContainer;
+$container = new Core\MyDIContainer;
 
 // Load client requst
 $request = $container->getService( "request" );
