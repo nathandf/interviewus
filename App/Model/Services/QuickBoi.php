@@ -22,9 +22,9 @@ class QuickBoi
         $this->dao = $dao;
     }
 
-    public function buildModel( $model_name )
+    public function buildEntity( $entity_name )
     {
-        $this->buildModelNames( $model_name );
+        $this->buildModelNames( $entity_name );
         $this->createEntityFile();
         $this->createRepositoryFile();
         $this->createMapperFile();
@@ -34,15 +34,15 @@ class QuickBoi
         return;
     }
 
-    public function buildModelNames( $model_name )
+    public function buildModelNames( $entity_name )
     {
-        if ( preg_match( "/[^a-zA-Z -]/", $model_name ) ) {
+        if ( preg_match( "/[^a-zA-Z -]/", $entity_name ) ) {
             throw new \Exception( "String can only contain characters a-z upper or lower case, spaces, and hyphens (-)" );
         }
 
         // Create the string with which classes will be registered with the container
         // and with which class names and tables will be built.
-        $id_string = $this->formatIdString( $model_name );
+        $id_string = $this->formatIdString( $entity_name );
         $this->setIdString( $id_string );
 
         // build entity, repository, and mapper class name
@@ -350,5 +350,48 @@ class QuickBoi
         $content .= "\n" . $query. ";";
 
         file_put_contents( $this->getQueryLogFile(), $content );
+    }
+
+    public function buildService( $service_name, array $dependencies )
+    {
+        $this->createServiceFile( $service_name, $dependencies );
+        $this->registerService( $service_name, $dependencies );
+    }
+
+    private function createServiceFile( $service_name, $dependencies )
+    {
+        // Create the class name
+        $class_name = $this->formatClassNameFromIdString( $service_name );
+
+        // Create the file name
+        $filename = "App/Model/Services/" . $class_name . ".php";
+
+        // Format the dependencies into class names and variables for constructor
+        // Save arguments from the constructor
+        $formatted_dependencies = "";
+        $dependency_properties = "";
+
+        $i = 1;
+        foreach ( $dependencies as $dependency ) {
+            if ( $i < count( $dependencies ) ) {
+                // Add commas after the variable names except on last dependency
+                $formatted_dependencies .= "\t\t" . $this->formatClassNameFromIdString( $dependency ) . " \${$this->formatClassNameFromIdString( $dependency )},\n";
+            } else {
+                $formatted_dependencies .= "\t\t" . $this->formatClassNameFromIdString( $dependency ) . " \${$this->formatClassNameFromIdString( $dependency )}";
+            }
+
+            $dependency_properties .= "\t\t\$this->{$this->formatClassNameFromIdString( $dependency )} = \${$this->formatClassNameFromIdString( $dependency )}\n";
+            $i++;
+        }
+        $contents = "<?php\n\nnamespace Model\Services;\n\nclass {$class_name}\n{\n\tpublic function __construct(\n{$formatted_dependencies}\n\t) {\n{$dependency_properties}\t}\n}";
+
+        $this->createFile( $filename, $contents );
+
+        return;
+    }
+
+    private function registerService( $service_name, $dependencies )
+    {
+
     }
 }
