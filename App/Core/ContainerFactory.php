@@ -4,13 +4,21 @@
 */
 namespace Core;
 
-class MyDIContainer extends DIContainer
+class ContainerFactory
 {
-    public function __construct()
+    public $container;
+
+    public function build()
     {
+        // Create the container
+        $this->container = new DIContainer;
+
         // Load the json services file and json_decode results to assoc array
+        // and load the container with anonymous functions that create the services
         $register = file_get_contents( "App/Conf/services.json" );
         $this->init( json_decode( $register, true ) );
+
+        return $this->container;
     }
 
     private function init( array $register )
@@ -36,7 +44,7 @@ class MyDIContainer extends DIContainer
                     $class = $this->serviceIndexToClass( $namespace, $service );
 
                     // Register anonymous function that returns the class
-                    $this->register( $service, function () use ( $class ) {
+                    $this->container->register( $service, function () use ( $class ) {
                         return new $class;
                     } );
 
@@ -47,9 +55,9 @@ class MyDIContainer extends DIContainer
                 $class = $this->serviceIndexToClass( $namespace, $index );
 
                 // Register anonymous function that returns the class
-                $container = $this;
+                $container = $this->container;
 
-                $this->register( $index, function () use ( $class, $service, $container  ) {
+                $this->container->register( $index, function () use ( $class, $service, $container  ) {
                     $dependencies = [];
                     foreach ( $service as $dependency ) {
                         // If the dependency is a this container, pass reference of $this
@@ -79,8 +87,8 @@ class MyDIContainer extends DIContainer
                     $class = $this->serviceIndexToClass( $namespace, $index );
                     $index = $prefix . "-" . $index;
                     // Register anonymous function that returns the class
-                    $container = $this;
-                    $this->register( $index, function () use ( $class, $dependencies, $container  ) {
+                    $container = $this->container;
+                    $this->container->register( $index, function () use ( $class, $dependencies, $container  ) {
                         foreach ( $dependencies as $key => $dependency ) {
 
                             // If the dependency is a this container, pass reference of $this
@@ -102,9 +110,9 @@ class MyDIContainer extends DIContainer
 
     private function registerAliases( array $aliases )
     {
-        $container = $this;
+        $container = $this->container;
         foreach ( $aliases as $abstraction => $implementation ) {
-            $this->register( $abstraction, function () use ( $implementation, $container ) {
+            $this->container->register( $abstraction, function () use ( $implementation, $container ) {
                 // Use splat operator "..." to unpack dependencies
                 return $container->getService( $implementation );
             } );
