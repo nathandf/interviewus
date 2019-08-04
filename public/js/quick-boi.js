@@ -1,10 +1,4 @@
 $( function () {
-	$( ".--level-trigger" ).on( "click", function () {
-		$( ".--level" ).hide();
-		id = "#" + $( this ).attr( "id" ) + "-container";
-		$( id ).show();
-	} );
-
 	var propertyBuilder = {
 		iteration: 0,
 		iterate: function () {
