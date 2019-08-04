@@ -74,13 +74,13 @@
 						<p class="label">{$namespace}</p>
 						{foreach from=$namespaced_services key=index item=service name=i}
 						{if $smarty.foreach.i.first && $namespace == "\\Core\\"}
-						<input id="{$service}-service" type="checkbox" name="dependencies[]" value="container" class="checkbox push-r"><label class="label push-r">container</label>
+						<input id="{$service}-service" type="checkbox" name="dependencies[]" value="{$namespace} container" class="checkbox push-r"><label class="label push-r">container</label>
 						<div class="clear"></div>
 						{/if}
 						{if is_numeric( $index )}
-						<input id="{$service}-service" type="checkbox" name="dependencies[]" value="{$service}" class="checkbox push-r"><label class="label push-r">{$service}</label>
+						<input id="{$service}-service" type="checkbox" name="dependencies[]" value="{$namespace} {$service}" class="checkbox push-r"><label class="label push-r">{$service}</label>
 						{else}
-						<input id="{$index}-service" type="checkbox" name="dependencies[]" value="{$index}" class="checkbox push-r"><label class="label push-r">{$index}</label>
+						<input id="{$index}-service" type="checkbox" name="dependencies[]" value="{$namespace} {$index}" class="checkbox push-r"><label class="label push-r">{$index}</label>
 						{/if}
 						<div class="clear"></div>
 						{/foreach}

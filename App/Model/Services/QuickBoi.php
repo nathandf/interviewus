@@ -84,6 +84,11 @@ class QuickBoi
         return str_replace( " ", "", ucwords( str_replace( "-", " ", $id_string ) ) );
     }
 
+    private function formatClassInstanceVariableFromIdString( $id_string )
+    {
+        return lcfirst( $this->formatClassNameFromIdString( $id_string ) );
+    }
+
     public function setEntityNamespace( $namespace )
     {
         $this->entity_namespace = $namespace;
@@ -373,14 +378,18 @@ class QuickBoi
 
         $i = 1;
         foreach ( $dependencies as $dependency ) {
+            $dependency_parts = explode( " ", $dependency );
+            $namespace = $dependency_parts[ 0 ];
+            $dependency_name = $dependency_parts[ 1 ];
+
             if ( $i < count( $dependencies ) ) {
                 // Add commas after the variable names except on last dependency
-                $formatted_dependencies .= "\t\t" . $this->formatClassNameFromIdString( $dependency ) . " \${$this->formatClassNameFromIdString( $dependency )},\n";
+                $formatted_dependencies .= "\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )},\n";
             } else {
-                $formatted_dependencies .= "\t\t" . $this->formatClassNameFromIdString( $dependency ) . " \${$this->formatClassNameFromIdString( $dependency )}";
+                $formatted_dependencies .= "\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )}";
             }
 
-            $dependency_properties .= "\t\t\$this->{$this->formatClassNameFromIdString( $dependency )} = \${$this->formatClassNameFromIdString( $dependency )}\n";
+            $dependency_properties .= "\t\t\$this->{$this->formatClassNameFromIdString( $dependency_name )} = \${$this->formatClassInstanceVariableFromIdString( $dependency_name )}\n";
             $i++;
         }
         $contents = "<?php\n\nnamespace Model\Services;\n\nclass {$class_name}\n{\n\tpublic function __construct(\n{$formatted_dependencies}\n\t) {\n{$dependency_properties}\t}\n}";
