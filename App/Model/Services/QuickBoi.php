@@ -29,6 +29,14 @@ class QuickBoi
         $this->createRepositoryFile();
         $this->createMapperFile();
         $this->createTable();
+
+        // Register the repository with in services.json
+        $this->registerService(
+            "\\Model\\Services\\",
+            $entity_name . "-repository",
+            [ "dao", "entity-factory" ]
+        );
+
         $this->logQuery();
 
         return;
