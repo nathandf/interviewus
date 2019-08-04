@@ -30,8 +30,8 @@ $( function () {
 		}
 	};
 
-	$( ".--model-name" ).on( "keyup", function() {
-		$( ".--model-name" ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ).split( "--" ).join( "-" ) );
+	$( ".--id-string" ).on( "keyup", function() {
+		$( this ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ).split( "--" ).join( "-" ) );
     });
 
 	$( "#add-property" ).on( "click", function () {

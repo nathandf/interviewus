@@ -1,4 +1,4 @@
-{extends file="layouts/core.tpl"}
+--id-string{extends file="layouts/core.tpl"}
 
 {block name="head"}
 <script src="{$HOME}{$JS_SCRIPTS}quick-boi.js"></script>
@@ -33,7 +33,7 @@
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="create_entity" value="{$csrf_token}">
 				<p class="label">Model name:</p>
-				<input id="model-name" type="text" name="model_name" class="inp inp-med-plus --model-name" required="required">
+				<input id="model-name" type="text" name="model_name" class="inp inp-med-plus --id-string" required="required">
 				<div class="hr"></div>
 				<p class="label">Entity Properties</p>
 				<button id="add-property" type="button" class="btn theme-primary-dark push-t-med">+ Property</button>
@@ -63,7 +63,7 @@
 			<input type="hidden" name="create_service" value="{$csrf_token}">
 			<div class="push-t-med">
 				<p class="label">Service Name</p>
-				<input type="text" name="service_name" class="inp inp-med">
+				<input type="text" name="service_name" class="inp inp-med --id-string">
 				<div class="hr-full"></div>
 				<button class="btn theme-primary">Build Service</button>
 				<div class="hr-full"></div>
