@@ -364,7 +364,13 @@ class QuickBoi
         }
 
         $this->createServiceFile( $service_name, $dependencies );
-        $this->registerService( $service_name, $dependencies );
+
+        $id_strings = [];
+        foreach ( $dependencies as $dependency ) {
+            $dependency_parts = explode( " ", $dependency );
+            $id_strings[] = $dependency_parts[ 1 ];
+        }
+        $this->registerService( "\\Model\\Services\\", $service_name, $id_strings );
     }
 
     private function createServiceFile( $service_name, $dependencies )
@@ -380,23 +386,25 @@ class QuickBoi
         $formatted_dependencies = "";
         $dependency_properties = "";
         $class_properties = "";
+        $id_strings = [];
 
         $i = 1;
         foreach ( $dependencies as $dependency ) {
             $dependency_parts = explode( " ", $dependency );
             $namespace = ( $dependency_parts[ 0 ] == "\Model\Services\\" ? "" : $dependency_parts[ 0 ] );
-            $dependency_name = $dependency_parts[ 1 ];
+            $id_string = $dependency_parts[ 1 ];
+            $id_strings[] = $dependency_parts[ 1 ];
 
             if ( $i < count( $dependencies ) ) {
                 // Add commas after the variable names except on last dependency
-                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )},";
-                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $dependency_name )};";
+                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $id_string ) . " \${$this->formatClassInstanceVariableFromIdString( $id_string )},";
+                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $id_string )};";
             } else {
-                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )}\n\t";
-                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $dependency_name )};\n";
+                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $id_string ) . " \${$this->formatClassInstanceVariableFromIdString( $id_string )}\n\t";
+                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $id_string )};\n";
             }
 
-            $dependency_properties .= "\t\t\$this->{$this->formatClassInstanceVariableFromIdString( $dependency_name )} = \${$this->formatClassInstanceVariableFromIdString( $dependency_name )};\n";
+            $dependency_properties .= "\t\t\$this->{$this->formatClassInstanceVariableFromIdString( $id_string )} = \${$this->formatClassInstanceVariableFromIdString( $id_string )};\n";
             $i++;
         }
         $contents = "<?php\n\nnamespace Model\Services;\n\nclass {$class_name}\n{{$class_properties}\n\tpublic function __construct({$formatted_dependencies}) {\n{$dependency_properties}\t}\n}";
@@ -406,8 +414,25 @@ class QuickBoi
         return;
     }
 
-    private function registerService( $service_name, $dependencies )
+    private function registerService( $namespace, $service_name, $dependencies, $package = null )
     {
+        $service_register = json_decode( file_get_contents( "App/Conf/services.json" ), true );
 
+        if ( !empty( $dependencies ) ) {
+            $service_register[ "services" ][ $namespace ][ $service_name ] = $dependencies;
+            ksort( $service_register[ "services" ][ $namespace ], SORT_STRING );
+
+            file_put_contents( "App/Conf/services.json", json_encode( $service_register, JSON_PRETTY_PRINT ) );
+
+            return;
+        }
+
+        $service_register[ "services" ][ $namespace ][] = $service_name;
+
+        ksort( $service_register[ "services" ][ $namespace ], SORT_STRING );
+
+        file_put_contents( "App/Conf/services.json", json_encode( $service_register, JSON_PRETTY_PRINT ) );
+
+        return;
     }
 }

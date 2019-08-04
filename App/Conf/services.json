@@ -35,8 +35,8 @@
             "0": "access-control",
             "1": "csv-generator",
             "email-builder": [
-				"config"
-			],
+                "config"
+            ],
             "3": "html-interview-results-builder",
             "4": "request-validator",
             "5": "time-converter",
@@ -48,12 +48,19 @@
         "\\Model\\Services\\": {
             "0": "entity-factory",
             "1": "domain-object-factory",
-            "quick-boi": [
-                "dao"
+            "account-provisioner": [
+                "account-repository",
+                "plan-repository",
+                "plan-details-repository"
             ],
             "account-repository": [
                 "dao",
                 "entity-factory"
+            ],
+            "account-upgrader": [
+                "account-repository",
+                "account-provisioner",
+                "plan-repository"
             ],
             "account-user-repository": [
                 "dao",
@@ -70,6 +77,10 @@
             "concatentated-sms-repository": [
                 "dao",
                 "entity-factory"
+            ],
+            "conversation-provisioner": [
+                "conversation-repository",
+                "twilio-phone-number-repository"
             ],
             "conversation-repository": [
                 "dao",
@@ -95,6 +106,11 @@
                 "dao",
                 "entity-factory"
             ],
+            "inbound-sms-cocatenated": [
+                "concatenated-sms-repository",
+                "inbound-sms-repository",
+                "logger"
+            ],
             "inbound-sms-repository": [
                 "dao",
                 "entity-factory"
@@ -103,15 +119,31 @@
                 "dao",
                 "entity-factory"
             ],
+            "interview-builder": [
+                "account-repository",
+                "interview-repository",
+                "question-repository",
+                "interview-question-repository",
+                "interviewee-repository"
+            ],
+            "interview-dispatcher": [
+                "interview-repository",
+                "interview-question-repository",
+                "interviewee-answer-repository",
+                "interviewee-repository",
+                "twilio-phone-number-repository",
+                "phone-repository",
+                "sms-messager"
+            ],
+            "interview-question-repository": [
+                "dao",
+                "entity-factory"
+            ],
             "interview-repository": [
                 "dao",
                 "entity-factory"
             ],
-            "timezone-repository": [
-                "dao",
-                "entity-factory"
-            ],
-            "interviewee-repository": [
+            "interview-template-repository": [
                 "dao",
                 "entity-factory"
             ],
@@ -119,11 +151,7 @@
                 "dao",
                 "entity-factory"
             ],
-            "interview-question-repository": [
-                "dao",
-                "entity-factory"
-            ],
-            "interview-template-repository": [
+            "interviewee-repository": [
                 "dao",
                 "entity-factory"
             ],
@@ -175,7 +203,14 @@
                 "dao",
                 "entity-factory"
             ],
+            "quick-boi": [
+                "dao"
+            ],
             "tag-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "timezone-repository": [
                 "dao",
                 "entity-factory"
             ],
@@ -187,6 +222,10 @@
                 "dao",
                 "entity-factory"
             ],
+            "user-authenticator": [
+                "user-repository",
+                "request"
+            ],
             "user-repository": [
                 "dao",
                 "entity-factory"
@@ -194,45 +233,6 @@
             "video-repository": [
                 "dao",
                 "entity-factory"
-            ],
-            "account-provisioner": [
-                "account-repository",
-                "plan-repository",
-                "plan-details-repository"
-            ],
-            "account-upgrader": [
-                "account-repository",
-                "account-provisioner",
-                "plan-repository"
-            ],
-            "conversation-provisioner": [
-                "conversation-repository",
-                "twilio-phone-number-repository"
-            ],
-            "interview-builder": [
-                "account-repository",
-                "interview-repository",
-                "question-repository",
-                "interview-question-repository",
-                "interviewee-repository"
-            ],
-            "interview-dispatcher": [
-                "interview-repository",
-                "interview-question-repository",
-                "interviewee-answer-repository",
-                "interviewee-repository",
-                "twilio-phone-number-repository",
-                "phone-repository",
-                "sms-messager"
-            ],
-            "inbound-sms-cocatenated": [
-                "concatenated-sms-repository",
-                "inbound-sms-repository",
-                "logger"
-            ],
-            "user-authenticator": [
-                "user-repository",
-                "request"
             ]
         }
     },
