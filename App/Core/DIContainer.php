@@ -12,8 +12,6 @@ class DIContainer
     public function __construct()
     {
         $container = $this;
-        // Load services using DIContainer
-        require_once( "App/Conf/services.php" );
     }
 
     public function register( $service_name, callable $service )
