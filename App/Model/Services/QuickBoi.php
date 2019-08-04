@@ -161,7 +161,7 @@ class QuickBoi
     private function checkFile( $filename )
     {
         if ( file_exists( $filename ) ) {
-            throw new \Exception( "Entity already exists" );
+            throw new \Exception( "File '{$filename}' already exists" );
         }
 
         return;
@@ -357,8 +357,12 @@ class QuickBoi
         file_put_contents( $this->getQueryLogFile(), $content );
     }
 
-    public function buildService( $service_name, array $dependencies )
+    public function buildService( $service_name, $dependencies )
     {
+        if ( !is_array( $dependencies ) ) {
+            $dependencies = [];
+        }
+
         $this->createServiceFile( $service_name, $dependencies );
         $this->registerService( $service_name, $dependencies );
     }
@@ -375,24 +379,27 @@ class QuickBoi
         // Save arguments from the constructor
         $formatted_dependencies = "";
         $dependency_properties = "";
+        $class_properties = "";
 
         $i = 1;
         foreach ( $dependencies as $dependency ) {
             $dependency_parts = explode( " ", $dependency );
-            $namespace = $dependency_parts[ 0 ];
+            $namespace = ( $dependency_parts[ 0 ] == "\Model\Services\\" ? "" : $dependency_parts[ 0 ] );
             $dependency_name = $dependency_parts[ 1 ];
 
             if ( $i < count( $dependencies ) ) {
                 // Add commas after the variable names except on last dependency
-                $formatted_dependencies .= "\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )},\n";
+                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )},";
+                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $dependency_name )};";
             } else {
-                $formatted_dependencies .= "\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )}";
+                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $dependency_name ) . " \${$this->formatClassInstanceVariableFromIdString( $dependency_name )}\n\t";
+                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $dependency_name )};\n";
             }
 
-            $dependency_properties .= "\t\t\$this->{$this->formatClassNameFromIdString( $dependency_name )} = \${$this->formatClassInstanceVariableFromIdString( $dependency_name )}\n";
+            $dependency_properties .= "\t\t\$this->{$this->formatClassInstanceVariableFromIdString( $dependency_name )} = \${$this->formatClassInstanceVariableFromIdString( $dependency_name )};\n";
             $i++;
         }
-        $contents = "<?php\n\nnamespace Model\Services;\n\nclass {$class_name}\n{\n\tpublic function __construct(\n{$formatted_dependencies}\n\t) {\n{$dependency_properties}\t}\n}";
+        $contents = "<?php\n\nnamespace Model\Services;\n\nclass {$class_name}\n{{$class_properties}\n\tpublic function __construct({$formatted_dependencies}) {\n{$dependency_properties}\t}\n}";
 
         $this->createFile( $filename, $contents );
 
