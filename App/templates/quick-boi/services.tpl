@@ -24,7 +24,7 @@
 			<input type="hidden" name="create_service" value="{$csrf_token}">
 			<div class="push-t-med">
 				<p class="label">Service Name</p>
-				<input type="text" name="id_string" class="inp inp-med --id-string">
+				<input type="text" name="id_string" class="inp inp-med-plus --id-string">
 				<div class="hr-full"></div>
 				<button class="btn theme-primary">Build Service</button>
 				<div class="hr-full"></div>

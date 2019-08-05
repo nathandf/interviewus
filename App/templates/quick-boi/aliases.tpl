@@ -32,9 +32,26 @@
 				{/foreach}
 			</table>
 		</div>
-		<form action="">
-			<button class="btn theme-secondary-dark push-t-med">Create Alias</button>
-		</form>
+		<div class="push-t-med">
+			<form action="" method="post">
+				<input type="hidden" name="new_alias" value="{$csrf_token}">
+				<div class="floatleft push-r-sml">
+					<p class="label">Alias</p>
+					<input type="text" name="alias" class="inp inp-med --id-string">
+				</div>
+				<div class="floatleft">
+					<p class="label">Services</p>
+					<select name="id_string" id="" class="inp inp-med cursor-pt" required="required">
+						<option value="" selected="selected" hidden="hidden">Choose a service</option>
+						{foreach from=$aliasable_services item=service}
+						<option value="{$service}">{$service}</option>
+						{/foreach}
+					</select>
+				</div>
+				<div class="clear"></div>
+				<button class="btn theme-secondary-dark push-t-med">Create Alias</button>
+			</form>
+		</div>
 	</div>
 </div>
 {/block}

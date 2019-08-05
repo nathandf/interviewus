@@ -443,4 +443,17 @@ class QuickBoi
 
         return;
     }
+
+    public function registerAlias( $alias, $id_string )
+    {
+        $service_register = json_decode( file_get_contents( "App/Conf/services.json" ), true );
+
+        $service_register[ "aliases" ][ $alias ] = $id_string;
+
+        ksort( $service_register[ "aliases" ], SORT_STRING );
+        
+        file_put_contents( "App/Conf/services.json", json_encode( $service_register, JSON_PRETTY_PRINT ) );
+
+        return;
+    }
 }

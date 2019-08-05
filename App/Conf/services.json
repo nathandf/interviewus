@@ -296,10 +296,10 @@
         }
     },
     "aliases": {
-        "templating-engine": "my-smarty",
-        "logger": "my-logger",
         "dao": "my-pdo",
+        "logger": "my-logger",
         "mailer": "sendgrid-mailer",
-        "sms-messager": "twilio-sms-messager"
+        "sms-messager": "twilio-sms-messager",
+        "templating-engine": "my-smarty"
     }
 }
