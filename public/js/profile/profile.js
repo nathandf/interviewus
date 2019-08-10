@@ -201,4 +201,11 @@ $( function () {
 	$( "#timezone-select" ).on( "change", function () {
 		$( "#timezone-indicator" ).text( $( "#timezone-select option:selected" ).val() );
 	} );
+
+	$( ".--sidebar-expand" ).on( "click", function () {
+		$( "#" + $( this ).attr( "id" ) + "-container" ).delay( 100 ).toggle( 10 );
+		$( "#" + $( this ).attr( "id" ) + "-sidebar-caret" ).delay( 100 ).toggleClass( "rotate-180", 10 );
+		$( this ).delay( 100 ).toggleClass( "sidebar-header-border", 10 );
+	} );
+
 } );

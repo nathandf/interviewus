@@ -1,3 +1,73 @@
+.main-content {
+	position: relative;
+	height: 100%;
+	overflow-y: scroll;
+	width: 82%;
+}
+
+.sidebar {
+	position: relative;
+	height: 100%;
+	width: 18%;
+	background: #151B26;
+	overflow-y: auto;
+}
+
+.sidebar-content {
+	height: 100%;
+}
+
+.sidebar-section {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.sidebar-header {
+	font-size: 12px;
+	font-family: "Rubik";
+	color: #9CA6AF;
+	font-weight: 600;
+}
+
+.sidebar-header:hover {
+	color: #DDDDDD;
+}
+
+.sidebar-header-border {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.sidebar .list-item:hover {
+	background: #605A84;
+	cursor: pointer;
+}
+
+.sidebar .list-item:hover .list-item-text {
+	color: #FFFFFF;
+}
+
+.sidebar .list-item:hover .list-item-thumbnail {
+	background: #26A69A;
+}
+
+.list-item .list-item-text {
+	margin-top: 7px;
+	font-size: 14px;
+	color: #CCCCCC;
+}
+
+.list-item-thumbnail {
+	text-align: center;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 35px;
+    font-size: 15px;
+    font-weight: 300;
+	font-family: "Rubik";
+	margin-left: 10%;
+}
+
 .interview-card {
 	display: block;
 }
