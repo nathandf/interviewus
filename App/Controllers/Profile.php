@@ -45,6 +45,18 @@ class Profile extends Controller
 
         if (
             $this->request->is( "post" ) &&
+            $this->request->post( "new_position" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                new \Model\Validations\NameDescription( $this->request->session( "csrf-token" ) ),
+                "new_position"
+            )
+        ) {
+            return [ "Position:create", "Position:create", null, null ];
+        }
+
+        if (
+            $this->request->is( "post" ) &&
             $this->request->post( "new_interview_template" ) != "" &&
             $requestValidator->validate(
                 $this->request,

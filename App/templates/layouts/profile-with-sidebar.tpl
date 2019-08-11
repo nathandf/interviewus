@@ -15,55 +15,7 @@
 	{include file="includes/modals/profile/share-interview-modal.tpl"}
 	<div id="sidebar" class="sidebar scrollbar mat-box-shadow floatleft">
 		<div class="sidebar-content">
-			<div class="sidebar-logo-container pad-sml floatleft">
-				<a href="{$HOME}">
-					<div>
-						<img src="{$HOME}public/static/img/initials.jpg" class="cursor-pt sidebar-logo" alt="Main Logo">
-					</div>
-				</a>
-			</div>
-			<div class="pad-med floatright">
-				<i class="fas fa-bars tc-white cursor-pt --sidebar-toggle"></i>
-			</div>
-			<div class="clear"></div>
-			<div class="sidebar-menu pad-sml">
-				<a class="sidebar-header menu-item" href="{$HOME}profile/">
-					<table>
-						<tr>
-							<td class="icon"><i class="fas fa-home"></i></td>
-							<td>Home</td>
-						</tr>
-					</table>
-				</a>
-				<div class="clear"></div>
-				<a class="sidebar-header menu-item" href="{$HOME}profile/interviewees/">
-					<table>
-						<tr>
-							<td class="icon"><i class="fas fa-user"></i></td>
-							<td>Interviewees</td>
-						</tr>
-					</table>
-				</a>
-				<div class="clear"></div>
-				<a class="sidebar-header menu-item" href="{$HOME}profile/interview-templates/">
-					<table>
-						<tr>
-							<td class="icon"><i class="far fa-copy"></i></td>
-							<td>Templates</td>
-						</tr>
-					</table>
-				</a>
-				<div class="clear"></div>
-				<a class="sidebar-header menu-item" href="{$HOME}profile/positions/">
-					<table>
-						<tr>
-							<td class="icon"><i class="fas fa-briefcase"></i></td>
-							<td>Positions</td>
-						</tr>
-					</table>
-				</a>
-				<div class="clear"></div>
-			</div>
+			{include file="includes/snippets/profile-sidebar-top.tpl"}
 			<div class="horizontal-rule"></div>
 			<div id="interviewees" class="cursor-pt --sidebar-expand sidebar-header">
 				<p class="pad-sml floatleft sidebar-header-title">Interviewees</p>
@@ -79,7 +31,11 @@
 					</div>
 				</a>
 				{foreachelse}
-				<p>No interviewees to show</p>
+				<a id="interviewee" class="text-sml new-button --modal-trigger">
+					<div class="list-item pad-sml">
+						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail bg-none push-r-sml"><i class="fas fa-plus"></i></span>New Interviewee</p>
+					</div>
+				</a>
 				{/foreach}
 			</div>
 
@@ -97,7 +53,11 @@
 					</div>
 				</a>
 				{foreachelse}
-				<p>No interviewees to show</p>
+				<a id="position" class="text-sml new-button --modal-trigger">
+					<div class="list-item pad-sml">
+						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail bg-none push-r-sml"><i class="fas fa-plus"></i></span>New Position</p>
+					</div>
+				</a>
 				{/foreach}
 			</div>
 			<div id="templates" class="cursor-pt --sidebar-expand sidebar-header sidebar-header-border">
@@ -114,7 +74,11 @@
 					</div>
 				</a>
 				{foreachelse}
-				<p>No interviewees to show</p>
+				<a id="interview-template" class="text-sml new-button --modal-trigger">
+					<div class="list-item pad-sml">
+						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail bg-none push-r-sml"><i class="fas fa-plus"></i></span>New Template</p>
+					</div>
+				</a>
 				{/foreach}
 			</div>
 		</div>

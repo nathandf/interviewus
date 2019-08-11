@@ -6,6 +6,7 @@
 {block name="profile-body"}
 	{include file="includes/modals/profile/interviewee-modal.tpl"}
 	{include file="includes/modals/profile/interview-template-modal.tpl"}
+	{include file="includes/modals/profile/position-modal.tpl"}
 	{include file="includes/modals/profile/interview-deployment-modal.tpl"}
 	<div class="pad-med-mob-neg">
 		{if !empty($error_messages.deploy_interview)}

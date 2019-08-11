@@ -71,6 +71,10 @@
 	font-family: arial;
 }
 
+.new-button {
+	color: #DDDDDD;
+}
+
 .sidebar-header-title {
 	font-family: "Open Sans";
 }
