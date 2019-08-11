@@ -13,13 +13,18 @@
 	{include file="includes/modals/profile/settings-modal.tpl"}
 	{include file="includes/modals/user-feedback.tpl"}
 	{include file="includes/modals/profile/share-interview-modal.tpl"}
-	<div class="sidebar scrollbar mat-box-shadow floatleft">
+	<div id="sidebar" class="sidebar scrollbar mat-box-shadow floatleft">
 		<div class="sidebar-content">
-			<a href="{$HOME}">
-				<div class="pad-sml">
-					<img src="{$HOME}public/static/img/typography.jpg" class="cursor-pt sidebar-logo" alt="Main Logo">
-				</div>
-			</a>
+			<div class="sidebar-logo-container pad-sml floatleft">
+				<a href="{$HOME}">
+					<div>
+						<img src="{$HOME}public/static/img/initials.jpg" class="cursor-pt sidebar-logo" alt="Main Logo">
+					</div>
+				</a>
+			</div>
+			<div class="pad-med floatright">
+				<i class="fas fa-bars tc-white cursor-pt --sidebar-toggle"></i>
+			</div>
 			<div class="clear"></div>
 			<div class="sidebar-menu pad-sml">
 				<a class="sidebar-header menu-item" href="{$HOME}profile/">
@@ -43,7 +48,7 @@
 				<a class="sidebar-header menu-item" href="{$HOME}profile/interview-templates/">
 					<table>
 						<tr>
-							<td class="icon"><i class="fas fa-scroll"></i></td>
+							<td class="icon"><i class="far fa-copy"></i></td>
 							<td>Templates</td>
 						</tr>
 					</table>
@@ -52,7 +57,7 @@
 				<a class="sidebar-header menu-item" href="{$HOME}profile/positions/">
 					<table>
 						<tr>
-							<td class="icon"><i class="fas fa-user-tie"></i></td>
+							<td class="icon"><i class="fas fa-briefcase"></i></td>
 							<td>Positions</td>
 						</tr>
 					</table>
@@ -62,17 +67,15 @@
 			<div class="horizontal-rule"></div>
 			<div id="interviewees" class="cursor-pt --sidebar-expand sidebar-header">
 				<p class="pad-sml floatleft sidebar-header-title">Interviewees</p>
-				<p id="interviewees-sidebar-caret" class="pad-sml floatright"><i class="fas fa-caret-down"></i></p>
+				<p id="interviewees-sidebar-caret" class="pad-sml floatright"><i class="fas fa-angle-down"></i></p>
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
 			<div id="interviewees-container" class="sidebar-section">
 				{foreach from=$interviewees item=interviewee}
-				<a class="text-sml" href="{$HOME}profile/interviewee/{$interviewee->id}/" style="color: #DDDDDD;">
+				<a class="text-sml" title="{$interviewee->getFullName()}" href="{$HOME}profile/interviewee/{$interviewee->id}/" style="color: #DDDDDD;">
 					<div class="list-item pad-sml">
-						<p class="list-item-thumbnail theme-secondary-light floatleft push-r-sml">{$interviewee->getFirstName()|substr:0:1}{$interviewee->getLastName()|substr:0:1|default:null}</p>
-						<p class="floatleft list-item-text">{$interviewee->getFullName()|truncate:"20":"..."}</p>
-						<div class="clear"></div>
+						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail theme-secondary-light push-r-sml">{$interviewee->getFirstName()|substr:0:1}{$interviewee->getLastName()|substr:0:1|default:null}</span>{$interviewee->getFullName()}</p>
 					</div>
 				</a>
 				{foreachelse}
@@ -82,17 +85,15 @@
 
 			<div id="positions" class="cursor-pt --sidebar-expand sidebar-header sidebar-header-border">
 				<p class="pad-sml floatleft sidebar-header-title">Positions</p>
-				<p id="positions-sidebar-caret" class="pad-sml floatright"><i class="fas fa-caret-up"></i></p>
+				<p id="positions-sidebar-caret" class="pad-sml floatright"><i class="fas fa-angle-up"></i></p>
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
 			<div id="positions-container" class="sidebar-section" style="display: none;">
 				{foreach from=$positions item=position}
-				<a class="text-sml" href="{$HOME}profile/position/{$position->id}/" style="color: #DDDDDD;">
+				<a class="text-sml" title="{$position->name}" href="{$HOME}profile/position/{$position->id}/" style="color: #DDDDDD;">
 					<div class="list-item pad-sml">
-						<p class="list-item-thumbnail bg-none floatleft push-r-sml"><i class="fas fa-user-tie"></i></p>
-						<p class="floatleft list-item-text">{$position->name|truncate:"20":"..."}</p>
-						<div class="clear"></div>
+						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail bg-none push-r-sml"><i class="fas fa-briefcase"></i></span>{$position->name}</p>
 					</div>
 				</a>
 				{foreachelse}
@@ -101,17 +102,15 @@
 			</div>
 			<div id="templates" class="cursor-pt --sidebar-expand sidebar-header sidebar-header-border">
 				<p class="pad-sml floatleft sidebar-header-title">Templates</p>
-				<p id="templates-sidebar-caret" class="pad-sml floatright"><i class="fas fa-caret-up"></i></p>
+				<p id="templates-sidebar-caret" class="pad-sml floatright"><i class="fas fa-angle-up"></i></p>
 				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
 			<div id="templates-container" class="sidebar-section" style="display: none;">
 				{foreach from=$interviewTemplates item=interviewTemplate}
-				<a class="text-sml" href="{$HOME}profile/interview-template/{$interviewTemplate->id}/" style="color: #DDDDDD;">
+				<a class="text-sml" title="{$interviewTemplate->name}" href="{$HOME}profile/interview-template/{$interviewTemplate->id}/" style="color: #DDDDDD;">
 					<div class="list-item pad-sml">
-						<p class="list-item-thumbnail bg-none floatleft push-r-sml"><i class="fas fa-scroll"></i></p>
-						<p class="floatleft list-item-text">{$interviewTemplate->name|truncate:"20":"..."}</p>
-						<div class="clear"></div>
+						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail bg-none push-r-sml"><i class="far fa-copy"></i></span>{$interviewTemplate->name}</p>
 					</div>
 				</a>
 				{foreachelse}
@@ -121,7 +120,7 @@
 		</div>
 	</div>
 	<div class="floatleft main-content scrollbar">
-		{include file="includes/navigation/profile/login-menu-theme-secondary.tpl"}
+		{include file="includes/navigation/profile/menu-alt.tpl"}
 		{block name="profile-body"}{/block}
 	</div>
 	<div class="section-seperator"></div>

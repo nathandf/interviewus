@@ -30,7 +30,7 @@
 				<p>2. Choose an interviewee</p>
 			</div>
 			<div class="pad-med deployment-widget-scrollable-section">
-				{if isset( $interviewee ) == false}
+				{if isset( $selected_interviewee ) === false}
 					{foreach from=$interviewees item=interviewee name=interviewee_loop}
 					{if !$smarty.foreach.interviewee_loop.first}
 					<div class="push-t-sml"></div>
@@ -43,32 +43,32 @@
 					</div>
 					{/foreach}
 				{else}
-					<input type="radio" name="interviewee_id" value="{$interviewee->id}" class="interviewee-radio" checked="checked" style="display: none;">
+					<input type="radio" name="interviewee_id" value="{$selected_interviewee->id}" class="interviewee-radio" checked="checked" style="display: none;">
 					<div class="deployment-tag pad-sml cursor-pt selected-tag">
-						<p class="text-med-heavy">{$interviewee->getFullName()}</p>
+						<p class="text-med-heavy">{$selected_interviewee->getFullName()}</p>
 					</div>
 				{/if}
 			</div>
 
 			<div class="theme-tertiary-dark pad-sml">
-				<p>3. What position are they interviewing for?</p>
+				<p>3. Choose a position</p>
 			</div>
 			<div class="pad-med deployment-widget-scrollable-section">
-				{if isset( $position ) == false}
+				{if isset( $selected_position ) === false}
 					{foreach from=$positions item=position name=position_loop}
 						{if !$smarty.foreach.position_loop.first}
 						<div class="push-t-sml"></div>
 						{/if}
 						<input type="radio" name="position_id" value="{$position->id}" class="position-radio --c-deployment-requirement" id="position-radio-{$position->id}" style="display: none;">
-						<label for="position-radio-{$position->id}" id="position-tag-{$position->id}" class="deployment-tag pad-sml cursor-pt radio-label" style="display: block;"><i aria-hidden="true" class="fas fa-user-tie push-r-sml"></i>{$position->name}</label>
+						<label for="position-radio-{$position->id}" id="position-tag-{$position->id}" class="deployment-tag pad-sml cursor-pt radio-label" style="display: block;"><i aria-hidden="true" class="fas fa-briefcase push-r-sml"></i>{$position->name}</label>
 					{foreachelse}
 						<p class="label" style="margin-top: 0;">Position</p>
 						<input type="text" class="inp inp-full position-input --c-deployment-requirement" name="position" required="required">
 					{/foreach}
 				{else}
-					<input type="radio" name="position_id" value="{$position->id}" class="position-radio" checked="checked" style="display: none;">
+					<input type="radio" name="position_id" value="{$selected_position->id}" class="selected_position-radio" checked="checked" style="display: none;">
 					<div class="deployment-tag pad-sml cursor-pt selected-tag">
-						<p class="text-med-heavy"><i aria-hidden="true" class="fas fa-user-tie push-r-sml"></i>{$position->name}</p>
+						<p class="text-med-heavy"><i aria-hidden="true" class="fas fa-briefcase push-r-sml"></i>{$selected_position->name}</p>
 					</div>
 				{/if}
 			</div>
@@ -83,7 +83,7 @@
 				{/if}
 				<input type="radio" name="interview_template_id" value="{$interviewTemplate->id}" id="interview-template-radio-{$interviewTemplate->id}" class="interview-template-radio --c-deployment-requirement" required="required" style="display: none;">
 				<label for="interview-template-radio-{$interviewTemplate->id}" class="radio-label pad-sml cursor-pt deployment-tag" style="display: block;">
-					<p class="text-med-heavy"><i aria-hidden="true" class="fas fa-scroll push-r-sml"></i>{$interviewTemplate->name}</p>
+					<p class="text-med-heavy"><i aria-hidden="true" class="far fa-copy push-r-sml"></i>{$interviewTemplate->name}</p>
 					{if $interviewTemplate->description != "" && $interviewTemplate->description != null}
 					<div class="hr-std push-t-sml"></div>
 					<p class="text-sml push-t-sml">{$interviewTemplate->description|truncate:"300":"..."}</p>

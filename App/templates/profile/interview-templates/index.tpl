@@ -29,7 +29,7 @@
 		{foreach from=$interviewTemplates item=interviewTemplate name=interview_templates_loop}
 			<div class="card">
 				<div class="pad-sml">
-					<p class="thumbnail-med theme-secondary-dark floatleft push-r-sml"><i class="fas fa-scroll"></i></p>
+					<p class="thumbnail-med theme-secondary-dark floatleft push-r-sml"><i class="far fa-copy"></i></p>
 					<div class="floatleft header">
 						<a class="header tc-black" href="{$HOME}profile/interview-template/{$interviewTemplate->id}/">{$interviewTemplate->name|truncate:"27"}</a>
 						<p class="sub-header">{$interviewTemplate->description|truncate:"40"}</p>

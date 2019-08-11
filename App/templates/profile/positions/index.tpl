@@ -21,7 +21,7 @@
 		{foreach from=$positions item=position name=positions_loop}
 			<div class="card">
 				<div class="pad-sml">
-					<p class="thumbnail-med theme-secondary-light floatleft push-r-sml"><i class="fas fa-user-tie"></i></p>
+					<p class="thumbnail-med theme-secondary-light floatleft push-r-sml"><i class="fas fa-briefcase"></i></p>
 					<div class="floatleft header">
 						<a class="header tc-black" href="{$HOME}profile/position/{$position->id}/">{$position->name|truncate:"27"}</a>
 						<p class="sub-header">{$position->description|truncate:"40"}</p>

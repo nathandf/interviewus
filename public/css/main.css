@@ -1579,9 +1579,9 @@ td {
 .title {
     color: #2F3033;
     text-align: center;
-    font-weight: 700;
     font-size: 42px;
     font-family: 'Open Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+    font-weight: 600;
     margin-top: 30px;
     margin-bottom: 30px;
 }
@@ -1711,6 +1711,13 @@ td {
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+
+.text-overflow-ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
 }
 
 .sub-title {
@@ -1852,9 +1859,16 @@ td {
 }
 
 /* Special */
+.scrollbar {
+    overflow: hidden;
+}
+
+.scrollbar:hover {
+    overflow-y: auto;
+}
 
 .scrollbar::-webkit-scrollbar {
-    width: 1em;
+    width: 10px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -1862,8 +1876,8 @@ td {
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
 }
 
 .fancy-line-text {
@@ -1978,6 +1992,10 @@ td {
 
 .mat-box-shadow {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.box-shadow-light {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04), 0 3px 6px rgba(0, 0, 0, 0.06);
 }
 
 .mat-hov {

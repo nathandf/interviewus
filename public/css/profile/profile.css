@@ -5,19 +5,41 @@
 	width: 82%;
 }
 
+.main-content-full {
+	width: 100%;
+}
+
+.nav-sidebar-toggle {
+	color: #151B26;
+	font-size: 20px;
+	line-height: 35px;
+}
+
+.organization-name {
+	color: #151B26;
+	font-size: 20px;
+	font-weight: 600;
+	font-family: "Noto Sans", "Source Sans Pro", "Rubik", sans-serif;
+	line-height: 35px;
+}
+
 .sidebar {
 	position: relative;
 	height: 100%;
 	width: 18%;
 	background: #151B26;
-	overflow-y: auto;
 }
 
 .sidebar-menu {
 }
 
+.sidebar-logo-container {
+	width: 65px;
+}
+
 .sidebar-logo {
 	width: 100%;
+	border-radius: 2px;
 }
 
 .sidebar-menu .menu-item {

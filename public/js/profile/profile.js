@@ -203,9 +203,14 @@ $( function () {
 	} );
 
 	$( ".--sidebar-expand" ).on( "click", function () {
-		$( "#" + $( this ).attr( "id" ) + "-container" ).delay( 100 ).toggle( 10 );
-		$( "#" + $( this ).attr( "id" ) + "-sidebar-caret" ).delay( 100 ).toggleClass( "rotate-180", 10 );
-		$( this ).delay( 100 ).toggleClass( "sidebar-header-border", 10 );
+		$( "#" + $( this ).attr( "id" ) + "-container" ).delay( 50 ).toggle( 10 );
+		$( "#" + $( this ).attr( "id" ) + "-sidebar-caret" ).delay( 50 ).toggleClass( "rotate-180", 10 );
+		$( this ).delay( 50 ).toggleClass( "sidebar-header-border", 10 );
 	} );
 
+	$( ".--sidebar-toggle" ).on( "click", function () {
+		$( "#nav-sidebar-toggle" ).toggle();
+		$( "#sidebar" ).toggle();
+		$( ".main-content" ).toggleClass( "main-content-full" );
+	} );
 } );
