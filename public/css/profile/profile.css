@@ -13,6 +13,26 @@
 	overflow-y: auto;
 }
 
+.sidebar-menu {
+}
+
+.sidebar-logo {
+	width: 100%;
+}
+
+.sidebar-menu .menu-item {
+	font-size: 15px;
+	color: #9CA6AF;
+	font-weight: 100;
+	display: inline-block;
+}
+
+.sidebar-menu .menu-item .icon {
+	text-align: left;
+	font-size: 12px;
+	width: 30px;
+}
+
 .sidebar-content {
 	height: 100%;
 }
@@ -23,9 +43,14 @@
 
 .sidebar-header {
 	font-size: 12px;
-	font-family: "Rubik";
 	color: #9CA6AF;
 	font-weight: 600;
+	padding-left: 10%;
+	font-family: arial;
+}
+
+.sidebar-header-title {
+	font-family: "Open Sans";
 }
 
 .sidebar-header:hover {
@@ -64,7 +89,7 @@
     line-height: 35px;
     font-size: 15px;
     font-weight: 300;
-	font-family: "Rubik";
+	font-family: "Raleway";
 	margin-left: 10%;
 }
 

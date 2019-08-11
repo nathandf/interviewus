@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{$HOME}public/css/main.css"/>
 <link rel="stylesheet" type="text/css" href="{$HOME}public/css/theme-7.css"/>
 <link href="https://fonts.googleapis.com/css?family=Raleway:500" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">

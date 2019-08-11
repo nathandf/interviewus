@@ -16,13 +16,52 @@
 	<div class="sidebar scrollbar mat-box-shadow floatleft">
 		<div class="sidebar-content">
 			<a href="{$HOME}">
-		        <img src="{$HOME}public/static/img/initials-logo.jpg" class="floatleft cursor-pt login-menu-logo" alt="Main Logo">
-		    </a>
+				<div class="pad-sml">
+					<img src="{$HOME}public/static/img/typography.jpg" class="cursor-pt sidebar-logo" alt="Main Logo">
+				</div>
+			</a>
 			<div class="clear"></div>
-			<div style="margin-bottom: 32px;"></div>
+			<div class="sidebar-menu pad-sml">
+				<a class="sidebar-header menu-item" href="{$HOME}profile/">
+					<table>
+						<tr>
+							<td class="icon"><i class="fas fa-home"></i></td>
+							<td>Home</td>
+						</tr>
+					</table>
+				</a>
+				<div class="clear"></div>
+				<a class="sidebar-header menu-item" href="{$HOME}profile/interviewees/">
+					<table>
+						<tr>
+							<td class="icon"><i class="fas fa-user"></i></td>
+							<td>Interviewees</td>
+						</tr>
+					</table>
+				</a>
+				<div class="clear"></div>
+				<a class="sidebar-header menu-item" href="{$HOME}profile/interview-templates/">
+					<table>
+						<tr>
+							<td class="icon"><i class="fas fa-scroll"></i></td>
+							<td>Templates</td>
+						</tr>
+					</table>
+				</a>
+				<div class="clear"></div>
+				<a class="sidebar-header menu-item" href="{$HOME}profile/positions/">
+					<table>
+						<tr>
+							<td class="icon"><i class="fas fa-user-tie"></i></td>
+							<td>Positions</td>
+						</tr>
+					</table>
+				</a>
+				<div class="clear"></div>
+			</div>
 			<div class="horizontal-rule"></div>
 			<div id="interviewees" class="cursor-pt --sidebar-expand sidebar-header">
-				<p class="pad-sml floatleft">Interviewees</p>
+				<p class="pad-sml floatleft sidebar-header-title">Interviewees</p>
 				<p id="interviewees-sidebar-caret" class="pad-sml floatright"><i class="fas fa-caret-down"></i></p>
 				<div class="clear"></div>
 			</div>
@@ -42,7 +81,7 @@
 			</div>
 
 			<div id="positions" class="cursor-pt --sidebar-expand sidebar-header sidebar-header-border">
-				<p class="pad-sml floatleft">Positions</p>
+				<p class="pad-sml floatleft sidebar-header-title">Positions</p>
 				<p id="positions-sidebar-caret" class="pad-sml floatright"><i class="fas fa-caret-up"></i></p>
 				<div class="clear"></div>
 			</div>
@@ -61,7 +100,7 @@
 				{/foreach}
 			</div>
 			<div id="templates" class="cursor-pt --sidebar-expand sidebar-header sidebar-header-border">
-				<p class="pad-sml floatleft">Templates</p>
+				<p class="pad-sml floatleft sidebar-header-title">Templates</p>
 				<p id="templates-sidebar-caret" class="pad-sml floatright"><i class="fas fa-caret-up"></i></p>
 				<div class="clear"></div>
 			</div>
@@ -82,8 +121,7 @@
 		</div>
 	</div>
 	<div class="floatleft main-content scrollbar">
-		{include file="includes/navigation/profile/login-menu.tpl"}
-		{include file="includes/navigation/profile/main-menu-without-logo.tpl"}
+		{include file="includes/navigation/profile/login-menu-theme-secondary.tpl"}
 		{block name="profile-body"}{/block}
 	</div>
 	<div class="section-seperator"></div>
