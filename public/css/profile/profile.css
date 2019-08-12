@@ -1,12 +1,6 @@
 .main-content {
 	position: relative;
 	height: 100%;
-	overflow-y: scroll;
-	width: 82%;
-}
-
-.main-content-full {
-	width: 100%;
 }
 
 .nav-sidebar-toggle {
@@ -26,7 +20,7 @@
 .sidebar {
 	position: relative;
 	height: 100%;
-	width: 18%;
+	width: 250px;
 	background: #151B26;
 }
 
@@ -67,7 +61,7 @@
 	font-size: 12px;
 	color: #9CA6AF;
 	font-weight: 600;
-	padding-left: 10%;
+	padding-left: 5%;
 	font-family: arial;
 }
 
@@ -101,7 +95,6 @@
 }
 
 .list-item .list-item-text {
-	margin-top: 7px;
 	font-size: 14px;
 	color: #CCCCCC;
 }
@@ -116,7 +109,7 @@
     font-size: 15px;
     font-weight: 300;
 	font-family: "Raleway";
-	margin-left: 10%;
+	margin-left: 5%;
 }
 
 .interview-card {

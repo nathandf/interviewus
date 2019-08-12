@@ -8,11 +8,16 @@ class Organization extends ProfileModel
 	{
 		if ( $this->validateAccount() ) {
 			$organizationRepo = $this->load( "organization-repository" );
-
-			$this->newOrganization = $organizationRepo->insert([
+			$organization = $organizationRepo->insert([
 				"name" => $this->request->post( "name" ),
-				"industry_id" => $this->request->post( "industry_id" )
+				"account_id" => $this->account->id
 			]);
+
+			$userRepo = $this->load( "user-repository" );
+			$userRepo->update(
+				[ "current_organization_id" => $organization->id ],
+				[ "id" => $this->user->id ]
+			);
 		}
 	}
 
@@ -22,13 +27,12 @@ class Organization extends ProfileModel
 			$organizationRepo = $this->load( "organization-repository" );
 			$organizationRepo->update(
 				[
-					"industry_id" => $this->request->post( "industry_id" ),
-					"name" => $this->request->post( "organization" )
+					"name" => $this->request->post( "name" )
 				],
 				[ "id" => $this->organization->id ]
 			);
 
-			$this->request->addFlashMessage( "success", "Organization updated" );
+			$this->request->addFlashMessage( "success", "Worksapce updated" );
 			$this->request->setFlashMessages();
 		}
 	}

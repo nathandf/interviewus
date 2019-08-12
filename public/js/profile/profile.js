@@ -211,6 +211,5 @@ $( function () {
 	$( ".--sidebar-toggle" ).on( "click", function () {
 		$( "#nav-sidebar-toggle" ).toggle();
 		$( "#sidebar" ).toggle();
-		$( ".main-content" ).toggleClass( "main-content-full" );
 	} );
 } );

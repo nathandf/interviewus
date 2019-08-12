@@ -10,9 +10,14 @@
 
 {block name="body"}
 	{include file="includes/modals/profile/user-modal.tpl"}
-	{include file="includes/modals/profile/settings-modal.tpl"}
+	{include file="includes/modals/profile/current-workspace-modal.tpl"}
 	{include file="includes/modals/user-feedback.tpl"}
 	{include file="includes/modals/profile/share-interview-modal.tpl"}
+	{include file="includes/modals/profile/interviewee-modal.tpl"}
+	{include file="includes/modals/profile/interview-template-modal.tpl"}
+	{include file="includes/modals/profile/position-modal.tpl"}
+	{include file="includes/modals/profile/new-workspace-modal.tpl"}
+	{include file="includes/modals/profile/interview-deployment-modal.tpl"}
 	<div id="sidebar" class="sidebar scrollbar mat-box-shadow floatleft">
 		<div class="sidebar-content">
 			{include file="includes/snippets/profile-sidebar-top.tpl"}
@@ -83,11 +88,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="floatleft main-content scrollbar">
+	<div class="main-content scrollbar">
 		{include file="includes/navigation/profile/menu-alt.tpl"}
 		{block name="profile-body"}{/block}
 	</div>
-	<div class="section-seperator"></div>
 	<div id="user-feedback" class="user-feedback-trigger tc-white mat-box-shadow --modal-trigger">
 		<p class="text-med"><i class="far fa-comment-dots push-r-sml"></i>Feedback</p>
 	</div>

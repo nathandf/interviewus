@@ -18,13 +18,14 @@ class ProfileModel extends Model
         $this->logger = $this->load( "logger" );
 
         $this->user = $userAuth->getAuthenticatedUser();
-		
+
         if ( is_null( $this->user ) ) {
             return $this->account_validated;
         }
 
         $this->account = $this->accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
+		$this->organizations = $organizationRepo->get( [ "*" ], [ "account_id" => $this->account->id ] );
 
 		$this->countries = $countryRepo->get( [ "*" ] );
 

@@ -131,6 +131,10 @@ class View extends CoreObject
 
     public function respondWithJson( $data )
     {
+        if ( is_string( $data ) ) {
+            echod( $data );
+        }
+
         echod( json_encode( $data ) );
     }
 }

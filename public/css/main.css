@@ -1860,11 +1860,7 @@ td {
 
 /* Special */
 .scrollbar {
-    overflow: hidden;
-}
-
-.scrollbar:hover {
-    overflow-y: auto;
+    overflow: auto;
 }
 
 .scrollbar::-webkit-scrollbar {
