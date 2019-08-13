@@ -1,4 +1,4 @@
-{extends file="layouts/profile.tpl"}
+{extends file="layouts/profile-with-sidebar.tpl"}
 
 {block name="profile-head"}
 	<link rel="stylesheet" href="{$HOME}public/css/profile/billing.css">
@@ -7,8 +7,9 @@
 {/block}
 
 {block name="profile-body"}
-	<div class="con-cnt-xlrg pad-med">
-		<p class="sub-heading"><i class="fas fa-shopping-cart push-r-sml"></i>Subscription</p>
+	<div class="pad-med-mob-neg">
+		<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml"><i aria-hidden="true" class="fas fa-home"></i></a>
+		<p class="sub-heading" style="margin-top: 0px;"><i class="fas fa-shopping-cart push-r-sml"></i>Subscription</p>
 		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}
 			{foreach from=$error_messages.cancel_subscription item=message}

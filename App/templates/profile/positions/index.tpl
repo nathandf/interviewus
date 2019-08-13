@@ -1,12 +1,13 @@
-{extends file="layouts/profile.tpl"}
+{extends file="layouts/profile-with-sidebar.tpl"}
 
 {block name="profile-head"}
 {/block}
 
 {block name="profile-body"}
 	{include file="includes/modals/profile/position-modal.tpl"}
-	<div class="con-cnt-xxlrg pad-med-mob-neg">
+	<div class="pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
+			<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml"><i aria-hidden="true" class="fas fa-home"></i></a>
 			<button id="position" class="btn btn-inline theme-secondary --modal-trigger"><i aria-hidden="true" class="push-r-sml fas fa-plus"></i>Position</button>
 		</div>
 		<div class="pad-sml-mob-neg"></div>

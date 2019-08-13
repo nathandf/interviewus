@@ -1,12 +1,13 @@
-{extends file="layouts/profile.tpl"}
+{extends file="layouts/profile-with-sidebar.tpl"}
 
 {block name="profile-head"}
 	<script src="{$HOME}{$JS_SCRIPTS}profile/position.js"></script>
 {/block}
 
 {block name="profile-body"}
-	<div class="con-cnt-xxlrg pad-med-mob-neg">
+	<div class="pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
+			<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml"><i aria-hidden="true" class="fas fa-home"></i></a>
 			<a href="{$HOME}profile/positions/" class="btn btn-inline theme-secondary-light"><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Positions</a>
 		</div>
 		<div class="pad-sml-mob-neg"></div>

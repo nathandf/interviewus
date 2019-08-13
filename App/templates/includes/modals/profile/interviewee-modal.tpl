@@ -8,7 +8,7 @@
 			<p>New Interviewee</p>
 		</div>
 		<div class="pad-med">
-			<form action="" method="post">
+			<form action="{$HOME}profile/" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="new_interviewee" value="{$csrf_token}">
 				<p class="label">Name</p>

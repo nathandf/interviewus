@@ -15,6 +15,8 @@ class Interviewee extends ProfileView
 		$this->model->interviewee->interviews = array_reverse( $this->model->interviewee->interviews );
 		$this->assign( "interviewee", $this->model->interviewee );
 
+		$this->assign( "selected_interviewee", $this->model->interviewee );
+
 		$this->assign( "interviewTemplates", $this->model->interviewTemplates );
         $this->assign( "positions", $this->model->positions );
         $this->setErrorMessages( $errors );

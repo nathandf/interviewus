@@ -36,6 +36,9 @@ class ProfileView extends View
 		$this->assign( "account", $this->model->account );
 		$this->assign( "organization", $this->model->organization );
 		$this->assign( "organizations", $this->model->organizations );
+		$this->assign( "interviewees", $this->model->interviewees );
+		$this->assign( "positions", $this->model->positions );
+		$this->assign( "interviewTemplates", $this->model->interviewTemplates );
 		$this->assign( "user", $this->model->user );
 	}
 }

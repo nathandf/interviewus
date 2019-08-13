@@ -42,12 +42,6 @@ class Profile extends ProfileModel
 	                $question->answer = $intervieweeAnswerRepo->get( [ "*" ], [ "interview_question_id" => $question->id ], "single" );
 	            }
 	        }
-
-	        $this->interviewTemplates = $interviewTemplateRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
-
-	        $this->positions = $positionRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
-
-	        $this->interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 		}
 	}
 

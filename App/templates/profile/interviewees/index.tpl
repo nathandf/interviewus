@@ -1,13 +1,13 @@
-{extends file="layouts/profile.tpl"}
+{extends file="layouts/profile-with-sidebar.tpl"}
 
 {block name="profile-head"}
 	<link rel="stylesheet" href="{$HOME}public/css/profile/interviewees.css">
 {/block}
 
 {block name="profile-body"}
-	{include file="includes/modals/profile/interviewee-modal.tpl"}
-	<div class="con-cnt-xxlrg pad-med-mob-neg">
+	<div class="pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
+			<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml"><i aria-hidden="true" class="fas fa-home"></i></a>
 			<button id="interviewee" class="btn btn-inline theme-primary-dark --modal-trigger"><i aria-hidden="true" class="push-r-sml fa fa-plus"></i>Interviewee</button>
 		</div>
 		<div class="pad-sml-mob-neg"></div>

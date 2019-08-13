@@ -7,7 +7,7 @@
 		<div class="theme-primary pad-med">
 			<p>New Interview Template</p>
 		</div>
-			<form action="" method="post">
+			<form action="{$HOME}profile/" method="post">
 			<input type="hidden" name="token" value={$csrf_token}>
 			<input type="hidden" name="new_interview_template" value="{$csrf_token}">
 		<div class="theme-tertiary-dark pad-sml">
