@@ -8,7 +8,7 @@
 
 {block name="profile-body"}
 	<div class="pad-med-mob-neg">
-		<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml"><i aria-hidden="true" class="fas fa-home"></i></a>
+		<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml push-b-med"><i aria-hidden="true" class="fas fa-home"></i></a>
 		<p class="sub-heading" style="margin-top: 0px;"><i class="fas fa-shopping-cart push-r-sml"></i>Subscription</p>
 		<div class="hr-full"></div>
 		{if !empty($error_messages.cancel_subscription)}

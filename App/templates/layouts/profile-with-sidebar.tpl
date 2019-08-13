@@ -89,7 +89,7 @@
 		</div>
 	</div>
 	<div class="main-content scrollbar">
-		{include file="includes/navigation/profile/menu-alt.tpl"}
+		{include file="includes/navigation/profile/main-menu.tpl"}
 		{block name="profile-body"}{/block}
 	</div>
 	<div id="user-feedback" class="user-feedback-trigger tc-white mat-box-shadow --modal-trigger">
