@@ -326,6 +326,20 @@ input[type=radio]:checked + .radio-label {
 	color: #FFFFFF;
 }
 
+#nav-sidebar-toggle {
+	display: none;
+}
+
+@media screen and (max-width: 800px) {
+	.sidebar {
+		width: 100%;
+		display: none;
+	}
+
+	#nav-sidebar-toggle {
+		display: block;
+	}
+}
 
 @media screen and (max-width: 600px) {
 	.schedule-button {

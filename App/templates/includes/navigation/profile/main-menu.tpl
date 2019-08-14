@@ -1,5 +1,5 @@
 <div class="pad-med bg-white box-shadow-light">
-    <div id="nav-sidebar-toggle" class="floatleft push-r-med" style="display: none;">
+    <div id="nav-sidebar-toggle" class="floatleft push-r-med" >
         <i class="nav-sidebar-toggle fas fa-bars tc-black cursor-pt --sidebar-toggle"></i>
     </div>
     <a id="current-workspace" class="floatleft organization-name cursor-pt --modal-trigger">{$organization->name}</a>
