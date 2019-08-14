@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="pad-sml-mob-pos content">
 			<div class="theme-primary pad-sml">
 				<p class="text-center text-xlrg-heavy">Interviews</p>
 			</div>

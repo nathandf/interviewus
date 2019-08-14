@@ -86,6 +86,7 @@
 				</a>
 				{/foreach}
 			</div>
+			<div class="pad-lrg"></div>
 		</div>
 	</div>
 	<div class="main-content scrollbar">

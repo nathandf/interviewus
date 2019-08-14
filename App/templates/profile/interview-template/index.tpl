@@ -13,7 +13,7 @@
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{include file="includes/snippets/flash-messages.tpl"}
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="content pad-sml-mob-pos floatleft">
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="update_template" value="{$csrf_token}">

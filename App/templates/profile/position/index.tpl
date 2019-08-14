@@ -19,7 +19,7 @@
 			{/foreach}
 		{/if}
 		{include file="includes/snippets/flash-messages.tpl"}
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="content pad-sml-mob-pos floatleft">
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="update_position" value="{$csrf_token}">
@@ -34,7 +34,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft push-t-sml">
+		<div class="content pad-sml-mob-pos floatleft push-t-sml">
 			<div class="theme-primary pad-sml">
 				<p class="text-center text-xlrg-heavy">Interviews</p>
 			</div>

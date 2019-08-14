@@ -263,25 +263,6 @@ td {
     background-color: rgba(256, 256, 256, .7);
 }
 
-.content {
-    background: var(--main-bg-light);
-    padding: var(--std-padding);
-    min-height: 800px;
-}
-
-.content-pad-none {
-    background: var(--main-bg-light);
-    min-height: 800px;
-}
-
-.content-lr-pad-none {
-    background: var(--main-bg-light);
-    padding: var(--std-padding);
-    padding-left: 0px;
-    padding-right: 0px;
-    min-height: 800px;
-}
-
 .alt-content {
     background: #FFFFFF;
 }
@@ -2103,12 +2084,6 @@ td {
         padding-right: 10px;
         padding-left: 10px;
     }
-
-    .content {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-
 }
 
 @media screen and (max-width: 640px) {

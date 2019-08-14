@@ -28,7 +28,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="content pad-sml-mob-pos floatleft">
 			<div class="interviewee-header card">
 				<div class="pad-sml">
 					<div class="thumbnail-lrg floatleft theme-primary push-r-med"><i class="fas fa-user"></i></div>

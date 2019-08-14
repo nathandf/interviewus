@@ -18,7 +18,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="con-cnt-med-plus-plus border-std bg-white pad-med floatleft">
+		<div class="content border-std bg-white pad-med floatleft">
 			<p class="label">Current Plan: {ucfirst( $plan->name )}</p>
 			<a href="{$HOME}pricing/" class="btn btn-inline tc-white bg-good-green push-t-sml floatleft push-r-sml"><i class="far fa-arrow-alt-circle-up push-r-sml"></i>Upgrade Account</a>
 			<button id="view-plan-details" class="btn btn-line theme-primary push-t-sml floatleft"><i class="fas fa-eye push-r-sml"></i>View Plan Details</button>
@@ -62,7 +62,7 @@
 		<div class="clear"></div>
 		{if !is_null( $subscription ) && $subscription->status != "Canceled"}
 		<div class="hr-full"></div>
-		<div class="con-cnt-med-plus-plus floatleft">
+		<div class="content">
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="cancel_subscription" value="{$csrf_token}">
@@ -87,7 +87,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="con-cnt-med-plus-plus border-std bg-white pad-med floatleft">
+		<div class="content border-std bg-white pad-med floatleft">
 			<div id="payment-methods">
 				<p class="label">Payment Methods</p>
 				{foreach from=$paymentMethods item=paymentMethod name="pm_loop"}

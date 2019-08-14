@@ -3,14 +3,19 @@
 	height: 100%;
 }
 
+.content {
+	width: 100%;
+	max-width: 800px;
+}
+
 .nav-sidebar-toggle {
-	color: #151B26;
+	color: #222222;
 	font-size: 20px;
 	line-height: 35px;
 }
 
 .organization-name {
-	color: #151B26;
+	color: #222222;
 	font-size: 20px;
 	font-weight: 600;
 	font-family: "Noto Sans", "Source Sans Pro", "Rubik", sans-serif;

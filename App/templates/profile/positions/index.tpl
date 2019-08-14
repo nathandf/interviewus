@@ -18,7 +18,7 @@
 				</div>
 			{/foreach}
 		{/if}
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="content pad-sml-mob-pos floatleft">
 		{foreach from=$positions item=position name=positions_loop}
 			<div class="card">
 				<div class="pad-sml">
