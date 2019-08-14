@@ -131,6 +131,7 @@
                 "interview-question-repository",
                 "interviewee-answer-repository",
                 "interviewee-repository",
+                "conversation-repository",
                 "twilio-phone-number-repository",
                 "phone-repository",
                 "sms-messager"
@@ -260,7 +261,7 @@
                 "service-dispatcher": [
                     "twilio-client-initializer"
                 ],
-                "sms-message": [
+                "sms-messager": [
                     "twilio-client-initializer"
                 ]
             }
