@@ -119,11 +119,18 @@ class Profile extends Controller
                     "name" => [
                         "required" => true,
                         "max" => 128
+                    ],
+                    "duplications" => [
+                        "is_array" => true
                     ]
                 ],
                 "new_organization"
             )
         ) {
+            if ( is_array( $this->request->post( "duplications" ) ) ) {
+                return [ "Organization:createAndDuplicate", "DefaultView:redirect", null, "profile/" ];
+            }
+
             return [ "Organization:create", "DefaultView:redirect", null, "profile/" ];
         }
 

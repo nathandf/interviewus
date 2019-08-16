@@ -13,6 +13,12 @@
 				<input type="hidden" name="new_organization" value="{$csrf_token}">
 				<p class="label">Name</p>
 				<input type="text" name="name" required="required" class="inp inp-full">
+				<p class="label push-t-sml">Duplicate the current workspace's:</p>
+				<input id="template-duplication" type="checkbox" class="checkbox" name="duplications[]" value="templates"><label for="template-duplication">Interview Templates</label>
+				<div class="clear"></div>
+				<input id="position-duplication" type="checkbox" class="checkbox" name="duplications[]" value="positions"><label for="position-duplication">Positions</label>
+				<div class="clear"></div>
+				<input id="interviewee-duplication" type="checkbox" class="checkbox" name="duplications[]" value="interviewees"><label for="interviewee-duplication">Interviewees</label>
 				<button type="submit" class="button theme-primary push-t-med">Create Workspace</button>
 			</form>
 		</div>

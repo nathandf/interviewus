@@ -826,6 +826,16 @@ td {
     cursor: pointer;
 }
 
+.radio {
+    height: 15px;
+    width: 15px;
+    margin-right: 8px;
+}
+
+.radio:hover {
+    cursor: pointer;
+}
+
 .encapsulate {
     box-sizing: border-box;
     border: 1px solid #CCC;

@@ -25,7 +25,7 @@
 				<input type="hidden" name="update_position" value="{$csrf_token}">
 				<p class="label">Name:</p>
 				<input type="text" class="inp inp-full property" name="name" value="{$position->name}">
-				<p class="label">Description:</p>
+				<p class="label">Job Description:</p>
 				<textarea name="description" class="inp textarea inp-full property">{$position->description|default:null}</textarea>
 				<div class="hr-full"></div>
 				<div class="pad-sml-mob-pos">
