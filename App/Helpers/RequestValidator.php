@@ -14,13 +14,14 @@ class RequestValidator
 		$this->required_fields = $fields;
 	}
 
-	public function validate( Request $request, $rules, $error_index )
+	public function validate( Request $request, $validation, $error_index )
 	{
-		if ( !is_array( $rules ) ) {
-			if ( !( $rules instanceof \Contracts\RulesetInterface ) ) {
+		$rule_set = $validation;
+		if ( !is_array( $validation ) ) {
+			if ( !( $validation instanceof \Contracts\RulesetInterface ) ) {
 				throw new \Exception( "RuleSet provided must be an instance of 'RuleSetInterface'" );
 			}
-			$rule_set = $rules->getRuleSet();
+			$rule_set = $validation->getRuleSet();
 		}
 
 		$method = strtolower( $request->method() );

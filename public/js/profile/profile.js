@@ -190,4 +190,26 @@ $( function () {
             event.preventDefault();
         }
     } );
+
+	$( "#change-timezone" ).on( "click", function () {
+		$( "#timezone-container" ).show();
+		$( "#change-timezone-container" ).hide();
+	} );
+
+	$( "#timezone-indicator" ).text( $( "#timezone-select option:selected" ).val() );
+
+	$( "#timezone-select" ).on( "change", function () {
+		$( "#timezone-indicator" ).text( $( "#timezone-select option:selected" ).val() );
+	} );
+
+	$( ".--sidebar-expand" ).on( "click", function () {
+		$( "#" + $( this ).attr( "id" ) + "-container" ).delay( 50 ).toggle( 10 );
+		$( "#" + $( this ).attr( "id" ) + "-sidebar-caret" ).delay( 50 ).toggleClass( "rotate-180", 10 );
+		$( this ).delay( 50 ).toggleClass( "sidebar-header-border", 10 );
+	} );
+
+	$( ".--sidebar-toggle" ).on( "click", function () {
+		$( "#nav-sidebar-toggle" ).toggle();
+		$( "#sidebar" ).toggle();
+	} );
 } );

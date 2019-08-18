@@ -3,18 +3,23 @@
 {block name="head"}
 	<title>InterviewUs</title>
 	<script src="{$HOME}{$JS_SCRIPTS}home.js"></script>
+	<link rel="stylesheet" href="{$HOME}public/css/home.css">
 {/block}
 
 {block name="body"}
-	{include file="includes/navigation/main-menu.tpl"}
-	<div class="theme-tertiary-light pad-med" style="overflow: hidden;">
-		<div id="welcome" class="con-cnt-lrg pad-med push-t-med push-b-med bg-white mat-box-shadow">
-			<div class="con-cnt-med-plus-plus">
-				<p class="title" style="margin: 0;">Automated Text Message Interviews</p>
-				<div class="push-t-med"></div>
-				<img class="img-lrg" src="{$HOME}public/static/img/robo-logo.jpg" style="display: block; margin: 0 auto;" alt="">
-				<p class="sub-title push-t-med">Interviews on Autopilot</p>
-				<a id="create-account" href="{$HOME}sign-up/" class="button-link theme-secondary">Create your first interview</a>
+	<div id="hero">
+		<div id="hero-overlay" class="theme-primary-gradient-transparent">
+			{include file="includes/navigation/main-menu.tpl"}
+			<div class="con-cnt-lrg pad-med push-t-med push-b-med">
+				<div class="con-cnt-med-plus-plus">
+					<div class="con-cnt-med">
+						<img style="width: 100%;" src="{$HOME}public/static/img/typography.jpg">
+					</div>
+					<p class="title" style="margin: 0; color: #FFFFFF;">Automated Text Message Interviews</p>
+					<div class="push-t-med">
+						<a href="{$HOME}sign-up/" class="button-link bg-real-gold tc-white demo-button"><i class="fas fa-comment-dots push-r-sml"></i>Start Interview Demo</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

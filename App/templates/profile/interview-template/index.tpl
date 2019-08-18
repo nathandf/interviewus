@@ -1,4 +1,4 @@
-{extends file="layouts/profile.tpl"}
+{extends file="layouts/profile-with-sidebar.tpl"}
 
 {block name="profile-head"}
 	<script src="{$HOME}{$JS_SCRIPTS}profile/interview-template.js"></script>
@@ -6,13 +6,14 @@
 
 {block name="profile-body"}
 	{include file="includes/modals/profile/add-question-modal.tpl"}
-	<div class="con-cnt-xxlrg pad-med-mob-neg">
+	<div class="pad-med-mob-neg">
 		<div class="pad-sml-mob-pos">
+			<a href="{$HOME}profile/" class="btn btn-inline theme-primary push-r-sml"><i aria-hidden="true" class="fas fa-home"></i></a>
 			<a href="{$HOME}profile/interview-templates/" class="btn btn-inline theme-primary "><i aria-hidden="true" class="push-r-sml fas fa-caret-left"></i>Interview Templates</a>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
 		{include file="includes/snippets/flash-messages.tpl"}
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="content pad-sml-mob-pos floatleft">
 			<form action="" method="post">
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="update_template" value="{$csrf_token}">

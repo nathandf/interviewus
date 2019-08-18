@@ -24,8 +24,8 @@ $( function () {
 		}
 	};
 
-	$( ".--model-name" ).on( "keyup", function() {
-		$( ".--model-name" ).val( $( this ).val().toLowerCase().split( " " ).join( "-" ).split( "--" ).join( "-" ) );
+	$( ".--id-string" ).on( "keyup", function() {
+		$( this ).val( $( this ).val().toLowerCase().replace( /[^a-zA-Z0-9\- ]+/g, "").split( " " ).join( "-" ).replace( /[\-]+/g, "-") );
     });
 
 	$( "#add-property" ).on( "click", function () {

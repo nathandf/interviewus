@@ -13,9 +13,21 @@
 	color: #FFFFFF;
 }
 
+.theme-primary-gradient {
+	background: linear-gradient( to right, #64d8cb, #00766c );
+}
+
+.theme-primary-gradient-transparent {
+	background: linear-gradient( to right, rgba(0, 118, 108, .9), rgba(100, 216, 203, .9) );
+}
+
 .theme-secondary {
 	background: #4a148c;
 	color: #FFFFFF;
+}
+
+.theme-gradient-transparent {
+	background: linear-gradient( to right, rgba(18, 0, 94, .9), rgba(124, 67, 189, .9), rgba(0, 118, 108, .9), rgba(100, 216, 203, .9) );
 }
 
 .theme-secondary-light {
@@ -26,6 +38,14 @@
 .theme-secondary-dark {
 	background: #12005e;
 	color: #FFFFFF;
+}
+
+.theme-secondary-gradient {
+	background: linear-gradient( to right, #7c43bd, #12005e );
+}
+
+.theme-secondary-gradient-transparent {
+	background: linear-gradient( to right, rgba(124, 67, 189, .9), rgba(18, 0, 94, .9) );
 }
 
 .theme-tertiary {

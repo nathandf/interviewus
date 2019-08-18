@@ -21,6 +21,7 @@ class Profile extends Controller
 
         $this->account = $this->accountRepo->get( [ "*" ], [ "id" => $this->user->current_account_id ], "single" );
         $this->organization = $organizationRepo->get( [ "*" ], [ "id" => $this->user->current_organization_id ], "single" );
+        $this->organization_ids = $organizationRepo->get( [ "id" ], [ "account_id" => $this->account->id ], "raw" );
     }
 
     public function indexAction()
@@ -39,8 +40,19 @@ class Profile extends Controller
                 "new_interviewee"
                 )
         ) {
-
             return [ "Interviewee:create", "Interviewee:create", null, null ];
+        }
+
+        if (
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_position" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                new \Model\Validations\NameDescription( $this->request->session( "csrf-token" ) ),
+                "new_position"
+            )
+        ) {
+            return [ "Position:create", "Position:create", null, null ];
         }
 
         if (
@@ -71,6 +83,78 @@ class Profile extends Controller
             )
         ) {
             return [ "Interview:deploy", "Profile:deployInterview", null, null ];
+        }
+
+        if (
+            $this->request->is( "post" ) &&
+            $this->request->post( "change_organization" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->request->session( "csrf-token" )
+                    ],
+                    "organization_id" => [
+                        "required" => true,
+                        "in_array" => $this->organization_ids
+                    ]
+                ],
+                "change_organization"
+            )
+        ) {
+            return [ "User:changeOrganization", "DefaultView:redirect", null, "profile/" ];
+        }
+
+        if (
+            $this->request->is( "post" ) &&
+            $this->request->post( "new_organization" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->request->session( "csrf-token" )
+                    ],
+                    "name" => [
+                        "required" => true,
+                        "max" => 128
+                    ],
+                    "timezone" => [
+                        "required" => true
+                    ],
+                    "duplications" => [
+                        "is_array" => true
+                    ]
+                ],
+                "new_organization"
+            )
+        ) {
+            if ( is_array( $this->request->post( "duplications" ) ) ) {
+                return [ "Organization:createAndDuplicate", "DefaultView:redirect", null, "profile/" ];
+            }
+
+            return [ "Organization:create", "DefaultView:redirect", null, "profile/" ];
+        }
+
+        if (
+            $this->request->is( "post" ) &&
+            $this->request->post( "update_organization" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->request->session( "csrf-token" )
+                    ],
+                    "name" => [
+                        "required" => true
+                    ]
+                ],
+                "udpate_organization"
+            )
+        ) {
+            return [ "Organization:update", "Home:redirect", null, "profile/" ];
         }
 
         return [ "Profile:index", "Profile:showAll", null, $requestValidator->getErrors() ];
@@ -142,6 +226,6 @@ class Profile extends Controller
 
     public function logout()
     {
-        return [ "Profile:logout", "Home:redirect", null, "" ];
+        return [ "User:logout", "DefaultView:redirect", null, "" ];
     }
 }

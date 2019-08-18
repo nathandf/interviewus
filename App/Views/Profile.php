@@ -29,9 +29,6 @@ class Profile extends ProfileView
 		$this->validateAccount();
 
 		$this->assign( "interviews", array_reverse( $this->model->interviews ) );
-        $this->assign( "interviewTemplates", $this->model->interviewTemplates );
-        $this->assign( "interviewees", $this->model->interviewees );
-        $this->assign( "positions", $this->model->positions );
         $this->setErrorMessages( $errors );
         $this->assign( "flash_messages", $this->model->request->getFlashMessages() );
 

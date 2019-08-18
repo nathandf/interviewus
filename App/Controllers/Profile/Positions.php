@@ -25,7 +25,7 @@ class Positions extends Controller
             $this->request->post( "new_position" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                new \Model\Validations\NamesDescription( $this->request->session( "csrf-token" ) ),
+                new \Model\Validations\NameDescription( $this->request->session( "csrf-token" ) ),
                 "new_position"
             )
         ) {

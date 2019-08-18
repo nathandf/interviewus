@@ -1,3 +1,123 @@
+.main-content {
+	position: relative;
+	height: 100%;
+}
+
+.content {
+	width: 100%;
+	max-width: 800px;
+}
+
+.nav-sidebar-toggle {
+	color: #222222;
+	font-size: 20px;
+	line-height: 35px;
+}
+
+.organization-name {
+	color: #222222;
+	font-size: 20px;
+	font-weight: 600;
+	font-family: "Noto Sans", "Source Sans Pro", "Rubik", sans-serif;
+	line-height: 35px;
+}
+
+.sidebar {
+	position: relative;
+	height: 100%;
+	width: 250px;
+	background: #151B26;
+}
+
+.sidebar-menu {
+}
+
+.sidebar-logo-container {
+	width: 65px;
+}
+
+.sidebar-logo {
+	width: 100%;
+	border-radius: 2px;
+}
+
+.sidebar-menu .menu-item {
+	font-size: 15px;
+	color: #9CA6AF;
+	font-weight: 100;
+	display: inline-block;
+}
+
+.sidebar-menu .menu-item .icon {
+	text-align: left;
+	font-size: 12px;
+	width: 30px;
+}
+
+.sidebar-content {
+	height: 100%;
+}
+
+.sidebar-section {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.sidebar-header {
+	font-size: 12px;
+	color: #9CA6AF;
+	font-weight: 600;
+	padding-left: 2.5%;
+	font-family: arial;
+}
+
+.new-button {
+	color: #DDDDDD;
+}
+
+.sidebar-header-title {
+	font-family: "Open Sans";
+}
+
+.sidebar-header:hover {
+	color: #DDDDDD;
+}
+
+.sidebar-header-border {
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.sidebar .list-item:hover {
+	background: #605A84;
+	cursor: pointer;
+}
+
+.sidebar .list-item:hover .list-item-text {
+	color: #FFFFFF;
+}
+
+.sidebar .list-item:hover .list-item-thumbnail {
+	background: #26A69A;
+}
+
+.list-item .list-item-text {
+	font-size: 14px;
+	color: #CCCCCC;
+}
+
+.list-item-thumbnail {
+	text-align: center;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 35px;
+    font-size: 15px;
+    font-weight: 300;
+	font-family: "Raleway", "Rubik",  "Open Sans";
+	margin-left: 2.5%;
+	padding-left: 1px;
+}
+
 .interview-card {
 	display: block;
 }
@@ -206,6 +326,20 @@ input[type=radio]:checked + .radio-label {
 	color: #FFFFFF;
 }
 
+#nav-sidebar-toggle {
+	display: none;
+}
+
+@media screen and (max-width: 800px) {
+	.sidebar {
+		width: 100%;
+		display: none;
+	}
+
+	#nav-sidebar-toggle {
+		display: block;
+	}
+}
 
 @media screen and (max-width: 600px) {
 	.schedule-button {

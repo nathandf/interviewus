@@ -11,9 +11,7 @@ class Interviewees extends ProfileView
 		if ( !is_null( $errors ) ) {
 			$this->assign( "error_messages", $errors );
 		}
-
-		$this->assign( "interviewees", array_reverse( $this->model->interviewees ) );
-
+		
 		$this->setTemplate( "profile/interviewees/index.tpl" );
 		$this->render();
 	}

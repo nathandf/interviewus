@@ -1,13 +1,17 @@
-{extends file="layouts/profile.tpl"}
+{extends file="layouts/profile-with-sidebar.tpl"}
 
 {block name="profile-head"}
 {/block}
 
 {block name="profile-body"}
-	{include file="includes/modals/profile/interviewee-modal.tpl"}
-	{include file="includes/modals/profile/interview-template-modal.tpl"}
-	{include file="includes/modals/profile/interview-deployment-modal.tpl"}
-	<div class="con-cnt-xxlrg pad-med-mob-neg">
+	<div class="pad-med-mob-neg">
+		{if !empty($error_messages.change_organization)}
+			{foreach from=$error_messages.change_organization item=message}
+				<div class="con-message-error mat-hov cursor-pt --c-hide">
+					<p class="user-message-body">{$message}</p>
+				</div>
+			{/foreach}
+		{/if}
 		{if !empty($error_messages.deploy_interview)}
 			{foreach from=$error_messages.deploy_interview item=message}
 				<div class="con-message-error mat-hov cursor-pt --c-hide">
@@ -24,7 +28,7 @@
 		{/if}
 		<div class="pad-sml-mob-pos">
 			<div class="floatleft push-r-xsml">
-				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i class="push-r-sml fas fa-rocket"></i>Deploy Interview</button>
+				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i class="fas fa-rocket"></i></button>
 				<div class="pad-xxsml-mob-pos"></div>
 				<div class="clear"></div>
 			</div>
@@ -68,7 +72,7 @@
 			</div>
 		</div>
 		<div class="pad-sml-mob-neg"></div>
-		<div class="con-cnt-lrg pad-sml-mob-pos floatleft">
+		<div class="pad-sml-mob-pos content">
 			<div class="theme-primary pad-sml">
 				<p class="text-center text-xlrg-heavy">Interviews</p>
 			</div>
@@ -182,4 +186,5 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	<div class="clear"></div>
 {/block}

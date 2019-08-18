@@ -1,0 +1,306 @@
+{
+    "services": {
+        "\\Conf\\": [
+            "config"
+        ],
+        "\\Core\\": {
+            "0": "controller-factory",
+            "1": "model-factory",
+            "model-dispatcher": [
+                "model-factory"
+            ],
+            "2": "view-factory",
+            "view-dispatcher": [
+                "view-factory"
+            ],
+            "error": [
+                "container"
+            ],
+            "3": "request",
+            "router": [
+                "config"
+            ],
+            "view-instance": [
+                "container"
+            ],
+            "my-pdo": [
+                "config"
+            ],
+            "my-logger": [
+                "config"
+            ],
+            "4": "my-smarty"
+        },
+        "\\Helpers\\": {
+            "0": "access-control",
+            "1": "csv-generator",
+            "email-builder": [
+                "config"
+            ],
+            "3": "html-interview-results-builder",
+            "4": "request-validator",
+            "5": "time-converter",
+            "6": "time-manager",
+            "7": "time-zone-helper",
+            "8": "image-manager",
+            "9": "video-manager"
+        },
+        "\\Model\\Services\\": {
+            "0": "entity-factory",
+            "1": "domain-object-factory",
+            "account-provisioner": [
+                "account-repository",
+                "plan-repository",
+                "plan-details-repository"
+            ],
+            "account-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "account-upgrader": [
+                "account-repository",
+                "account-provisioner",
+                "plan-repository"
+            ],
+            "account-user-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "address-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "cart-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "concatentated-sms-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "conversation-provisioner": [
+                "conversation-repository",
+                "twilio-phone-number-repository"
+            ],
+            "conversation-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "country-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "deployment-type-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "facebook-pixel-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "file-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "image-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "inbound-sms-cocatenated": [
+                "concatenated-sms-repository",
+                "inbound-sms-repository",
+                "logger"
+            ],
+            "inbound-sms-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "industry-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "interview-builder": [
+                "account-repository",
+                "interview-repository",
+                "question-repository",
+                "interview-question-repository",
+                "interviewee-repository"
+            ],
+            "interview-dispatcher": [
+                "interview-repository",
+                "interview-question-repository",
+                "interviewee-answer-repository",
+                "interviewee-repository",
+                "conversation-repository",
+                "twilio-phone-number-repository",
+                "phone-repository",
+                "sms-messager"
+            ],
+            "interview-question-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "interview-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "interview-template-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "interviewee-answer-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "interviewee-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "organization-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "organization-user-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "payment-method-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "phone-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "plan-details-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "plan-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "position-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "product-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "question-choice-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "question-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "question-tag-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "question-type-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "quick-boi": [
+                "dao"
+            ],
+            "tag-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "timezone-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "twilio-phone-number-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "unsubscribe-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "user-authenticator": [
+                "user-repository",
+                "request"
+            ],
+            "user-repository": [
+                "dao",
+                "entity-factory"
+            ],
+            "video-repository": [
+                "dao",
+                "entity-factory"
+            ]
+        }
+    },
+    "packages": {
+        "sendgrid": {
+            "\\Model\\Services\\SendgridAPI\\": {
+                "client-initializer": [
+                    "config"
+                ],
+                "mailer": [
+                    "sendgrid-client-initializer",
+                    "unsubscribe-repository"
+                ]
+            }
+        },
+        "twilio": {
+            "\\Model\\Services\\TwilioAPI\\": {
+                "client-initializer": [
+                    "config"
+                ],
+                "phone-number-buyer": [
+                    "twilio-client-initializer",
+                    "config"
+                ],
+                "service-dispatcher": [
+                    "twilio-client-initializer"
+                ],
+                "sms-messager": [
+                    "twilio-client-initializer"
+                ]
+            }
+        },
+        "braintree": {
+            "\\Model\\Services\\BraintreeAPI\\": {
+                "gateway-initializer": [
+                    "config"
+                ],
+                "client-token-generator": [
+                    "braintree-gateway-initializer"
+                ],
+                "customer-repository": [
+                    "braintree-gateway-initializer"
+                ],
+                "payment-method-repository": [
+                    "braintree-gateway-initializer"
+                ],
+                "subscription-repository": [
+                    "braintree-gateway-initializer"
+                ],
+                "api-manager": [
+                    "braintree-gateway-initializer"
+                ]
+            }
+        },
+        "ipdata": {
+            "\\Model\\Services\\IPDataAPI\\": {
+                "gateway": [
+                    "config"
+                ]
+            }
+        }
+    },
+    "aliases": {
+        "dao": "my-pdo",
+        "logger": "my-logger",
+        "mailer": "sendgrid-mailer",
+        "sms-messager": "twilio-sms-messager",
+        "templating-engine": "my-smarty"
+    }
+}

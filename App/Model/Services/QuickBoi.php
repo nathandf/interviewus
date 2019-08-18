@@ -22,27 +22,35 @@ class QuickBoi
         $this->dao = $dao;
     }
 
-    public function buildModel( $model_name )
+    public function buildEntity( $entity_name )
     {
-        $this->buildModelNames( $model_name );
+        $this->buildModelNames( $entity_name );
         $this->createEntityFile();
         $this->createRepositoryFile();
         $this->createMapperFile();
         $this->createTable();
+
+        // Register the repository with in services.json
+        $this->registerService(
+            "\\Model\\Services\\",
+            $entity_name . "-repository",
+            [ "dao", "entity-factory" ]
+        );
+
         $this->logQuery();
 
         return;
     }
 
-    public function buildModelNames( $model_name )
+    public function buildModelNames( $entity_name )
     {
-        if ( preg_match( "/[^a-zA-Z -]/", $model_name ) ) {
+        if ( preg_match( "/[^a-zA-Z -]/", $entity_name ) ) {
             throw new \Exception( "String can only contain characters a-z upper or lower case, spaces, and hyphens (-)" );
         }
 
         // Create the string with which classes will be registered with the container
         // and with which class names and tables will be built.
-        $id_string = $this->formatIdString( $model_name );
+        $id_string = $this->formatIdString( $entity_name );
         $this->setIdString( $id_string );
 
         // build entity, repository, and mapper class name
@@ -82,6 +90,11 @@ class QuickBoi
     private function formatClassNameFromIdString( $id_string )
     {
         return str_replace( " ", "", ucwords( str_replace( "-", " ", $id_string ) ) );
+    }
+
+    private function formatClassInstanceVariableFromIdString( $id_string )
+    {
+        return lcfirst( $this->formatClassNameFromIdString( $id_string ) );
     }
 
     public function setEntityNamespace( $namespace )
@@ -156,7 +169,7 @@ class QuickBoi
     private function checkFile( $filename )
     {
         if ( file_exists( $filename ) ) {
-            throw new \Exception( "Entity already exists" );
+            throw new \Exception( "File '{$filename}' already exists" );
         }
 
         return;
@@ -350,5 +363,97 @@ class QuickBoi
         $content .= "\n" . $query. ";";
 
         file_put_contents( $this->getQueryLogFile(), $content );
+    }
+
+    public function buildService( $service_name, $dependencies )
+    {
+        if ( !is_array( $dependencies ) ) {
+            $dependencies = [];
+        }
+
+        $this->createServiceFile( $service_name, $dependencies );
+
+        $id_strings = [];
+        foreach ( $dependencies as $dependency ) {
+            $dependency_parts = explode( " ", $dependency );
+            $id_strings[] = $dependency_parts[ 1 ];
+        }
+        $this->registerService( "\\Model\\Services\\", $service_name, $id_strings );
+    }
+
+    private function createServiceFile( $service_name, $dependencies )
+    {
+        // Create the class name
+        $class_name = $this->formatClassNameFromIdString( $service_name );
+
+        // Create the file name
+        $filename = "App/Model/Services/" . $class_name . ".php";
+
+        // Format the dependencies into class names and variables for constructor
+        // Save arguments from the constructor
+        $formatted_dependencies = "";
+        $dependency_properties = "";
+        $class_properties = "";
+        $id_strings = [];
+
+        $i = 1;
+        foreach ( $dependencies as $dependency ) {
+            $dependency_parts = explode( " ", $dependency );
+            $namespace = ( $dependency_parts[ 0 ] == "\Model\Services\\" ? "" : $dependency_parts[ 0 ] );
+            $id_string = $dependency_parts[ 1 ];
+            $id_strings[] = $dependency_parts[ 1 ];
+
+            if ( $i < count( $dependencies ) ) {
+                // Add commas after the variable names except on last dependency
+                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $id_string ) . " \${$this->formatClassInstanceVariableFromIdString( $id_string )},";
+                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $id_string )};";
+            } else {
+                $formatted_dependencies .= "\n\t\t" . $namespace . $this->formatClassNameFromIdString( $id_string ) . " \${$this->formatClassInstanceVariableFromIdString( $id_string )}\n\t";
+                $class_properties .= "\n\tpublic \${$this->formatClassInstanceVariableFromIdString( $id_string )};\n";
+            }
+
+            $dependency_properties .= "\t\t\$this->{$this->formatClassInstanceVariableFromIdString( $id_string )} = \${$this->formatClassInstanceVariableFromIdString( $id_string )};\n";
+            $i++;
+        }
+        $contents = "<?php\n\nnamespace Model\Services;\n\nclass {$class_name}\n{{$class_properties}\n\tpublic function __construct({$formatted_dependencies}) {\n{$dependency_properties}\t}\n}";
+
+        $this->createFile( $filename, $contents );
+
+        return;
+    }
+
+    private function registerService( $namespace, $service_name, $dependencies, $package = null )
+    {
+        $service_register = json_decode( file_get_contents( "App/Conf/services.json" ), true );
+
+        if ( !empty( $dependencies ) ) {
+            $service_register[ "services" ][ $namespace ][ $service_name ] = $dependencies;
+            ksort( $service_register[ "services" ][ $namespace ], SORT_STRING );
+
+            file_put_contents( "App/Conf/services.json", json_encode( $service_register, JSON_PRETTY_PRINT ) );
+
+            return;
+        }
+
+        $service_register[ "services" ][ $namespace ][] = $service_name;
+
+        ksort( $service_register[ "services" ][ $namespace ], SORT_STRING );
+
+        file_put_contents( "App/Conf/services.json", json_encode( $service_register, JSON_PRETTY_PRINT ) );
+
+        return;
+    }
+
+    public function registerAlias( $alias, $id_string )
+    {
+        $service_register = json_decode( file_get_contents( "App/Conf/services.json" ), true );
+
+        $service_register[ "aliases" ][ $alias ] = $id_string;
+
+        ksort( $service_register[ "aliases" ], SORT_STRING );
+        
+        file_put_contents( "App/Conf/services.json", json_encode( $service_register, JSON_PRETTY_PRINT ) );
+
+        return;
     }
 }

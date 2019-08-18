@@ -75,6 +75,10 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+}
+
 iframe {
     max-width: 100%;
 }
@@ -257,25 +261,6 @@ td {
     width: 100%;
     height: 100%;
     background-color: rgba(256, 256, 256, .7);
-}
-
-.content {
-    background: var(--main-bg-light);
-    padding: var(--std-padding);
-    min-height: 800px;
-}
-
-.content-pad-none {
-    background: var(--main-bg-light);
-    min-height: 800px;
-}
-
-.content-lr-pad-none {
-    background: var(--main-bg-light);
-    padding: var(--std-padding);
-    padding-left: 0px;
-    padding-right: 0px;
-    min-height: 800px;
 }
 
 .alt-content {
@@ -841,6 +826,16 @@ td {
     cursor: pointer;
 }
 
+.radio {
+    height: 15px;
+    width: 15px;
+    margin-right: 8px;
+}
+
+.radio:hover {
+    cursor: pointer;
+}
+
 .encapsulate {
     box-sizing: border-box;
     border: 1px solid #CCC;
@@ -1269,6 +1264,9 @@ td {
 }
 
 /* Background Colors */
+.bg-none {
+    background: none;
+}
 
 .bg-error {
     background: #B00020;
@@ -1572,9 +1570,9 @@ td {
 .title {
     color: #2F3033;
     text-align: center;
-    font-weight: 700;
     font-size: 42px;
     font-family: 'Open Sans', 'Source Sans Pro', 'Roboto', 'Roboto Slab', sans-serif;
+    font-weight: 600;
     margin-top: 30px;
     margin-bottom: 30px;
 }
@@ -1706,6 +1704,13 @@ td {
     hyphens: auto;
 }
 
+.text-overflow-ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+}
+
 .sub-title {
     text-align: center;
     margin-bottom: 20px;
@@ -1835,7 +1840,32 @@ td {
     font-weight: 600;
 }
 
+/* Animations */
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
 /* Special */
+.scrollbar {
+    overflow: auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
 
 .fancy-line-text {
     position: relative;
@@ -1951,6 +1981,10 @@ td {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+.box-shadow-light {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04), 0 3px 6px rgba(0, 0, 0, 0.06);
+}
+
 .mat-hov {
     transition: .4s;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -2060,12 +2094,6 @@ td {
         padding-right: 10px;
         padding-left: 10px;
     }
-
-    .content {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-
 }
 
 @media screen and (max-width: 640px) {

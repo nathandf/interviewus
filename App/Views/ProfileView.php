@@ -35,6 +35,11 @@ class ProfileView extends View
 		$this->assign( "countries", $this->model->countries );
 		$this->assign( "account", $this->model->account );
 		$this->assign( "organization", $this->model->organization );
+		$this->assign( "organizations", $this->model->organizations );
+		$this->assign( "interviewees", array_reverse( $this->model->interviewees ) );
+		$this->assign( "positions", array_reverse( $this->model->positions ) );
+		$this->assign( "interviewTemplates", array_reverse( $this->model->interviewTemplates ) );
 		$this->assign( "user", $this->model->user );
+		$this->assign( "timezones", $this->model->timezones );
 	}
 }

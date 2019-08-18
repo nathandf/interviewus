@@ -224,7 +224,12 @@ class Request
         setcookie( $index, null, time() - 3600, "/" );
     }
 
-    public function getCookie( $index )
+    public function getCookie( $index ) // Keep for backwards compatibility
+    {
+        return $this->cookie( $index );
+    }
+
+	public function cookie( $index )
     {
         if ( isset( $_COOKIE[ $index ] ) ) {
             return $_COOKIE[ $index ];

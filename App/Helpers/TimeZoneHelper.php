@@ -4,6 +4,8 @@ namespace Helpers;
 
 class TimeZoneHelper
 {
+    public $server_timezone;
+
     public function getTimeZoneOffset( $timezone_1, $timezone_2 )
     {
         // Get UTC DateTimeZone object and DateTimeZone object for businesses timezone
@@ -20,6 +22,24 @@ class TimeZoneHelper
 
     public function getServerTimeZoneOffset( $timezone )
     {
-        return $this->getTimeZoneOffset( date_default_timezone_get(), $timezone );
+        return $this->getTimeZoneOffset( $this->getServerTimezone(), $timezone );
+    }
+
+    private function getServerTimezone()
+    {
+        if ( isset( $this->server_timezone ) ) {
+            return $this->server_timezone;
+        }
+
+        $this->server_timezone = date_default_timezone_get();
+
+        return $this->server_timezone;
+    }
+
+    public function getUTCTimeZoneOffset( $timezone )
+    {
+        $dateTime = new \DateTime( "now", new \DateTimeZone( $timezone ) );
+        
+        return $dateTime->getOffset();
     }
 }

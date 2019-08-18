@@ -10,13 +10,24 @@ class Interviews extends ProfileModel
 	{
 		$interviewRepo = $this->load( "interview-repository" );
 		$interviewDispatcher = $this->load( "interview-dispatcher" );
+		$organizationRepo = $this->load( "organization-repository" );
+		$timezoneHelper = $this->load( "time-zone-helper" );
 
 		$interviews = $interviewRepo->get( [ "*" ], [ "status" => "scheduled" ] );
 
+		// Server time
 		$now = time();
 
 		foreach ( $interviews as $interview ) {
-			if ( strtotime( $interview->scheduled_time ) <= $now ) {
+			// Get the organiations timezone
+			$organization_timezone = $organizationRepo->get( [ "timezone" ], [ "id" => $interview->organization_id ], "raw" )[ 0 ];
+
+			// Resolve timezone differences between server time and the
+			// organization timezone
+			$timezone_offset = $timezoneHelper->getUTCTimeZoneOffset( $organization_timezone );
+			$deployment_time = strtotime( $interview->scheduled_time ) - $timezone_offset;
+			
+			if ( $deployment_time <= $now ) {
 				// Update the inteview status to pending
 				$interviewRepo->update(
 					[ "status" => "pending" ],

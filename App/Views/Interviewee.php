@@ -7,11 +7,17 @@ class Interviewee extends ProfileView
 	public function index( $errors )
 	{
 		$this->validateAccount();
-		
-		$this->model->interviewee->interviews = array_reverse( $this->model->interviewee->interviews );
 
+
+		$timezoneRepo = $this->load( "timezone-repository" );
+		$this->assign( "timezones", $timezoneRepo->getAllAscAlpha( "US" ) );
+
+		$this->model->interviewee->interviews = array_reverse( $this->model->interviewee->interviews );
 		$this->assign( "interviewee", $this->model->interviewee );
-        $this->assign( "interviewTemplates", $this->model->interviewTemplates );
+
+		$this->assign( "selected_interviewee", $this->model->interviewee );
+
+		$this->assign( "interviewTemplates", $this->model->interviewTemplates );
         $this->assign( "positions", $this->model->positions );
         $this->setErrorMessages( $errors );
         $this->assign( "flash_messages", $this->request->getFlashMessages() );

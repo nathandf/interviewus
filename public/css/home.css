@@ -1,0 +1,24 @@
+#hero {
+	display: block;
+	overflow: auto;
+	background: url( "../static/img/office.jpg" );
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#hero-overlay {
+	display: block;
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+}
+
+.demo-button {
+	width: auto;
+	display: table;
+	margin: 0 auto;
+	padding: 20px;
+	font-size: 20px;
+	font-weight: 600;
+}

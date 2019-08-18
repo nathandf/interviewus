@@ -39,21 +39,6 @@ class Settings extends Controller
 
         if (
             $this->request->is( "post" ) &&
-            $this->request->post( "update_organization" ) != "" &&
-            $requestValidator->validate(
-                $this->request,
-                new \Model\Validations\Organization(
-                    $this->request->session( "csrf-token" ),
-                    $industryRepo->get( [ "id" ], [], "raw" )
-                ),
-                "udpate_organization"
-            )
-        ) {
-            return [ "Organization:update", "Home:redirect", null, "profile/settings/" ];
-        }
-
-        if (
-            $this->request->is( "post" ) &&
             $this->request->post( "update_default_payment_method" ) != "" &&
             $requestValidator->validate(
                 $this->request,
