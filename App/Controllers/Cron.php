@@ -19,7 +19,7 @@ class Cron extends Controller
 			$this->request->is( "get" ) &&
 			$requestValidator->validate(
 				$this->request,
-				new Model\Validations\Cron,
+				new \Model\Validations\Cron,
 				"dispatch_pending_interviews"
 			)
 		) {
