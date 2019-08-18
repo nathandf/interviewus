@@ -11,7 +11,8 @@ class Organization extends ProfileModel
 			$organization = $organizationRepo->insert([
 				"name" => $this->request->post( "name" ),
 				"account_id" => $this->account->id,
-				"user_id" => $this->organization->user_id
+				"user_id" => $this->organization->user_id,
+				"timezone" => $this->request->post( "timezone" )
 			]);
 
 			$userRepo = $this->load( "user-repository" );
@@ -19,6 +20,13 @@ class Organization extends ProfileModel
 				[ "current_organization_id" => $organization->id ],
 				[ "id" => $this->user->id ]
 			);
+
+			// Create new OrganizationUsers for this organization
+			$organizationUserRepo = $this->load( "organization-user-repository" );
+			$organizationUser = $organizationUserRepo->insert([
+				"organization_id" => $organization->id,
+				"user_id" => $this->user->id
+			]);
 
 			return $organization;
 		}

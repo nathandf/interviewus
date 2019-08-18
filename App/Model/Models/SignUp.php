@@ -112,7 +112,8 @@ class SignUp extends Model
 			$organization = $organizationRepo->insert([
 				"account_id" => $account->id,
 				"name" => "My Organization",
-				"user_id" => $user->id
+				"user_id" => $user->id,
+				"timezone" => $timezone
 			]);
 
 			// Update current_organization_id to new organization_id

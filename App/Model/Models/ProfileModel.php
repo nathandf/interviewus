@@ -38,6 +38,9 @@ class ProfileModel extends Model
 		$countryRepo = $this->load( "country-repository" );
 		$this->countries = $countryRepo->get( [ "*" ] );
 
+		$timezoneRepo = $this->load( "timezone-repository" );
+		$this->timezones = $timezoneRepo->getAllAscAlpha( "US" );
+
 		return $this->account_validated = true;
 	}
 }

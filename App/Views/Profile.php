@@ -28,9 +28,6 @@ class Profile extends ProfileView
 	{
 		$this->validateAccount();
 
-		$timezoneRepo = $this->load( "timezone-repository" );
-		$this->assign( "timezones", $timezoneRepo->getAllAscAlpha( "US" ) );
-
 		$this->assign( "interviews", array_reverse( $this->model->interviews ) );
         $this->setErrorMessages( $errors );
         $this->assign( "flash_messages", $this->model->request->getFlashMessages() );

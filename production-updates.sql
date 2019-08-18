@@ -326,3 +326,4 @@ ALTER TABLE `timezone` CHANGE `gmt_offset` `gmt_offset` FLOAT(10,2) NULL DEFAULT
 ALTER TABLE `timezone` CHANGE `timezone` `timezone` VARCHAR(125) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '';
 ALTER TABLE `timezone` ADD `id` BIGINT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` ADD `timezone` VARCHAR(128) NOT NULL AFTER `braintree_subscription_id`;
+ALTER TABLE `organization` ADD `timezone` VARCHAR(256) NULL DEFAULT 'America/Chicago' AFTER `user_id`;

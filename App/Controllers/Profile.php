@@ -120,6 +120,9 @@ class Profile extends Controller
                         "required" => true,
                         "max" => 128
                     ],
+                    "timezone" => [
+                        "required" => true
+                    ],
                     "duplications" => [
                         "is_array" => true
                     ]
