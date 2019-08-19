@@ -129,19 +129,15 @@
 					<div class="pad-sml">
 						{foreach from=$interview->questions item=question name=questions_loop}
 						<div class="qa-container">
-							<div class="question-answer pad-xsml">
-								<p class="label" style="color: #222222;">Question {$smarty.foreach.questions_loop.iteration}:</p>
-								<p class="text-lrg">{$question->body}</p>
+							<div class="question theme-secondary floatleft">
+								<p >{$question->body}</p>
 							</div>
-							<div class="question-answer pad-xsml">
-								<p class="label" style="color: #222222;">Answer:</p>
-								<p class="text-lrg">{$question->answer->body|default:"<i>Not answered</i>"}</p>
+							<div class="clear"></div>
+							<div class="answer theme-primary floatright">
+								<p>{$question->answer->body|default:"<i>Not answered</i>"}</p>
 							</div>
 							<div class="clear"></div>
 						</div>
-						{if !$smarty.foreach.questions_loop.last}
-						<div class="hr-full"></div>
-						{/if}
 						{foreachelse}
 						<p>There are no questions for this interview</p>
 						{/foreach}

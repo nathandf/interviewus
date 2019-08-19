@@ -144,6 +144,56 @@
 	width: 50%;
 }
 
+.question {
+	margin-left: 10px;
+	position: relative;
+	background: #4A148C;
+	border-radius: 15px;
+	padding: 12px;
+	max-width: 60%;
+	margin-top: 10px;
+}
+
+.question:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 60%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color: #4A148C;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-left: -15px;
+}
+
+.answer {
+	margin-right: 10px;
+	position: relative;
+	background: #26A69A;
+	border-radius: 15px;
+	padding: 12px;
+	max-width: 60%;
+	margin-top: 10px;
+}
+
+.answer:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 60%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: #26A69A;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-right: -15px;
+}
+
 .interviews-container {
 	border: 1px solid #CCCCCC;
 	background: #FFFFFF;
