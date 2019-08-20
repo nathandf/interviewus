@@ -13,6 +13,13 @@ class Interviewee extends ProfileView
 		$this->assign( "timezones", $timezoneRepo->getAllAscAlpha( "US" ) );
 
 		$this->model->interviewee->interviews = array_reverse( $this->model->interviewee->interviews );
+
+		// Add a context indicator and reference to the interviewee on each interview
+		foreach ( $this->model->interviewee->interviews as $interview ) {
+			$interview->context = "interviewee";
+			$interview->interviewee = &$this->model->interviewee;
+		}
+
 		$this->assign( "interviewee", $this->model->interviewee );
 
 		$this->assign( "selected_interviewee", $this->model->interviewee );

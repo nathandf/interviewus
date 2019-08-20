@@ -48,6 +48,8 @@
 				</div>
 			</div>
 			<div class="pad-sml"></div>
+		{foreachelse}
+		<p>No interview templates to show</p>
 		{/foreach}
 		</div>
 		<div class="clear"></div>

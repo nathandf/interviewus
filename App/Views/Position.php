@@ -8,6 +8,11 @@ class Position extends ProfileView
 	{
 		$this->validateAccount();
 
+		// Add a context
+		foreach ( $this->model->interviews as $interview ) {
+			$interview->context = "position";
+		}
+
 		$this->assign( "interviews", array_reverse( $this->model->interviews ) );
         $this->assign( "position", $this->model->position );
         $this->assign( "flash_messages", $this->model->request->getFlashMessages() );

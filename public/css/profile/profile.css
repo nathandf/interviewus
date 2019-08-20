@@ -135,6 +135,10 @@
 	padding-top: 10px;
 }
 
+.conversation-container {
+	padding: 20px;
+}
+
 .question-count {
 	margin-top: 0px;
 }
@@ -202,6 +206,17 @@
 .interview-snippet {
 	padding: 18px 10px 18px 10px;
 	width: 100%;
+}
+
+.full-size {
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 999999;
+	background: #FFFFFF;
 }
 
 .interview-snippet-seperator {

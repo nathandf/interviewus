@@ -30,6 +30,7 @@ $( function () {
 		} );
 	} );
 
+
 	$( ".share-interview-button" ).on( "click", function () {
 		$( "#interview-id-field" ).val( this.dataset.interview_id );
 	} );

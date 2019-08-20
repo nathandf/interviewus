@@ -35,6 +35,8 @@
 				</div>
 			</div>
 			<div class="pad-sml"></div>
+		{foreachelse}
+		<p>No positions to show</p>
 		{/foreach}
 		</div>
 		<div class="clear"></div>
