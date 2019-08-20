@@ -8,10 +8,6 @@ class Interviewee extends ProfileView
 	{
 		$this->validateAccount();
 
-
-		$timezoneRepo = $this->load( "timezone-repository" );
-		$this->assign( "timezones", $timezoneRepo->getAllAscAlpha( "US" ) );
-
 		$this->model->interviewee->interviews = array_reverse( $this->model->interviewee->interviews );
 
 		// Add a context indicator and reference to the interviewee on each interview

@@ -31,7 +31,7 @@
 							{if isset( $timezones )}
 							<option value="{$account->timezone|default:'America/Chicago'}" selected="selected" hidden="hidden">{$account->timezone|default:'America/Chicago'}</option>
 							{foreach from=$timezones item=timezone}
-							<option value="{$timezone->timezone}">UTC/GMT {$timezone->gmt_offset|floor} ({$timezone->timezone})</option>
+							<option value="{$timezone->timezone}">UTC/GMT {$timezone->gmt_offset|floor} ({$timezone->abbr} - {$timezone->timezone})</option>
 							{/foreach}
 							{else}
 							<option value="{$account->timezone|default:'America/Chicago'}" selected="selected">{$account->timezone|default:'America/Chicago'}</option>

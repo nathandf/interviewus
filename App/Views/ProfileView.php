@@ -41,11 +41,15 @@ class ProfileView extends View
 		$this->assign( "interviewTemplates", array_reverse( $this->model->interviewTemplates ) );
 		$this->assign( "user", $this->model->user );
 
-		foreach ( $this->model->timezones as $timezone ) {
+		$timezoneRepo = $this->load( "timezone-repository" );
+		$timezones = $timezoneRepo->getAllAscAlpha( "US" );
+
+		foreach ( $timezones as $timezone ) {
 			$dateTime = new \DateTime();
 			$dateTime->setTimeZone( new \DateTimeZone( $timezone->timezone ) );
 			$timezone->abbr = $dateTime->format( "T" );
 		}
-		$this->assign( "timezones", $this->model->timezones );
+		
+		$this->assign( "timezones", $timezones );
 	}
 }
