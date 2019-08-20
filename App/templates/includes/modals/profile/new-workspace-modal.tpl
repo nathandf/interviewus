@@ -29,9 +29,9 @@
 						<p class="label">Timezone:</p>
 						<select name="timezone" class="inp cursor-pt" id="timezone-select">
 							{if isset( $timezones )}
-							<option value="{$account->timezone|default:'America/Chicago'}" selected="selected">{$account->timezone|default:'America/Chicago'}</option>
+							<option value="{$account->timezone|default:'America/Chicago'}" selected="selected" hidden="hidden">{$account->timezone|default:'America/Chicago'}</option>
 							{foreach from=$timezones item=timezone}
-							<option value="{$timezone->timezone}">{$timezone->timezone}</option>
+							<option value="{$timezone->timezone}">UTC/GMT {$timezone->gmt_offset|floor} ({$timezone->timezone})</option>
 							{/foreach}
 							{else}
 							<option value="{$account->timezone|default:'America/Chicago'}" selected="selected">{$account->timezone|default:'America/Chicago'}</option>

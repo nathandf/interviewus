@@ -40,6 +40,12 @@ class ProfileView extends View
 		$this->assign( "positions", array_reverse( $this->model->positions ) );
 		$this->assign( "interviewTemplates", array_reverse( $this->model->interviewTemplates ) );
 		$this->assign( "user", $this->model->user );
+
+		foreach ( $this->model->timezones as $timezone ) {
+			$dateTime = new \DateTime();
+			$dateTime->setTimeZone( new \DateTimeZone( $timezone->timezone ) );
+			$timezone->abbr = $dateTime->format( "T" );
+		}
 		$this->assign( "timezones", $this->model->timezones );
 	}
 }

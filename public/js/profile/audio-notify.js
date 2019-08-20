@@ -1,8 +1,8 @@
 $( function () {
 	var audioElement = document.createElement( "audio" );
-	audioElement.setAttribute( "src", "http://localhost/interviewus.net/public/static/audio/ding.wav" );
+	audioElement.setAttribute( "src", "http://localhost/interviewus.net/public/static/audio/notification.wav" );
 
-	audioElement.addEventListener( "ended", function() {
+	$( audioElement ).on( "ended", function () {
 		this.pause();
 	}, false );
 
