@@ -327,3 +327,5 @@ ALTER TABLE `timezone` CHANGE `timezone` `timezone` VARCHAR(125) CHARACTER SET l
 ALTER TABLE `timezone` ADD `id` BIGINT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` ADD `timezone` VARCHAR(128) NOT NULL AFTER `braintree_subscription_id`;
 ALTER TABLE `organization` ADD `timezone` VARCHAR(256) NULL DEFAULT 'America/Chicago' AFTER `user_id`;
+
+CREATE TABLE `password_reset_token` ( `id` BIGINT NOT NULL AUTO_INCREMENT , `token` VARCHAR(256) NOT NULL , `email` VARCHAR(256) NOT NULL , `expiration` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) engine = InnoDB;

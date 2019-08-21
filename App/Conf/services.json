@@ -164,6 +164,14 @@
                 "dao",
                 "entity-factory"
             ],
+            "password-reset-token-handler": [
+                "config",
+                "password-reset-token-repository"
+            ],
+            "password-reset-token-repository": [
+                "dao",
+                "entity-factory"
+            ],
             "payment-method-repository": [
                 "dao",
                 "entity-factory"
