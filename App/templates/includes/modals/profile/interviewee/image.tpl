@@ -12,11 +12,11 @@
 				<input type="hidden" name="token" value="{$csrf_token}">
 				<input type="hidden" name="upload_image" value="{$csrf_token}">
 				{if !is_null( $interviewee->image )}
-				<img id="uploaded-image" class="col-100" src="{$HOME}public/img/uploads/{$interviewee->image->filename}"/>
+				<img id="uploaded-image" class="uploaded-image" src="{$HOME}public/img/uploads/{$interviewee->image->filename}"/>
 				{else}
-				<img id="uploaded-image" class="col-100" src="http://placehold.it/200x200&text=No+Attachment!" style="display: none;"/>
+				<img id="uploaded-image" class="uploaded-image" src="http://placehold.it/200x200&text=No+Attachment!" style="display: none;"/>
 				{/if}
-				<div class="clear"></div>
+				<div class="clear push-t-med"></div>
 				<label for="image-uploader">Select Image</label>
 				<input id="image-uploader" name="image" type="file">
 				<div class="clear"></div>
