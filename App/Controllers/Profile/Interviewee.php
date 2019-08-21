@@ -67,6 +67,26 @@ class Interviewee extends Controller
             return [ "Interview:deploy", "Interviewee:deployInterview", null, null ];
         }
 
+        if (
+            $this->request->is( "post" ) &&
+            $this->request->post( "upload_image" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->request->session( "csrf-token" )
+                    ],
+                    "upload_image" => [
+                        "required" => true
+                    ]
+                ],
+                "upload_image"
+            )
+        ) {
+            return [ "Interviewee:uploadImage", "DefaultView:redirect", null, "profile/interviewee/{$this->request->params( "id" )}/" ];
+        }
+
         return [ "Interviewee:index", "Interviewee:index", null, $requestValidator->getErrors() ];
     }
 }

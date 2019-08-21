@@ -118,6 +118,22 @@
 	padding-left: 1px;
 }
 
+.list-item-thumbnail-image {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    display: inline-block;
+	margin-left: 2.5%;
+	padding-left: 1px;
+	margin-bottom: -11px;
+}
+
+.sidebar .list-item .list-item-text-with-image {
+	line-height: 35px;
+	font-size: 14px;
+	color: #CCCCCC;
+}
+
 .interview-card {
 	display: block;
 }

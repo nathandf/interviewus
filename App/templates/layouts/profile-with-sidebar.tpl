@@ -32,7 +32,11 @@
 				{foreach from=$interviewees item=interviewee}
 				<a class="text-sml" title="{$interviewee->getFullName()}" href="{$HOME}profile/interviewee/{$interviewee->id}/" style="color: #DDDDDD;">
 					<div class="list-item pad-sml">
+						{if !is_null( $interviewee->image )}
+						<p class="list-item-text-with-image text-overflow-ellipsis"><img src="{$HOME}public/img/uploads/{$interviewee->image->filename}" class="list-item-thumbnail-image push-r-sml">{$interviewee->getFullName()}</p>
+						{else}
 						<p class="list-item-text text-overflow-ellipsis"><span class="list-item-thumbnail theme-secondary-light push-r-sml">{$interviewee->getFirstName()|substr:0:1}{$interviewee->getLastName()|substr:0:1|default:null}</span>{$interviewee->getFullName()}</p>
+						{/if}
 					</div>
 				</a>
 				{foreachelse}

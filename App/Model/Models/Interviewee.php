@@ -13,6 +13,10 @@ class Interviewee extends ProfileModel
 			$phoneRepo = $this->load( "phone-repository" );
 	        $this->interviewee->phone = $phoneRepo->get( [ "*" ], [ "id" => $this->interviewee->phone_id ], "single" );
 
+			// Get the interviewees image
+			$imageRepo = $this->load( "image-repository" );
+			$this->interviewee->image = $imageRepo->get( [ "*" ], [ "id" => $this->interviewee->image_id ], "single" );
+
 	        // Retrieve all interviews for this interviewee
 			$interviewRepo = $this->load( "interview-repository" );
 	        $this->interviewee->interviews = $interviewRepo->get( [ "*" ], [ "interviewee_id" => $this->interviewee->id ] );
@@ -107,6 +111,29 @@ class Interviewee extends ProfileModel
 
 			$this->request->addFlashMessage( "success", "Interviewee Updated" );
 			$this->request->setFlashMessages();
+		}
+	}
+
+	public function uploadImage()
+	{
+		if ( $this->validateAccount() ) {
+			// Save the image file
+			$imageManager = $this->load( "image-manager" );
+			$image_filename = $imageManager->saveTo( "image" );
+
+			// Save image data to database
+			$imageRepo = $this->load( "image-repository" );
+			$image = $imageRepo->insert([
+				"filename" => $image_filename,
+				"file_type" => $imageManager->getFileType()
+			]);
+
+			// Save image id to interviewee
+			$intervieweeRepo = $this->load( "interviewee-repository" );
+			$intervieweeRepo->update(
+				[ "image_id" => $image->id ],
+				[ "id" => $this->request->params( "id" ) ]
+			);
 		}
 	}
 }

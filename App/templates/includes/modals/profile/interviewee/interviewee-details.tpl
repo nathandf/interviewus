@@ -20,7 +20,7 @@
 				<div class="container-full-phone push-t-sml">
 					<div class="container-country-code">
 						<p class="label">Code</p>
-						<select name="country_code" class="inp inp-full" required="required">
+						<select name="country_code" class="inp inp-full cursor-pt" required="required">
 							<option value="{$interviewee->phone->country_code}" selected="selected" hidden="hidden">+{$interviewee->phone->country_code}</option>
 							<option value="1">+1</option>
 							{if isset($countries)}

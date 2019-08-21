@@ -1840,6 +1840,14 @@ td {
     font-weight: 600;
 }
 
+.thumbnail-image-lrg {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid #CCCCCC;
+}
+
 /* Animations */
 .rotate-180 {
     transform: rotate(180deg);

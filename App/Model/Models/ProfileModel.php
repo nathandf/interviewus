@@ -35,6 +35,18 @@ class ProfileModel extends Model
 		$intervieweeRepo = $this->load( "interviewee-repository" );
 		$this->interviewees = $intervieweeRepo->get( [ "*" ], [ "organization_id" => $this->organization->id ] );
 
+		// Get the images for interviewees
+		$imageRepo = $this->load( "image-repository" );
+		foreach ( $this->interviewees as $interviewee ) {
+			if ( is_null( $interviewee->image_id ) ) {
+				$interviewee->image = null;
+
+				continue;
+			}
+
+			$interviewee->image = $imageRepo->get( [ "*" ], [ "id" => $interviewee->image_id ], "single" );
+		}
+
 		$countryRepo = $this->load( "country-repository" );
 		$this->countries = $countryRepo->get( [ "*" ] );
 

@@ -8,8 +8,9 @@ class ImageManager
     public $new_image_file_name;
     public $image_name_iterator = 0;
     public $allowed_file_types = [ "image/jpg", "image/jpeg", "image/png", "image/gif" ];
+    private $file_type;
 
-    public function saveImageTo( $index, $save_to_path = "public/img/uploads/" )
+    public function saveTo( $index, $save_to_path = "public/img/uploads/" )
     {
         if ( isset( $_FILES[ $index ] ) ) {
             $file_name      = $_FILES[ $index ][ "name" ];
@@ -17,9 +18,11 @@ class ImageManager
             $file_size      = $_FILES[ $index ][ "size" ];
             $file_tmp_name  = $_FILES[ $index ][ "tmp_name" ];
 
-            if ( !in_array( $_FILES[ $index ][ "type" ], $this->allowed_file_types ) ) {
+            if ( !in_array( $file_type, $this->allowed_file_types ) ) {
                 return false;
             }
+
+            $this->setFileType( $file_type );
 
             $file_extension = $this->getFileExtension( $_FILES[ $index ][ "name" ] );
             $new_image_name = $this->buildUniqueImageName( $file_extension );
@@ -78,4 +81,19 @@ class ImageManager
         return $this->new_image_file_name;
     }
 
+    private function setFileType( $file_type )
+    {
+        $this->file_type = $file_type;
+
+        return $this;
+    }
+
+    public function getFileType()
+    {
+        if ( isset( $this->file_type ) === false ) {
+            throw new \Exception( "file_error - file_type has not been set", 1 );
+        }
+
+        return $this->file_type;
+    }
 }
