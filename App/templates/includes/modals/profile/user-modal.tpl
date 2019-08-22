@@ -27,6 +27,11 @@
 		<div class="theme-primary pad-sml">
 			<p class="text-center">Account</p>
 		</div>
+		<a class="link" href="{$HOME}reset-password" style="text-decoration: none;">
+			<div class="pad-sml text-center bg-white tc-black text-med shade-on-hover" style="border-bottom: 1px solid #000000;">
+				<p>Reset Password</p>
+			</div>
+		</a>
 		<a class="link" href="{$HOME}profile/settings/" style="text-decoration: none;">
 			<div class="pad-sml text-center bg-white tc-black text-med shade-on-hover" style="border-bottom: 1px solid #000000;">
 				<p>Subscription & Billing</p>

@@ -35,7 +35,7 @@ class Home extends Controller
         return [ null, "Home:signIn", null, [ "error_messages" => $requestValidator->getErrors() ] ];
     }
 
-    public function forgotPasswordAction()
+    public function resetPasswordAction()
     {
         $requestValidator = $this->load( "request-validator" );
         $logger = $this->load( "logger" );
@@ -58,10 +58,12 @@ class Home extends Controller
                 "send_reset_link"
             )
         ) {
-            return [ "Home:sendResetLink", "DefaultView:redirect", null, "forgot-password" ];
+            $logger->info( "(REQUEST PASSWORD RESET) [IP] {$this->request->ip()} [EMAIL] {$this->request->post( "email" )}" );
+
+            return [ "Home:sendResetLink", "DefaultView:redirect", null, "reset-password" ];
         }
 
-        return [ null, "Home:forgotPassword", null, $requestValidator->getErrors() ];
+        return [ null, "Home:resetPassword", null, $requestValidator->getErrors() ];
     }
 
     public function privacyPolicyAction()

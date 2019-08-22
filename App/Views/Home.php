@@ -12,11 +12,11 @@ class Home extends View
 		$this->render();
 	}
 
-	public function forgotPassword()
+	public function resetPassword()
 	{
 		$this->assign( "flash_messages", $this->request->getFlashMessages() );
 
-		$this->setTemplate( "forgot-password.tpl" );
+		$this->setTemplate( "reset-password.tpl" );
 		$this->render();
 	}
 
