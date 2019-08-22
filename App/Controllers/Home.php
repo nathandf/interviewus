@@ -35,6 +35,37 @@ class Home extends Controller
         return [ null, "Home:signIn", null, [ "error_messages" => $requestValidator->getErrors() ] ];
     }
 
+    public function resetPasswordAction()
+    {
+        $requestValidator = $this->load( "request-validator" );
+        $logger = $this->load( "logger" );
+
+        if (
+            $this->request->is( "post" ) &&
+            $this->request->post( "send_reset_link" ) != "" &&
+            $requestValidator->validate(
+                $this->request,
+                [
+                    "token" => [
+                        "required" => true,
+                        "equals-hidden" => $this->request->session( "csrf-token" )
+                    ],
+                    "email" => [
+                        "required" => true,
+                        "email" => true
+                    ]
+                ],
+                "send_reset_link"
+            )
+        ) {
+            $logger->info( "(REQUEST PASSWORD RESET) [IP] {$this->request->ip()} [EMAIL] {$this->request->post( "email" )}" );
+
+            return [ "Home:sendResetLink", "DefaultView:redirect", null, "reset-password" ];
+        }
+
+        return [ null, "Home:resetPassword", null, $requestValidator->getErrors() ];
+    }
+
     public function privacyPolicyAction()
     {
         return [ null, "Home:privacyPolicy", null, null ];

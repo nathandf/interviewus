@@ -817,13 +817,18 @@ td {
 }
 
 .checkbox {
-    height: 15px;
-    width: 15px;
-    margin-right: 8px;
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+    vertical-align: top;
 }
 
 .checkbox:hover {
     cursor: pointer;
+}
+
+.checkbox-label {
+    font-size: 15px;
 }
 
 .radio {

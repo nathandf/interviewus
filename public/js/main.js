@@ -24,6 +24,20 @@ $( function() {
         }
     } );
 
+    $( ".--toggle-input-type" ).on( "click", function () {
+        var password_input = document.getElementById( "password" );
+
+        if ( password_input.type === "password" ) {
+            password_input.type = "text";
+
+            return;
+        }
+
+        password_input.type = "password";
+
+        return;
+    } );
+
     $( ".--c-confirm" ).on( "click", function( event ) {
         confirmation = confirm( "Are you sure you want to continue? This action is permanant." );
         if ( confirmation === false ) {
@@ -89,6 +103,6 @@ $( function() {
         $( this ).parent().hide();
     } );
 
-    $( ".con-message-success" ).delay( 5000 ).fadeOut( 1000 );
+    $( ".con-message-success" ).delay( 8000 ).fadeOut( 1000 );
 
 } );

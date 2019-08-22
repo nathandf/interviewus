@@ -25,8 +25,7 @@
 			<p class="label">Email</p>
 			<input type="email" class="inp inp-full" id="email" name="email" value="{$fields.create_account.email|default:null}" required="required"/>
 			<div class="clear push-t-med"></div>
-			<p class="label">Password</p>
-			<input type="password" class="inp inp-full" id="password" name="password" value="{$fields.create_account.password|default:null}" required="required"/>
+			{include file="includes/snippets/form-components/password-show.tpl"}
 			<div class="clear push-t-med"></div>
 			<input type="hidden" name="terms_conditions_agreement" value="true"><label class="text-sml">By pressing "Create Account", you accept and agree to the<br><a target="_blank" href="{$HOME}terms-and-conditions">Terms and Conditions</a> and <a target="_blank" href="{$HOME}privacy-policy">Privacy Policy</a></label>
 			<div class="clear last"></div>

@@ -20,7 +20,5 @@ class Feedback extends Controller
         ) {
             return [ "Feedback:send", "Feedback:send", null, null ];
         }
-
-        $logger->debug( "test" );
     }
 }

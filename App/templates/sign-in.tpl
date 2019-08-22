@@ -27,6 +27,9 @@
 			<input type="password" name="password" class="inp inp-full push-b-sml">
 			<button type="submit" class="button theme-primary push-t-med">Sign In</button>
 			<p class="text-med push-t-sml"><a class="link text-med" href="{$HOME}sign-up/">Sign up</a></p>
+			<div class="push-t-sml">
+				<p class="text-med push-t-sml text-center"><a class="link text-med text-center" href="{$HOME}reset-password">Forgot Password?</a></p>
+			</div>
 		</form>
 	</div>
 {/block}
