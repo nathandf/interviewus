@@ -22,7 +22,7 @@
 				<input id="interviewee-duplication" type="checkbox" class="checkbox" name="duplications[]" value="interviewees"><label for="interviewee-duplication">Interviewees</label>
 				<div class="push-t-med">
 					<div id="change-timezone-container">
-						<input type="checkbox" class="cursor-pt" id="change-timezone">
+						<input type="checkbox" class="checkbox" id="change-timezone">
 						<label class="label cursor-pt" for="change-timezone">Change Timezone: <span id="timezone-indicator" class="text-sml tc-gun-metal"></span></label>
 					</div>
 					<div id="timezone-container" style="display: none;">

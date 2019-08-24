@@ -125,6 +125,7 @@
     display: inline-block;
 	margin-left: 2.5%;
 	margin-bottom: -11px;
+	box-sizing: content-box;
 	background: #FFFFFF;
 }
 
