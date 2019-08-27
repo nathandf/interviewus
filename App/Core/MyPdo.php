@@ -5,7 +5,7 @@ namespace Core;
 use \Conf\Config;
 use \PDO;
 
-class MyPDO extends PDO
+class MyPdo extends PDO
 {
 	public function __construct( Config $config )
 	{
