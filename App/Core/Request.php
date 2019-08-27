@@ -81,19 +81,21 @@ class Request
 		return null;
 	}
 
+	// TODO fix php.ini in production to allow for use of filter_input() for the following
+	// methods: method(), queryString(), ip()
 	public function method()
 	{
-		return filter_input( INPUT_SERVER, "REQUEST_METHOD" );
+		return $_SERVER[ "REQUEST_METHOD" ];
 	}
 
 	public function queryString()
 	{
-		return filter_input( INPUT_SERVER, "QUERY_STRING" );
+		return  $_SERVER[ "QUERY_STRING" ];
 	}
 
 	public function ip()
 	{
-		return filter_input( INPUT_SERVER, "REMOTE_ADDR" );
+		return  $_SERVER[ "REMOTE_ADDR" ];
 	}
 
 	public function setParams( $params )
