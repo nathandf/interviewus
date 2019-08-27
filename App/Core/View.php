@@ -8,26 +8,22 @@ namespace Core;
  */
 class View extends CoreObject
 {
-
-    private $templatingEngine;
-    public $container;
+    protected $model;
+    protected $container;
+    private $configs;
+    public $request;
     public $template;
-    public $data = [];
+    private $data = [];
 
-    /**
-     * View constructor.
-     * @param DI_Container $container
-     */
-    public function __construct( DI_Container $container )
+    public function __construct( Model $model, DIContainer $container )
     {
+        $this->model = $model;
         $this->setContainer( $container );
+        $this->configs = $container->getService( "config" )->configs;
+        $this->request = $model->request;
+        $this->setTemplatingEngine();
     }
 
-    /**
-     * @param string $redirect_url
-     * @param int $http_response_code
-     * @param bool $external_redirect
-     */
     public function redirect( $redirect_url, $http_response_code = 200, $external_redirect = false )
     {
         if ( $external_redirect ) {
@@ -39,9 +35,6 @@ class View extends CoreObject
         exit();
     }
 
-    /**
-     *
-     */
     protected function setTemplatingEngine()
     {
         $this->templatingEngine = $this->load( "templating-engine" );
@@ -49,19 +42,43 @@ class View extends CoreObject
         // All templates are pulled from here
         $this->templatingEngine->template_dir = "App/templates";
         $this->templatingEngine->compile_dir = "App/templates/tmp";
+
+        // Set csrf token
+        $this->templatingEngine->assign( "csrf_token", $this->request->csrf_token );
+
         // Constants
         $this->templatingEngine->assign( "HOME", HOME );
         $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
-
+        $this->templatingEngine->assign( "APP_NAME", $this->configs[ "app-details" ][ "app_name" ] );
+        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_NUMBER", $this->configs[ "app-details" ][ "app_customer_support_number" ] );
+        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_EMAIL", $this->configs[ "app-details" ][ "app_customer_support_email" ] );
     }
 
-    /**
-     * NOTE: This should only be set after all inputs have been analyzed and validated
-     * @param array $error_messages
-     */
+    public function addApplicationError( $error_messages )
+    {
+        if ( is_array( $error_messages ) ) {
+            foreach ( $error_messages as $message ) {
+                if ( !is_string( $message ) ) {
+                    throw new \Exception( "Error message must be of type string; Type '" . gettype( $message ) . "' provided" );
+                }
+
+                $this->application_error_messages[] = $message;
+            }
+        }
+
+        $this->application_error_messages[] = $error_messages;
+
+        $this->assign( "application_errors", $this->application_error_messages );
+    }
+
     public function setErrorMessages( array $error_messages )
     {
         $this->assign( "error_messages", $error_messages );
+    }
+
+    public function addErrorMessage( $index, $message )
+    {
+        $this->data[ "error_messages" ][ $index ] = $message;
     }
 
     public function setFlashMessages( array $flash_messages )
@@ -70,31 +87,26 @@ class View extends CoreObject
     }
 
     /**
-     * @param string $file_name
-     * @param null $data
-     */
-    public function render( $file_name, $data = null )
-    {
-        $this->setTemplatingEngine();
-
-        // assigning data from the views to the templating engine
-        foreach ( $this->data as $key => $value ) {
-            $this->templatingEngine->assign( $key, $value );
-        }
-
-        // render view
-        ob_start();
-        require_once( VIEWS . $file_name );
-        ob_end_flush();
-
-    }
-
-    /**
      * @param string $template
      */
     public function setTemplate( $template )
     {
         $this->template = $template;
+    }
+
+    public function render( $data = null )
+    {
+        // assigning data from the views to the templating engine
+        foreach ( $this->data as $key => $value ) {
+            $this->templatingEngine->assign( $key, $value );
+        }
+
+        if ( isset( $this->template ) ) {
+            // render view
+            ob_start();
+            $this->templatingEngine->display( "App/templates/". $this->template );
+            ob_end_flush();
+        }
     }
 
     /**
@@ -109,14 +121,20 @@ class View extends CoreObject
 
     public function render404()
     {
-        $this->render( "App/templates/404.shtml" );
-        exit();
+        $this->setTemplate( "404.shtml" );
     }
 
     public function render403()
     {
-        $this->render( "App/templates/403.shtml" );
-        exit();
+        $this->render( "403.shtml" );
     }
 
+    public function respondWithJson( $data )
+    {
+        if ( is_string( $data ) ) {
+            echod( $data );
+        }
+
+        echod( json_encode( $data ) );
+    }
 }

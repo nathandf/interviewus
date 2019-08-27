@@ -7,8 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Views\\' => array($baseDir . '/Views'),
+    'Twilio\\' => array($vendorDir . '/twilio/sdk/Twilio'),
     'Services\\' => array($baseDir . '/Model/Services'),
+    'SendGrid\\' => array($vendorDir . '/sendgrid/php-http-client/lib'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Models\\' => array($baseDir . '/Model/Models'),
     'Model\\' => array($baseDir . '/Model'),
     'Mappers\\' => array($baseDir . '/Model/Mappers'),
     'Katzgrau\\KLogger\\' => array($vendorDir . '/katzgrau/klogger/src'),
@@ -18,4 +21,5 @@ return array(
     'Controllers\\' => array($baseDir . '/Controllers'),
     'Contracts\\' => array($baseDir . '/Contracts'),
     'Conf\\' => array($baseDir . '/Conf'),
+    'Braintree\\' => array($vendorDir . '/braintree/braintree_php/lib/Braintree'),
 );

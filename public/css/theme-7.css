@@ -1,0 +1,64 @@
+.theme-primary {
+	background: #26a69a;
+	color: #FFFFFF;
+}
+
+.theme-primary-light {
+	background: #64d8cb;
+	color: #000000;
+}
+
+.theme-primary-dark {
+	background: #00766c;
+	color: #FFFFFF;
+}
+
+.theme-primary-gradient {
+	background: linear-gradient( to right, #64d8cb, #00766c );
+}
+
+.theme-primary-gradient-transparent {
+	background: linear-gradient( to right, rgba(0, 118, 108, .9), rgba(100, 216, 203, .9) );
+}
+
+.theme-secondary {
+	background: #4a148c;
+	color: #FFFFFF;
+}
+
+.theme-gradient-transparent {
+	background: linear-gradient( to right, rgba(18, 0, 94, .9), rgba(124, 67, 189, .9), rgba(0, 118, 108, .9), rgba(100, 216, 203, .9) );
+}
+
+.theme-secondary-light {
+	background: #7c43bd;
+	color: #FFFFFF;
+}
+
+.theme-secondary-dark {
+	background: #12005e;
+	color: #FFFFFF;
+}
+
+.theme-secondary-gradient {
+	background: linear-gradient( to right, #7c43bd, #12005e );
+}
+
+.theme-secondary-gradient-transparent {
+	background: linear-gradient( to right, rgba(124, 67, 189, .9), rgba(18, 0, 94, .9) );
+}
+
+.theme-tertiary {
+	background: #D0D0D0;
+	color: #000000;
+}
+
+.theme-tertiary-light {
+	background: #F5F5F6;
+	color: #000000;
+}
+
+.theme-tertiary-dark {
+	background: #C0C0C0;
+	color: #000000;
+}

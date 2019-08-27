@@ -8,17 +8,16 @@ abstract class CoreObject implements CoreObjectInterface
 {
     protected $container;
 
-    public function setContainer( DI_Container $container )
+    public function setContainer( DIContainer $container )
     {
         $this->container = $container;
     }
 
     // load allows all children of CoreObject to load in service objects
     // without explicitly referencing the method of retrival. In this case, it's a
-    // simple Dependency Injection / IoC Container
+    // simple Dependency Invesion / IoC Container
     public function load( $service )
     {
         return $this->container->getService( $service );
     }
-
 }

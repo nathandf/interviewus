@@ -1,39 +1,43 @@
 <?php
-/*
-* Front Controller
-*/
+
 // autoloading native classes and third party libraries. Check composer.json for details
 require_once( "App/vendor/autoload.php" );
 require_once( "App/Helpers/debug.php" );
 
-// Dependency injection container
-$container = new Core\DI_Container;
-
-// Environment
-Conf\Config::setEnv( "development" );
-
-// Load services using DI_Container
-require_once( "App/Conf/services.php" );
-
-// Error handling
-Core\Error::setEnv( Conf\Config::getEnv() );
+date_default_timezone_set( "UTC" );
 error_reporting( E_ALL );
-// set_error_handler( "Core\Error::errorHandler" );
-// set_exception_handler( "Core\Error::exceptionHandler" );
 
-// Session and token handling
-$session = $container->getService( "session" );
 
-// routing
+// Dependency injection container
+$containerFactory = new Core\ContainerFactory;
+$container = $containerFactory->build();
+
+// Load client requst
+$request = $container->getService( "request" );
+
+// Load the router
 $Router = $container->getService( "router" );
 
-// routes
-require_once( "App/Conf/routes.php" );
+// Get the route
+$route = $Router->dispatch( $request );
 
-$request = $Router->dispatch( $_SERVER[ "QUERY_STRING" ] );
-$controller_name = $request[ "controller" ];
-$method = $request[ "method" ];
-$params = $request[ "params" ];
+// Use the route to build the controller
+$controllerFactory = $container->getService( "controller-factory" );
 
-$controller = new $controller_name( $container, $session, $params );
-$controller->$method();
+$controller = $controllerFactory->build(
+	$route[ "controller" ],
+	$request->setParams( $route[ "params" ] ), // returns $this (\Core\Request)
+	$container
+);
+
+$command = $controller->{$route[ "method" ]}();
+
+if ( !is_null( $command ) ) {
+	// Dispatch Model
+	$modelDispatcher = $container->getService( "model-dispatcher" );
+	$model = $modelDispatcher->dispatch( $command, $request, $container );
+
+	// Dispatch View
+	$viewDispatcher = $container->getService( "view-dispatcher" );
+	$view = $viewDispatcher->dispatch( $command, $model, $container );
+}

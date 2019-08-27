@@ -268,7 +268,7 @@ abstract class DataMapper implements DataMapperInterface
             $where_query = $where_query . "{$key} = :{$token_prefix}{$key}" . $and;
             $iteration++;
         }
-
+        
         return $where_query;
     }
 
@@ -286,7 +286,7 @@ abstract class DataMapper implements DataMapperInterface
             }
 
             if ( $value === null || $value === "" ) {
-                $query = $query . "{$key} IS NULL" . $and;
+                $query = $query . "{$key} = NULL" . $and;
                 $i++;
 
                 continue;

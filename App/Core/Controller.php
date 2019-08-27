@@ -6,27 +6,45 @@ namespace Core;
 
 abstract class Controller extends CoreObject
 {
-    protected $session;
     protected $container;
+    protected $config;
+    protected $request;
     protected $params;
-    protected $view;
     protected $action_filter_data = [];
 
-    public function __construct( DI_Container $container, Session $session, $params )
+    public function __construct( Request $request, DIContainer $container )
     {
         $this->setContainer( $container );
-        $this->session = $session;
-        $this->params = $params;
-        $this->view = $this->load( "view" );
+        $this->config = $this->container->getService( "config" );
+        $this->request = $request;
+        $this->params = $request->params();
     }
 
+    // Every time a method is called on Controller class, check if before and after
+    // methods exist and run them respectively
     public function __call( $name, $args )
     {
         $method = $name . "Action";
         if ( method_exists( $this, $method ) ) {
-            if ( $this->before() !== false ) {
-                call_user_func_array( [ $this, $method ], $args );
-                $this->after();
+            // Run the before method
+            $before = $this->before();
+
+            // If a command is returned in the before method, then return it in
+            // the controller method.
+            if ( is_array( $before ) ) {
+                return $before;
+            }
+
+            // If a command is returned in the primary method, return it
+            $primary = call_user_func_array( [ $this, $method ], $args );
+            if ( is_array( $primary ) ) {
+                return $primary;
+            }
+
+            // If a command is returned in the after method, return it
+            $after = $this->after();
+            if ( is_array( $after ) ) {
+                return $after;
             }
         } else {
             throw new \Exception( "Method \"$method\" is not a method of class " . get_class( $this ), 404 );

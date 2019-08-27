@@ -17,52 +17,31 @@ $( function() {
         }
     } );
 
-    $( ".--c-mp-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Confirm prospect to member conversion." );
+    $( ".--c-cancel-confirm" ).on( "click", function( event ) {
+        confirmation = confirm( "Cancelling your subscription is permanant. You're remaining interviews will be unaffected until the end of your billing cycle but access to advanced features will be limited immediately upon cancellation. Are you sure you want to continue?" );
         if ( confirmation === false ) {
             event.preventDefault();
         }
     } );
 
-    $( ".--c-reject-prospect" ).on( "click", function( event ) {
-        confirmation = confirm( "Are you sure your want to pass this lead on to the nearest gym? This action is permanent." );
-        if ( confirmation === false ) {
-            event.preventDefault();
+    $( ".--toggle-input-type" ).on( "click", function () {
+        var password_input = document.getElementById( "password" );
+
+        if ( password_input.type === "password" ) {
+            password_input.type = "text";
+
+            return;
         }
+
+        password_input.type = "password";
+
+        return;
     } );
 
-    $( ".--c-purchase" ).on( "click", function( event ) {
-        confirmation = confirm( "Press OK to confirm your purchase." );
+    $( ".--c-confirm" ).on( "click", function( event ) {
+        confirmation = confirm( "Are you sure you want to continue? This action is permanant." );
         if ( confirmation === false ) {
             event.preventDefault();
-        }
-    } );
-
-    $( ".--c-status-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Confirm this status change." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--c-send-confirm" ).on( "click", function( event ) {
-        confirmation = confirm( "Press \"OK\" to confirm and send this email." );
-        if ( confirmation === false ) {
-            event.preventDefault();
-        }
-    } );
-
-    $( ".--clickable" ).on( "click", function( event ) {
-        if ( $( location ).attr( "hostname" ) == "www.jiujitsuscout.com" ) {
-            $.post(
-                "https://www.jiujitsuscout.com/tracking/record-click",
-                {
-                    "business_id": this.dataset.b_id,
-                    "property": this.dataset.property,
-                    "property_sub_type": this.dataset.property_sub_type,
-                    "ip": this.dataset.ip
-                }
-            );
         }
     } );
 
@@ -82,19 +61,7 @@ $( function() {
     } );
 
     $( ".--c-advanced-options" ).on( "click", function() {
-        $( "#advanced-options" ).slideToggle();
-    } );
-
-    $( "#create-account" ).on( "submit", function () {
-        $( "#account-creation-loading-screen" ).show( "" );
-    } );
-
-    $( ".emailer-open" ).on( "click", function () {
-        $( "#emailer" ).toggle();
-    } );
-
-    $( ".lightbox-close" ).on( "click", function () {
-        $( ".lightbox-close" ).parent().hide();
+        $( ".advanced-options" ).slideToggle();
     } );
 
     $( ".--update-button" ).on( "click", function () {
@@ -120,4 +87,22 @@ $( function() {
     $( ".--create-button" ).on( "click", function () {
         $( this ).html( "Creating<i class=\"fa fa-spinner fa-spin push-l-sml\" aria-hidden=\"true\"></i>" );
     } );
+
+    // Trigger modals with based on the buttons id
+    $( ".--modal-trigger" ).on( "click", function () {
+		$( "#" + this.id + "-modal" ).show( 0, function () {
+            $( "#" + this.id + " > div.--modal-content" ).effect( "slide" );
+        } );
+	} );
+
+    $( ".row-link" ).on( "click", function () {
+        window.location = $( this ).data( "href" );
+    } );
+
+    $( ".lightbox-close" ).on( "click", function () {
+        $( this ).parent().hide();
+    } );
+
+    $( ".con-message-success" ).delay( 8000 ).fadeOut( 1000 );
+
 } );
