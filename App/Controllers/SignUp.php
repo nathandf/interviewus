@@ -20,7 +20,7 @@ class SignUp extends Controller
                 "create_account"
             )
         ) {
-            return [ "SignUp:createAccount", "Signup:createAccount", null, null ];
+            return [ "SignUp:createAccount", "SignUp:createAccount", null, null ];
         }
 
         return [ null, "SignUp:index", null, [ "error_messages" => $requestValidator->getErrors() ] ];
