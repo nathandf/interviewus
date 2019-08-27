@@ -49,10 +49,12 @@ class Config
             "email-templates" => "App/templates/email-templates/"
         ];
 
-        $this->configs[ "environment" ] = "development";
+        $this->configs[ "environment" ] = "production";
 
         $this->configs[ "approved_server_names" ] = [
-            "www.interviewus.net"
+            "www.interviewus.net",
+            "interviewus.net",
+            "https://www.interviewus.net"
         ];
 
         $this->config[ "allowable_origins" ] = [
@@ -98,9 +100,9 @@ class Config
             ],
             "production" => [
                 "host" => "localhost",
-                "dbname" => "interviewus",
-                "user" => "interviewus",
-                "password" => "0b5wStZMAapOQJuG"
+                "dbname" => "intervie_prod",
+                "user" => "intervie_prod",
+                "password" => "XNJBT!b+a1W%"
             ]
         ];
 
