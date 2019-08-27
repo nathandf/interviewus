@@ -3,7 +3,7 @@
 namespace Core;
 
 use \Conf\Config;
-use \Katzgrau\KLogger\Logger;
+use Katzgrau\KLogger\Logger;
 
 class MyLogger extends Logger
 {
