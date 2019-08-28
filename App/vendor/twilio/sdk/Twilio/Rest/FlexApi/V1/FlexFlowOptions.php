@@ -23,17 +23,17 @@ abstract class FlexFlowOptions {
 
     /**
      * @param string $contactIdentity Channel contact Identity
-     * @param boolean $enabled Boolean flag for enabling or disabling the FlexFlow
+     * @param bool $enabled Boolean flag for enabling or disabling the FlexFlow
      * @param string $integrationType Integration type
      * @param string $integrationFlowSid Flow Sid.
      * @param string $integrationUrl External Webhook Url
      * @param string $integrationWorkspaceSid Workspace Sid for a new task
      * @param string $integrationWorkflowSid Workflow Sid for a new task
      * @param string $integrationChannel Task Channel for a new task
-     * @param integer $integrationTimeout Task timeout in seconds for a new task
-     * @param integer $integrationPriority Task priority for a new task
-     * @param boolean $integrationCreationOnMessage Flag for task creation
-     * @param boolean $longLived Long Lived flag for new Channel
+     * @param int $integrationTimeout Task timeout in seconds for a new task
+     * @param int $integrationPriority Task priority for a new task
+     * @param bool $integrationCreationOnMessage Flag for task creation
+     * @param bool $longLived Long Lived flag for new Channel
      * @return CreateFlexFlowOptions Options builder
      */
     public static function create($contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE) {
@@ -45,17 +45,17 @@ abstract class FlexFlowOptions {
      * @param string $chatServiceSid Service Sid.
      * @param string $channelType Channel type
      * @param string $contactIdentity Channel contact Identity
-     * @param boolean $enabled Boolean flag for enabling or disabling the FlexFlow
+     * @param bool $enabled Boolean flag for enabling or disabling the FlexFlow
      * @param string $integrationType Integration type
      * @param string $integrationFlowSid Flow Sid.
      * @param string $integrationUrl External Webhook Url
      * @param string $integrationWorkspaceSid Workspace Sid for a new task
      * @param string $integrationWorkflowSid Workflow Sid for a new task
      * @param string $integrationChannel Task Channel for a new task
-     * @param integer $integrationTimeout Task timeout in seconds for a new task
-     * @param integer $integrationPriority Task priority for a new task
-     * @param boolean $integrationCreationOnMessage Flag for task creation
-     * @param boolean $longLived Long Lived flag for new Channel
+     * @param int $integrationTimeout Task timeout in seconds for a new task
+     * @param int $integrationPriority Task priority for a new task
+     * @param bool $integrationCreationOnMessage Flag for task creation
+     * @param bool $longLived Long Lived flag for new Channel
      * @return UpdateFlexFlowOptions Options builder
      */
     public static function update($friendlyName = Values::NONE, $chatServiceSid = Values::NONE, $channelType = Values::NONE, $contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE) {
@@ -73,7 +73,7 @@ class ReadFlexFlowOptions extends Options {
 
     /**
      * Human readable description of this FlexFlow
-     * 
+     *
      * @param string $friendlyName Human readable description of this FlexFlow
      * @return $this Fluent Builder
      */
@@ -84,7 +84,7 @@ class ReadFlexFlowOptions extends Options {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {
@@ -101,17 +101,17 @@ class ReadFlexFlowOptions extends Options {
 class CreateFlexFlowOptions extends Options {
     /**
      * @param string $contactIdentity Channel contact Identity
-     * @param boolean $enabled Boolean flag for enabling or disabling the FlexFlow
+     * @param bool $enabled Boolean flag for enabling or disabling the FlexFlow
      * @param string $integrationType Integration type
      * @param string $integrationFlowSid Flow Sid.
      * @param string $integrationUrl External Webhook Url
      * @param string $integrationWorkspaceSid Workspace Sid for a new task
      * @param string $integrationWorkflowSid Workflow Sid for a new task
      * @param string $integrationChannel Task Channel for a new task
-     * @param integer $integrationTimeout Task timeout in seconds for a new task
-     * @param integer $integrationPriority Task priority for a new task
-     * @param boolean $integrationCreationOnMessage Flag for task creation
-     * @param boolean $longLived Long Lived flag for new Channel
+     * @param int $integrationTimeout Task timeout in seconds for a new task
+     * @param int $integrationPriority Task priority for a new task
+     * @param bool $integrationCreationOnMessage Flag for task creation
+     * @param bool $longLived Long Lived flag for new Channel
      */
     public function __construct($contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE) {
         $this->options['contactIdentity'] = $contactIdentity;
@@ -130,7 +130,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Channel contact Identity (number / contact)
-     * 
+     *
      * @param string $contactIdentity Channel contact Identity
      * @return $this Fluent Builder
      */
@@ -141,8 +141,8 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Boolean flag for enabling or disabling the FlexFlow
-     * 
-     * @param boolean $enabled Boolean flag for enabling or disabling the FlexFlow
+     *
+     * @param bool $enabled Boolean flag for enabling or disabling the FlexFlow
      * @return $this Fluent Builder
      */
     public function setEnabled($enabled) {
@@ -152,7 +152,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Integration type (studio | external | task)
-     * 
+     *
      * @param string $integrationType Integration type
      * @return $this Fluent Builder
      */
@@ -163,7 +163,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * The unique SID identifier of the Flow for Studio integration type
-     * 
+     *
      * @param string $integrationFlowSid Flow Sid.
      * @return $this Fluent Builder
      */
@@ -174,7 +174,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * External Webhook Url for External integration type
-     * 
+     *
      * @param string $integrationUrl External Webhook Url
      * @return $this Fluent Builder
      */
@@ -185,7 +185,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Workspace Sid for a new task for Task integration type
-     * 
+     *
      * @param string $integrationWorkspaceSid Workspace Sid for a new task
      * @return $this Fluent Builder
      */
@@ -196,7 +196,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Workflow Sid for a new task for Task integration type
-     * 
+     *
      * @param string $integrationWorkflowSid Workflow Sid for a new task
      * @return $this Fluent Builder
      */
@@ -207,7 +207,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Task Channel for a new task for Task integration type (default is 'default')
-     * 
+     *
      * @param string $integrationChannel Task Channel for a new task
      * @return $this Fluent Builder
      */
@@ -218,8 +218,8 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Task timeout in seconds for a new task for Task integration type (default 86400)
-     * 
-     * @param integer $integrationTimeout Task timeout in seconds for a new task
+     *
+     * @param int $integrationTimeout Task timeout in seconds for a new task
      * @return $this Fluent Builder
      */
     public function setIntegrationTimeout($integrationTimeout) {
@@ -229,8 +229,8 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Task priority for a new task for Task integration type (default 0)
-     * 
-     * @param integer $integrationPriority Task priority for a new task
+     *
+     * @param int $integrationPriority Task priority for a new task
      * @return $this Fluent Builder
      */
     public function setIntegrationPriority($integrationPriority) {
@@ -240,8 +240,8 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Flag for task creation, either creating task with the channel, or if true create task whwn first message arrives (for Task integration type)
-     * 
-     * @param boolean $integrationCreationOnMessage Flag for task creation
+     *
+     * @param bool $integrationCreationOnMessage Flag for task creation
      * @return $this Fluent Builder
      */
     public function setIntegrationCreationOnMessage($integrationCreationOnMessage) {
@@ -251,8 +251,8 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Default Flag defining whether the new channels created are long lived or not
-     * 
-     * @param boolean $longLived Long Lived flag for new Channel
+     *
+     * @param bool $longLived Long Lived flag for new Channel
      * @return $this Fluent Builder
      */
     public function setLongLived($longLived) {
@@ -262,7 +262,7 @@ class CreateFlexFlowOptions extends Options {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {
@@ -282,17 +282,17 @@ class UpdateFlexFlowOptions extends Options {
      * @param string $chatServiceSid Service Sid.
      * @param string $channelType Channel type
      * @param string $contactIdentity Channel contact Identity
-     * @param boolean $enabled Boolean flag for enabling or disabling the FlexFlow
+     * @param bool $enabled Boolean flag for enabling or disabling the FlexFlow
      * @param string $integrationType Integration type
      * @param string $integrationFlowSid Flow Sid.
      * @param string $integrationUrl External Webhook Url
      * @param string $integrationWorkspaceSid Workspace Sid for a new task
      * @param string $integrationWorkflowSid Workflow Sid for a new task
      * @param string $integrationChannel Task Channel for a new task
-     * @param integer $integrationTimeout Task timeout in seconds for a new task
-     * @param integer $integrationPriority Task priority for a new task
-     * @param boolean $integrationCreationOnMessage Flag for task creation
-     * @param boolean $longLived Long Lived flag for new Channel
+     * @param int $integrationTimeout Task timeout in seconds for a new task
+     * @param int $integrationPriority Task priority for a new task
+     * @param bool $integrationCreationOnMessage Flag for task creation
+     * @param bool $longLived Long Lived flag for new Channel
      */
     public function __construct($friendlyName = Values::NONE, $chatServiceSid = Values::NONE, $channelType = Values::NONE, $contactIdentity = Values::NONE, $enabled = Values::NONE, $integrationType = Values::NONE, $integrationFlowSid = Values::NONE, $integrationUrl = Values::NONE, $integrationWorkspaceSid = Values::NONE, $integrationWorkflowSid = Values::NONE, $integrationChannel = Values::NONE, $integrationTimeout = Values::NONE, $integrationPriority = Values::NONE, $integrationCreationOnMessage = Values::NONE, $longLived = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
@@ -314,7 +314,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Human readable description of this FlexFlow
-     * 
+     *
      * @param string $friendlyName Human readable description of this FlexFlow
      * @return $this Fluent Builder
      */
@@ -325,7 +325,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * The unique SID identifier of the chat service
-     * 
+     *
      * @param string $chatServiceSid Service Sid.
      * @return $this Fluent Builder
      */
@@ -336,7 +336,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Channel type (web | facebook | sms)
-     * 
+     *
      * @param string $channelType Channel type
      * @return $this Fluent Builder
      */
@@ -347,7 +347,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Channel contact Identity (number / contact)
-     * 
+     *
      * @param string $contactIdentity Channel contact Identity
      * @return $this Fluent Builder
      */
@@ -358,8 +358,8 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Boolean flag for enabling or disabling the FlexFlow
-     * 
-     * @param boolean $enabled Boolean flag for enabling or disabling the FlexFlow
+     *
+     * @param bool $enabled Boolean flag for enabling or disabling the FlexFlow
      * @return $this Fluent Builder
      */
     public function setEnabled($enabled) {
@@ -369,7 +369,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Integration type (studio | external | task)
-     * 
+     *
      * @param string $integrationType Integration type
      * @return $this Fluent Builder
      */
@@ -380,7 +380,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * The unique SID identifier of the Flow for Studio integration type
-     * 
+     *
      * @param string $integrationFlowSid Flow Sid.
      * @return $this Fluent Builder
      */
@@ -391,7 +391,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * External Webhook Url for External integration type
-     * 
+     *
      * @param string $integrationUrl External Webhook Url
      * @return $this Fluent Builder
      */
@@ -402,7 +402,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Workspace Sid for a new task for Task integration type
-     * 
+     *
      * @param string $integrationWorkspaceSid Workspace Sid for a new task
      * @return $this Fluent Builder
      */
@@ -413,7 +413,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Workflow Sid for a new task for Task integration type
-     * 
+     *
      * @param string $integrationWorkflowSid Workflow Sid for a new task
      * @return $this Fluent Builder
      */
@@ -424,7 +424,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Task Channel for a new task for Task integration type (default is 'default')
-     * 
+     *
      * @param string $integrationChannel Task Channel for a new task
      * @return $this Fluent Builder
      */
@@ -435,8 +435,8 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Task timeout in seconds for a new task for Task integration type (default 86400)
-     * 
-     * @param integer $integrationTimeout Task timeout in seconds for a new task
+     *
+     * @param int $integrationTimeout Task timeout in seconds for a new task
      * @return $this Fluent Builder
      */
     public function setIntegrationTimeout($integrationTimeout) {
@@ -446,8 +446,8 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Task priority for a new task for Task integration type (default 0)
-     * 
-     * @param integer $integrationPriority Task priority for a new task
+     *
+     * @param int $integrationPriority Task priority for a new task
      * @return $this Fluent Builder
      */
     public function setIntegrationPriority($integrationPriority) {
@@ -457,8 +457,8 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Flag for task creation, either creating task with the channel, or if true create task whwn first message arrives (for Task integration type)
-     * 
-     * @param boolean $integrationCreationOnMessage Flag for task creation
+     *
+     * @param bool $integrationCreationOnMessage Flag for task creation
      * @return $this Fluent Builder
      */
     public function setIntegrationCreationOnMessage($integrationCreationOnMessage) {
@@ -468,8 +468,8 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Default Flag defining whether the new channels created are long lived or not
-     * 
-     * @param boolean $longLived Long Lived flag for new Channel
+     *
+     * @param bool $longLived Long Lived flag for new Channel
      * @return $this Fluent Builder
      */
     public function setLongLived($longLived) {
@@ -479,7 +479,7 @@ class UpdateFlexFlowOptions extends Options {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

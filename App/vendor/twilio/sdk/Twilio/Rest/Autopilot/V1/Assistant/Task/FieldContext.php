@@ -9,6 +9,7 @@
 
 namespace Twilio\Rest\Autopilot\V1\Assistant\Task;
 
+use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
@@ -19,14 +20,14 @@ use Twilio\Version;
 class FieldContext extends InstanceContext {
     /**
      * Initialize the FieldContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The SID of the Assistant that is the parent of
      *                             the Task associated with the resource to fetch
      * @param string $taskSid The SID of the
      *                        [Task](https://www.twilio.com/docs/autopilot/api/task) resource associated with the Field resource to fetch
      * @param string $sid The unique string that identifies the resource
-     * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\FieldContext 
+     * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\FieldContext
      */
     public function __construct(Version $version, $assistantSid, $taskSid, $sid) {
         parent::__construct($version);
@@ -39,7 +40,7 @@ class FieldContext extends InstanceContext {
 
     /**
      * Fetch a FieldInstance
-     * 
+     *
      * @return FieldInstance Fetched FieldInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -63,7 +64,7 @@ class FieldContext extends InstanceContext {
 
     /**
      * Deletes the FieldInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -73,7 +74,7 @@ class FieldContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

@@ -18,32 +18,34 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
- * 
- * @property string sid
- * @property string accountSid
- * @property string friendlyName
- * @property integer codeLength
- * @property boolean lookupEnabled
- * @property boolean psd2Enabled
- * @property boolean skipSmsToLandlines
- * @property boolean dtmfInputRequired
- * @property string ttsName
- * @property \DateTime dateCreated
- * @property \DateTime dateUpdated
- * @property string url
- * @property array links
+ *
+ * @property string $sid
+ * @property string $accountSid
+ * @property string $friendlyName
+ * @property int $codeLength
+ * @property bool $lookupEnabled
+ * @property bool $psd2Enabled
+ * @property bool $skipSmsToLandlines
+ * @property bool $dtmfInputRequired
+ * @property string $ttsName
+ * @property \DateTime $dateCreated
+ * @property \DateTime $dateUpdated
+ * @property string $url
+ * @property array $links
  */
 class ServiceInstance extends InstanceResource {
     protected $_verifications = null;
     protected $_verificationChecks = null;
+    protected $_rateLimits = null;
+    protected $_messagingConfigurations = null;
 
     /**
      * Initialize the ServiceInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $sid The unique string that identifies the resource
-     * @return \Twilio\Rest\Verify\V2\ServiceInstance 
+     * @return \Twilio\Rest\Verify\V2\ServiceInstance
      */
     public function __construct(Version $version, array $payload, $sid = null) {
         parent::__construct($version);
@@ -71,7 +73,7 @@ class ServiceInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Verify\V2\ServiceContext Context for this
      *                                               ServiceInstance
      */
@@ -85,7 +87,7 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Fetch a ServiceInstance
-     * 
+     *
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -95,7 +97,7 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Deletes the ServiceInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -105,7 +107,7 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Update the ServiceInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -116,8 +118,8 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Access the verifications
-     * 
-     * @return \Twilio\Rest\Verify\V2\Service\VerificationList 
+     *
+     * @return \Twilio\Rest\Verify\V2\Service\VerificationList
      */
     protected function getVerifications() {
         return $this->proxy()->verifications;
@@ -125,16 +127,34 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Access the verificationChecks
-     * 
-     * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckList 
+     *
+     * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckList
      */
     protected function getVerificationChecks() {
         return $this->proxy()->verificationChecks;
     }
 
     /**
+     * Access the rateLimits
+     *
+     * @return \Twilio\Rest\Verify\V2\Service\RateLimitList
+     */
+    protected function getRateLimits() {
+        return $this->proxy()->rateLimits;
+    }
+
+    /**
+     * Access the messagingConfigurations
+     *
+     * @return \Twilio\Rest\Verify\V2\Service\MessagingConfigurationList
+     */
+    protected function getMessagingConfigurations() {
+        return $this->proxy()->messagingConfigurations;
+    }
+
+    /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
@@ -154,7 +174,7 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

@@ -17,28 +17,27 @@ use Twilio\Values;
 use Twilio\Version;
 
 /**
- * @property string accountSid
- * @property integer averageWaitTime
- * @property integer currentSize
- * @property \DateTime dateCreated
- * @property \DateTime dateUpdated
- * @property string friendlyName
- * @property integer maxSize
- * @property string sid
- * @property string uri
- * @property array subresourceUris
+ * @property string $accountSid
+ * @property int $averageWaitTime
+ * @property int $currentSize
+ * @property \DateTime $dateCreated
+ * @property \DateTime $dateUpdated
+ * @property string $friendlyName
+ * @property int $maxSize
+ * @property string $sid
+ * @property string $uri
  */
 class QueueInstance extends InstanceResource {
     protected $_members = null;
 
     /**
      * Initialize the QueueInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The SID of the Account that created this resource
      * @param string $sid The unique string that identifies this resource
-     * @return \Twilio\Rest\Api\V2010\Account\QueueInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\QueueInstance
      */
     public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
         parent::__construct($version);
@@ -54,7 +53,6 @@ class QueueInstance extends InstanceResource {
             'maxSize' => Values::array_get($payload, 'max_size'),
             'sid' => Values::array_get($payload, 'sid'),
             'uri' => Values::array_get($payload, 'uri'),
-            'subresourceUris' => Values::array_get($payload, 'subresource_uris'),
         );
 
         $this->solution = array('accountSid' => $accountSid, 'sid' => $sid ?: $this->properties['sid'], );
@@ -63,7 +61,7 @@ class QueueInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Api\V2010\Account\QueueContext Context for this
      *                                                     QueueInstance
      */
@@ -81,7 +79,7 @@ class QueueInstance extends InstanceResource {
 
     /**
      * Fetch a QueueInstance
-     * 
+     *
      * @return QueueInstance Fetched QueueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -91,7 +89,7 @@ class QueueInstance extends InstanceResource {
 
     /**
      * Update the QueueInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return QueueInstance Updated QueueInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -102,7 +100,7 @@ class QueueInstance extends InstanceResource {
 
     /**
      * Deletes the QueueInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -112,8 +110,8 @@ class QueueInstance extends InstanceResource {
 
     /**
      * Access the members
-     * 
-     * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberList 
+     *
+     * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberList
      */
     protected function getMembers() {
         return $this->proxy()->members;
@@ -121,7 +119,7 @@ class QueueInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
@@ -141,7 +139,7 @@ class QueueInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

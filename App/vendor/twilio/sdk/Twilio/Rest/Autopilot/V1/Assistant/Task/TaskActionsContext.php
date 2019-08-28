@@ -9,6 +9,7 @@
 
 namespace Twilio\Rest\Autopilot\V1\Assistant\Task;
 
+use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Options;
 use Twilio\Serialize;
@@ -21,14 +22,14 @@ use Twilio\Version;
 class TaskActionsContext extends InstanceContext {
     /**
      * Initialize the TaskActionsContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The SID of the Assistant that is the parent of
      *                             the Task for which the task actions to fetch
      *                             were defined
      * @param string $taskSid The SID of the Task for which the task actions to
      *                        fetch were defined
-     * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\TaskActionsContext 
+     * @return \Twilio\Rest\Autopilot\V1\Assistant\Task\TaskActionsContext
      */
     public function __construct(Version $version, $assistantSid, $taskSid) {
         parent::__construct($version);
@@ -41,7 +42,7 @@ class TaskActionsContext extends InstanceContext {
 
     /**
      * Fetch a TaskActionsInstance
-     * 
+     *
      * @return TaskActionsInstance Fetched TaskActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -64,7 +65,7 @@ class TaskActionsContext extends InstanceContext {
 
     /**
      * Update the TaskActionsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return TaskActionsInstance Updated TaskActionsInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -91,7 +92,7 @@ class TaskActionsContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

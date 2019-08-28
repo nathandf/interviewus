@@ -9,6 +9,7 @@
 
 namespace Twilio\Rest\Voice\V1\DialingPermissions;
 
+use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Options;
 use Twilio\Serialize;
@@ -21,9 +22,9 @@ use Twilio\Version;
 class SettingsContext extends InstanceContext {
     /**
      * Initialize the SettingsContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
-     * @return \Twilio\Rest\Voice\V1\DialingPermissions\SettingsContext 
+     * @return \Twilio\Rest\Voice\V1\DialingPermissions\SettingsContext
      */
     public function __construct(Version $version) {
         parent::__construct($version);
@@ -36,7 +37,7 @@ class SettingsContext extends InstanceContext {
 
     /**
      * Fetch a SettingsInstance
-     * 
+     *
      * @return SettingsInstance Fetched SettingsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -54,7 +55,7 @@ class SettingsContext extends InstanceContext {
 
     /**
      * Update the SettingsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return SettingsInstance Updated SettingsInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -78,7 +79,7 @@ class SettingsContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

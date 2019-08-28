@@ -9,8 +9,10 @@
 
 namespace Twilio\Rest\Verify\V2\Service;
 
+use Twilio\Exceptions\TwilioException;
 use Twilio\ListResource;
 use Twilio\Options;
+use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
@@ -20,11 +22,11 @@ use Twilio\Version;
 class VerificationList extends ListResource {
     /**
      * Construct the VerificationList
-     * 
+     *
      * @param Version $version Version that contains the resource
      * @param string $serviceSid The SID of the Service that the resource is
      *                           associated with
-     * @return \Twilio\Rest\Verify\V2\Service\VerificationList 
+     * @return \Twilio\Rest\Verify\V2\Service\VerificationList
      */
     public function __construct(Version $version, $serviceSid) {
         parent::__construct($version);
@@ -37,7 +39,7 @@ class VerificationList extends ListResource {
 
     /**
      * Create a new VerificationInstance
-     * 
+     *
      * @param string $to The phone number to verify
      * @param string $channel The verification method to use
      * @param array|Options $options Optional Arguments
@@ -56,6 +58,7 @@ class VerificationList extends ListResource {
             'CustomCode' => $options['customCode'],
             'Amount' => $options['amount'],
             'Payee' => $options['payee'],
+            'RateLimits' => Serialize::jsonObject($options['rateLimits']),
         ));
 
         $payload = $this->version->create(
@@ -70,9 +73,9 @@ class VerificationList extends ListResource {
 
     /**
      * Constructs a VerificationContext
-     * 
+     *
      * @param string $sid The unique string that identifies the resource
-     * @return \Twilio\Rest\Verify\V2\Service\VerificationContext 
+     * @return \Twilio\Rest\Verify\V2\Service\VerificationContext
      */
     public function getContext($sid) {
         return new VerificationContext($this->version, $this->solution['serviceSid'], $sid);
@@ -80,7 +83,7 @@ class VerificationList extends ListResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

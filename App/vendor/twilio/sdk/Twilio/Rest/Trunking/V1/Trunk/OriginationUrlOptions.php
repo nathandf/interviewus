@@ -14,11 +14,10 @@ use Twilio\Values;
 
 abstract class OriginationUrlOptions {
     /**
-     * @param integer $weight The value that determines the relative load the URI
-     *                        should receive compared to others with the same
-     *                        priority
-     * @param integer $priority The relative importance of the URI
-     * @param boolean $enabled Whether the URL is enabled
+     * @param int $weight The value that determines the relative load the URI
+     *                    should receive compared to others with the same priority
+     * @param int $priority The relative importance of the URI
+     * @param bool $enabled Whether the URL is enabled
      * @param string $friendlyName A string to describe the resource
      * @param string $sipUrl The SIP address you want Twilio to route your
      *                       Origination calls to
@@ -31,11 +30,10 @@ abstract class OriginationUrlOptions {
 
 class UpdateOriginationUrlOptions extends Options {
     /**
-     * @param integer $weight The value that determines the relative load the URI
-     *                        should receive compared to others with the same
-     *                        priority
-     * @param integer $priority The relative importance of the URI
-     * @param boolean $enabled Whether the URL is enabled
+     * @param int $weight The value that determines the relative load the URI
+     *                    should receive compared to others with the same priority
+     * @param int $priority The relative importance of the URI
+     * @param bool $enabled Whether the URL is enabled
      * @param string $friendlyName A string to describe the resource
      * @param string $sipUrl The SIP address you want Twilio to route your
      *                       Origination calls to
@@ -50,10 +48,9 @@ class UpdateOriginationUrlOptions extends Options {
 
     /**
      * The value that determines the relative share of the load the URI should receive compared to other URIs with the same priority. Can be an integer from 1 to 65535, inclusive, and the default is 10. URLs with higher values receive more load than those with lower ones with the same priority.
-     * 
-     * @param integer $weight The value that determines the relative load the URI
-     *                        should receive compared to others with the same
-     *                        priority
+     *
+     * @param int $weight The value that determines the relative load the URI
+     *                    should receive compared to others with the same priority
      * @return $this Fluent Builder
      */
     public function setWeight($weight) {
@@ -63,8 +60,8 @@ class UpdateOriginationUrlOptions extends Options {
 
     /**
      * The relative importance of the URI. Can be an integer from 0 to 65535, inclusive, and the default is 10. The lowest number represents the most important URI.
-     * 
-     * @param integer $priority The relative importance of the URI
+     *
+     * @param int $priority The relative importance of the URI
      * @return $this Fluent Builder
      */
     public function setPriority($priority) {
@@ -74,8 +71,8 @@ class UpdateOriginationUrlOptions extends Options {
 
     /**
      * Whether the URL is enabled. The default is `true`.
-     * 
-     * @param boolean $enabled Whether the URL is enabled
+     *
+     * @param bool $enabled Whether the URL is enabled
      * @return $this Fluent Builder
      */
     public function setEnabled($enabled) {
@@ -85,7 +82,7 @@ class UpdateOriginationUrlOptions extends Options {
 
     /**
      * A descriptive string that you create to describe the resource. It can be up to 64 characters long.
-     * 
+     *
      * @param string $friendlyName A string to describe the resource
      * @return $this Fluent Builder
      */
@@ -96,7 +93,7 @@ class UpdateOriginationUrlOptions extends Options {
 
     /**
      * The SIP address you want Twilio to route your Origination calls to. This must be a `sip:` schema. `sips` is NOT supported.
-     * 
+     *
      * @param string $sipUrl The SIP address you want Twilio to route your
      *                       Origination calls to
      * @return $this Fluent Builder
@@ -108,7 +105,7 @@ class UpdateOriginationUrlOptions extends Options {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {
