@@ -70,10 +70,8 @@ class InterviewTemplate extends ProfileModel
 				if ( is_array( $existing_questions ) ) {
 					$iteration = 1;
 					foreach ( $existing_questions as $id => $body ) {
-						echo $id . "<br>" . $body . "<br>";
 						// Ensure question body isn't empty
 						if ( !is_null( $body ) && $body != "" ) {
-							echo "updating<br>";
 							$questionRepo->update(
 								[ "body" => $body, "placement" => $iteration ],
 								[ "id" => $id, "interview_template_id" => $this->request->params( "id" ) ]
