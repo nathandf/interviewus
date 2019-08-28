@@ -66,7 +66,7 @@
 		<div class="interview-details-{$interview->id} expandable-content" style="display: none;">
 			<div class="divider"></div>
 			<div class="pad-sml">
-				<p class="label text-breakable text-sml">URL:&nbsp;https://www.interviewus.net/i/{$interview->token}/</p>
+				<p class="label text-breakable text-sml"><i class="far fa-bookmark push-r-sml"></i>&nbsp;https://www.interviewus.net/i/{$interview->token}/</p>
 			</div>
 			<div class="divider"></div>
 			<div class="conversation-container">
