@@ -71,6 +71,10 @@
                 "entity-factory"
             ],
             "cart-repository": [
+                "cart-repository",
+                "product-repository"
+            ],
+            "cart-repository": [
                 "dao",
                 "entity-factory"
             ],

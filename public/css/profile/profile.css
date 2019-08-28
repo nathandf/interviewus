@@ -413,8 +413,10 @@ input[type=radio]:checked + .radio-label {
 }
 
 .uploaded-image {
-	width: 85%;
+	width: 85vh;
+	height: 85vh;
 	max-width: 200px;
+	max-height: 200px;
 	display: block;
 	margin: 0 auto;
 	border-radius: 50%;
