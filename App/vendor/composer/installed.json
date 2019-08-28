@@ -49,58 +49,6 @@
         ]
     },
     {
-        "name": "katzgrau/klogger",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/katzgrau/KLogger.git",
-            "reference": "de2d3ab6777a393a9879e0496ebb8e0644066e3f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/katzgrau/KLogger/zipball/de2d3ab6777a393a9879e0496ebb8e0644066e3f",
-            "reference": "de2d3ab6777a393a9879e0496ebb8e0644066e3f",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3",
-            "psr/log": "^1.0.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^6.0.0"
-        },
-        "time": "2017-12-01T19:46:35+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Katzgrau\\KLogger\\": "src/"
-            },
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Kenny Katzgrau",
-                "email": "katzgrau@gmail.com"
-            },
-            {
-                "name": "Dan Horrigan",
-                "email": "dan@dhorrigan.com"
-            }
-        ],
-        "description": "A Simple Logging Class",
-        "keywords": [
-            "logging"
-        ]
-    },
-    {
         "name": "smarty/smarty",
         "version": "v3.1.33",
         "version_normalized": "3.1.33.0",
@@ -260,54 +208,6 @@
         ]
     },
     {
-        "name": "twilio/sdk",
-        "version": "5.31.3",
-        "version_normalized": "5.31.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twilio/twilio-php.git",
-            "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/twilio/twilio-php/zipball/58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
-            "reference": "58a8322c5a8ce2ff7d68cd16ff56dc8ab44c168f",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.0"
-        },
-        "require-dev": {
-            "apigen/apigen": "^4.1",
-            "phpunit/phpunit": "4.5.*"
-        },
-        "time": "2019-05-01T17:36:14+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Twilio\\": "Twilio/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Twilio API Team",
-                "email": "api@twilio.com"
-            }
-        ],
-        "description": "A PHP wrapper for Twilio's API",
-        "homepage": "http://github.com/twilio/twilio-php",
-        "keywords": [
-            "api",
-            "sms",
-            "twilio"
-        ]
-    },
-    {
         "name": "braintree/braintree_php",
         "version": "3.34.0",
         "version_normalized": "3.34.0.0",
@@ -434,6 +334,58 @@
             "log",
             "logging",
             "psr-3"
+        ]
+    },
+    {
+        "name": "twilio/sdk",
+        "version": "5.34.4",
+        "version_normalized": "5.34.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twilio/twilio-php.git",
+            "reference": "489ff05fce96e76c87ab58e837fd907e49aee42b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twilio/twilio-php/zipball/489ff05fce96e76c87ab58e837fd907e49aee42b",
+            "reference": "489ff05fce96e76c87ab58e837fd907e49aee42b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "require-dev": {
+            "apigen/apigen": "^4.1",
+            "guzzlehttp/guzzle": "^6.3",
+            "phpunit/phpunit": "4.5.*"
+        },
+        "suggest": {
+            "guzzlehttp/guzzle": "An HTTP client to execute the API requests"
+        },
+        "time": "2019-08-21T21:58:51+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Twilio\\": "Twilio/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Twilio API Team",
+                "email": "api@twilio.com"
+            }
+        ],
+        "description": "A PHP wrapper for Twilio's API",
+        "homepage": "http://github.com/twilio/twilio-php",
+        "keywords": [
+            "api",
+            "sms",
+            "twilio"
         ]
     }
 ]

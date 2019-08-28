@@ -15,7 +15,6 @@ return array(
     'Models\\' => array($baseDir . '/Model/Models'),
     'Model\\' => array($baseDir . '/Model'),
     'Mappers\\' => array($baseDir . '/Model/Mappers'),
-    'Katzgrau\\KLogger\\' => array($vendorDir . '/katzgrau/klogger/src'),
     'Helpers\\' => array($baseDir . '/Helpers'),
     'Entities\\' => array($baseDir . '/Model/Entities'),
     'Core\\' => array($baseDir . '/Core'),

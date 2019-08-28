@@ -9,6 +9,7 @@
 
 namespace Twilio\Rest\Api\V2010\Account;
 
+use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Options;
 use Twilio\Values;
@@ -17,12 +18,12 @@ use Twilio\Version;
 class KeyContext extends InstanceContext {
     /**
      * Initialize the KeyContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $accountSid The SID of the Account that created the resource
      *                           to fetch
      * @param string $sid The unique string that identifies the resource
-     * @return \Twilio\Rest\Api\V2010\Account\KeyContext 
+     * @return \Twilio\Rest\Api\V2010\Account\KeyContext
      */
     public function __construct(Version $version, $accountSid, $sid) {
         parent::__construct($version);
@@ -35,7 +36,7 @@ class KeyContext extends InstanceContext {
 
     /**
      * Fetch a KeyInstance
-     * 
+     *
      * @return KeyInstance Fetched KeyInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -58,7 +59,7 @@ class KeyContext extends InstanceContext {
 
     /**
      * Update the KeyInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return KeyInstance Updated KeyInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -85,7 +86,7 @@ class KeyContext extends InstanceContext {
 
     /**
      * Deletes the KeyInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -95,7 +96,7 @@ class KeyContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

@@ -9,6 +9,7 @@
 
 namespace Twilio\Rest\Verify\V2\Service;
 
+use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
@@ -19,12 +20,12 @@ use Twilio\Version;
 class VerificationContext extends InstanceContext {
     /**
      * Initialize the VerificationContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $serviceSid The SID of the verification Service to fetch the
      *                           resource from
      * @param string $sid The unique string that identifies the resource
-     * @return \Twilio\Rest\Verify\V2\Service\VerificationContext 
+     * @return \Twilio\Rest\Verify\V2\Service\VerificationContext
      */
     public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
@@ -37,7 +38,7 @@ class VerificationContext extends InstanceContext {
 
     /**
      * Update the VerificationInstance
-     * 
+     *
      * @param string $status The new status of the resource
      * @return VerificationInstance Updated VerificationInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -62,7 +63,7 @@ class VerificationContext extends InstanceContext {
 
     /**
      * Fetch a VerificationInstance
-     * 
+     *
      * @return VerificationInstance Fetched VerificationInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -85,7 +86,7 @@ class VerificationContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

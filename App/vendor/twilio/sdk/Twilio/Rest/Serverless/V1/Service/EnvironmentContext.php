@@ -12,29 +12,33 @@ namespace Twilio\Rest\Serverless\V1\Service;
 use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
 use Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList;
+use Twilio\Rest\Serverless\V1\Service\Environment\LogList;
 use Twilio\Rest\Serverless\V1\Service\Environment\VariableList;
 use Twilio\Values;
 use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
- * 
- * @property \Twilio\Rest\Serverless\V1\Service\Environment\VariableList variables
- * @property \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList deployments
+ *
+ * @property \Twilio\Rest\Serverless\V1\Service\Environment\VariableList $variables
+ * @property \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList $deployments
+ * @property \Twilio\Rest\Serverless\V1\Service\Environment\LogList $logs
  * @method \Twilio\Rest\Serverless\V1\Service\Environment\VariableContext variables(string $sid)
  * @method \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentContext deployments(string $sid)
+ * @method \Twilio\Rest\Serverless\V1\Service\Environment\LogContext logs(string $sid)
  */
 class EnvironmentContext extends InstanceContext {
     protected $_variables = null;
     protected $_deployments = null;
+    protected $_logs = null;
 
     /**
      * Initialize the EnvironmentContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $serviceSid Service Sid.
      * @param string $sid Environment Sid.
-     * @return \Twilio\Rest\Serverless\V1\Service\EnvironmentContext 
+     * @return \Twilio\Rest\Serverless\V1\Service\EnvironmentContext
      */
     public function __construct(Version $version, $serviceSid, $sid) {
         parent::__construct($version);
@@ -47,7 +51,7 @@ class EnvironmentContext extends InstanceContext {
 
     /**
      * Fetch a EnvironmentInstance
-     * 
+     *
      * @return EnvironmentInstance Fetched EnvironmentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -69,9 +73,19 @@ class EnvironmentContext extends InstanceContext {
     }
 
     /**
+     * Deletes the EnvironmentInstance
+     *
+     * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
+     */
+    public function delete() {
+        return $this->version->delete('delete', $this->uri);
+    }
+
+    /**
      * Access the variables
-     * 
-     * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableList 
+     *
+     * @return \Twilio\Rest\Serverless\V1\Service\Environment\VariableList
      */
     protected function getVariables() {
         if (!$this->_variables) {
@@ -87,8 +101,8 @@ class EnvironmentContext extends InstanceContext {
 
     /**
      * Access the deployments
-     * 
-     * @return \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList 
+     *
+     * @return \Twilio\Rest\Serverless\V1\Service\Environment\DeploymentList
      */
     protected function getDeployments() {
         if (!$this->_deployments) {
@@ -103,11 +117,24 @@ class EnvironmentContext extends InstanceContext {
     }
 
     /**
+     * Access the logs
+     *
+     * @return \Twilio\Rest\Serverless\V1\Service\Environment\LogList
+     */
+    protected function getLogs() {
+        if (!$this->_logs) {
+            $this->_logs = new LogList($this->version, $this->solution['serviceSid'], $this->solution['sid']);
+        }
+
+        return $this->_logs;
+    }
+
+    /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
-     * @throws \Twilio\Exceptions\TwilioException For unknown subresources
+     * @throws TwilioException For unknown subresources
      */
     public function __get($name) {
         if (property_exists($this, '_' . $name)) {
@@ -120,11 +147,11 @@ class EnvironmentContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
-     * @throws \Twilio\Exceptions\TwilioException For unknown resource
+     * @throws TwilioException For unknown resource
      */
     public function __call($name, $arguments) {
         $property = $this->$name;
@@ -137,7 +164,7 @@ class EnvironmentContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

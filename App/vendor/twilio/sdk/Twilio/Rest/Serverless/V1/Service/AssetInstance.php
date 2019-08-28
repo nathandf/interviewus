@@ -17,27 +17,27 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
- * 
- * @property string sid
- * @property string accountSid
- * @property string serviceSid
- * @property string friendlyName
- * @property \DateTime dateCreated
- * @property \DateTime dateUpdated
- * @property string url
- * @property array links
+ *
+ * @property string $sid
+ * @property string $accountSid
+ * @property string $serviceSid
+ * @property string $friendlyName
+ * @property \DateTime $dateCreated
+ * @property \DateTime $dateUpdated
+ * @property string $url
+ * @property array $links
  */
 class AssetInstance extends InstanceResource {
     protected $_assetVersions = null;
 
     /**
      * Initialize the AssetInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid Service Sid.
      * @param string $sid Asset Sid.
-     * @return \Twilio\Rest\Serverless\V1\Service\AssetInstance 
+     * @return \Twilio\Rest\Serverless\V1\Service\AssetInstance
      */
     public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
         parent::__construct($version);
@@ -60,7 +60,7 @@ class AssetInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Serverless\V1\Service\AssetContext Context for this
      *                                                         AssetInstance
      */
@@ -78,7 +78,7 @@ class AssetInstance extends InstanceResource {
 
     /**
      * Fetch a AssetInstance
-     * 
+     *
      * @return AssetInstance Fetched AssetInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -87,8 +87,18 @@ class AssetInstance extends InstanceResource {
     }
 
     /**
+     * Deletes the AssetInstance
+     *
+     * @return boolean True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
+     */
+    public function delete() {
+        return $this->proxy()->delete();
+    }
+
+    /**
      * Update the AssetInstance
-     * 
+     *
      * @param string $friendlyName A human-readable description of this Asset.
      * @return AssetInstance Updated AssetInstance
      * @throws TwilioException When an HTTP error occurs.
@@ -99,8 +109,8 @@ class AssetInstance extends InstanceResource {
 
     /**
      * Access the assetVersions
-     * 
-     * @return \Twilio\Rest\Serverless\V1\Service\Asset\AssetVersionList 
+     *
+     * @return \Twilio\Rest\Serverless\V1\Service\Asset\AssetVersionList
      */
     protected function getAssetVersions() {
         return $this->proxy()->assetVersions;
@@ -108,7 +118,7 @@ class AssetInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
@@ -128,7 +138,7 @@ class AssetInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

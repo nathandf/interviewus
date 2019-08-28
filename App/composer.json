@@ -3,7 +3,6 @@
         "twilio/sdk": "^5.16",
         "sendgrid/sendgrid": "~6.0",
         "smarty/smarty": "~3.1",
-        "katzgrau/klogger": "dev-master",
         "braintree/braintree_php" : "3.34.0",
         "monolog/monolog": "^1.24"
     },

@@ -17,28 +17,28 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
- * 
- * @property string sid
- * @property string serviceSid
- * @property string accountSid
- * @property string to
- * @property string channel
- * @property string status
- * @property boolean valid
- * @property string amount
- * @property string payee
- * @property \DateTime dateCreated
- * @property \DateTime dateUpdated
+ *
+ * @property string $sid
+ * @property string $serviceSid
+ * @property string $accountSid
+ * @property string $to
+ * @property string $channel
+ * @property string $status
+ * @property bool $valid
+ * @property string $amount
+ * @property string $payee
+ * @property \DateTime $dateCreated
+ * @property \DateTime $dateUpdated
  */
 class VerificationCheckInstance extends InstanceResource {
     /**
      * Initialize the VerificationCheckInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid The SID of the Service that the resource is
      *                           associated with
-     * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckInstance 
+     * @return \Twilio\Rest\Verify\V2\Service\VerificationCheckInstance
      */
     public function __construct(Version $version, array $payload, $serviceSid) {
         parent::__construct($version);
@@ -63,7 +63,7 @@ class VerificationCheckInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
@@ -83,7 +83,7 @@ class VerificationCheckInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {

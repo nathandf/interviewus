@@ -15,22 +15,22 @@ use Twilio\Values;
 use Twilio\Version;
 
 /**
- * @property string accountSid
- * @property string serviceSid
- * @property string channelSid
- * @property string userSid
- * @property string memberSid
- * @property string status
- * @property integer lastConsumedMessageIndex
- * @property integer unreadMessagesCount
- * @property array links
- * @property string url
- * @property string notificationLevel
+ * @property string $accountSid
+ * @property string $serviceSid
+ * @property string $channelSid
+ * @property string $userSid
+ * @property string $memberSid
+ * @property string $status
+ * @property int $lastConsumedMessageIndex
+ * @property int $unreadMessagesCount
+ * @property array $links
+ * @property string $url
+ * @property string $notificationLevel
  */
 class UserChannelInstance extends InstanceResource {
     /**
      * Initialize the UserChannelInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid The SID of the Service that the resource is
@@ -38,7 +38,7 @@ class UserChannelInstance extends InstanceResource {
      * @param string $userSid The SID of the User the User Channel belongs to
      * @param string $channelSid The SID of the Channel that has the User Channel
      *                           to fetch
-     * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserChannelInstance 
+     * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserChannelInstance
      */
     public function __construct(Version $version, array $payload, $serviceSid, $userSid, $channelSid = null) {
         parent::__construct($version);
@@ -68,7 +68,7 @@ class UserChannelInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserChannelContext Context
      *                                                                     for this
      *                                                                     UserChannelInstance
@@ -88,7 +88,7 @@ class UserChannelInstance extends InstanceResource {
 
     /**
      * Fetch a UserChannelInstance
-     * 
+     *
      * @return UserChannelInstance Fetched UserChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
@@ -98,7 +98,7 @@ class UserChannelInstance extends InstanceResource {
 
     /**
      * Update the UserChannelInstance
-     * 
+     *
      * @param string $notificationLevel The push notification level to assign to
      *                                  the User Channel
      * @return UserChannelInstance Updated UserChannelInstance
@@ -110,7 +110,7 @@ class UserChannelInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
@@ -130,7 +130,7 @@ class UserChannelInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
     public function __toString() {
