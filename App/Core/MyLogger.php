@@ -3,37 +3,23 @@
 namespace Core;
 
 use \Conf\Config;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
-class MyLogger
+class MyLogger extends Logger
 {
-	public $logger;
+	private $logfile = "main.log";
 
 	public function __construct( Config $config )
 	{
-		$this->logger = new \Katzgrau\KLogger\Logger(
-			$config->configs[ "logs_directory" ]
+		parent::__construct( "main" );
+
+		$this->pushHandler(
+			new StreamHandler(
+				$config->configs[ "logs_directory" ] . $this->logfile
+			)
 		);
 
 		return $this;
-	}
-
-	public function info( $message )
-	{
-		$this->logger->info( $message );
-	}
-
-	public function debug( $message )
-	{
-		$this->logger->debug( $message );
-	}
-
-	public function warning( $message )
-	{
-		$this->logger->warning( $message );
-	}
-
-	public function error( $message )
-	{
-		$this->logger->error( $message );
 	}
 }
