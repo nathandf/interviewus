@@ -17,12 +17,12 @@ class Interviewees extends Controller
                 $this->request,
                 new \Model\Validations\Interviewee( $this->request->session( "csrf-token" ) ),
                 "new_interviewee"
-                )
+            )
         ) {
 
             return [ "Interviewee:create", "Interviewee:create", null, null ];
         }
-
+        
         return [ "Interviewees:index", "Interviewees:showAll", null, [ "errors" => $requestValidator->getErrors() ] ];
     }
 }

@@ -34,6 +34,8 @@ class Config
 
     public function initConfigs()
     {
+        $this->configs[ "environment" ] = "production";
+
         // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
         $this->configs[ "app-details" ] = [
             "app_url" => "https://www.interviewus.net/",
@@ -48,8 +50,6 @@ class Config
         $this->configs[ "dir" ] = [
             "email-templates" => "App/templates/email-templates/"
         ];
-
-        $this->configs[ "environment" ] = "production";
 
         $this->configs[ "approved_server_names" ] = [
             "www.interviewus.net",
