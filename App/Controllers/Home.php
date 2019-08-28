@@ -8,8 +8,6 @@ class Home extends Controller
 {
     public function indexAction()
     {
-        $logger = $this->load( "logger" );
-        $logger->debug( "test" );
         return [ null, "Home:index", null, null ];
     }
 
