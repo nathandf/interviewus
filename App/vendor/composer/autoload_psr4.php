@@ -11,6 +11,7 @@ return array(
     'Services\\' => array($baseDir . '/Model/Services'),
     'SendGrid\\' => array($vendorDir . '/sendgrid/php-http-client/lib'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Models\\' => array($baseDir . '/Model/Models'),
     'Model\\' => array($baseDir . '/Model'),
     'Mappers\\' => array($baseDir . '/Model/Mappers'),
