@@ -18,7 +18,7 @@ class Pricing extends Model
 		$this->planDetailsRepo = $this->load( "plan-details-repository" );
 
 		$this->countries = $this->countryRepo->get( [ "*" ] );
-
+		
         $this->user = $this->userAuth->getAuthenticatedUser();
         $this->account = null;
         $this->organization = null;
