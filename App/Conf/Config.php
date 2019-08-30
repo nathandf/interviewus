@@ -34,7 +34,7 @@ class Config
 
     public function initConfigs()
     {
-        $this->configs[ "environment" ] = "production";
+	$this->configs[ "environment" ] = "production";
 
         // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
         $this->configs[ "app-details" ] = [
