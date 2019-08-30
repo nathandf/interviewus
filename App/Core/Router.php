@@ -70,7 +70,7 @@ class Router
         $url = $this->removeQueryStringVariables( $url );
         $this->resetGETSuperGLobal( $url );
 
-        if ( $this->match( $url ) ) {
+		if ( $this->match( $url ) ) {
             $root = $this->config->getEnv() == "production"
             ? $this->config->configs[ "routing" ][ "production" ][ "root" ]
             : $this->createRelativeURL( $url );
