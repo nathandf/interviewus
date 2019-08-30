@@ -1,4 +1,7 @@
 .idea/
+.buildpath
+.metadata/
+.project
 .htaccess
 App/Conf/server-vars.php
 App/Controllers/QuickBoi.php
