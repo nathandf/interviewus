@@ -8,6 +8,11 @@ class Test extends Controller
 {
     public function indexAction()
     {
-        
+           
+    }
+    
+    public function phpInfo()
+    {
+        phpinfo();
     }
 }
