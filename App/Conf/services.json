@@ -70,11 +70,11 @@
                 "dao",
                 "entity-factory"
             ],
-            "cart-repository": [
+            "cart-destroyer": [
                 "cart-repository",
                 "product-repository"
             ],
-            "cart-destroyer": [
+            "cart-repository": [
                 "dao",
                 "entity-factory"
             ],

@@ -69,12 +69,14 @@ class Router
         $url = $request->queryString();
         $url = $this->removeQueryStringVariables( $url );
         $this->resetGETSuperGLobal( $url );
-
+		
 		if ( $this->match( $url ) ) {
-            $root = $this->config->getEnv() == "production"
-            ? $this->config->configs[ "routing" ][ "production" ][ "root" ]
-            : $this->createRelativeURL( $url );
-
+			
+			$root = $this->createRelativeURL( $url );
+			
+			if ( $this->config->getEnv() == "production" ) {
+				$root = $this->config->configs[ "routing" ][ "production" ][ "root" ];
+			}
             define( "HOME", $root );
 
 
@@ -97,15 +99,14 @@ class Router
                     if ( $method == "" ) {
                         $method = "index";
                     }
-
                 } else {
                     throw new \Exception( "Method \"$method\" is not a method of class $controller", 404 );
                 }
+				
                 // Magic in use here! ( __call() ) $method is not actually a method of $controller
                 // because it's missing the suffix "Action". This allows for before and after
                 // action filters. See \Core\Controller::__call();
-                return array( "controller" =>  $controller, "method" => $method, "params" => $this->params );
-
+                return [ "controller" => $controller, "method" => $method, "params" => $this->params ];
             } else {
                 throw new \Exception( "Class \"$controller\" does not exist", 404 );
             }
