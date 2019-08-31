@@ -78,7 +78,7 @@
                 "dao",
                 "entity-factory"
             ],
-            "concatentated-sms-repository": [
+            "concatenated-sms-repository": [
                 "dao",
                 "entity-factory"
             ],
@@ -110,7 +110,7 @@
                 "dao",
                 "entity-factory"
             ],
-            "inbound-sms-cocatenated": [
+            "inbound-sms-concatenator": [
                 "concatenated-sms-repository",
                 "inbound-sms-repository",
                 "logger"

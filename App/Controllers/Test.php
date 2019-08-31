@@ -15,4 +15,9 @@ class Test extends Controller
     {
         phpinfo();
     }
+	
+	public function testNumber()
+	{
+		return [ null, "Sms:send", null, null ];
+	}
 }

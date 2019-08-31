@@ -21,7 +21,7 @@ class Incoming extends TwilioIncomingModel
 				],
 				"single"
 			);
-
+			
 			if ( !is_null( $conversation ) ) {
 				$inboundSms = $inboundSmsRepo->insert([
 					"conversation_id" => $conversation->id,
