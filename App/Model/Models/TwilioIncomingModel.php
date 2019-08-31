@@ -15,7 +15,7 @@ class TwilioIncomingModel extends Model
 
         // If no twilio phone number exists
         if ( is_null( $this->twilioPhoneNumber ) ) {
-            $this->logger->error( "Twilio number with sid '{$this->request->params( "sid )}' does not exist" );
+            $this->logger->error( "Twilio number with sid '{$this->request->params( "sid" )}' does not exist" );
 
 			return false;
 		}
