@@ -11,14 +11,14 @@ class Config
     public function __construct()
     {
         $this->initConfigs();
-
-        if ( !in_array( $this->configs[ "environment" ], $this->environments ) ) {
-            throw new \Exception( "\"{$this->environment}\" is not valid environment - Environments list [ " . implode( ",", $this->environments ) ." ]" );
+		
+		$this->environment = $this->configs[ "environment" ];
+		
+        if ( !in_array( $this->environment, $this->environments ) ) {
+            throw new \Exception( "{$this->environment} is not valid environment - Environments list [ " . implode( ", ", $this->environments ) ." ]" );
         }
 
-        $this->environment = $this->configs[ "environment" ];
-
-        // Make sure people aint stealing my shit
+        // Redirect to approved server name if invalid server name is detected
         if ( $this->environment == "production" && $_SERVER[ "REMOTE_ADDR" ] != "::1" ) {
             if ( !in_array( $_SERVER[ "SERVER_NAME" ], $this->configs[ "approved_server_names" ] ) ) {
                 header( "location: " . $this->configs[ "routing" ][ "production" ][ "root" ] );
@@ -34,7 +34,7 @@ class Config
 
     public function initConfigs()
     {
-		$this->configs[ "environment" ] = "production";
+		$this->configs[ "environment" ] = "development";
 
         // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
         $this->configs[ "app-details" ] = [
