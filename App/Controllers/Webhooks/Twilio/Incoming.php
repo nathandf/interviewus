@@ -23,7 +23,7 @@ class Incoming extends Controller
                 "recieve_sms"
             )
         ) {
-            return [ "Incoming:sms", "Default:index", null, null ]
+            return [ "Incoming:sms", "Default:index", null, null ];
         }
     }
 
