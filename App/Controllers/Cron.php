@@ -9,6 +9,9 @@ class Cron extends Controller
 	public function dispatchScheduledInterviews()
 	{
 		$requestValidator = $this->load( "request-validator" );
+		$logger = $this->load( "my-logger" );
+		
+		$logger->info( "[CRON EXECUTION] [START] dispatchScheduledInterviews" );
 
 		if (
 			$this->request->is( "get" ) &&
@@ -24,8 +27,10 @@ class Cron extends Controller
 
 	public function dispatchSmsInterviewQuestions()
 	{
-
 		$requestValidator = $this->load( "request-validator" );
+		$logger = $this->load( "my-logger" );
+		
+		$logger->info( "[CRON EXECUTION] [START] dispatchSmsInterviewQuestions" );
 
 		if (
 			$this->request->is( "get" ) &&
