@@ -52,7 +52,7 @@
 								<p class="text-sml-heavy">USD / month</p>
 								<p class="text-sml-heavy tc-gun-metal">Billed <span class="billing-frequency-text">annually</span></p>
 							</div>
-							{if isset( $account )}
+							{if isset( $account ) && $account->plan_id != 11}
 								{if $account->plan_id == $plan->id}
 								<div class="pricing-cta-container">
 									<button type="button" class="current-plan" disabled="disabled">Current Plan</button>
