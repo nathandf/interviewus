@@ -13,7 +13,7 @@ class Cron extends Controller
 		
 		$start = time();
 		
-		$logger->info( "[CRON] [START:{$start}] DISPATCH SCHEDULED INTERVIEWS" );
+		$logger->info( "[CRON] [START] DISPATCH SCHEDULED INTERVIEWS" );
 
 		if (
 			$this->request->is( "get" ) &&
@@ -25,6 +25,8 @@ class Cron extends Controller
 		) {
 			return [ "Interviews:dispatchScheduledInterviews", "DefaultView:index", null, null ];
 		}
+		
+		$logger->info( "[CRON] VALIDATION ERROR" );
 	}
 
 	public function dispatchSmsInterviewQuestions()
@@ -34,7 +36,7 @@ class Cron extends Controller
 		
 		$start = time();
 		
-		$logger->info( "[CRON] [START:{$start}] DISPATCH INTERVIEW QUESTIONS" );
+		$logger->info( "[CRON] [START] DISPATCH INTERVIEW QUESTIONS" );
 
 		if (
 			$this->request->is( "get" ) &&
@@ -46,5 +48,7 @@ class Cron extends Controller
 		) {
 			return [ "Interviews:dispatchSmsInterviewQuestions", "DefaultView:index", null, null ];
 		}
+		
+		$logger->info( "[CRON] VALIDATION ERROR" );
 	}
 }
