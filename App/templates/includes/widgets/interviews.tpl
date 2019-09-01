@@ -25,21 +25,21 @@
 				{if isset( $interview->context )}
 					{if $interview->context == "interview"}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
+					<p class="sub-header">{$interview->position->name}</p>
 					{elseif $interview->context == "position"}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
+					<p class="sub-header">{$interview->position->name}</p>
 					{elseif $interview->context == "interviewee"}
 					<a href="{$HOME}profile/position/{$interview->position->id}/" class="header push-r-sml">{$interview->position->name|truncate:"30"}</a>
 					<!--<p class="sub-header"><b class="tc-black text-med push-r-sml">Start:</b> {$interview->start_time|default:"Not started"}</p>
 					<p class="sub-header"><b class="tc-black text-med push-r-sml">End:</b> {$interview->end_time|default:"<i>pending</i>"}</p>-->
 					{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
+					<p class="sub-header">{$interview->position->name}</p>
 					{/if}
 				{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
+					<p class="sub-header">{$interview->position->name}</p>
 				{/if}
 				<div class="progress-container">
 					<div class="progress-bar floatleft push-r-sml">
@@ -117,6 +117,14 @@
 		<div class="divider"></div>
 		<div class="pad-xsml">
 			<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
+			<div class="floatright">
+				<form action="{$HOME}profile/remind" method="post" class="--interview-reminder">
+					<input type="hidden" name="token" value="{$csrf_token}">
+					<input type="hidden" name="remind" value="{$csrf_token}">
+					<input type="hidden" name="interview_id" value="{$interview->id}">
+					<button type="submit" class="button-text-only action icon tooltip-icon --confirm-interview-reminder" title="Send an interview reminder email to {$interview->interviewee->first_name}"><i class="fas fa-envelope"></i></button>
+				</form>
+			</div>
 			<button id="share-interview" data-interview_id="{$interview->id}" class="share-interview-button button-text-only action icon floatright tooltip-icon --modal-trigger" title="Share"><i class="fas fa-share-alt"></i></button>
 			<div class="floatright">
 				<form class="archive-form" action="{$HOME}profile/archive" method="post">

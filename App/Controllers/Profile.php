@@ -223,6 +223,33 @@ class Profile extends Controller
 
         return [ null, "Profile:respondWithJson", null, "An unknown error has occured"  ];
     }
+	
+	public function remindAction()
+	{
+		$requestValidator = $this->load( "request-validator" );
+		
+		if (
+			$this->request->is( "post" ) &&
+			$this->request->post( "remind" ) != "" &&
+			$requestValidator->validate(
+				$this->request,
+				[
+					"token" => [
+						"required" => true,
+						"equals-hidden" => $this->request->session( "csrf-token" )
+					],
+					"interview_id" => [
+						"required" => true
+					]
+				],
+				"remind"
+			)
+		) {
+			return [ "Interview:remind", "DefaultView:respondWithJson", null, "success" ];
+		}
+		
+		return [ null, "DefaultView:respondWithJson", null, "An unknown error has occured"  ];
+	}
 
     public function logout()
     {

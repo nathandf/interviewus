@@ -261,4 +261,44 @@ class Interview extends ProfileModel
 		// Download the csv
 		$csvGenerator->download( $filename );
 	}
+	
+	public function remind()
+	{
+		// Send interviewee email prompting to start interview
+		if ( $this->validateAccount() ) {
+			
+			$interviewRepo = $this->load( "interview-repository" );
+			$interview = $interviewRepo->get(
+				[ "*" ],
+				[ "id" => $this->request->post( "interview_id" ), "organization_id" => $this->organization->id ],
+				"single"
+			);
+			
+			$intervieweeRepo = $this->load( "interviewee-repository" );
+			$interviewee = $intervieweeRepo->get(
+				[ "*" ],
+				[ "id" => $interview->interviewee_id, "organization_id" => $this->organization->id ],
+				"single"
+			);
+			
+			if ( !is_null( $interviewee ) ) {
+				$domainObjectFactory = $this->load( "domain-object-factory" );
+				$emailContext = $domainObjectFactory->build( "EmailContext" );
+				$emailContext->addProps([
+					"full_name" => $interviewee->getFullName(),
+					"first_name" => $interviewee->getFirstName(),
+					"interview_token" => $interview->token,
+					"sent_by" => $this->user->getFullName()
+				]);
+
+				$mailer = $this->load( "mailer" );
+				$emailBuilder = $this->load( "email-builder" );
+				$resp = $mailer->setTo( $interviewee->email, $interviewee->getFullName() )
+					->setFrom( "noreply@interviewus.net", "InterviewUs" )
+					->setSubject( "You have a pending interivew: {$interviewee->getFullName()}" )
+					->setContent( $emailBuilder->build( "interview-dispatch-notification.html", $emailContext ) )
+					->mail();
+			}
+		}	
+	}
 }
