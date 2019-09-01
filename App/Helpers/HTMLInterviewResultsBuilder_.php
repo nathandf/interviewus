@@ -4,7 +4,7 @@ namespace Helpers;
 
 use Model\Entities\Interview;
 
-class HTMLInterviewResultsBuilder
+class HtmlInterviewResultsBuilder
 {
 	private $html_interview_results;
 

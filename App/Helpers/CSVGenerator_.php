@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-class CSVGenerator
+class CsvGenerator
 {
 	private $cells = [];
 	private $entries = 0;
