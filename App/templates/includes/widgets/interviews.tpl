@@ -25,21 +25,21 @@
 				{if isset( $interview->context )}
 					{if $interview->context == "interview"}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header">{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 					{elseif $interview->context == "position"}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header">{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 					{elseif $interview->context == "interviewee"}
 					<a href="{$HOME}profile/position/{$interview->position->id}/" class="header push-r-sml">{$interview->position->name|truncate:"30"}</a>
 					<!--<p class="sub-header"><b class="tc-black text-med push-r-sml">Start:</b> {$interview->start_time|default:"Not started"}</p>
 					<p class="sub-header"><b class="tc-black text-med push-r-sml">End:</b> {$interview->end_time|default:"<i>pending</i>"}</p>-->
 					{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header">{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 					{/if}
 				{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header">{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 				{/if}
 				<div class="progress-container">
 					<div class="progress-bar floatleft push-r-sml">
@@ -47,7 +47,6 @@
 						{foreach from=$interview->questions item=question name=qa_progress_bar}
 							{assign var="width" value=(1/count($interview->questions))*100}
 							{if !is_null( $question->answer ) && $smarty.foreach.qa_progress_bar.last}{assign var="width" value=( 1/count( $interview->questions ) ) * 100}{/if}
-
 							<div class="progress-increment {if !is_null( $question->answer )}{assign var='total_answers' value=$total_answers + 1 } status-complete floatleft{else}floatright{/if}" style='width: {$width}%;'></div>
 						{/foreach}
 						<div class="clear"></div>
