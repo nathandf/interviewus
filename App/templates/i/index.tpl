@@ -54,7 +54,7 @@
 							<textarea name="interviewee_answers[{$question->id}]" class="inp textarea inp-full" required="required">{$question->answer->body|default:null}</textarea>
 							<div class="push-t-med"></div>
 							{/foreach}
-							<div class="con-cnt-med-plus">
+							<div class="con-cnt-med-plus pad-sml">
 								<button class="button theme-primary" type="submit"><i aria-hidden="true" class="fas fa-paper-plane push-r-med"></i>Submit answers</button>
 							</div>
 						</form>

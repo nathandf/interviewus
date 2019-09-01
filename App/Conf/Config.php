@@ -29,7 +29,6 @@ class Config
         if ( !in_array( $_SERVER[ "SERVER_NAME" ], $this->configs[ "indexable_domains" ] ) ) {
             header( "X-Robots-Tag: noindex, nofollow", true );
         }
-
     }
 
     public function initConfigs()
@@ -56,6 +55,10 @@ class Config
             "interviewus.net",
             "https://www.interviewus.net"
         ];
+		
+		$this->configs[ "approved_ip_addresses" ] = [
+			"192.169.235.224"
+		];
 
         $this->config[ "allowable_origins" ] = [
             "https://www.interviewus.net"
