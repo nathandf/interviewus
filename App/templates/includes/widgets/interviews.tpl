@@ -25,10 +25,10 @@
 				{if isset( $interview->context )}
 					{if $interview->context == "interview"}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header"><i class="fas fa-briefcase push-r-sml"></i>{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 					{elseif $interview->context == "position"}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header"><i class="fas fa-briefcase push-r-sml"></i>{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 					{elseif $interview->context == "interviewee"}
 					<a href="{$HOME}profile/position/{$interview->position->id}/" class="header push-r-sml">{$interview->position->name|truncate:"30"}</a>
 					<!--<p class="sub-header"><b class="tc-black text-med push-r-sml">Start:</b> {$interview->start_time|default:"Not started"}</p>
