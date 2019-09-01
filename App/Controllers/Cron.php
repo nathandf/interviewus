@@ -14,19 +14,20 @@ class Cron extends Controller
 		$start = time();
 		
 		$logger->info( "[CRON] [START] DISPATCH SCHEDULED INTERVIEWS" );
-
-		if (
-			$this->request->is( "get" ) &&
-			$requestValidator->validate(
-				$this->request,
-				new \Model\Validations\Cron,
-				"dispatch_pending_interviews"
-			)
-		) {
-			return [ "Interviews:dispatchScheduledInterviews", "DefaultView:index", null, null ];
-		}
+		$logger->info( $this->request->ip() );
 		
-		$logger->info( "[CRON] VALIDATION ERROR" );
+		return [ "Interviews:dispatchScheduledInterviews", "DefaultView:index", null, null ];
+		
+		//if (
+		//	$this->request->is( "get" ) &&
+		//	$requestValidator->validate(
+		//		$this->request,
+		//		new \Model\Validations\Cron,
+		//		"dispatch_pending_interviews"
+		//	)
+		//) {
+		//	return [ "Interviews:dispatchScheduledInterviews", "DefaultView:index", null, null ];
+		//}
 	}
 
 	public function dispatchSmsInterviewQuestions()
@@ -37,18 +38,17 @@ class Cron extends Controller
 		$start = time();
 		
 		$logger->info( "[CRON] [START] DISPATCH INTERVIEW QUESTIONS" );
+		return [ "Interviews:dispatchSmsInterviewQuestions", "DefaultView:index", null, null ];
 
-		if (
-			$this->request->is( "get" ) &&
-			$requestValidator->validate(
-				$this->request,
-				new \Model\Validations\Cron,
-				"dispatch_sms_interview_questions"
-			)
-		) {
-			return [ "Interviews:dispatchSmsInterviewQuestions", "DefaultView:index", null, null ];
-		}
-		
-		$logger->info( "[CRON] VALIDATION ERROR" );
+		//if (
+		//	$this->request->is( "get" ) &&
+		//	$requestValidator->validate(
+		//		$this->request,
+		//		new \Model\Validations\Cron,
+		//		"dispatch_sms_interview_questions"
+		//	)
+		//) {
+		//	return [ "Interviews:dispatchSmsInterviewQuestions", "DefaultView:index", null, null ];
+		//}
 	}
 }
