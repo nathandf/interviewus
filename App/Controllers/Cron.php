@@ -12,7 +12,7 @@ class Cron extends Controller
 		$config = $this->load( "config" );
 		
 		if ( in_array( $this->request->ip(), $this->config->configs[ "approved_ip_addresses" ] ) ) {
-			$logger->info( "[CRON] [START] DISPATCH INTERVIEW QUESTIONS" );
+			$logger->info( "[CRON] [START] DISPATCH SCHEDULED INTERVIEW" );
 			return [ "Interviews:dispatchScheduledInterviews", "DefaultView:index", null, null ];
 		}
 		
