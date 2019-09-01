@@ -37,7 +37,7 @@
 					<form action="" method="post">
 						<input type="hidden" name="start_interview" value="{$csrf_token}">
 						<input type="hidden" name="token" value="{$csrf_token}">
-						<div class="con-cnt-med-plus push-t-sml">
+						<div class="con-cnt-med-plus push-t-sml pad-sml">
 							<button class="button theme-primary" type="submit"><i aria-hidden="true" class="fas fa-play push-r-med"></i>Start interview</button>
 						</div>
 					</form>
