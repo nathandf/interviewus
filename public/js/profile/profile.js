@@ -184,6 +184,28 @@ $( function () {
         } );
         e.preventDefault();
     } );
+	
+	$( ".--interview-reminder" ).submit( function( e ) {
+        e.preventDefault();
+		$.ajax( {
+            type : "post",
+            url : $( this ).attr( "action" ),
+            data : $( this ).serialize(),
+            success : function( response ) {
+				if ( response != "success" ) {
+					alert( response );
+					return;
+				}
+				
+				alert( "Email reminder sent" );
+				return;
+            },
+            error : function() {
+                alert( "Something went wrong." );
+            }
+        } );
+        e.preventDefault();
+    } );
 
 	$( ".--c-duplicate-interview-template" ).on( "click", function( event ) {
         confirmation = confirm( "Confirm interview template duplication" );
@@ -212,5 +234,12 @@ $( function () {
 	$( ".--sidebar-toggle" ).on( "click", function () {
 		$( "#nav-sidebar-toggle" ).toggle();
 		$( "#sidebar" ).toggle();
+	} );
+	
+	$( ".--confirm-interview-reminder" ).on( "click", function ( event ) {
+		confirmation = confirm( "Send an interview reminder email?" );
+        if ( confirmation === false ) {
+            event.preventDefault();
+        }
 	} );
 } );
