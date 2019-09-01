@@ -117,6 +117,7 @@
 		<div class="divider"></div>
 		<div class="pad-xsml">
 			<button data-interview_id="{$interview->id}" class="button-text-only action tc-deep-purple --expand">EXPAND</button>
+			{if !in_array( $interview->status, [ "complete", "error", "terminated" ] ) }
 			<div class="floatright">
 				<form action="{$HOME}profile/remind" method="post" class="--interview-reminder">
 					<input type="hidden" name="token" value="{$csrf_token}">
@@ -125,6 +126,7 @@
 					<button type="submit" class="button-text-only action icon tooltip-icon --confirm-interview-reminder" title="Send an interview reminder email to {$interview->interviewee->first_name}"><i class="fas fa-envelope"></i></button>
 				</form>
 			</div>
+			{/if}
 			<button id="share-interview" data-interview_id="{$interview->id}" class="share-interview-button button-text-only action icon floatright tooltip-icon --modal-trigger" title="Share"><i class="fas fa-share-alt"></i></button>
 			<div class="floatright">
 				<form class="archive-form" action="{$HOME}profile/archive" method="post">
