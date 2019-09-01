@@ -11,11 +11,12 @@ class Cron extends Controller
 		$logger = $this->load( "my-logger" );
 		$config = $this->load( "config" );
 		
-		if ( in_array( $this->reuqest->ip(), $this->config->configs[ "approved_ip_addresses" ] ) ) {
+		if ( in_array( $this->request->ip(), $this->config->configs[ "approved_ip_addresses" ] ) ) {
 			$logger->info( "[CRON] [START] DISPATCH INTERVIEW QUESTIONS" );
 			return [ "Interviews:dispatchScheduledInterviews", "DefaultView:index", null, null ];
 		}
 		
+		$logger->info( "[CRON] [UNAPPROVED IP] {$this->request->ip()}" );
 	}
 
 	public function dispatchSmsInterviewQuestions()
@@ -23,9 +24,11 @@ class Cron extends Controller
 		$logger = $this->load( "my-logger" );
 		$config = $this->load( "config" );
 		
-		if ( in_array( $this->reuqest->ip(),  ) ) {
+		if ( in_array( $this->request->ip(), $this->config->configs[ "approved_ip_addresses" ] ) ) {
 			$logger->info( "[CRON] [START] DISPATCH INTERVIEW QUESTIONS" );
 			return [ "Interviews:dispatchSmsInterviewQuestions", "DefaultView:index", null, null ];
 		}
+		
+		$logger->info( "[CRON] [UNAPPROVED IP] {$this->request->ip()}" );
 	}
 }
