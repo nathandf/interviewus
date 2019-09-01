@@ -35,11 +35,11 @@
 					<p class="sub-header"><b class="tc-black text-med push-r-sml">End:</b> {$interview->end_time|default:"<i>pending</i>"}</p>-->
 					{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header">{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 					{/if}
 				{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
-					<p class="sub-header">{$interview->position->name}</p>
+					<p class="sub-header"><i class="fas fa-briefcase"></i> {$interview->position->name}</p>
 				{/if}
 				<div class="progress-container">
 					<div class="progress-bar floatleft push-r-sml">
