@@ -2,12 +2,12 @@
 
 namespace Views;
 
-use Core\View;
-
-class Pricing extends View
+class Pricing extends Page // Page inherits from View
 {
 	public function index( $args )
 	{
+		$this->showFacebookPixel( [ "ViewContent" ] );
+		
 		if ( isset( $args[ "errors" ] ) ) {
 			$this->assign( "error_messages", $args[ "errors" ] );
 		}

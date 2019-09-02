@@ -17,3 +17,5 @@
 <script src="{$HOME}public/jqueryui/js/jquery-ui.js"></script>
 <script src="{$HOME}public/jqueryui/js/jquery.ui.touch-punch.min.js"></script>
 <script src="{$HOME}{$JS_SCRIPTS}main.js"></script>
+{if isset( $facebook_pixel_code )}{$facebook_pixel_code}{/if}
+{if isset( $page_title )}{$page_title}{/if}

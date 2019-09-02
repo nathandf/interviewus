@@ -2,18 +2,21 @@
 
 namespace Views;
 
-use Core\View;
-
-class Home extends View
+class Home extends Page // Page inherits from View
 {
 	public function index()
 	{
+		$this->showFacebookPixel();
+		$this->pageTitle( "Automated SMS Interviews | Interview By Text Message" );
+		
 		$this->setTemplate( "index.tpl" );
 		$this->render();
 	}
 
 	public function resetPassword()
 	{
+		$this->showFacebookPixel();
+		
 		$this->assign( "flash_messages", $this->request->getFlashMessages() );
 
 		$this->setTemplate( "reset-password.tpl" );
@@ -22,6 +25,8 @@ class Home extends View
 
 	public function signIn( array $args )
 	{
+		$this->showFacebookPixel();
+		
 		$this->setErrorMessages( $args[ "error_messages" ] );
 		$this->setTemplate( "sign-in.tpl" );
 		$this->render();
@@ -45,6 +50,8 @@ class Home extends View
 
 	public function authenticateUser()
 	{
+		$this->showFacebookPixel();
+		
 		if ( $this->model->user_authenticated ) {
 			$this->redirect( "profile/" );
 		}
@@ -56,11 +63,13 @@ class Home extends View
 
 	public function termsAndConditions()
 	{
+		$this->showFacebookPixel();
 		echo( "terms and conditions" );
 	}
 
 	public function privacyPolicy()
 	{
+		$this->showFacebookPixel();
 		echo( "privacy policy" );
 	}
 }

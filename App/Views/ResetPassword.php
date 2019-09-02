@@ -2,12 +2,12 @@
 
 namespace Views;
 
-use Core\View;
-
-class ResetPassword extends View
+class ResetPassword extends Page // Page inherits from View
 {
 	public function index( $errors = [] )
-	{
+	{	
+		$this->showFacebookPixel();
+		
 		$this->assign( "flash_messages", $this->request->getFlashMessages() );
 		$this->setErrorMessages( $errors );
 
@@ -17,6 +17,8 @@ class ResetPassword extends View
 
 	public function invalidToken()
 	{
+		$this->showFacebookPixel();
+		
 		$this->setTemplate( "reset-password/invalid-token.tpl" );
         $this->render();
 	}
