@@ -7,7 +7,7 @@ class FacebookPixelBuilder
 	public $pixel;
 	public $pixelID;
 	public $pixel_ids = [];
-	public $events = [ "PageView" ];
+	public $events = [];
 	public $custom_events = [];
 
 	public function addEvent( $events )

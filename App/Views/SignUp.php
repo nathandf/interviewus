@@ -2,12 +2,12 @@
 
 namespace Views;
 
-use Core\View;
-
-class SignUp extends View
+class SignUp extends Page // Page inherits from View
 {
 	public function index( $args )
 	{
+		$this->showFacebookPixel( [ "ViewContent" ] );
+		
 		// Form field data that was submitted
         $fields = [];
 
@@ -28,6 +28,8 @@ class SignUp extends View
 
 	public function createAccount()
 	{
+		$this->showFacebookPixel( [ "ViewContent" ] );
+		
 		// If creating the account didn't cause any errors
 		if ( empty( $this->model->errors ) ) {
 			$this->redirect( "profile/" );

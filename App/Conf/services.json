@@ -43,7 +43,8 @@
             "6": "time-manager",
             "7": "time-zone-helper",
             "8": "image-manager",
-            "9": "video-manager"
+            "9": "video-manager",
+			"10": "facebook-pixel-builder"
         },
         "\\Model\\Services\\": {
             "0": "entity-factory",

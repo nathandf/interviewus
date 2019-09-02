@@ -2,12 +2,12 @@
 
 namespace Views;
 
-use Core\View;
-
-class I extends View
+class I extends Page // Page inherits from View
 {
 	public function index( $errors = [] )
 	{
+		$this->showFacebookPixel();
+		
 		$this->assign( "interview", $this->model->interview );
         $this->assign( "organization", $this->model->organization );
         $this->assign( "error_messages", $errors );
@@ -33,6 +33,8 @@ class I extends View
 
 	public function deploymentSuccessful()
 	{
+		$this->showFacebookPixel( [ "ViewContent" ] );
+		
 		if ( isset( $this->model->interview ) && !is_null( $this->model->interview ) ) {
 			if ( $this->model->interview->status == "pending" ) {
 				$this->redirect( "i/{$this->model->interview->token}/" );
@@ -54,6 +56,8 @@ class I extends View
 
 	public function interviewComplete()
 	{
+		$this->showFacebookPixel( [ "ViewContent" ] );
+		
 		$this->setTemplate( "i/interview-complete.tpl" );
 		$this->render();
 	}

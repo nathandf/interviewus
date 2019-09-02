@@ -2,12 +2,12 @@
 
 namespace Views;
 
-use Core\View;
-
-class Cart extends View
+class Cart extends Page // Page inherits from View
 {
 	public function index( $errors = [] )
 	{
+		$this->showFacebookPixel( [ "InitiateCheckout" ] );
+		
 		$this->assign( "account", $this->model->account );
         $this->assign( "user", $this->model->user );
         $this->assign( "cart", $this->model->cart );
