@@ -4,6 +4,7 @@
 	<title>InterviewUs</title>
 	<script src="{$HOME}{$JS_SCRIPTS}home.js"></script>
 	<link rel="stylesheet" href="{$HOME}public/css/home.css">
+	<meta name="google-site-verification" content="AhGM06DjA34VtTEjeHwZ03Sfae2B5xcoEOgqLZ9CpnE" />
 {/block}
 
 {block name="body"}
