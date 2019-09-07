@@ -127,7 +127,7 @@ class Config
                 "status_callback" => "http://1428890c.ngrok.io/interviewus.net/webhooks/twilio/status/"
             ],
             "production" => [
-                "status_callback" => "http://www.interviewus.net/webhooks/twilio/status/"
+                "status_callback" => "https://www.interviewus.net/webhooks/twilio/status/"
             ]
         ];
 

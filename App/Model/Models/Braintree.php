@@ -8,16 +8,9 @@ class Braintree extends ProfileModel
 
 	public function processSubscriptions()
 	{
-		$braintreeGatewayInitializer = $this->load( "braintree-gateway-initializer" );
-		$accountRepo = $this->load( "account-repository" );
-		$accountProvisioner = $this->load( "account-provisioner" );
-		$emailBuilder = $this->load( "email-builder" );
-		$mailer = $this->load( "mailer" );
-		$domainObjectFactory = $this->load( "domain-object-factory" );
-		$userRepo = $this->load( "user-repository" );
-
 		try {
 			// Connect to braintree API
+			$braintreeGatewayInitializer = $this->load( "braintree-gateway-initializer" );
 			$gateway = $braintreeGatewayInitializer->init();
 
 			// Parse the signature and payload
@@ -27,6 +20,7 @@ class Braintree extends ProfileModel
 			);
 
 			// Get the account associated with this notification
+			$accountRepo = $this->load( "account-repository" );
 			$account = $accountRepo->get(
 				[ "*" ],
 				[ "braintree_subscription_id" => $webhookNotification->subscription->id ],
@@ -34,9 +28,15 @@ class Braintree extends ProfileModel
 			);
 
 			// Get the primary user of the account
+			$userRepo = $this->load( "user-repository" );
 			$user = $userRepo->get( [ "*" ], [ "id" => $account->user_id ], "single" );
 
 			// Handle for the different notification types
+			$accountProvisioner = $this->load( "account-provisioner" );
+			$emailBuilder = $this->load( "email-builder" );
+			$mailer = $this->load( "mailer" );
+			$domainObjectFactory = $this->load( "domain-object-factory" );
+			
 			switch ( $webhookNotification->kind ) {
 
 				case "subscription_cancelled":
@@ -88,7 +88,7 @@ class Braintree extends ProfileModel
 
 					$resp = $mailer->setTo( $user->email, $user->getFullName() )
 						->setFrom( "customersupport@interviewus.net", "InterviewUs" )
-						->setSubject( "Uh Oh, {$user->getFirstName()}! - We failed to renew your subscription - InterviewUs" )
+						->setSubject( "{$user->getFirstName()}! - We failed to renew your subscription - InterviewUs" )
 						->setContent( $emailBuilder->build( "subscription-renewal-failure.html", $emailContext ) )
 						->mail();
 					break;
