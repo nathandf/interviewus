@@ -4,7 +4,7 @@ namespace Model\Validations;
 
 class SMSStatusUpdate extends RuleSet
 {
-	public function __construct( $csrf_token, array $plan_ids )
+	public function __construct()
 	{
 		$this->setRuleSet([
 			"From" => [
