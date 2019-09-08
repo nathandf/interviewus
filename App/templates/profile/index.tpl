@@ -28,7 +28,7 @@
 		{/if}
 		<div class="pad-sml-mob-pos">
 			<div class="floatleft push-r-xsml">
-				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i class="fas fa-rocket"></i></button>
+				<button id="interview-deployment" class="btn btn-inline theme-secondary-dark --modal-trigger"><i class="fas fa-rocket push-r-sml"></i>Launch</button>
 				<div class="pad-xxsml-mob-pos"></div>
 				<div class="clear"></div>
 			</div>
