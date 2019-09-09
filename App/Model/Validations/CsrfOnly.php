@@ -2,7 +2,7 @@
 
 namespace Model\Validations;
 
-class CSRFOnly extends RuleSet
+class CsrfOnly extends RuleSet
 {
 	public function __construct( $csrf_token ) {
 		$this->setRuleSet([
