@@ -4,7 +4,7 @@ namespace Model\Models;
 
 use Core\Model;
 
-class InterviewTemplate extends Model
+class InterviewQuestion extends Model
 {
 	public function updateSmsStatus()
 	{
