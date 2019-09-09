@@ -83,7 +83,7 @@ class Settings extends Controller
             $this->request->post( "cancel_subscription" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                new \Model\Validations\CSRFOnly( $this->request->session( "csrf-token" ) ),
+                new \Model\Validations\CsrfOnly( $this->request->session( "csrf-token" ) ),
                 "cancel_subscription"
             )
         ) {
