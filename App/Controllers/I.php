@@ -49,7 +49,7 @@ class I extends Controller
             $this->request->post( "start_interview" ) != "" &&
             $requestValidator->validate(
                 $this->request,
-                new \Model\Validations\CSRFOnly( $this->request->session( "csrf-token" ) ),
+                new \Model\Validations\CsrfOnly( $this->request->session( "csrf-token" ) ),
                 "start_interview"
             )
         ) {

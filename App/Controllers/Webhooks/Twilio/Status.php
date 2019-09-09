@@ -15,13 +15,13 @@ class Status extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                new \Model\Validations\SMSStatusUpdate,
+                new \Model\Validations\SmsStatusUpdate,
                 "status"
             )
         ) {
             return [ "InterviewQuestion:updateSmsStatus", "Default:index", null, null ];
         }
 
-        $logger->info( "SmsStatus Update Attempt Failed: Could not validate" );
+        $logger->info( "SmsStatus Update Failed" );
     }
 }

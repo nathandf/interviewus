@@ -4,7 +4,8 @@ namespace Model\Validations;
 
 class IncomingSms extends RuleSet
 {
-	public function __construct() {
+	public function __construct()
+	{
 		$this->setRuleSet([
 			"From" => [
 				"required" => true
