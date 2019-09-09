@@ -7,10 +7,10 @@ class SmsStatusUpdate extends RuleSet
 	public function __construct()
 	{
 		$this->setRuleSet([
-			"From" => [
+			"SmsStatus" => [
 				"required" => true
 			],
-			"Body" => [
+			"SmsSid" => [
 				"required" => true
 			]
 		]);

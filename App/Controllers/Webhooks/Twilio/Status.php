@@ -22,6 +22,6 @@ class Status extends Controller
             return [ "InterviewQuestion:updateSmsStatus", "Default:index", null, null ];
         }
 
-        $logger->info( "SmsStatus Update Attempt Failed: Could not validate" );
+        $logger->info( "SmsStatus Update Failed" );
     }
 }
