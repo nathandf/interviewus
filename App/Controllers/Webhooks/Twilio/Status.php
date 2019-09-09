@@ -8,6 +8,7 @@ class Status extends Controller
 {
     public function index()
     {
+        $logger = $this->load( "logger" );
         $requestValidator = $this->load( "request-validator" );
 
         if (
@@ -20,5 +21,7 @@ class Status extends Controller
         ) {
             return [ "InterviewQuestion:updateSmsStatus", "Default:index", null, null ];
         }
+
+        $logger->info( "SmsStatus Update Attempt Failed: Could not validate" );
     }
 }
