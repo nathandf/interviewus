@@ -11,8 +11,8 @@ class InterviewQuestion extends Model
 		$interviewQuestionRepo = $this->load( "interview-question-repository" );
 
 		$interviewQuestionRepo->update(
-			[ "sms_status" => $this->model->request->post( "SmsStatus" ) ],
-			[ "sms_sid" => $this->model->request->post( "SmsSid" ) ]
+			[ "sms_status" => $this->request->post( "SmsStatus" ) ],
+			[ "sms_sid" => $this->request->post( "SmsSid" ) ]
 		);
 	}
 }
