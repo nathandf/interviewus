@@ -2,7 +2,7 @@
 
 namespace Model\Validations;
 
-class SMSStatusUpdate extends RuleSet
+class SmsStatusUpdate extends RuleSet
 {
 	public function __construct()
 	{
