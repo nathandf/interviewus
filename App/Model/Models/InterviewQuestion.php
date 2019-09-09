@@ -14,8 +14,5 @@ class InterviewTemplate extends Model
 			[ "sms_status" => $this->model->request->post( "SmsStatus" ) ],
 			[ "sms_sid" => $this->model->request->post( "SmsSid" ) ]
 		);
-
-		$logger = $this->load( "logger" );
-		$logger->info( "Validated" );
 	}
 }
