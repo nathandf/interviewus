@@ -15,7 +15,7 @@ class Status extends Controller
             $this->request->is( "post" ) &&
             $requestValidator->validate(
                 $this->request,
-                new \Model\Validations\SMSStatusUpdate,
+                new \Model\Validations\SmsStatusUpdate,
                 "status"
             )
         ) {
