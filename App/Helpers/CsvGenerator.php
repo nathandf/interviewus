@@ -50,7 +50,7 @@ class CsvGenerator
         $fp = fopen( "php://output", "wb" );
 
         foreach ( $this->cells as $line ) {
-            fputcsv( $fp, $line, "," );
+            @fputcsv( $fp, $line, "," );
         }
 
         fclose( $fp );
