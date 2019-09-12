@@ -31,8 +31,10 @@
 					<p class="sub-header">{$interview->position->name}</p>
 					{elseif $interview->context == "interviewee"}
 					<a href="{$HOME}profile/position/{$interview->position->id}/" class="header push-r-sml">{$interview->position->name|truncate:"30"}</a>
+					{*
 					<!--<p class="sub-header"><b class="tc-black text-med push-r-sml">Start:</b> {$interview->start_time|default:"Not started"}</p>
 					<p class="sub-header"><b class="tc-black text-med push-r-sml">End:</b> {$interview->end_time|default:"<i>pending</i>"}</p>-->
+					*}
 					{else}
 					<a href="{$HOME}profile/interviewee/{$interview->interviewee->id}/" class="header push-r-sml">{$interview->interviewee->getFullName()|truncate:"30"}</a>
 					<p class="sub-header">{$interview->position->name}</p>
@@ -135,7 +137,8 @@
 					<button type="submit" class="button-text-only action icon tooltip-icon" title="Archive"><i class="fas fa-archive"></i></button>
 				</form>
 			</div>
-			<div class="floatright">
+			{*
+			<!-- <div class="floatright">
 				<form action="{$HOME}downloads/interviewCSV" method="post">
 					<input type="hidden" name="token" value="{$csrf_token}">
 					<input type="hidden" name="account_id" value="{$account->id}">
@@ -144,7 +147,8 @@
 					<input type="hidden" name="interview_id" value="{$interview->id}">
 					<button type="submit" class="button-text-only action icon tooltip-icon" title="Download as CSV"><i class="fas fa-download"></i></button>
 				</form>
-			</div>
+			</div> -->
+			*}
 			<div class="clear"></div>
 		</div>
 	</div>
