@@ -11,7 +11,7 @@ class Gateway
 
 	public function __construct( Config $config )
 	{
-		$this->api_key = $config->getConfigs()[ "ipdata" ][ "api-key" ];
+		$this->api_key = $config->getConfigs()[ "packages" ][ "ipdata" ][ "api-key" ];
 	}
 
 	// Determines the geographic data related to the ip address making the query

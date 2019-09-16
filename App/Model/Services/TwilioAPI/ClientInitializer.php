@@ -13,7 +13,7 @@ class ClientInitializer
 	public function __construct( \Conf\Config $Config )
 	{
 		// Get facebook configs
-		$this->setConfigs( $Config->configs[ "twilio" ] );
+		$this->setConfigs( $Config->configs[ "packages" ][ "twilio" ] );
 
 		// Set server environment
 		$this->setServerEnv( $Config->getEnv() );

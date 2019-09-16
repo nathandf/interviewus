@@ -11,9 +11,9 @@ class MyPdo extends PDO
 	{
 		try {
 			parent::__construct(
-				"mysql:host={$config->configs[ "db" ][ "{$config->getEnv()}" ][ "host" ]}; dbname={$config->configs[ "db" ][ "{$config->getEnv()}" ][ "dbname" ]};",
-				$config->configs[ "db" ][ "{$config->getEnv()}" ][ "user" ],
-				$config->configs[ "db" ][ "{$config->getEnv()}" ][ "password" ]
+				"mysql:host={$config->configs[ "database" ][ "host" ]}; dbname={$config->configs[ "database" ][ "dbname" ]};",
+				$config->configs[ "database" ][ "user" ],
+				$config->configs[ "database" ][ "password" ]
 			);
 
 			$this->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );

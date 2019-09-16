@@ -12,7 +12,7 @@ class EmailBuilder
 
 	public function __construct( Config $config )
 	{
-		$this->email_templates_dir = $config->configs[ "dir" ][ "email-templates" ];
+		$this->email_templates_dir = $config->configs[ "templating" ][ "email-templates" ];
 		$this->app_details = $config->configs[ "app-details" ];
 	}
 

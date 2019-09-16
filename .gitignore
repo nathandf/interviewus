@@ -3,5 +3,7 @@
 .metadata/
 .project
 .htaccess
-App/Conf/server-vars.php
 App/Controllers/QuickBoi.php
+App/Conf/configs/database.development.json
+App/Conf/configs/database.production.json
+

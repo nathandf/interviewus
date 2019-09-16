@@ -8,10 +8,10 @@ class GatewayInitializer
 
     public function __construct( \Conf\Config $Config )
     {
-        if ( !isset( $Config->configs[ "braintree" ] ) ) {
+        if ( !isset( $Config->configs[ "packages" ][ "braintree" ] ) ) {
             throw new \Exception( "Index 'braintree' does not exist in configs" );
         }
-        $this->setConfigs( $Config->configs[ "braintree" ] );
+        $this->setConfigs( $Config->configs[ "packages" ][ "braintree" ] );
     }
 
     public function init()

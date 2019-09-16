@@ -11,11 +11,11 @@ class ClientInitializer
     {
         $this->setEnv( $Config->getEnv() );
 
-        if ( !isset( $Config->configs[ "sendgrid" ] ) ) {
+        if ( !isset( $Config->configs[ "packages" ][ "sendgrid" ] ) ) {
             throw new \Exception( "Index 'sendgrid' does not exist in configs" );
         }
 
-        $this->setConfigs( $Config->configs[ "sendgrid" ] );
+        $this->setConfigs( $Config->configs[ "packages" ][ "sendgrid" ] );
     }
 
     public function init()
