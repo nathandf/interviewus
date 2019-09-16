@@ -10,9 +10,7 @@ class Config
 
     public function __construct()
     {
-        $this->initConfigs();
-		
-		$this->environment = $this->configs[ "environment" ];
+        $this->initConfigs( "production" );
 		
         if ( !in_array( $this->environment, $this->environments ) ) {
             throw new \Exception( "{$this->environment} is not valid environment - Environments list [ " . implode( ", ", $this->environments ) ." ]" );
@@ -31,9 +29,10 @@ class Config
         }
     }
 
-    public function initConfigs()
+    public function initConfigs( $environment )
     {
-		$this->configs[ "environment" ] = "production";
+        $this->environment = $environment;
+		$this->configs[ "environment" ] = $environment;
 
         // Only use _ for keys in app-details configs. prefix all keys with 'app_'.
         $this->configs[ "app-details" ] = [
