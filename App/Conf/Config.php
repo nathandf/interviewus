@@ -10,7 +10,7 @@ class Config
 
     public function __construct()
     {
-        $this->init( "development" );
+        $this->init( "production" );
 		
         if ( !in_array( $this->environment, $this->environments ) ) {
             throw new \Exception( "{$this->environment} is not valid environment - Environments list [ " . implode( ", ", $this->environments ) ." ]" );
