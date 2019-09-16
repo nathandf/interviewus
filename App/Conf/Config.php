@@ -41,7 +41,7 @@ class Config
 
         foreach ( $config_files as $configs ) {
             if ( !file_exists( $configs ) ) {
-               throw new Exception( "Config file does not exist" );
+               throw new \Exception( "Config file does not exist" );
             }
 
              $this->configs = array_merge(
