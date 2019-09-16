@@ -19,8 +19,11 @@ class View extends CoreObject
     {
         $this->model = $model;
         $this->setContainer( $container );
+
         $this->configs = $container->getService( "config" )->configs;
+
         $this->request = $model->request;
+        
         $this->setTemplatingEngine();
     }
 
@@ -39,19 +42,21 @@ class View extends CoreObject
     {
         $this->templatingEngine = $this->load( "templating-engine" );
 
-        // All templates are pulled from here
-        $this->templatingEngine->template_dir = "App/templates";
-        $this->templatingEngine->compile_dir = "App/templates/tmp";
+        if ( $this->templatingEngine ) {
+            // All templates are pulled from here
+            $this->templatingEngine->template_dir = $this->configs[ "templating" ][ "templates" ];
+            $this->templatingEngine->compile_dir = $this->configs[ "templating" ][ "cached_templates" ];
 
-        // Set csrf token
-        $this->templatingEngine->assign( "csrf_token", $this->request->csrf_token );
+            // Set csrf token
+            $this->templatingEngine->assign( "csrf_token", $this->request->csrf_token );
 
-        // Constants
-        $this->templatingEngine->assign( "HOME", HOME );
-        $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
-        $this->templatingEngine->assign( "APP_NAME", $this->configs[ "app-details" ][ "app_name" ] );
-        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_NUMBER", $this->configs[ "app-details" ][ "app_customer_support_number" ] );
-        $this->templatingEngine->assign( "CUSTOMER_SUPPORT_EMAIL", $this->configs[ "app-details" ][ "app_customer_support_email" ] );
+            // Constants
+            $this->templatingEngine->assign( "HOME", HOME );
+            $this->templatingEngine->assign( "JS_SCRIPTS", "public/js/" );
+            $this->templatingEngine->assign( "APP_NAME", $this->configs[ "app-details" ][ "app_name" ] );
+            $this->templatingEngine->assign( "CUSTOMER_SUPPORT_NUMBER", $this->configs[ "app-details" ][ "app_customer_support_number" ] );
+            $this->templatingEngine->assign( "CUSTOMER_SUPPORT_EMAIL", $this->configs[ "app-details" ][ "app_customer_support_email" ] );
+        }
     }
 
     public function addApplicationError( $error_messages )
@@ -96,17 +101,29 @@ class View extends CoreObject
 
     public function render( $data = null )
     {
-        // assigning data from the views to the templating engine
-        foreach ( $this->data as $key => $value ) {
-            $this->templatingEngine->assign( $key, $value );
+        if ( $this->templatingEngine ) {
+            // assigning data from the views to the templating engine
+            foreach ( $this->data as $key => $value ) {
+                $this->templatingEngine->assign( $key, $value );
+            }
+
+            if ( isset( $this->template ) ) {
+                // render view
+                ob_start();
+                $this->templatingEngine->display( "App/templates/". $this->template );
+                ob_end_flush();
+            }
+
+            return;
         }
 
-        if ( isset( $this->template ) ) {
-            // render view
-            ob_start();
-            $this->templatingEngine->display( "App/templates/". $this->template );
-            ob_end_flush();
+        if ( pathinfo( $this->template, PATHINFO_EXTENSION ) == "tpl" ) {
+            throw new \Exception( "Cannot render .tpl file without a templating engine" );
         }
+        
+        require_once( $this->configs[ "templating" ][ "templates" ] . $this->template );
+
+        return;
     }
 
     /**
